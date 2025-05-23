@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@mjs/ui/primitives/card';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAccount, useConnect } from 'wagmi';
+import { ConnectWalletButton } from './connect-wallet-button';
 
 export const ConnectWallet = () => {
   const wallet = useConnect();
@@ -41,17 +41,11 @@ export const ConnectWallet = () => {
           className='flex-1'
           // disabled={isPending}
           type='button'
-          // onClick={handleCancel}
+          onClick={() => router.push('/dashboard')}
         >
           Skip
         </Button>
-        <div className='contents [&>div>button]:flex-grow'>
-          <ConnectButton
-            label='Connect'
-            accountStatus='full'
-            chainStatus='none'
-          />
-        </div>
+        <ConnectWalletButton />
         {/* <Button
           variant='accent'
           className='flex-1'

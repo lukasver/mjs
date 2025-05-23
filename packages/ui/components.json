@@ -6,14 +6,14 @@
 	"iconLibrary": "lucide",
 	"tailwind": {
 		"config": "tailwind.config.ts",
-		"css": "src/styles.css",
+		"css": "src/globals.css",
 		"baseColor": "slate",
 		"cssVariables": true
 	},
 	"aliases": {
-		"components": "@/components",
-		"utils": "@/lib/utils",
-		"hooks": "@/hooks",
-		"ui": "@/primitives"
+		"components": "@mjs/ui/components",
+		"utils": "@mjs/ui/lib/utils",
+		"hooks": "@mjs/ui/hooks",
+		"ui": "@mjs/ui/primitives"
 	}
 }

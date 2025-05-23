@@ -1,3 +1,4 @@
+import "server-only";
 import { env } from "@/common/config/env";
 import { prisma } from "@/common/db/prisma";
 import { betterAuth } from "better-auth";
@@ -74,7 +75,7 @@ export const auth = betterAuth({
 	// 	enabled: true,
 	// },
 	advanced: {
-		cookiePrefix: "mjs-td",
+		cookiePrefix: COOKIE_PREFIX,
 	},
 	plugins: [passkey(), nextCookies()],
 });
