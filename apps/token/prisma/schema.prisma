@@ -1,0 +1,472 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // binaryTargets   = ["native", "linux-arm64-openssl-1.1.x", "linux-arm64-openssl-3.0.x"]
+}
+
+generator zod {
+  provider               = "zod-prisma-types"
+  output                 = "../src/common/schemas/generated"
+  useMultipleFiles       = false
+  createModelTypes       = true
+  // Useful for input validation but might affect performance since outputed file is huge
+  createInputTypes       = true
+  addInputTypeValidation = true
+  // createOptionalDefaultValuesTypes = false
+}
+
+model User {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name          String
+  email         String  @unique
+  emailVerified Boolean @default(false)
+  image         String?
+
+  // registrationStep  RegistrationStep        @default(REGISTRATION_NEW_ACCOUNT)
+  isSiwe           Boolean            @default(false)
+  profile          Profile?
+  sales            Sale[]
+  // isEmailVerify     EmailVerificationStatus @default(NOTVERIFIED)
+  userRole         UserRole[]
+  transactionAudit TransactionAudit[]
+  kycVerification  KycVerification?
+  sessions         Session[]
+  accounts         Account[]
+
+  transactions         SaleTransactions[] @relation("UserTransactions")
+  transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
+  Document             Document[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid()) @db.Text
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  expiresAt DateTime
+  token     String
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id        String   @id @default(cuid()) @db.Text
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+
+  @@map("account")
+}
+
+model Verification {
+  id        String   @id @default(cuid()) @db.Text
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+  expiresAt DateTime
+
+  identifier String
+  value      String
+
+  @@map("verification")
+}
+
+model Profile {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  firstName     String?
+  lastName      String?
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @unique
+  email         String?
+  // check
+  walletAddress String?
+  address       Address?
+  phoneNumber   String?
+  dateOfBirth   DateTime?
+
+  @@map("profile")
+}
+
+model Address {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  profile          Profile? @relation(fields: [userId], references: [userId])
+  userId           String   @unique
+  city             String?
+  zipCode          String?
+  country          String?
+  state            String?
+  street           String?
+  formattedAddress String?
+  latitude         Float?
+  longitude        Float?
+
+  @@map("address")
+}
+
+model Sale {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name                   String
+  status                 SaleStatus         @default(CREATED)
+  availableTokenQuantity Int?
+  saleCurrency           Currency           @default(CHF)
+  initialTokenQuantity   Int
+  maximumTokenBuyPerUser Int?
+  minimumTokenBuyPerUser Int                @default(1)
+  saleStartDate          DateTime
+  tokenContractAddress   String?
+  tokenName              String
+  tokenTotalSupply       String?
+  tokenPricePerUnit      Float
+  tokenSymbol            String
+  toWalletsAddress       String
+  saleClosingDate        DateTime
+  createdBy              String
+  user                   User               @relation(fields: [createdBy], references: [id])
+  transactions           SaleTransactions[]
+  saleInformation        SaleInformation?
+  saftCheckbox           Boolean            @default(false)
+  saftContract           String?
+  documents              Document[]
+
+  token            Token             @relation(fields: [tokenId], references: [id])
+  tokenId          String
+  vestingSchedules VestingSchedule[]
+
+  @@map("sales")
+}
+
+model Document {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name     String
+  fileName String
+  url      String
+  type     String
+
+  sale   Sale?   @relation(fields: [saleId], references: [id])
+  saleId String?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("documents")
+}
+
+model VestingSchedule {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  saleId           String
+  sale             Sale    @relation(fields: [saleId], references: [id])
+  name             String
+  cliffPeriod      Int // in days
+  vestingPeriod    Int // in days
+  releaseFrequency Int // in days
+  initialRelease   Float // percentage
+  isEnabled        Boolean @default(true)
+
+  @@map("vesting_schedules")
+}
+
+model TokenDistribution {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  transactionId    String
+  transaction      SaleTransactions @relation(fields: [transactionId], references: [id])
+  amount           String
+  distributionDate DateTime
+  txHash           String?
+  status           String
+
+  @@map("token_distributions")
+}
+
+model SaleInformation {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  summary           String?
+  tokenUtility      String?
+  tokenDistribution String?
+  otherInformation  String?
+  tokenLifecycle    String?
+  liquidityPool     String?
+  futurePlans       String?
+  useOfProceeds     String?
+  imageSale         String?
+  imageToken        String?
+  contactEmail      String?
+  sale              Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  saleId            String  @unique
+
+  @@map("sales_information")
+}
+
+model SaleTransactions {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  tokenSymbol String
+
+  quantity    Decimal @db.Decimal(36, 18)
+  rawPrice    String // Store exact value as string
+  price       Decimal @db.Decimal(36, 18) // Optimized for crypto
+  totalAmount Decimal @db.Decimal(36, 18)
+
+  formOfPayment   FOP
+  confirmationId  String?
+  receivingWallet String?
+
+  status TransactionStatus @default(PENDING)
+  user   User              @relation("UserTransactions", fields: [userId], references: [id])
+  userId String
+
+  sale   Sale   @relation(fields: [saleId], references: [id])
+  saleId String
+
+  comment String?
+
+  amountPaid         String
+  amountPaidCurrency Currency
+
+  txHash     String?
+  blockchain Blockchain? @relation(fields: [blockchainId], references: [id])
+
+  blockchainId String?
+  agreementId  String?
+
+  approvedBy String?
+  approver   User?   @relation("TransactionApprovals", fields: [approvedBy], references: [id])
+
+  rejectionReason String?
+  paymentEvidence String?
+  paymentDate     DateTime?
+
+  auditTrail         TransactionAudit[]
+  tokenDistributions TokenDistribution[]
+
+  @@map("sales_transactions")
+}
+
+model Blockchain {
+  id           String             @id @default(cuid()) @db.Text
+  name         String
+  chainId      Int                @unique
+  rpcUrl       String
+  explorerUrl  String
+  symbol       String
+  decimals     Int                @default(18)
+  isTestnet    Boolean            @default(false)
+  isEnabled    Boolean            @default(true)
+  tokens       Token[]
+  transactions SaleTransactions[]
+  createdAt    DateTime           @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime           @updatedAt @db.Timestamptz(6)
+  deletedAt    DateTime?          @db.Timestamptz(6)
+
+  @@map("blockchain")
+}
+
+model ContractStatus {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  userId     String
+  saleId     String
+  contractId String
+  status     ContractSignatureStatus
+
+  @@map("contract_status")
+}
+
+model TransactionAudit {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  transactionId String
+  transaction   SaleTransactions  @relation(fields: [transactionId], references: [id])
+  actionType    String
+  fromStatus    TransactionStatus
+  toStatus      TransactionStatus
+  performedBy   String
+  admin         User              @relation(fields: [performedBy], references: [id])
+  comment       String?
+
+  @@map("transaction_audits")
+}
+
+model KycVerification {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status          KycStatus @default(NOT_STARTED)
+  documentType    String?
+  documentNumber  String?
+  verifiedAt      DateTime?
+  rejectionReason String?
+
+  @@map("kyc_verifications")
+}
+
+model Role {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name  String     @unique
+  users UserRole[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model Token {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  symbol          String     @unique
+  name            String
+  decimals        Int        @default(18)
+  totalSupply     String
+  contractAddress String?
+  blockchain      Blockchain @relation(fields: [blockchainId], references: [id])
+  blockchainId    String
+  sales           Sale[]
+
+  @@map("tokens")
+}
+
+enum RegistrationStep {
+  REGISTRATION_NEW_ACCOUNT
+  REGISTRATION_PERSONAL_DETAIL
+  REGISTRATION_DOCUMENT_DETAIL
+  REGISTRATION_COMPLETED
+}
+
+enum FOP {
+  CRYPTO
+  TRANSFER
+  CARD
+}
+
+enum SaleStatus {
+  CREATED
+  OPEN
+  CLOSED
+  FINISHED
+}
+
+enum Currency {
+  CHF
+  GBP
+  USD
+  EUR
+  ETH
+  USDC
+  MATIC
+  LINK
+}
+
+enum TransactionStatus {
+  PENDING
+  AWAITING_PAYMENT
+  PAYMENT_SUBMITTED
+  PAYMENT_VERIFIED
+  REJECTED
+  CANCELLED
+  TOKENS_ALLOCATED
+  TOKENS_DISTRIBUTED
+  COMPLETED
+  REFUNDED
+}
+
+enum ContractSignatureStatus {
+  PENDING
+  SIGNED
+}
+
+enum EmailVerificationStatus {
+  VERIFIED
+  PENDING
+  NOTVERIFIED
+}
+
+enum KycStatus {
+  NOT_STARTED
+  SUBMITTED
+  VERIFIED
+  REJECTED
+}

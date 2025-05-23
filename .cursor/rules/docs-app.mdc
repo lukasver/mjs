@@ -1,0 +1,25 @@
+---
+description: 
+globs: apps/docs/**/*.tsx,apps/docs/**/*.ts
+alwaysApply: false
+---
+---
+description: Documentation app structure
+globs: apps/docs/**/*.tsx,apps/docs/**/*.ts
+alwaysApply: false
+---
+
+# Documentation Application
+
+The docs application is a Next.js application used to display information about a web3 project and its technicalities.
+
+## Structure
+
+- [apps/docs/app/](mdc:apps/docs/app) - Next.js App Router pages
+- [apps/docs/public/](mdc:apps/docs/public) - Static assets
+
+## Key Features
+
+- Built with Next.js App Router
+- Documentation pages organized by feature
+- API documentation

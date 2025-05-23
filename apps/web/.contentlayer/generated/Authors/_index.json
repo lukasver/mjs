@@ -1,0 +1,35 @@
+[
+	{
+		"name": "Mahjong Stars",
+		"avatar": "/static/images/avatar.png",
+		"occupation": "Business",
+		"company": "Mahjong Stars",
+		"email": null,
+		"twitter": "https://x.com/mahjongstars",
+		"linkedin": "https://linkedin.com/in/mahjongstars",
+		"github": "https://github.com/mahjongstars",
+		"body": {
+			"raw": "\nMahjong Stars works tirelessly to make sure all customers are happy. We are always looking for ways to improve our service and welcome any feedback. If you have any questions or concerns, please contact us [here](mailto:).\n",
+			"code": "var Component=(()=>{var u=Object.create;var s=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var g=Object.getOwnPropertyNames;var j=Object.getPrototypeOf,x=Object.prototype.hasOwnProperty;var d=(t,a)=>()=>(a||t((a={exports:{}}).exports,a),a.exports),f=(t,a)=>{for(var e in a)s(t,e,{get:a[e],enumerable:!0})},c=(t,a,e,r)=>{if(a&&typeof a==\"object\"||typeof a==\"function\")for(let o of g(a))!x.call(t,o)&&o!==e&&s(t,o,{get:()=>a[o],enumerable:!(r=p(a,o))||r.enumerable});return t};var y=(t,a,e)=>(e=t!=null?u(j(t)):{},c(a||!t||!t.__esModule?s(e,\"default\",{value:t,enumerable:!0}):e,t)),k=t=>c(s({},\"__esModule\",{value:!0}),t);var m=d((v,i)=>{i.exports=_jsx_runtime});var M={};f(M,{default:()=>l,frontmatter:()=>w});var n=y(m()),w={name:\"Mahjong Stars\",avatar:\"/static/images/avatar.png\",occupation:\"Business\",company:\"Mahjong Stars\",email:null,twitter:\"https://x.com/mahjongstars\",linkedin:\"https://linkedin.com/in/mahjongstars\",github:\"https://github.com/mahjongstars\"};function h(t){let a={a:\"a\",p:\"p\",...t.components};return(0,n.jsxs)(a.p,{children:[\"Mahjong Stars works tirelessly to make sure all customers are happy. We are always looking for ways to improve our service and welcome any feedback. If you have any questions or concerns, please contact us \",(0,n.jsx)(a.a,{href:\"mailto:\",children:\"here\"}),\".\"]})}function l(t={}){let{wrapper:a}=t.components||{};return a?(0,n.jsx)(a,{...t,children:(0,n.jsx)(h,{...t})}):h(t)}return k(M);})();\n;return Component;"
+		},
+		"_id": "authors/default.md",
+		"_raw": {
+			"sourceFilePath": "authors/default.md",
+			"sourceFileName": "default.md",
+			"sourceFileDir": "authors",
+			"contentType": "markdown",
+			"flattenedPath": "authors/default"
+		},
+		"type": "Authors",
+		"readingTime": {
+			"text": "1 min read",
+			"minutes": 0.18,
+			"time": 10800,
+			"words": 36
+		},
+		"slug": "default",
+		"path": "authors/default",
+		"filePath": "authors/default.md",
+		"toc": []
+	}
+]

@@ -1,0 +1,47 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Project structure
+globs: 
+alwaysApply: true
+---
+
+# Code Conventions
+
+This project follows specific coding conventions to ensure consistency and maintainability.
+
+## TypeScript Conventions
+
+- Avoid using `any`. Prefer `unknown` instead when type is uncertain
+- Use JSDoc to document functions, classes, and methods
+- One export per file
+
+## Naming Conventions
+
+- Use PascalCase for classes
+- Use camelCase for variables, functions, and methods
+- Use kebab-case for file and directory names
+- Use UPPERCASE for environment variables
+- Start each function with a verb
+- Use verbs for boolean variables (e.g., isLoading, hasError, canDelete)
+- Use complete words instead of abbreviations
+
+## File Structure
+
+- Component files should match the component name
+- Component directories should include an index.ts file
+- Use feature-based organization for complex features
+
+## Testing
+
+- Use vitest for unit & integration testing framework.
+- Use playwright for e2e testing when applicable.
+- Tests should be in a `__tests__` directory.
+
+## Documentation
+
+- Provide clear and concise comments for complex logic
+- Use JSDoc comments for functions and components to improve IDE intellisense

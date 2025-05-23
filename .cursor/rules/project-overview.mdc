@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Project structure
+globs: 
+alwaysApply: true
+---
+# Monorepo Project Overview
+
+This is a monorepo built with Turborepo containing multiple applications and shared packages.
+
+## Structure
+
+- [apps/](mdc:apps) - Contains all applications
+  - [apps/token/](mdc:apps/token) - Main token/blockchain application
+  - [apps/web/](mdc:apps/web) - Marketing website
+  - [apps/docs/](mdc:apps/docs) - Documentation site
+  - [apps/test/](mdc:apps/test) - Testing application
+
+- [packages/](mdc:packages) - Contains shared packages
+  - [packages/ui/](mdc:packages/ui) - Shared UI components
+  - [packages/typescript-config/](mdc:packages/typescript-config) - Shared TypeScript configuration
+  - [packages/tailwind-config/](mdc:packages/tailwind-config) - Shared Tailwind CSS configuration
+  - [packages/transactional/](mdc:packages/transactional) - Transactional email templates
+
+## Configuration Files
+
+- [package.json](mdc:package.json) - Root package.json with workspaces configuration
+- [turbo.json](mdc:turbo.json) - Turborepo configuration
+- [pnpm-workspace.yaml](mdc:pnpm-workspace.yaml) - PNPM workspace configuration

@@ -1,0 +1,35 @@
+---
+description: 
+globs: apps/web/**/*.tsx,apps/web/**/*.ts
+alwaysApply: false
+---
+---
+description: Marketing website and block project structure
+globs: apps/web/**/*.tsx,apps/web/**/*.ts
+alwaysApply: false
+---
+
+# Web Application
+
+The web application serves as the marketing website and blog for the project.
+
+## Structure
+
+- [apps/web/app/](mdc:apps/web/app) - Next.js App Router pages
+- [apps/web/components/](mdc:apps/web/components) - UI components applicable only to this app
+  - [apps/web/components/landing/](mdc:apps/web/components/landing) - Landing page components
+  - [apps/web/components/blog/](mdc:apps/web/components/blog) - Blog components
+- [apps/web/public/](mdc:apps/web/public) - Static assets
+- [apps/web/data/](mdc:apps/web/data) - Content data
+
+## Content Layer
+
+The web app uses ContentLayer for managing blog content:
+- [apps/web/.contentlayer/](mdc:apps/web/.contentlayer) - ContentLayer generated content
+
+## Key Pages
+
+- Homepage: [apps/web/app/page.tsx](mdc:apps/web/app/page.tsx)
+- Blog: [apps/web/app/all-articles/page.tsx](mdc:apps/web/app/all-articles/page.tsx)
+- About: [apps/web/app/about/page.tsx](mdc:apps/web/app/about/page.tsx)
+- Pricing: [apps/web/app/pricing/page.tsx](mdc:apps/web/app/pricing/page.tsx)

@@ -1,0 +1,34 @@
+---
+description: 
+globs: apps/token/**/*.tsx,apps/token/**/*.ts
+alwaysApply: false
+---
+---
+description: Token Dashboard project structure
+globs: apps/token/**/*.tsx,apps/token/**/*.ts
+alwaysApply: false
+---
+
+# Token Application
+
+The token application is the main blockchain/cryptocurrency application in the monorepo.
+
+## Structure
+
+- [apps/token/src/](mdc:apps/token/src) - Main source code
+  - [apps/token/src/components/](mdc:apps/token/src/components) - UI components
+  - [apps/token/src/containers/](mdc:apps/token/src/containers) - Container components
+  - [apps/token/src/pages/](mdc:apps/token/src/pages) - Next.js pages
+  - [apps/token/src/common/](mdc:apps/token/src/common) - Shared utilities and types
+  - [apps/token/src/services/](mdc:apps/token/src/services) - Service layer
+
+## Key Features
+
+- Blockchain Integration: [apps/token/src/services/crypto/](mdc:apps/token/src/services/crypto)
+- API Endpoints: [apps/token/src/pages/api/](mdc:apps/token/src/pages/api)
+- Database Models: [apps/token/prisma/](mdc:apps/token/prisma)
+- Authentication: [apps/token/src/pages/api/auth/](mdc:apps/token/src/pages/api/auth)
+
+## Database Migrations
+
+Database migrations are stored in [apps/token/prisma/migrations/](mdc:apps/token/prisma/migrations)

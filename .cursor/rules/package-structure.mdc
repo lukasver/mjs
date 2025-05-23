@@ -1,0 +1,31 @@
+---
+description: 
+globs: apps/**/*.tsx,apps/**/*.ts,packages/**/*.tsx,packages/**/*.ts
+alwaysApply: false
+---
+---
+description: Shared Packages project structure
+globs: apps/**/*.tsx,apps/**/*.ts,packages/**/*.tsx,packages/**/*.ts
+alwaysApply: false
+---
+
+# Shared Packages
+
+This monorepo contains several shared packages used across multiple applications.
+
+## UI Package
+
+- [packages/ui/](mdc:packages/ui) - Shared UI components
+  - [packages/ui/src/components/](mdc:packages/ui/src/components) - Reusable UI components
+  - [packages/ui/src/hooks/](mdc:packages/ui/src/hooks) - Custom React hooks
+  - [packages/ui/src/primitives/](mdc:packages/ui/src/primitives) - Primitive UI elements
+
+## Configuration Packages
+
+- [packages/typescript-config/](mdc:packages/typescript-config) - Shared TypeScript configuration
+- [packages/tailwind-config/](mdc:packages/tailwind-config) - Shared Tailwind CSS configuration
+
+## Transactional Emails
+
+- [packages/transactional/](mdc:packages/transactional) - Email templates
+  - [packages/transactional/emails/](mdc:packages/transactional/emails) - Email templates
