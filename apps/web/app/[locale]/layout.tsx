@@ -1,6 +1,6 @@
+import { routing } from '@/lib/i18n/routing';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { routing } from '@/lib/i18n/routing';
 
 import '@/css/styles.css';
 import { siteConfig } from '@/data/config/site.settings';
@@ -9,8 +9,8 @@ import { ThemeProviders } from '../theme-providers';
 
 import { AnalyticsWrapper } from '@/components/Analytics';
 import { SearchProvider } from '@/components/SearchProvider';
-import { fontClash, fontTeachers } from '../fonts';
 import { getLangDir } from 'rtl-detect';
+import { fontClash, fontTeachers } from '../fonts';
 
 export default async function RootLayout({
   children,

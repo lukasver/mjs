@@ -1,6 +1,6 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./lib/i18n/routing";
 import { NextRequest } from "next/server";
+import { routing } from "./lib/i18n/routing";
 
 export default (req: NextRequest) => {
 	if (process.env.NODE_ENV === "development") {

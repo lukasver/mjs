@@ -1,93 +1,93 @@
 {
-  "Navigation": {
-    "links": {
-      "home": "首页",
-      "features": "特色",
-      "game": "游戏",
-      "character": "角色",
-      "support": "支持"
-    },
-    "buttons": {
-      "login": "登录",
-      "playNow": "立即游戏"
-    }
-  },
-  "Hero": {
-    "title": "加入Web3麻将游戏",
-    "subtitle": "在麻将之星挑战你的朋友，酷炫角色主宰游戏！"
-  },
-  "About": {
-    "title": "什么是麻将之星？",
-    "description": "探索麻将之星，这是一个古老麻将与现代游戏相结合的Web3平台。挑战他人，收集独特的NFT角色，并在充满活力的在线世界中赢取奖励。通过区块链的力量全球连接，获得革命性的游戏体验。"
-  },
-  "GameFeatures": {
-    "title": "游戏特色",
-    "features": {
-      "stayInGame": {
-        "title": "保持游戏 保持领先",
-        "description": "随时游戏。攀登排行榜并提高你的技能。"
-      },
-      "trainableAI": {
-        "title": "可训练的AI按你的方式玩",
-        "description": "定制AI，使其学习并适应你的游戏风格。"
-      },
-      "collectCharacters": {
-        "title": "收集难忘角色",
-        "description": "用你的区块链解锁稀有角色和专属物品。"
-      },
-      "bringFriends": {
-        "title": "带朋友同桌游戏",
-        "description": "挑战朋友，分享欢笑，在丰富的对局中战斗。"
-      }
-    }
-  },
-  "GameVariants": {
-    "title": "麻将游戏",
-    "variants": {
-      "shenzhen": {
-        "title": "深圳麻将规则，又称香港麻将",
-        "description": "体验这种麻将变体的快节奏刺激，在其中你需要战略性地保留杠牌。"
-      },
-      "riichi": {
-        "title": "立直麻将规则",
-        "description": "刺激的日本麻将变体。将于2025年后推出。"
-      }
-    }
-  },
-  "Characters": {
-    "title": "认识我们的部分角色",
-    "tonyKong": {
-      "quote": "我不追求运气。我创造运气。",
-      "name": "Tony Kong",
-      "description": "自认为是无可争议的麻将大师，Tony确切知道如何将糟糕的牌面转变为制胜局。如果你敢，就来挑战他吧！"
-    },
-    "anneWan": {
-      "quote": "街头有型，牌桌有策略。看我两样都赢。",
-      "name": "Anne Wan",
-      "description": "Anne Wan大胆、顽皮，总是走在潮流前端。她为麻将世界带来了新鲜、无畏的活力——在聪明的走棋和对奶茶、运动鞋以及一切时尚事物的热爱之间取得平衡。Anne不只是为了赢而玩——她为了表达自己而玩。"
-    },
-    "mrsChen": {
-      "quote": "我忘记的胜利手牌比你玩过的还要多。",
-      "name": "Mrs Chen",
-      "description": "Mrs. Chen是一位不妥协的麻将老手，在你出生之前就开始横扫牌桌了。她策略凶猛，有点可怕，仅凭一个眼神就能赢得尊重——她那只脾气暴躁的猫也同样挑剔。低估她后果自负。"
-    },
-    "uncleCai": {
-      "quote": "当你在数牌的时候，我在数我的胜利。",
-      "name": "Uncle Cai",
-      "description": "Uncle Cai是一位街头智慧的麻将大师，什么都见过——通常什么都能赢。他心态轻松但头脑敏锐，更喜欢扇扇子让别人流汗。他的复古风格、金链子和冷幽默使他成为牌桌上和街头的传奇人物。"
-    }
-  },
-  "CTAs": {
-    "logIn": "登录",
-    "findMoreCharacters": "查找更多角色"
-  },
-  "Footer": {
-    "links": {
-      "whoWeAre": "关于我们",
-      "termsAndConditions": "条款和条件",
-      "privacyPolicy": "隐私政策",
-      "contact": "联系我们"
-    },
-    "copyright": "©2023 WASABI GAMES DMCC"
-  }
+	"Navigation": {
+		"links": {
+			"home": "首页",
+			"features": "特色",
+			"game": "游戏",
+			"character": "角色",
+			"support": "支持"
+		},
+		"buttons": {
+			"login": "登录",
+			"playNow": "立即游戏"
+		}
+	},
+	"Hero": {
+		"title": "加入Web3麻将游戏",
+		"subtitle": "在麻将之星挑战你的朋友，酷炫角色主宰游戏！"
+	},
+	"About": {
+		"title": "什么是麻将之星？",
+		"description": "探索麻将之星，这是一个古老麻将与现代游戏相结合的Web3平台。挑战他人，收集独特的NFT角色，并在充满活力的在线世界中赢取奖励。通过区块链的力量全球连接，获得革命性的游戏体验。"
+	},
+	"GameFeatures": {
+		"title": "游戏特色",
+		"features": {
+			"stayInGame": {
+				"title": "保持游戏 保持领先",
+				"description": "随时游戏。攀登排行榜并提高你的技能。"
+			},
+			"trainableAI": {
+				"title": "可训练的AI按你的方式玩",
+				"description": "定制AI，使其学习并适应你的游戏风格。"
+			},
+			"collectCharacters": {
+				"title": "收集难忘角色",
+				"description": "用你的区块链解锁稀有角色和专属物品。"
+			},
+			"bringFriends": {
+				"title": "带朋友同桌游戏",
+				"description": "挑战朋友，分享欢笑，在丰富的对局中战斗。"
+			}
+		}
+	},
+	"GameVariants": {
+		"title": "麻将游戏",
+		"variants": {
+			"shenzhen": {
+				"title": "深圳麻将规则，又称香港麻将",
+				"description": "体验这种麻将变体的快节奏刺激，在其中你需要战略性地保留杠牌。"
+			},
+			"riichi": {
+				"title": "立直麻将规则",
+				"description": "刺激的日本麻将变体。将于2025年后推出。"
+			}
+		}
+	},
+	"Characters": {
+		"title": "认识我们的部分角色",
+		"tonyKong": {
+			"quote": "我不追求运气。我创造运气。",
+			"name": "Tony Kong",
+			"description": "自认为是无可争议的麻将大师，Tony确切知道如何将糟糕的牌面转变为制胜局。如果你敢，就来挑战他吧！"
+		},
+		"anneWan": {
+			"quote": "街头有型，牌桌有策略。看我两样都赢。",
+			"name": "Anne Wan",
+			"description": "Anne Wan大胆、顽皮，总是走在潮流前端。她为麻将世界带来了新鲜、无畏的活力——在聪明的走棋和对奶茶、运动鞋以及一切时尚事物的热爱之间取得平衡。Anne不只是为了赢而玩——她为了表达自己而玩。"
+		},
+		"mrsChen": {
+			"quote": "我忘记的胜利手牌比你玩过的还要多。",
+			"name": "Mrs Chen",
+			"description": "Mrs. Chen是一位不妥协的麻将老手，在你出生之前就开始横扫牌桌了。她策略凶猛，有点可怕，仅凭一个眼神就能赢得尊重——她那只脾气暴躁的猫也同样挑剔。低估她后果自负。"
+		},
+		"uncleCai": {
+			"quote": "当你在数牌的时候，我在数我的胜利。",
+			"name": "Uncle Cai",
+			"description": "Uncle Cai是一位街头智慧的麻将大师，什么都见过——通常什么都能赢。他心态轻松但头脑敏锐，更喜欢扇扇子让别人流汗。他的复古风格、金链子和冷幽默使他成为牌桌上和街头的传奇人物。"
+		}
+	},
+	"CTAs": {
+		"logIn": "登录",
+		"findMoreCharacters": "查找更多角色"
+	},
+	"Footer": {
+		"links": {
+			"whoWeAre": "关于我们",
+			"termsAndConditions": "条款和条件",
+			"privacyPolicy": "隐私政策",
+			"contact": "联系我们"
+		},
+		"copyright": "©2023 WASABI GAMES DMCC"
+	}
 }

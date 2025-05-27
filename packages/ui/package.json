@@ -1,12 +1,8 @@
 {
 	"name": "@mjs/ui",
 	"version": "0.0.0",
-	"sideEffects": [
-		"**/*.css"
-	],
-	"files": [
-		"dist"
-	],
+	"sideEffects": ["**/*.css"],
+	"files": ["dist"],
 	"exports": {
 		"./colors": "./dist/lib/colors.js",
 		"./styles.css": "./dist/index.css",
