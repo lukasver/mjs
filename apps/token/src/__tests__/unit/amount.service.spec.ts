@@ -261,7 +261,7 @@ test.describe("Amount Calculator service", () => {
 					precision,
 				};
 			});
-			let index = 1;
+			let _index = 1;
 			for (const payload of payloads) {
 				const amount = service.getTotalAmount(payload)?.toString();
 				const control = currencyJs(payload.pricePerUnit, {
@@ -319,7 +319,7 @@ test.describe("Amount Calculator service", () => {
 				//   expect(value).toBe(controlValue);
 				// }
 				// expect(countDecimalDigits(value)).toBeLessThan(5);
-				index++;
+				_index++;
 			}
 		});
 	});

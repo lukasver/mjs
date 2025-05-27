@@ -5,8 +5,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { passkey } from "better-auth/plugins/passkey";
-import { createEmailService } from "./email";
 import { headers } from "next/headers";
+import { createEmailService } from "./email";
 
 const email = createEmailService(env.EMAIL_API_KEY);
 

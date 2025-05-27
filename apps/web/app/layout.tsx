@@ -60,14 +60,6 @@ export default function RootLayout({
 			suppressHydrationWarning
 		>
 			<head>
-				{/* <style>
-          {`
-          :root, :before, :after {
-            ${style.join(';')}
-          }
-        `}
-        </style> */}
-
 				<link
 					rel="apple-touch-icon"
 					sizes="76x76"

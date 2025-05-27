@@ -1,4 +1,4 @@
-@import '@mjs/ui/globals.css';
+@import "@mjs/ui/globals.css";
 
 /* Root level overrides from the shared config styles*/
 /* :root {
@@ -6,6 +6,6 @@
 } */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+	background: var(--background);
+	color: var(--foreground);
 }

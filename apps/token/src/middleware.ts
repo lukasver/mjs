@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_PREFIX } from "./common/config/contants";
 
 const PUBLIC_ROUTES: string[] = ["/", "/onboarding"];
-const PRIVATE_ROUTES: string[] = ["/dashboard"];
+const _PRIVATE_ROUTES: string[] = ["/dashboard"];
 
 export default async (req: NextRequest) => {
 	log("[MIDDLEWARE]", req.nextUrl.pathname);

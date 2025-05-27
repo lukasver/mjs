@@ -241,7 +241,7 @@ export const usePricePerUnit = ({
 							...rest,
 						});
 					setPricePerUnit(pricePerUnit);
-				} catch (error) {
+				} catch (_error) {
 					toast.error("Ops! someting wrong.");
 					onError?.();
 				}

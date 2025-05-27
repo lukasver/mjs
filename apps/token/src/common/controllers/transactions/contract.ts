@@ -34,7 +34,7 @@ class ContractController {
 			} else {
 				res.status(HttpStatusCode.OK).json(null);
 			}
-		} catch (error) {
+		} catch (_error) {
 			res
 				.status(HttpStatusCode.INTERNAL_SERVER_ERROR)
 				.json({ error: "Internal Server Error" });

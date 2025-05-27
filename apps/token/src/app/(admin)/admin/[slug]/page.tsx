@@ -1,9 +1,9 @@
 export default async function AdminPage({
-  params,
+	params,
 }: {
-  params: { slug: string };
+	params: { slug: string };
 }) {
-  const { slug } = await params;
+	const { slug } = await params;
 
-  return <div>Admin {slug}</div>;
+	return <div>Admin {slug}</div>;
 }
