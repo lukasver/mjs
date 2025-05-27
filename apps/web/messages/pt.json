@@ -1,0 +1,97 @@
+{
+  "Navigation": {
+    "links": {
+      "home": "INÍCIO",
+      "features": "RECURSOS",
+      "game": "JOGO",
+      "character": "PERSONAGEM",
+      "support": "SUPORTE"
+    },
+    "buttons": {
+      "login": "ENTRAR",
+      "playNow": "JOGAR AGORA"
+    }
+  },
+  "Hero": {
+    "title": "<span>Junte-se ao</span> <span>Mahjong Web3</span>",
+    "subtitle": "Desafie seus amigos no Mahjong Stars, onde personagens incríveis dominam o jogo!"
+  },
+  "About": {
+    "title": "O que é Mahjong Stars?",
+    "description": "Explore Mahjong Stars, uma plataforma Web3 onde o Mahjong antigo encontra o jogo moderno. Desafie outros, colecione personagens NFT únicos e ganhe recompensas em um mundo online dinâmico. Conecte-se globalmente através do poder do blockchain para uma experiência de jogo revolucionária."
+  },
+  "GameFeatures": {
+    "title": "RECURSOS DO JOGO",
+    "features": {
+      "stayInGame": {
+        "title": "Permaneça no Jogo, Mantenha-se no Topo",
+        "description": "Jogue a qualquer momento. Suba no ranking e desenvolva sua habilidade."
+      },
+      "trainableAI": {
+        "title": "IA Treinável que Joga do Seu Jeito",
+        "description": "Personalize uma IA para aprender e se adaptar ao seu estilo de jogo."
+      },
+      "collectCharacters": {
+        "title": "Colecione o Inesquecível",
+        "description": "Desbloqueie personagens raros e itens exclusivos com seu blockchain."
+      },
+      "bringFriends": {
+        "title": "Traga Seus Amigos para a Mesa",
+        "description": "Desafie amigos, compartilhe risadas e batalhe em partidas ricas."
+      }
+    }
+  },
+  "GameVariants": {
+    "title": "O JOGO DE MAHJONG",
+    "variants": {
+      "shenzhen": {
+        "title": "Regras do Mahjong de Shenzhen, também conhecido como Hong Kong",
+        "description": "Experimente a emoção acelerada desta variante do Mahjong onde você preserva estrategicamente seus Kongs."
+      },
+      "riichi": {
+        "title": "Regras do Mahjong Riichi",
+        "description": "A emocionante variante japonesa do Mahjong. Chegando no final de 2025."
+      }
+    }
+  },
+  "Characters": {
+    "title": "CONHEÇA ALGUNS DOS NOSSOS PERSONAGENS",
+    "tonyKong": {
+      "quote": "Eu não persigo a sorte. Eu a crio.",
+      "name": "Tony Kong",
+      "description": "Acreditando ser o Mestre indiscutível do Mahjong, Tony sabe exatamente como transformar uma mão ruim em um jogo vencedor. Desafie-o se você ousar!"
+    },
+    "anneWan": {
+      "quote": "Estilo nas ruas, estratégia na mesa. Veja-me vencer ambos.",
+      "name": "Anne Wan",
+      "description": "Anne Wan é ousada, divertida e sempre na moda. Ela traz uma energia fresca e destemida ao mundo do Mahjong — equilibrando jogadas inteligentes com amor por bubble tea, tênis e tudo que é estiloso. Anne não joga apenas para vencer — ela joga para se expressar."
+    },
+    "mrsChen": {
+      "quote": "Já esqueci mais mãos vencedoras do que você já jogou.",
+      "name": "Mrs Chen",
+      "description": "Mrs. Chen é uma veterana do Mahjong sem rodeios que vem dominando mesas desde antes de você nascer. Ferozmente estratégica e um pouco assustadora, ela comanda respeito com apenas um olhar — e seu gato rabugento é igualmente crítico. Subestime-a por sua conta e risco."
+    },
+    "uncleCai": {
+      "quote": "Enquanto você conta peças, eu conto minhas vitórias.",
+      "name": "Uncle Cai",
+      "description": "Uncle Cai é um mestre do Mahjong esperto que já viu de tudo — e geralmente ganha tudo. Tranquilo com uma mente afiada, ele prefere se abanar e deixar os outros suarem. Seu estilo old-school, corrente de ouro e humor seco o tornam uma lenda tanto na mesa quanto nas ruas."
+    }
+  },
+  "CTAs": {
+    "logIn": "ENTRAR",
+    "findMoreCharacters": "para encontrar mais personagens"
+  },
+  "Footer": {
+    "links": {
+      "home": "Início",
+      "whoWeAre": "Quem Somos",
+      "termsAndConditions": "Termos e Condições",
+      "privacyPolicy": "Política de Privacidade",
+      "contact": "Contato"
+    },
+    "copyright": "©2023 WASABI GAMES DMCC"
+  },
+  "Global": {
+    "soon": "Em Breve"
+  }
+}

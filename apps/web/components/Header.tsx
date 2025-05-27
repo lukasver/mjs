@@ -23,7 +23,7 @@ const Header = ({ className }: { className?: string }) => {
               alt='Mahjong Stars logo'
               height={141}
               width={47}
-              className='group-hover:animate-wiggle hover:animate-wiggle'
+              className='group-hover:animate-wiggle hover:animate-wiggle h-8 w-auto'
             />
 
             <div className='sr-only'>Mahjong Stars</div>

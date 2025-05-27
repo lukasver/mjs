@@ -1,0 +1,108 @@
+'use client';
+
+import { useState } from 'react';
+import { Button } from '@mjs/ui/primitives/button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from '@mjs/ui/primitives/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@mjs/ui/primitives/popover';
+import { cn } from '@mjs/ui/lib/utils';
+import { Check, Globe } from 'lucide-react';
+import { usePathname, Link } from '@/lib/i18n/navigation';
+
+interface Locale {
+  code: string;
+  name: string;
+}
+
+const locales: Locale[] = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Español' },
+  { code: 'fr', name: 'Français' },
+  { code: 'de', name: 'Deutsch' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'pt', name: 'Português' },
+  { code: 'nl', name: 'Nederlands' },
+  { code: 'ja', name: '日本語' },
+  { code: 'ko', name: '한국어' },
+  { code: 'zh-CN', name: '中文 (简体)' },
+  { code: 'zh-TW', name: '中文 (繁體)' },
+];
+
+interface LocaleSwitcherProps {
+  currentLocale?: string;
+  onLocaleChange?: (locale: string) => void;
+}
+
+export default function LocaleSwitcher({
+  currentLocale = 'en',
+  onLocaleChange,
+}: LocaleSwitcherProps) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [selectedLocale, setSelectedLocale] = useState(
+    locales.find((locale) => locale.code === currentLocale) || locales[0]
+  );
+
+  const handleLocaleSelect = (locale: Locale) => {
+    setSelectedLocale(locale);
+    setOpen(false);
+    onLocaleChange?.(locale.code);
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant='outline'
+          role='combobox'
+          aria-expanded={open}
+          aria-label='Select language'
+          className='justify-between flex flex-row gap-2'
+        >
+          <div className='flex items-center gap-2'>
+            <Globe className='h-4 w-4' />
+            <span className='text-sm'>{selectedLocale?.name || 'English'}</span>
+          </div>
+          {/* <ChevronDown className='h-4 w-4 shrink-0 opacity-50' /> */}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className='w-[125px] p-0'>
+        <Command>
+          <CommandList>
+            <CommandEmpty>No language found.</CommandEmpty>
+            <CommandGroup>
+              {locales.map((locale) => (
+                <Link href={pathname} locale={locale.code} key={locale.code}>
+                  <CommandItem
+                    value={locale.name}
+                    onSelect={() => handleLocaleSelect(locale)}
+                    className='flex items-center gap-2'
+                  >
+                    <span className='flex-1'>{locale.name}</span>
+                    <Check
+                      className={cn(
+                        'ml-auto h-4 w-4',
+                        selectedLocale?.code === locale.code
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      )}
+                    />
+                  </CommandItem>
+                </Link>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}

@@ -1,0 +1,161 @@
+import Header from '@/components/Header';
+import Image from '@/components/Image';
+import { cn } from '@mjs/ui/lib/utils';
+import { Button } from '@mjs/ui/primitives/button';
+import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
+import { IngameFeatures } from '@/components/IngameFeatures';
+import { GameVariants } from '@/components/GameVariants';
+import CharactersCarousel from '@/components/CharactersCarousel';
+import Footer from '@/components/Footer';
+import { Tooltip } from '@mjs/ui/primitives/tooltip';
+
+export default async function Home() {
+  const t = await getTranslations();
+  return (
+    <div className='flex flex-col w-full items-center fancy-overlay'>
+      {/* <LandingSocialProofBand invert={false} className='hidden md:flex'>
+        <LandingSocialProofBandItem>
+          Fast, reliable, and secure
+        </LandingSocialProofBandItem>
+
+        <LandingSocialProofBandItem>
+          $MJS Token coming soon
+        </LandingSocialProofBandItem>
+
+    
+      </LandingSocialProofBand> */}
+
+      <div
+        className={cn(
+          'grid',
+          `[&>section]:min-h-screen [&>section]:h-full [&>section]:py-20`,
+          'w-full'
+        )}
+      >
+        <section
+          id='home'
+          className={cn(
+            'relative',
+            'after:absolute after:inset-0 after:-z-[1] after:bg-gradient-to-b after:from-transparent after:from-10% after:via-transparent after:to-primary'
+          )}
+        >
+          <Header className='fixed top-0 left-0 right-0 mb-0 lg:mb-0 mx-auto z-110 bg-transparent' />
+          <div className='mx-auto z-1 h-full grid place-items-center'>
+            <div
+              id={'hero-characters'}
+              className='grid grid-cols-6 grid-rows-3'
+            >
+              <div className='flex flex-col gap-4 col-start-2 col-end-6 row-start-2 row-end-4 z-10'>
+                <h1 className='font-head lg:text-7xl text-center [&>span]:block'>
+                  {t.rich('Hero.title', {
+                    span: (chunks) => <span>{chunks}</span>,
+                  })}
+                </h1>
+                <h2 className='text-xl text-center font-common font-medium'>
+                  {t('Hero.subtitle')}
+                </h2>
+                <Button className='w-full max-w-md mx-auto uppercase font-bold animate-pulse'>
+                  {t('Navigation.buttons.playNow')}
+                </Button>
+              </div>
+              <Image
+                src='/static/images/chars1.webp'
+                alt='hero-characters'
+                fill
+                className={cn(
+                  'w-full h-full object-cover z-1 col-start-1 col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow 2xl:scale-75'
+                )}
+                style={{
+                  maskImage:
+                    'linear-gradient(to bottom, black 80%, transparent 100%)',
+                }}
+              />
+            </div>
+          </div>
+          <Image
+            src='/static/images/bg.webp'
+            alt='bg'
+            className='w-full h-full absolute inset-0'
+            priority
+            fill
+            sizes='100vw'
+            style={{
+              objectFit: 'cover',
+              zIndex: -1,
+            }}
+          />
+        </section>
+
+        <section
+          id='features'
+          className={cn('container mx-auto flex flex-col gap-4')}
+        >
+          <div className='grid place-items-center h-[50dvh]'>
+            <div className='max-w-5xl'>
+              <h2 className='font-semibold text-5xl text-center mb-4'>
+                {t('About.title')}
+              </h2>
+              <p className='text-2xl text-center font-common font-base'>
+                {t('About.description')}
+              </p>
+            </div>
+          </div>
+          <p className='text-3xl uppercase font-bold text-center mb-4 font-common'>
+            {t('GameFeatures.title')}
+          </p>
+          <Suspense fallback={null}>
+            <IngameFeatures />
+          </Suspense>
+        </section>
+
+        <section
+          id='game'
+          className='container mx-auto gap-12 flex flex-col justify-center items-center min-h-[70dvh]!'
+        >
+          <p className='text-3xl uppercase font-bold text-center font-common'>
+            {t('GameVariants.title')}
+          </p>
+          <Suspense fallback={null}>
+            <GameVariants />
+          </Suspense>
+        </section>
+
+        <section
+          id='characters'
+          className={cn('relative bg-transparent! grid place-items-center')}
+        >
+          <div className='container mx-auto flex flex-col gap-4'>
+            <p className='text-3xl uppercase font-bold text-center mb-4 font-common'>
+              {t('Characters.title')}
+            </p>
+            <Suspense fallback={null}>
+              <div className='relative max-w-[90%] mx-auto'>
+                <CharactersCarousel />
+              </div>
+            </Suspense>
+            <div className='flex flex-col items-center justify-center h-40 w-full gap-4'>
+              <Tooltip content={t('Global.soon')}>
+                <span className='w-full max-w-80'>
+                  <Button className='w-full' disabled>
+                    {t('CTAs.logIn')}
+                  </Button>
+                </span>
+              </Tooltip>
+              <p className='font-common font-base text-2xl'>
+                {t('CTAs.findMoreCharacters')}
+              </p>
+            </div>
+          </div>
+          <div
+            className={cn(
+              'w-full h-full absolute inset-0 bg-repeat -z-1 bg-[url(/static/images/bg2.png)]',
+              'gradient-y-primary'
+            )}
+          />
+        </section>
+        <Footer />
+      </div>
+    </div>
+  );
+}
