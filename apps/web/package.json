@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "pnpm run appinfo && cross-env PORT=6006 NODE_OPTIONS='--no-warnings' next dev",
-		"build": "pnpm run appinfo && next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
+		"build": "pnpm run appinfo && next build",
 		"serve": "next start",
 		"analyze": "cross-env ANALYZE=true next build",
 		"lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
