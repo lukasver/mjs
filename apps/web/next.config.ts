@@ -8,10 +8,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-analytics.com *.vercel-scripts.com *.cloudflareinsights.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-analytics.com *.vercel-scripts.com *.cloudflareinsights.com *.posthog.com; 
   style-src 'self' 'unsafe-inline';
   img-src *.supabase.co * blob: data:;
-  media-src *.s3.amazonaws.com *.shipixen.com;
+  media-src *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
 `;
@@ -91,6 +91,25 @@ module.exports = () => {
 				},
 			],
 		},
+		// PostHog rewrites to proxy ingest requests
+		async rewrites() {
+			return [
+				{
+					source: "/ingest/static/:path*",
+					destination: "https://eu-assets.i.posthog.com/static/:path*",
+				},
+				{
+					source: "/ingest/:path*",
+					destination: "https://eu.i.posthog.com/:path*",
+				},
+				{
+					source: "/ingest/decide",
+					destination: "https://eu.i.posthog.com/decide",
+				},
+			];
+		},
+		// This is required to support PostHog trailing slash API requests
+		skipTrailingSlashRedirect: true,
 		async headers() {
 			return [
 				{

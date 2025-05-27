@@ -25,16 +25,16 @@ interface Locale {
 
 const locales: Locale[] = [
   { code: 'en', name: 'English' },
+  { code: 'de', name: 'Deutsch' },
   { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'it', name: 'Italiano' },
+  { code: 'cn', name: '中文' },
   { code: 'pt', name: 'Português' },
-  { code: 'nl', name: 'Nederlands' },
+  { code: 'it', name: 'Italiano' },
   { code: 'ja', name: '日本語' },
   { code: 'ko', name: '한국어' },
-  { code: 'zh-CN', name: '中文 (简体)' },
-  { code: 'zh-TW', name: '中文 (繁體)' },
+  { code: 'ru', name: 'Русский' },
+  { code: 'zh', name: '中文' },
 ];
 
 interface LocaleSwitcherProps {

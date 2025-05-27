@@ -1,7 +1,13 @@
-export default function RootLayout({
+import { PostHogProvider } from '../components/PostHogProvider';
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <PostHogProvider>{children}</PostHogProvider>
+    </>
+  );
 }

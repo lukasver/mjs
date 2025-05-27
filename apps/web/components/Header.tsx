@@ -36,7 +36,9 @@ const Header = ({ className }: { className?: string }) => {
             <ActiveLink
               key={link.title}
               href={link.href}
-              className='nav-link hidden sm:block font-sans uppercase font-medium'
+              className={cn(
+                'nav-link hidden sm:block font-sans uppercase font-medium px-8 py-2 rounded'
+              )}
               activeClassName='nav-link-active'
             >
               <span>{link.title}</span>
