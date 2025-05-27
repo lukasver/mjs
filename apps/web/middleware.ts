@@ -3,7 +3,9 @@ import { routing } from "./lib/i18n/routing";
 import { NextRequest } from "next/server";
 
 export default (req: NextRequest) => {
-	console.log("\x1b[31m[MIDDLEWARE]", req.nextUrl.pathname, "\x1b[0m");
+	if (process.env.NODE_ENV === "development") {
+		console.log("\x1b[31m[MIDDLEWARE]", req.nextUrl.pathname, "\x1b[0m");
+	}
 	return createMiddleware(routing)(req);
 };
 

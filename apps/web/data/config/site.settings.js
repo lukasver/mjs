@@ -4,8 +4,8 @@ const { metadata } = require('./metadata');
 const siteConfig = {
   ...metadata,
 
-  blogPath: '', // The location of all blog pages under 'data'. Empty string means 'data' (default). Best for SEO is to have articles under the root path.
-  allArticlesPath: '/all-articles', // The name of the page where you can see a list of all articles (needs to match app/all-articles/page.tsx)
+  // blogPath: '', // The location of all blog pages under 'data'. Empty string means 'data' (default). Best for SEO is to have articles under the root path.
+  // allArticlesPath: '/all-articles', // The name of the page where you can see a list of all articles (needs to match app/all-articles/page.tsx)
 
   // Configure analytics
   disableAnalytics: false, // Disable all analytics on the site
@@ -23,9 +23,9 @@ const siteConfig = {
     //   plausibleDataDomain: '', // e.g. insert-business-name.vercel.app
     // },
     // simpleAnalytics: {},
-    // posthogAnalytics: {
-    //   posthogProjectApiKey: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
-    // },
+    posthogAnalytics: {
+      posthogProjectApiKey: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
+    },
     // googleAnalytics: {
     //   googleAnalyticsId: '', // e.g. G-XXXXXXX
     // },

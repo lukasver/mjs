@@ -93,7 +93,6 @@ export default async function RootLayout({
 // https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#static-rendering
 export function generateStaticParams() {
   const locales = routing.locales.map((locale) => ({ locale }));
-  console.debug('🚀 ~ layout.tsx:98 ~ locales:', locales);
   return locales;
 }
 
