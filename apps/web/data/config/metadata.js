@@ -19,9 +19,9 @@ const metadata = {
   threads: '',
   mastodon: '',
   author: 'WASABI GAMES DMCC',
-  language: 'en-us',
+  language: 'en',
   theme: 'system',
-  locale: 'en-US',
+  locale: 'en',
 };
 
 module.exports = { metadata };
