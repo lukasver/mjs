@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "Contáctanos",
+		"description": "Envíanos un mensaje y te responderemos lo antes posible.",
+		"fields": {
+			"name": {
+				"label": "Nombre",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "Email",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "Asunto",
+				"placeholder": "¿De qué se trata?"
+			},
+			"message": {
+				"label": "Mensaje",
+				"placeholder": "¡Me encantaría saber más sobre su juego de mahjong y cómo puedo participar!"
+			}
+		},
+		"captcha": {
+			"label": "No soy un robot",
+			"protection": "Protegido por ALTCHA"
+		},
+		"buttons": {
+			"cancel": "Cancelar",
+			"send": "Enviar Mensaje"
+		},
+		"messages": {
+			"success": {
+				"title": "¡Mensaje enviado!",
+				"description": "Gracias por tu mensaje. Te responderemos pronto."
+			},
+			"error": {
+				"title": "Algo salió mal. Por favor, inténtalo de nuevo.",
+				"captchaFailed": "Captcha falló"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "El nombre es obligatorio",
+				"minLength": "El nombre debe tener al menos 2 caracteres."
+			},
+			"email": {
+				"required": "El email es obligatorio",
+				"invalid": "Por favor, ingresa una dirección de email válida."
+			},
+			"subject": {
+				"required": "El asunto es obligatorio",
+				"minLength": "El asunto debe tener al menos 5 caracteres."
+			},
+			"message": {
+				"required": "El mensaje es obligatorio",
+				"minLength": "El mensaje debe tener al menos 10 caracteres.",
+				"maxLength": "El mensaje debe tener menos de 1000 caracteres."
+			}
+		}
+	},
 	"Global": {
 		"soon": "Próximamente"
 	}

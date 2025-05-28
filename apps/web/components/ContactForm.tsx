@@ -11,25 +11,34 @@ import * as z from 'zod';
 import { useRouter } from '@/lib/i18n/navigation';
 import { Dialog } from '@mjs/ui/primitives/dialog';
 import Altcha from './Altcha';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePostHog } from './PostHogProvider';
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  email: z.string().email({
-    message: 'Please enter a valid email address.',
-  }),
-  subject: z.string().min(5, {
-    message: 'Subject must be at least 5 characters.',
-  }),
-  message: z.string().min(10, {
-    message: 'Message must be at least 10 characters.',
-  }),
-});
+const getFormSchema = (t: ReturnType<typeof useTranslations>) =>
+  z.object({
+    name: z.string().min(2, {
+      message: t('validation.name.minLength'),
+    }),
+    email: z.string().email({
+      message: t('validation.email.invalid'),
+    }),
+    subject: z.string().min(5, {
+      message: t('validation.subject.minLength'),
+    }),
+    message: z
+      .string()
+      .min(10, {
+        message: t('validation.message.minLength'),
+      })
+      .max(1000, {
+        message: t('validation.message.maxLength'),
+      }),
+  });
 
 const ContactForm = () => {
   const [isPending, startTransition] = useTransition();
+  const { captureEvent, PostHogEvents } = usePostHog();
+  const t = useTranslations('ContactForm');
   const locale = useLocale();
   const altchaRef = useRef<{ value: string | null; reset: () => void } | null>(
     null
@@ -37,7 +46,7 @@ const ContactForm = () => {
   const router = useRouter();
 
   const form = useAppForm({
-    validators: { onSubmit: formSchema },
+    validators: { onSubmit: getFormSchema(t) },
     defaultValues: {
       name: '',
       email: '',
@@ -56,12 +65,12 @@ const ContactForm = () => {
     [form]
   );
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<ReturnType<typeof getFormSchema>>) {
     const captcha = altchaRef.current?.value;
     startTransition(async () => {
       try {
         if (!captcha) {
-          throw new Error('Captcha failed');
+          throw new Error(t('messages.error.captchaFailed'));
         }
 
         const result = await fetch('/api/captcha', {
@@ -70,71 +79,78 @@ const ContactForm = () => {
         }).then((res) => res.json() as Promise<{ success: boolean }>);
 
         if (result.success) {
-          toast.success('Message sent!', {
-            description:
-              "Thank you for your message. We'll get back to you soon.",
+          toast.success(t('messages.success.title'), {
+            description: t('messages.success.description'),
+          });
+          captureEvent(PostHogEvents.contactFormSubmit, {
+            name: values.name,
+            email: values.email,
+            subject: values.subject,
           });
           form.reset();
           altchaRef.current?.reset();
           router.back();
         } else {
-          toast.error('Something went wrong. Please try again.', {
-            description:
-              // @ts-expect-error fixme
-              result.error || 'Something went wrong. Please try again.',
-          });
+          toast.error(
+            t('messages.error.title'),
+            // @ts-expect-error fixme
+            result?.error
+              ? {
+                  description:
+                    // @ts-expect-error fixme
+                    result.error,
+                }
+              : undefined
+          );
         }
       } catch (error: unknown) {
-        toast.error('Something went wrong. Please try again.', {
-          description:
-            error instanceof Error
-              ? error.message
-              : 'Something went wrong. Please try again.',
-        });
+        toast.error(
+          t('messages.error.title'),
+          error instanceof Error
+            ? {
+                description: error.message,
+              }
+            : undefined
+        );
       }
     });
   }
   return (
     <>
       <form.AppForm>
-        <button type={'button'} onClick={() => toast.success('TEST TOAST')}>
-          TEST TOAST
-        </button>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='grid grid-cols-2 gap-4'>
             <FormInput
               name='name'
               type='text'
-              label='Name'
+              label={t('fields.name.label')}
               inputProps={{
-                placeholder: 'Tony Kong',
+                placeholder: t('fields.name.placeholder'),
               }}
             />
             <FormInput
               name='email'
               type='email'
-              label='Email'
+              label={t('fields.email.label')}
               inputProps={{
-                placeholder: 'tony@mahjongstars.com',
+                placeholder: t('fields.email.placeholder'),
               }}
             />
           </div>
           <FormInput
             name='subject'
             type='text'
-            label='Subject'
+            label={t('fields.subject.label')}
             inputProps={{
-              placeholder: "What's this about?",
+              placeholder: t('fields.subject.placeholder'),
             }}
           />
           <FormInput
             name='message'
             type='textarea'
-            label='Message'
-            placeholder='Tell us more about your inquiry...'
+            label={t('fields.message.label')}
             inputProps={{
-              placeholder:
-                'I would love to learn more about your mahjong game and how I can get involved!',
+              placeholder: t('fields.message.placeholder'),
             }}
           />
 
@@ -147,10 +163,10 @@ const ContactForm = () => {
               onClick={() => router.push('/')}
               className='flex-1'
             >
-              Cancel
+              {t('buttons.cancel')}
             </Button>
             <Button type='submit' disabled={isPending} className='flex-1'>
-              Send Message
+              {t('buttons.send')}
             </Button>
           </div>
         </form>

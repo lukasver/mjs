@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "Kontaktiere uns",
+		"description": "Sende uns eine Nachricht und wir melden uns so schnell wie möglich bei dir.",
+		"fields": {
+			"name": {
+				"label": "Name",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "E-Mail",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "Betreff",
+				"placeholder": "Worum geht es?"
+			},
+			"message": {
+				"label": "Nachricht",
+				"placeholder": "Ich würde gerne mehr über euer Mahjong-Spiel erfahren und wie ich mitmachen kann!"
+			}
+		},
+		"captcha": {
+			"label": "Ich bin kein Roboter",
+			"protection": "Geschützt durch ALTCHA"
+		},
+		"buttons": {
+			"cancel": "Abbrechen",
+			"send": "Nachricht senden"
+		},
+		"messages": {
+			"success": {
+				"title": "Nachricht gesendet!",
+				"description": "Danke für deine Nachricht. Wir melden uns bald bei dir."
+			},
+			"error": {
+				"title": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+				"captchaFailed": "Captcha fehlgeschlagen"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "Name ist erforderlich",
+				"minLength": "Name muss mindestens 2 Zeichen lang sein."
+			},
+			"email": {
+				"required": "E-Mail ist erforderlich",
+				"invalid": "Bitte gib eine gültige E-Mail-Adresse ein."
+			},
+			"subject": {
+				"required": "Betreff ist erforderlich",
+				"minLength": "Betreff muss mindestens 5 Zeichen lang sein."
+			},
+			"message": {
+				"required": "Nachricht ist erforderlich",
+				"minLength": "Nachricht muss mindestens 10 Zeichen lang sein.",
+				"maxLength": "Nachricht muss weniger als 1000 Zeichen haben."
+			}
+		}
+	},
 	"Global": {
 		"soon": "Demnächst"
 	}

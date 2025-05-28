@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "联系我们",
+		"description": "发送消息给我们，我们会尽快回复您。",
+		"fields": {
+			"name": {
+				"label": "姓名",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "电子邮件",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "主题",
+				"placeholder": "这是关于什么的？"
+			},
+			"message": {
+				"label": "消息",
+				"placeholder": "我想了解更多关于您的麻将游戏以及如何参与！"
+			}
+		},
+		"captcha": {
+			"label": "我不是机器人",
+			"protection": "由 ALTCHA 保护"
+		},
+		"buttons": {
+			"cancel": "取消",
+			"send": "发送消息"
+		},
+		"messages": {
+			"success": {
+				"title": "消息已发送！",
+				"description": "谢谢您的消息。我们会尽快回复您。"
+			},
+			"error": {
+				"title": "出现问题。请重试。",
+				"captchaFailed": "验证码失败"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "姓名为必填项",
+				"minLength": "姓名必须至少2个字符。"
+			},
+			"email": {
+				"required": "电子邮件为必填项",
+				"invalid": "请输入有效的电子邮件地址。"
+			},
+			"subject": {
+				"required": "主题为必填项",
+				"minLength": "主题必须至少5个字符。"
+			},
+			"message": {
+				"required": "消息为必填项",
+				"minLength": "消息必须至少10个字符.",
+				"maxLength": "消息必须少于1000个字符。"
+			}
+		}
+	},
 	"Global": {
 		"soon": "即将推出"
 	}

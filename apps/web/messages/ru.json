@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "Связаться с нами",
+		"description": "Отправьте нам сообщение, и мы ответим как можно скорее.",
+		"fields": {
+			"name": {
+				"label": "Имя",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "Email",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "Тема",
+				"placeholder": "О чем это?"
+			},
+			"message": {
+				"label": "Сообщение",
+				"placeholder": "Я хотел бы узнать больше о вашей игре в маджонг и как я могу принять участие!"
+			}
+		},
+		"captcha": {
+			"label": "Я не робот",
+			"protection": "Защищено ALTCHA"
+		},
+		"buttons": {
+			"cancel": "Отменить",
+			"send": "Отправить сообщение"
+		},
+		"messages": {
+			"success": {
+				"title": "Сообщение отправлено!",
+				"description": "Спасибо за ваше сообщение. Мы скоро ответим."
+			},
+			"error": {
+				"title": "Что-то пошло не так. Попробуйте еще раз.",
+				"captchaFailed": "Капча не пройдена"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "Имя обязательно",
+				"minLength": "Имя должно содержать не менее 2 символов."
+			},
+			"email": {
+				"required": "Email обязателен",
+				"invalid": "Пожалуйста, введите действительный адрес электронной почты."
+			},
+			"subject": {
+				"required": "Тема обязательна",
+				"minLength": "Тема должна содержать не менее 5 символов."
+			},
+			"message": {
+				"required": "Сообщение обязательно",
+				"minLength": "Сообщение должно содержать не менее 10 символов.",
+				"maxLength": "Сообщение должно содержать менее 1000 символов."
+			}
+		}
+	},
 	"Global": {
 		"soon": "Скоро"
 	}

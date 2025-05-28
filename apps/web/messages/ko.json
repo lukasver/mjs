@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "문의하기",
+		"description": "메시지를 보내주시면 최대한 빨리 답변드리겠습니다.",
+		"fields": {
+			"name": {
+				"label": "이름",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "이메일",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "제목",
+				"placeholder": "무엇에 관한 것인가요?"
+			},
+			"message": {
+				"label": "메시지",
+				"placeholder": "마작 게임에 대해 더 알고 싶고 어떻게 참여할 수 있는지 궁금합니다!"
+			}
+		},
+		"captcha": {
+			"label": "로봇이 아닙니다",
+			"protection": "ALTCHA로 보호됨"
+		},
+		"buttons": {
+			"cancel": "취소",
+			"send": "메시지 보내기"
+		},
+		"messages": {
+			"success": {
+				"title": "메시지가 전송되었습니다!",
+				"description": "메시지를 보내주셔서 감사합니다. 곧 답변드리겠습니다."
+			},
+			"error": {
+				"title": "문제가 발생했습니다. 다시 시도해주세요.",
+				"captchaFailed": "캡차 실패"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "이름은 필수입니다",
+				"minLength": "이름은 최소 2글자 이상이어야 합니다."
+			},
+			"email": {
+				"required": "이메일은 필수입니다",
+				"invalid": "유효한 이메일 주소를 입력해주세요."
+			},
+			"subject": {
+				"required": "제목은 필수입니다",
+				"minLength": "제목은 최소 5글자 이상이어야 합니다."
+			},
+			"message": {
+				"required": "메시지는 필수입니다",
+				"minLength": "메시지는 최소 10글자 이상이어야 합니다.",
+				"maxLength": "메시지는 1000자 미만이어야 합니다."
+			}
+		}
+	},
 	"Global": {
 		"soon": "출시 예정"
 	}

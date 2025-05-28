@@ -99,6 +99,65 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"ContactForm": {
+		"title": "お問い合わせ",
+		"description": "メッセージをお送りください。できるだけ早くご返信いたします。",
+		"fields": {
+			"name": {
+				"label": "お名前",
+				"placeholder": "Tony Kong"
+			},
+			"email": {
+				"label": "メールアドレス",
+				"placeholder": "tony@mahjongstars.com"
+			},
+			"subject": {
+				"label": "件名",
+				"placeholder": "どのようなご用件でしょうか？"
+			},
+			"message": {
+				"label": "メッセージ",
+				"placeholder": "麻雀ゲームについてもっと知りたく、どのように参加できるかを教えてください！"
+			}
+		},
+		"captcha": {
+			"label": "私はロボットではありません",
+			"protection": "ALTCHAによって保護されています"
+		},
+		"buttons": {
+			"cancel": "キャンセル",
+			"send": "メッセージを送信"
+		},
+		"messages": {
+			"success": {
+				"title": "メッセージが送信されました！",
+				"description": "メッセージをありがとうございます。近日中にご返信いたします。"
+			},
+			"error": {
+				"title": "何か問題が発生しました。もう一度お試しください。",
+				"captchaFailed": "キャプチャに失敗しました"
+			}
+		},
+		"validation": {
+			"name": {
+				"required": "お名前は必須です",
+				"minLength": "お名前は2文字以上である必要があります。"
+			},
+			"email": {
+				"required": "メールアドレスは必須です",
+				"invalid": "有効なメールアドレスを入力してください。"
+			},
+			"subject": {
+				"required": "件名は必須です",
+				"minLength": "件名は5文字以上である必要があります。"
+			},
+			"message": {
+				"required": "メッセージは必須です",
+				"minLength": "メッセージは10文字以上である必要があります.",
+				"maxLength": "メッセージは1000文字未満である必要があります。"
+			}
+		}
+	},
 	"Global": {
 		"soon": "近日公開"
 	}

@@ -2,6 +2,7 @@ import { createChallenge, verifySolution } from "altcha-lib";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { templates } from "@mjs/emails";
+import { siteConfig } from "@/data/config/site.settings";
 
 const resend = new Resend(process.env.EMAIL_API_KEY);
 
@@ -46,7 +47,7 @@ export const POST = async (req: Request) => {
 		const { data, error } = await resend.emails.send({
 			from: process.env.EMAIL_FROM!, // Replace with your domain
 			to: [process.env.NEXT_PUBLIC_CONTACT_EMAIL!], // Replace with your email
-			subject: `Contact Form: ${subject}`,
+			subject: `${siteConfig.title} - Contact Form: ${subject}`,
 			react: templates["contact"]({
 				name,
 				email,
