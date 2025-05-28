@@ -1,21 +1,48 @@
 {
 	"$schema": "https://turborepo.com/schema.json",
 	"ui": "stream",
+	"globalDependencies": [
+		"**/.env.*local"
+	],
+	"globalPassThroughEnv": [
+		"COREPACK_HOME",
+		"PLAYWRIGHT_*"
+	],
+	"globalEnv": [
+		"DEBUG",
+		"NODE_ENV",
+		"DATABASE_URL",
+		"GITHUB_TOKEN",
+		"ENABLE_EXPERIMENTAL_COREPACK"
+	],
 	"tasks": {
 		"//#format": {},
 		"//#format:fix": {
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^build"],
-			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"$TURBO_DEFAULT$",
+				".env*"
+			],
+			"outputs": [
+				"dist/**",
+				".next/**",
+				"!.next/cache/**"
+			]
 		},
 		"lint": {
-			"dependsOn": ["^lint"]
+			"dependsOn": [
+				"^lint"
+			]
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": [
+				"^check-types"
+			]
 		},
 		"dev": {
 			"cache": false,
@@ -23,7 +50,21 @@
 		},
 		"clean": {
 			"cache": false,
-			"dependsOn": ["^clean"]
+			"dependsOn": [
+				"^clean"
+			]
+		},
+		"@mjs/web#build": {
+			"outputs": [
+				"dist/**",
+				".next/**",
+				"!.next/cache/**"
+			],
+			"env": [
+				"EMAIL_API_KEY",
+				"ALTCHA_HMAC_KEY",
+				"EMAIL_FROM"
+			]
 		}
 	}
 }
