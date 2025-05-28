@@ -18,14 +18,14 @@ export const IngameFeatures = async () => {
   ] as const;
 
   return (
-    <div className='grid grid-cols-4 gap-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
       {features.map((feature, i) => {
         return (
           <FeatureCard
             key={feature}
             title={t(`${feature}.title`)}
             description={t(`${feature}.description`)}
-            image={`/static/images/features${i + 1}.png`}
+            image={`/static/images/features${i + 1}.webp`}
           />
         );
       })}

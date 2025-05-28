@@ -3,7 +3,7 @@ name: Mahjong Stars
 avatar: /static/images/avatar.png
 occupation: Business
 company: Mahjong Stars
-email: 
+email:
 twitter: https://x.com/mahjongstars
 linkedin: https://linkedin.com/in/mahjongstars
 github: https://github.com/mahjongstars

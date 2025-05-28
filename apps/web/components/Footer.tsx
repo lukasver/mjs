@@ -31,7 +31,7 @@ export default async function Footer({ className }: { className?: string }) {
       >
         <div className='w-full flex flex-col md:flex-row justify-between gap-6 mt-12  p-6 max-w-full container-wide'>
           <ul className='space-y-2'>
-            {getFooterLinks(t).map(({ links }, i) =>
+            {getFooterLinks(t).map(({ links }) =>
               links.map((link) => (
                 <li key={link.title}>
                   <ActiveLink

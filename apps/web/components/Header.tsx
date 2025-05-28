@@ -21,7 +21,7 @@ const Header = async ({ className }: { className?: string }) => {
         <Link href='/' aria-label={siteConfig.logoTitle}>
           <div className='flex items-center gap-3 justify-between'>
             <Image
-              src='/static/images/logo-wt.png'
+              src='/static/images/logo-wt.webp'
               alt='Mahjong Stars logo'
               height={141}
               width={47}
@@ -49,8 +49,7 @@ const Header = async ({ className }: { className?: string }) => {
         </div>
         {/* <SearchButton />
         <ThemeSwitch /> */}
-        <MobileNav />
-        <Link href={'#newsletter'}>
+        <Link href={'#newsletter'} className='hidden md:block'>
           <Button
             variant='accent'
             className='uppercase font-medium shadow'
@@ -59,6 +58,7 @@ const Header = async ({ className }: { className?: string }) => {
             {t('CTAs.logIn')}
           </Button>
         </Link>
+        <MobileNav />
       </nav>
     </header>
   );

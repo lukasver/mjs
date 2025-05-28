@@ -66,7 +66,7 @@ export async function GET() {
     process.cwd(),
     '/public/static/favicons/android-chrome-512x512.png'
   );
-  const bgPath = path.join(process.cwd(), '/public/static/images/bg2.png');
+  const bgPath = path.join(process.cwd(), '/public/static/images/bg2.webp');
 
   const title = metadata.title;
   const description = metadata.description;

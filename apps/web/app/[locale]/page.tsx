@@ -4,11 +4,9 @@ import { GameVariants } from '@/components/GameVariants';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
 import { IngameFeatures } from '@/components/IngameFeatures';
+import { LandingNewsletterSection } from '@/components/landing/newsletter/LandingNewsletterSection';
+import { LandingSocialProof } from '@/components/landing/social-proof/LandingSocialProof';
 import Link from '@/components/Link';
-import {
-  LandingNewsletterSection,
-  LandingSocialProof,
-} from '@/components/landing';
 import { cn } from '@mjs/ui/lib/utils';
 import { Button } from '@mjs/ui/primitives/button';
 import { Tooltip } from '@mjs/ui/primitives/tooltip';
@@ -34,7 +32,7 @@ export default async function Home() {
       <div
         className={cn(
           'grid',
-          `[&>section]:min-h-screen [&>section]:h-full [&>section]:py-20`,
+          `[&>section]:min-h-screen [&>section]:h-full [&>section]:md:py-20 [&>section]:py-12 [&>section]:px-4`,
           'w-full'
         )}
       >
@@ -49,15 +47,15 @@ export default async function Home() {
           <div className='mx-auto z-1 h-full grid place-items-center'>
             <div
               id={'hero-characters'}
-              className='grid grid-cols-6 grid-rows-3'
+              className='grid grid-cols-1 md:grid-cols-6 grid-rows-3'
             >
-              <div className='flex flex-col gap-4 col-start-2 col-end-6 row-start-2 row-end-4 z-10'>
-                <h1 className='font-head lg:text-7xl text-center [&>span]:block'>
+              <div className='flex flex-col gap-4 md:col-start-2 md:col-end-6 row-start-2 row-end-4 z-10'>
+                <h1 className='font-head text-4xl lg:text-7xl text-center [&>span]:block'>
                   {t.rich('Hero.title', {
                     span: (chunks) => <span>{chunks}</span>,
                   })}
                 </h1>
-                <h2 className='text-xl text-center font-common font-medium'>
+                <h2 className='text-xl md:text-2xl text-center font-common font-medium'>
                   {t('Hero.subtitle')}
                 </h2>
                 <Link href={'#newsletter'}>
@@ -71,7 +69,7 @@ export default async function Home() {
                 alt='hero-characters'
                 fill
                 className={cn(
-                  'w-full h-full object-cover z-1 col-start-1 col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow 2xl:scale-75'
+                  'w-full h-full object-cover z-1 md:col-start-1 md:col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow 2xl:scale-75'
                 )}
                 style={{
                   maskImage:
@@ -98,12 +96,12 @@ export default async function Home() {
           id='features'
           className={cn('container mx-auto flex flex-col gap-4')}
         >
-          <div className='grid place-items-center h-[50dvh]'>
+          <div className='grid place-items-center min-h-[50dvh]'>
             <div className='max-w-5xl'>
-              <h2 className='font-semibold text-5xl text-center mb-4'>
+              <h2 className='font-semibold text-4xl md:text-5xl text-center mb-4'>
                 {t('About.title')}
               </h2>
-              <p className='text-2xl text-center font-common font-base'>
+              <p className='text-xl md:text-2xl text-center font-common font-base'>
                 {t('About.description')}
               </p>
             </div>
@@ -161,6 +159,7 @@ export default async function Home() {
             )}
           />
         </section>
+
         <div id='newsletter'>
           <LandingNewsletterSection
             title={t('Newsletter.title')}
