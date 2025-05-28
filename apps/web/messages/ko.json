@@ -77,6 +77,10 @@
 			"description": "차이 아저씨는 모든 것을 보아왔고 — 보통은 모든 것을 이기는 거리의 현명한 마작 마스터입니다. 날카로운 마음을 가진 느긋한 그는 자신은 부채질하며 다른 사람들이 땀 흘리게 하는 것을 선호합니다. 그의 올드스쿨 스웨그, 금 체인, 그리고 무표정한 유머는 그를 테이블과 거리 모두에서 전설로 만들었습니다."
 		}
 	},
+	"Newsletter": {
+		"title": "업데이트를 놓치지 마세요!",
+		"description": "최신 공지사항, 뉴스 및 독점 혜택을 받으려면 뉴스레터를 구독하세요."
+	},
 	"CTAs": {
 		"logIn": "로그인",
 		"findMoreCharacters": "더 많은 캐릭터 찾기"
@@ -89,7 +93,7 @@
 			"privacyPolicy": "개인정보처리방침",
 			"contact": "문의하기"
 		},
-		"copyright": "©2023 WASABI GAMES DMCC"
+		"copyright": "©{year} WASABI GAMES DMCC"
 	},
 	"Global": {
 		"soon": "출시 예정"

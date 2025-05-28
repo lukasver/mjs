@@ -77,18 +77,23 @@
 			"description": "Uncle Cai es un maestro del Mahjong callejero que lo ha visto todo — y usualmente lo gana todo. Relajado con una mente aguda, prefiere abanicarse y dejar que otros suden. Su swag de la vieja escuela, cadena de oro y humor seco lo convierten en una leyenda tanto en la mesa como en las calles."
 		}
 	},
+	"Newsletter": {
+		"title": "¡No te pierdas ninguna actualización!",
+		"description": "Suscríbete a nuestro boletín para recibir los últimos anuncios, noticias y ofertas exclusivas."
+	},
 	"CTAs": {
 		"logIn": "INICIAR SESIÓN",
 		"findMoreCharacters": "para encontrar más personajes"
 	},
 	"Footer": {
 		"links": {
+			"home": "Inicio",
 			"whoWeAre": "Quiénes Somos",
 			"termsAndConditions": "Términos y Condiciones",
 			"privacyPolicy": "Política de Privacidad",
 			"contact": "Contacto"
 		},
-		"copyright": "©2023 WASABI GAMES DMCC"
+		"copyright": "©{year} WASABI GAMES DMCC"
 	},
 	"Global": {
 		"soon": "Próximamente"

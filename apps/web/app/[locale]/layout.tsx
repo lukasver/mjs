@@ -55,7 +55,7 @@ export default async function RootLayout({
         <link
           rel='mask-icon'
           href='/static/favicons/safari-pinned-tab.svg'
-          color='#5bbad5'
+          color='#4a0000'
         />
         <meta name='generator' content='Shipixen' />
         <meta name='msapplication-TileColor' content='#000000' />
@@ -108,8 +108,8 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: './',
     siteName: siteConfig.title,
-    images: [siteConfig.socialBanner],
-    locale: 'en_US',
+    // images: [siteConfig.socialBanner],
+    locale: 'en',
     type: 'website',
   },
   alternates: {
@@ -132,6 +132,6 @@ export const metadata: Metadata = {
   twitter: {
     title: siteConfig.title,
     card: 'summary_large_image',
-    images: [siteConfig.socialBanner],
+    // images: [siteConfig.socialBanner],
   },
 };

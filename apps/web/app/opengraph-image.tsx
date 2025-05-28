@@ -6,6 +6,14 @@ import sizeOf from 'image-size';
 import mime from 'mime-types';
 import sharp from 'sharp';
 
+export const alt = 'Mahjong Stars';
+export const size = {
+  width: 1200,
+  height: 630,
+};
+
+export const contentType = 'image/jpeg';
+
 const MAX_LOGO_HEIGHT = 150;
 const MAX_LOGO_WIDTH = 350;
 

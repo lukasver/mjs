@@ -64,18 +64,22 @@
 		"anneWan": {
 			"quote": "Style on the streets, strategy at the table. Watch me win both.",
 			"name": "Anne Wan",
-			"description": "Anne Wan is bold, playful, and always on-trend. She brings a fresh, fearless energy to the Mahjong world — balancing smart moves with a love for bubble tea, sneakers, and all things stylish. Anne doesn’t just play to win — she plays to express herself."
+			"description": "Anne Wan is bold, playful, and always on-trend. She brings a fresh, fearless energy to the Mahjong world — balancing smart moves with a love for bubble tea, sneakers, and all things stylish. Anne doesn't just play to win — she plays to express herself."
 		},
 		"mrsChen": {
 			"quote": "I've forgotten more winning hands than you've ever played.",
 			"name": "Mrs Chen",
-			"description": "Mrs. Chen is a no-nonsense Mahjong veteran who’s been crushing tables since before you were born. Fiercely strategic and a little terrifying, she commands respect with just a look — and her grumpy cat is just as judgmental. Underestimate her at your own risk."
+			"description": "Mrs. Chen is a no-nonsense Mahjong veteran who's been crushing tables since before you were born. Fiercely strategic and a little terrifying, she commands respect with just a look — and her grumpy cat is just as judgmental. Underestimate her at your own risk."
 		},
 		"uncleCai": {
 			"quote": "While you're counting tiles, I'm counting my wins.",
 			"name": "Uncle Cai",
-			"description": "Uncle Cai is a streetwise Mahjong master who’s seen it all — and usually wins it all. Laid-back with a sharp mind, he prefers to fan himself and let others sweat. His old-school swag, gold chain, and deadpan humor make him a legend both at the table and on the streets."
+			"description": "Uncle Cai is a streetwise Mahjong master who's seen it all — and usually wins it all. Laid-back with a sharp mind, he prefers to fan himself and let others sweat. His old-school swag, gold chain, and deadpan humor make him a legend both at the table and on the streets."
 		}
+	},
+	"Newsletter": {
+		"title": "Never miss an update!",
+		"description": "Subscribe to our newsletter to get the latest announcements, news and exclusive offers."
 	},
 	"CTAs": {
 		"logIn": "LOG IN",
@@ -89,7 +93,7 @@
 			"privacyPolicy": "Privacy Policy",
 			"contact": "Contact"
 		},
-		"copyright": "©2023 WASABI GAMES DMCC"
+		"copyright": "©{year} WASABI GAMES DMCC"
 	},
 	"Global": {
 		"soon": "Coming Soon"

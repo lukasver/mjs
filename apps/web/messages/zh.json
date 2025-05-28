@@ -77,6 +77,10 @@
 			"description": "蔡叔是一位见多识广的街头麻将大师——通常也是赢得最多的。心思敏锐却态度悠闲，他喜欢摇着扇子让其他人焦急。他的老派作风、金链子和面无表情的幽默让他在牌桌上和街头都成为传奇。"
 		}
 	},
+	"Newsletter": {
+		"title": "不要错过任何更新！",
+		"description": "订阅我们的通讯以获取最新公告、新闻和独家优惠。"
+	},
 	"CTAs": {
 		"logIn": "登录",
 		"findMoreCharacters": "发现更多角色"
@@ -89,7 +93,7 @@
 			"privacyPolicy": "隐私政策",
 			"contact": "联系我们"
 		},
-		"copyright": "©2023 WASABI GAMES DMCC"
+		"copyright": "©{year} WASABI GAMES DMCC"
 	},
 	"Global": {
 		"soon": "即将推出"

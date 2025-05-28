@@ -77,18 +77,23 @@
 			"description": "Uncle Cai是一位街头智慧的麻将大师，什么都见过——通常什么都能赢。他心态轻松但头脑敏锐，更喜欢扇扇子让别人流汗。他的复古风格、金链子和冷幽默使他成为牌桌上和街头的传奇人物。"
 		}
 	},
+	"Newsletter": {
+		"title": "不要錯過任何更新！",
+		"description": "訂閱我們的電子報以獲取最新公告、新聞和專屬優惠。"
+	},
 	"CTAs": {
 		"logIn": "登录",
 		"findMoreCharacters": "查找更多角色"
 	},
 	"Footer": {
 		"links": {
+			"home": "首页",
 			"whoWeAre": "关于我们",
 			"termsAndConditions": "条款和条件",
 			"privacyPolicy": "隐私政策",
 			"contact": "联系我们"
 		},
-		"copyright": "©2023 WASABI GAMES DMCC"
+		"copyright": "©{year} WASABI GAMES DMCC"
 	},
 	"Global": {
 		"soon": "即将推出"
