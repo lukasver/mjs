@@ -33,7 +33,7 @@ export default async function Footer({ className }: { className?: string }) {
           <ul className='space-y-2'>
             {getFooterLinks(t).map(({ links }, i) =>
               links.map((link) => (
-                <li key={i}>
+                <li key={link.title}>
                   <ActiveLink
                     href={link.href}
                     className={'nav-link text-4xl'}

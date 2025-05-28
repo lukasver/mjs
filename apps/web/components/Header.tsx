@@ -6,8 +6,10 @@ import { cn } from '@mjs/ui/lib/utils';
 import { Button } from '@mjs/ui/primitives/button';
 import Link from './Link';
 import MobileNav from './MobileNav';
+import { getTranslations } from 'next-intl/server';
 
-const Header = ({ className }: { className?: string }) => {
+const Header = async ({ className }: { className?: string }) => {
+  const t = await getTranslations();
   return (
     <header
       className={cn(
@@ -41,7 +43,7 @@ const Header = ({ className }: { className?: string }) => {
               )}
               activeClassName='nav-link-active'
             >
-              <span>{link.title}</span>
+              <span>{t(`Navigation.links.${link.title.toLowerCase()}`)}</span>
             </ActiveLink>
           ))}
         </div>
@@ -54,7 +56,7 @@ const Header = ({ className }: { className?: string }) => {
             className='uppercase font-medium shadow'
             size='lg'
           >
-            Log in
+            {t('CTAs.logIn')}
           </Button>
         </Link>
       </nav>

@@ -6,5 +6,5 @@ export const headerNavLinks: Array<{
 	{ href: "/#features", title: "Features" },
 	{ href: "/#game", title: "Game" },
 	{ href: "/#characters", title: "Character" },
-	{ href: "/support", title: "Support" },
+	{ href: "/contact", title: "Support" },
 ];

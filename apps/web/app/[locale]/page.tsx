@@ -163,8 +163,8 @@ export default async function Home() {
         </section>
         <div id='newsletter'>
           <LandingNewsletterSection
-            title='Never miss an update!'
-            description='Subscribe to our newsletter to get the latest announcements, news and exclusive offers.'
+            title={t('Newsletter.title')}
+            description={t('Newsletter.description')}
           >
             <LandingSocialProof
               className='mt-6 w-full flex justify-center'
