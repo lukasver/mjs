@@ -31,7 +31,9 @@ const formSchema = z.object({
 const ContactForm = () => {
   const [isPending, startTransition] = useTransition();
   const locale = useLocale();
-  const altchaRef = useRef<{ value: string | null } | null>(null);
+  const altchaRef = useRef<{ value: string | null; reset: () => void } | null>(
+    null
+  );
   const router = useRouter();
 
   const form = useAppForm({
@@ -73,6 +75,8 @@ const ContactForm = () => {
               "Thank you for your message. We'll get back to you soon.",
           });
           form.reset();
+          altchaRef.current?.reset();
+          router.back();
         } else {
           toast.error('Something went wrong. Please try again.', {
             description:
@@ -93,6 +97,9 @@ const ContactForm = () => {
   return (
     <>
       <form.AppForm>
+        <button type={'button'} onClick={() => toast.success('TEST TOAST')}>
+          TEST TOAST
+        </button>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='grid grid-cols-2 gap-4'>
             <FormInput

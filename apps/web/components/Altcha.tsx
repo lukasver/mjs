@@ -32,6 +32,9 @@ const Altcha = forwardRef<{ value: string | null }, AltchaProps>(
           get value() {
             return value;
           },
+          reset() {
+            setValue(null);
+          },
         };
       },
       [value]
