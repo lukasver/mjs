@@ -40,6 +40,7 @@ export const POST = async (req: Request) => {
 
 	// Verify the submitted payload
 	const verified = await verifySolution(captcha, hmacKey);
+	console.log("🚀 verified:", verified);
 
 	if (verified) {
 		// Send email using Resend
