@@ -1,5 +1,8 @@
+const VERCEL_URL =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+
 const domain =
-  process.env.VERCEL_URL ||
+  VERCEL_URL ||
   process.env.NEXT_PUBLIC_DOMAIN?.split('://')?.[1] ||
   'mahjongstars.comn';
 
