@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import React, { useState, useEffect, Children } from 'react';
 import Link from './Link';
 import { useActiveLink } from '@mjs/ui/hooks/use-active-link';
@@ -18,10 +19,10 @@ const ActiveLink = ({
   activeClassName,
   ...props
 }: ActiveLinkProps) => {
+  const routePathname = usePathname();
   const { activeLink, setActiveLink } = useActiveLink();
 
   const child = Children.only(children);
-  // @ts-expect-error - child.props.className is not typed
   const childClassName = child.props.className || '';
   const [className, setClassName] = useState(childClassName);
 
@@ -35,6 +36,7 @@ const ActiveLink = ({
       setClassName(newClassName);
     }
   }, [
+    routePathname,
     props.as,
     props.href,
     childClassName,
@@ -44,14 +46,18 @@ const ActiveLink = ({
     activeLink,
   ]);
 
-  const handleLinkChange = (href: string) => () => {
+  const handleHashChange = (href: string) => () => {
     setActiveLink(href);
+    // console.debug('🚀 ~ ActiveLink.tsx:89 ~ href:', href);
+    // if (href.includes('#')) {
+    //   const hash = href.split('#')[1];
+    //   setActiveLink(`#${hash}`);
+    // }
   };
 
   return (
-    <Link {...props} href={props.href} onClick={handleLinkChange(props.href)}>
+    <Link {...props} href={props.href} onClick={handleHashChange(props.href)}>
       {React.cloneElement(child, {
-        // @ts-expect-error - child.props.className is not typed
         className: className || null,
       })}
     </Link>

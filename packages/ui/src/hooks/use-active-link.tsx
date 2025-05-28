@@ -21,11 +21,6 @@ interface ActiveLinkProviderProps {
   initialActiveLink?: string;
 }
 
-const getInitialActiveLink = (href: string) => {
-  const url = new URL(href);
-  return url.pathname + url.hash;
-};
-
 /**
  * Provider component that manages active link state and provides it to child components
  * @param children - Child components that can access the active link context
@@ -35,9 +30,7 @@ export const ActiveLinkProvider = ({
   children,
   initialActiveLink = '',
 }: ActiveLinkProviderProps) => {
-  const [activeLink, setActiveLink] = useState<string>(
-    initialActiveLink || getInitialActiveLink(window.location.href)
-  );
+  const [activeLink, setActiveLink] = useState<string>(initialActiveLink);
 
   return (
     <ActiveLinkContext.Provider value={{ activeLink, setActiveLink }}>
