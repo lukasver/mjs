@@ -11,7 +11,8 @@
 			"@/app/*": ["./app/*"],
 			"@/demo/*": ["./demo/*"],
 			"contentlayer/generated": ["./.contentlayer/generated"],
-			"@mjs/ui/*": ["../../packages/ui/src/*"]
+			"@mjs/ui/*": ["../../packages/ui/src/*"],
+			"@mjs/emails": ["../../packages/transactional/emails/index.tsx"]
 		},
 		"plugins": [
 			{

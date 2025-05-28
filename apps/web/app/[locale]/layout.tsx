@@ -8,7 +8,6 @@ import { Metadata } from 'next';
 import { ThemeProviders } from '../theme-providers';
 
 import { AnalyticsWrapper } from '@/components/Analytics';
-import { SearchProvider } from '@/components/SearchProvider';
 import { getLangDir } from 'rtl-detect';
 
 export default async function RootLayout({
@@ -35,12 +34,12 @@ export default async function RootLayout({
             <AnalyticsWrapper />
 
             <div className='w-full flex flex-col justify-between items-center font-sans'>
-              <SearchProvider>
-                <main className='w-full flex flex-col items-center mb-auto'>
-                  {children}
-                </main>
-                {modals}
-              </SearchProvider>
+              {/* <SearchProvider> */}
+              <main className='w-full flex flex-col items-center mb-auto'>
+                {children}
+              </main>
+              {modals}
+              {/* </SearchProvider> */}
             </div>
           </ThemeProviders>
         </NextIntlClientProvider>

@@ -1,11 +1,9 @@
 import { siteConfig } from "@/data/config/site.settings";
-// @ts-expect-error fixme
 import { NewsletterAPI } from "@shipixen/pliny/newsletter";
 
 export const dynamic = "force-static";
 
 const handler = NewsletterAPI({
-	// @ts-ignore
 	provider: siteConfig.newsletter.provider,
 });
 

@@ -2,14 +2,16 @@
 
 import { Button } from '@mjs/ui/primitives/button';
 import { FormInput } from '@mjs/ui/primitives/form-input';
-import { useCallback, useState, useTransition } from 'react';
+import { useCallback, useRef, useState, useTransition } from 'react';
 
-import { Toaster, toast } from '@mjs/ui/primitives/sonner';
+import { toast } from '@mjs/ui/primitives/sonner';
 import { useAppForm } from '@mjs/ui/primitives/tanstack-form';
 // import { submitContactForm } from '@/lib/actions';
 import * as z from 'zod';
 import { useRouter } from '@/lib/i18n/navigation';
 import { Dialog } from '@mjs/ui/primitives/dialog';
+import Altcha from './Altcha';
+import { useLocale } from 'next-intl';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -28,6 +30,8 @@ const formSchema = z.object({
 
 const ContactForm = () => {
   const [isPending, startTransition] = useTransition();
+  const locale = useLocale();
+  const altchaRef = useRef<{ value: string | null } | null>(null);
   const router = useRouter();
 
   const form = useAppForm({
@@ -51,9 +55,17 @@ const ContactForm = () => {
   );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const captcha = altchaRef.current?.value;
     startTransition(async () => {
       try {
-        const result = { success: false }; // await submitContactForm(values);
+        if (!captcha) {
+          throw new Error('Captcha failed');
+        }
+
+        const result = await fetch('/api/captcha', {
+          method: 'POST',
+          body: JSON.stringify(Object.assign(values, { captcha })),
+        }).then((res) => res.json() as Promise<{ success: boolean }>);
 
         if (result.success) {
           toast.success('Message sent!', {
@@ -80,12 +92,6 @@ const ContactForm = () => {
   }
   return (
     <>
-      <Toaster
-        position='top-center'
-        offset={10}
-        toastOptions={{ duration: 2000 }}
-      />
-
       <form.AppForm>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='grid grid-cols-2 gap-4'>
@@ -124,6 +130,8 @@ const ContactForm = () => {
                 'I would love to learn more about your mahjong game and how I can get involved!',
             }}
           />
+
+          <Altcha ref={altchaRef} language={locale} />
 
           <div className='flex gap-3 pt-4'>
             <Button

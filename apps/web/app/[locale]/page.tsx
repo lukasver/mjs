@@ -69,7 +69,7 @@ export default async function Home() {
                 alt='hero-characters'
                 fill
                 className={cn(
-                  'w-full h-full object-contain lg:object-cover z-1 md:col-start-1 md:col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow scale-120 2xl:scale-75'
+                  'w-full h-full object-contain lg:object-cover z-1 md:col-start-1 md:col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow 2xl:scale-75'
                 )}
                 style={{
                   maskImage:
@@ -154,7 +154,7 @@ export default async function Home() {
           </div>
           <div
             className={cn(
-              'w-full h-full absolute inset-0 bg-repeat -z-1 bg-[url(/static/images/bg2.png)]',
+              'w-full h-full absolute inset-0 bg-repeat -z-1 bg-[url(/static/images/bg2.webp)]',
               'gradient-y-primary'
             )}
           />

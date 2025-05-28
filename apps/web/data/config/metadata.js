@@ -9,7 +9,9 @@ const metadata = {
   domain,
   logoTitle: 'Mahjong Stars',
   businessName: 'Mahjong Stars',
-  siteUrl: `https://${domain}`,
+  siteUrl: `http${
+    process.env.NODE_ENV === 'development' ? '' : 's'
+  }://${domain}`,
   siteRepo: '',
   socialBanner: '/api/og',
   supportEmail: '',

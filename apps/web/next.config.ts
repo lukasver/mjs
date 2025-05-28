@@ -11,6 +11,7 @@ const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-analytics.com *.vercel-scripts.com *.cloudflareinsights.com *.posthog.com; 
   style-src 'self' 'unsafe-inline';
+	worker-src 'self' blob: ;
   img-src *.supabase.co * blob: data:;
   media-src *.s3.amazonaws.com;
   connect-src *;

@@ -3,6 +3,7 @@ import { siteConfig } from '@/data/config/site.settings';
 
 import { fontClash, fontTeachers } from './fonts';
 import { PostHogProvider } from '../components/PostHogProvider';
+import { Toaster } from '@mjs/ui/primitives/sonner';
 
 export default async function RootLayout({
   children,
@@ -57,6 +58,11 @@ export default async function RootLayout({
       </head>
       <body>
         <PostHogProvider>{children}</PostHogProvider>
+        <Toaster
+          position='top-center'
+          offset={10}
+          toastOptions={{ duration: 2000 }}
+        />
       </body>
     </html>
   );
