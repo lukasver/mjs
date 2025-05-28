@@ -74,6 +74,9 @@ export default () => {
 		eslint: {
 			dirs: ["app", "components", "layouts", "scripts"],
 		},
+		compiler: {
+			removeConsole: { exclude: ["error", "warn", "debug", "info"] },
+		},
 		experimental: {
 			scrollRestoration: true,
 		},

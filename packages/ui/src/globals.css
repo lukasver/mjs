@@ -1,7 +1,5 @@
 @import '@mjs/tailwind-config';
-/*
-  ---break---
-*/
+
 @custom-variant dark (&:is(.dark *));
 @config "../tailwind.config.js";
 
@@ -70,20 +68,6 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-@utility perspective-none {
-  transform: none;
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
   }
 }
 

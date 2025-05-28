@@ -7,6 +7,7 @@ import { Button } from '@mjs/ui/primitives/button';
 import Link from './Link';
 import MobileNav from './MobileNav';
 import { getTranslations } from 'next-intl/server';
+import { ActiveLinkProvider } from '@mjs/ui/hooks/use-active-link';
 
 const Header = async ({ className }: { className?: string }) => {
   const t = await getTranslations();
@@ -32,37 +33,39 @@ const Header = async ({ className }: { className?: string }) => {
           </div>
         </Link>
       </div>
-      <nav className='flex items-center leading-5 gap-4 sm:gap-6 flex-1'>
-        <div className='items-center gap-4 flex-1 justify-evenly hidden lg:flex'>
-          {headerNavLinks.map((link) => (
-            <ActiveLink
-              key={link.title}
-              href={link.href}
-              className={cn(
-                'nav-link hidden sm:block font-sans uppercase font-medium md:px-8 py-2 rounded'
-              )}
-              activeClassName='nav-link-active'
-              scroll={link.href !== '/contact'}
-            >
-              <span>{t(`Navigation.links.${link.title.toLowerCase()}`)}</span>
-            </ActiveLink>
-          ))}
-        </div>
-        {/* <SearchButton />
-        <ThemeSwitch /> */}
-        <div className='flex justify-end gap-8 flex-1 lg:flex-none '>
-          <Link href={'#newsletter'} className='hidden md:block'>
-            <Button
-              variant='accent'
-              className='uppercase font-medium shadow'
-              size='lg'
-            >
-              {t('CTAs.logIn')}
-            </Button>
-          </Link>
-          <MobileNav />
-        </div>
-      </nav>
+      <ActiveLinkProvider>
+        <nav className='flex items-center leading-5 gap-4 sm:gap-6 flex-1'>
+          <div className='items-center gap-4 flex-1 justify-evenly hidden lg:flex'>
+            {headerNavLinks.map((link) => (
+              <ActiveLink
+                key={link.title}
+                href={link.href}
+                className={cn(
+                  'nav-link hidden sm:block font-sans uppercase font-medium md:px-8 py-2 rounded'
+                )}
+                activeClassName='nav-link-active'
+                scroll={link.href !== '/contact'}
+              >
+                <span>{t(`Navigation.links.${link.title.toLowerCase()}`)}</span>
+              </ActiveLink>
+            ))}
+          </div>
+          {/* <SearchButton />*/}
+          {/* <ThemeSwitch /> */}
+          <div className='flex justify-end gap-8 flex-1 lg:flex-none '>
+            <Link href={'#newsletter'} className='hidden md:block'>
+              <Button
+                variant='accent'
+                className='uppercase font-medium shadow'
+                size='lg'
+              >
+                {t('CTAs.logIn')}
+              </Button>
+            </Link>
+            <MobileNav />
+          </div>
+        </nav>
+      </ActiveLinkProvider>
     </header>
   );
 };

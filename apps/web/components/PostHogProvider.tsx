@@ -23,7 +23,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       ui_host: 'https://eu.posthog.com',
       capture_pageview: false, // We capture pageviews manually
       capture_pageleave: true, // Enable pageleave capture
-      debug: process.env.NODE_ENV === 'development',
+      // debug: process.env.NODE_ENV === 'development',
       capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this
     });
   }, []);
