@@ -1,4 +1,5 @@
 // const { withContentlayer } = require("next-contentlayer2");
+import { type NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -54,10 +55,7 @@ const securityHeaders = [
 	},
 ];
 
-/**
- * @type {import('next/dist/next-server/server/config').NextConfig}
- **/
-module.exports = () => {
+export default () => {
 	const plugins = [
 		withBundleAnalyzer,
 		createNextIntlPlugin("./lib/i18n/request.ts"),
@@ -74,6 +72,9 @@ module.exports = () => {
 		pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
 		eslint: {
 			dirs: ["app", "components", "layouts", "scripts"],
+		},
+		experimental: {
+			scrollRestoration: true,
 		},
 		images: {
 			remotePatterns: [
@@ -126,5 +127,5 @@ module.exports = () => {
 
 			return config;
 		},
-	});
+	} as NextConfig);
 };

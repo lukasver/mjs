@@ -79,7 +79,11 @@
 	},
 	"Newsletter": {
 		"title": "Verpassen Sie kein Update!",
-		"description": "Abonnieren Sie unseren Newsletter, um die neuesten Ankündigungen, Nachrichten und exklusive Angebote zu erhalten."
+		"description": "Abonnieren Sie unseren Newsletter, um die neuesten Ankündigungen, Nachrichten und exklusive Angebote zu erhalten.",
+		"placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+		"button": "Abonnieren",
+		"footer": "bereits angemeldet",
+		"success": "Vielen Dank für Ihr Abonnement!"
 	},
 	"CTAs": {
 		"logIn": "ANMELDEN",

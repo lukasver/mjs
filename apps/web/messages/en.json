@@ -79,7 +79,11 @@
 	},
 	"Newsletter": {
 		"title": "Never miss an update!",
-		"description": "Subscribe to our newsletter to get the latest announcements, news and exclusive offers."
+		"description": "Subscribe to our newsletter to get the latest announcements, news and exclusive offers.",
+		"placeholder": "Enter your email address",
+		"button": "Subscribe",
+		"footer": "already joined",
+		"success": "Thank you for subscribing!"
 	},
 	"CTAs": {
 		"logIn": "LOG IN",

@@ -47,9 +47,9 @@ export default async function Home() {
           <div className='mx-auto z-1 h-full grid place-items-center'>
             <div
               id={'hero-characters'}
-              className='grid grid-cols-1 md:grid-cols-6 grid-rows-3'
+              className='grid grid-cols-1 md:grid-cols-6 grid-rows-3 h-full md:h-auto'
             >
-              <div className='flex flex-col gap-4 md:col-start-2 md:col-end-6 row-start-2 row-end-4 z-10'>
+              <div className='flex flex-col gap-4 md:col-start-2 md:col-end-6 row-start-2 row-end-4 z-10 justify-center-safe'>
                 <h1 className='font-head text-4xl lg:text-7xl text-center [&>span]:block'>
                   {t.rich('Hero.title', {
                     span: (chunks) => <span>{chunks}</span>,
@@ -69,7 +69,7 @@ export default async function Home() {
                 alt='hero-characters'
                 fill
                 className={cn(
-                  'w-full h-full object-cover z-1 md:col-start-1 md:col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow 2xl:scale-75'
+                  'w-full h-full object-contain lg:object-cover z-1 md:col-start-1 md:col-end-7 row-start-1 row-end-4 -mt-20 animate-fade-in-down-slow scale-120 2xl:scale-75'
                 )}
                 style={{
                   maskImage:
@@ -164,6 +164,8 @@ export default async function Home() {
           <LandingNewsletterSection
             title={t('Newsletter.title')}
             description={t('Newsletter.description')}
+            buttonLabel={t('Newsletter.button')}
+            placeholderLabel={t('Newsletter.placeholder')}
           >
             <LandingSocialProof
               className='mt-6 w-full flex justify-center'
@@ -187,7 +189,7 @@ export default async function Home() {
                 },
               ]}
             >
-              <p className='text-sm'>already joined</p>
+              <p className='text-sm'>{t('Newsletter.footer')}</p>
             </LandingSocialProof>
           </LandingNewsletterSection>
         </div>

@@ -79,7 +79,11 @@
 	},
 	"Newsletter": {
 		"title": "Nunca perca uma atualização!",
-		"description": "Inscreva-se em nossa newsletter para receber os últimos anúncios, notícias e ofertas exclusivas."
+		"description": "Inscreva-se em nossa newsletter para receber os últimos anúncios, notícias e ofertas exclusivas.",
+		"placeholder": "Digite seu endereço de email",
+		"button": "Inscrever-se",
+		"footer": "já inscrito",
+		"success": "Obrigado por se inscrever!"
 	},
 	"CTAs": {
 		"logIn": "ENTRAR",

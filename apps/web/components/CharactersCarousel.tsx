@@ -51,7 +51,7 @@ const CharacterCarouselCard = ({
 }) => {
   return (
     <div className='grid grid-cols-1 grid-rows-1 md:flex md:flex-row gap-4 h-full'>
-      <picture className='h-full w-full max-w-lg relative grid place-items-center min-h-[300px] md:min-h-[550px] z-10 col-start-1 col-end-2 row-start-1 row-end-2'>
+      <picture className='h-full w-full max-w-lg relative grid place-items-center min-h-[500px] md:min-h-[550px] z-10 col-start-1 col-end-2 row-start-1 row-end-2'>
         <Image
           src={image}
           alt={name}
@@ -64,7 +64,7 @@ const CharacterCarouselCard = ({
       </picture>
       <div className='flex flex-col items-center md:items-start gap-4 justify-evenly z-20 col-start-1 col-end-2 row-start-1 row-end-2'>
         <Quote className='max-w-md'>{quote}</Quote>
-        <div className='flex flex-col gap-8 max-w-lg flex-1 justify-end'>
+        <div className='flex flex-col gap-2 md:gap-8 max-w-lg flex-1 justify-end'>
           <Name>{name}</Name>
           <Description>{description}</Description>
         </div>
@@ -117,8 +117,9 @@ const Description = ({ children }: { children: React.ReactNode }) => {
   return (
     <p
       className={cn(
-        'text-base md:text-xl font-semibold py-8 px-4 font-common',
-        'bg-gradient-to-b from-white/5 to-transparent rounded-xl'
+        'text-md md:text-lg font-semibold px-2 py-2 md:py-8 md:px-4 font-common rounded-xl',
+        'md:bg-gradient-to-b md:from-white/5 md:to-transparent',
+        'bg-gradient-to-b from-white/5 via-90% to-white/5 backdrop-blur-xs md:backdrop-blur-none'
       )}
     >
       {children}

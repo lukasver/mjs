@@ -78,8 +78,12 @@
 		}
 	},
 	"Newsletter": {
-		"title": "不要錯過任何更新！",
-		"description": "訂閱我們的電子報以獲取最新公告、新聞和專屬優惠。"
+		"title": "不要错过任何更新！",
+		"description": "订阅我们的电子报以获取最新公告、新闻和专属优惠。",
+		"placeholder": "输入您的邮箱地址",
+		"button": "订阅",
+		"footer": "已订阅",
+		"success": "感谢您的订阅！"
 	},
 	"CTAs": {
 		"logIn": "登录",

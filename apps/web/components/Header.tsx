@@ -33,15 +33,16 @@ const Header = async ({ className }: { className?: string }) => {
         </Link>
       </div>
       <nav className='flex items-center leading-5 gap-4 sm:gap-6 flex-1'>
-        <div className='flex items-center gap-4 flex-1 justify-evenly'>
+        <div className='items-center gap-4 flex-1 justify-evenly hidden lg:flex'>
           {headerNavLinks.map((link) => (
             <ActiveLink
               key={link.title}
               href={link.href}
               className={cn(
-                'nav-link hidden sm:block font-sans uppercase font-medium px-8 py-2 rounded'
+                'nav-link hidden sm:block font-sans uppercase font-medium md:px-8 py-2 rounded'
               )}
               activeClassName='nav-link-active'
+              scroll={link.href !== '/contact'}
             >
               <span>{t(`Navigation.links.${link.title.toLowerCase()}`)}</span>
             </ActiveLink>
@@ -49,16 +50,18 @@ const Header = async ({ className }: { className?: string }) => {
         </div>
         {/* <SearchButton />
         <ThemeSwitch /> */}
-        <Link href={'#newsletter'} className='hidden md:block'>
-          <Button
-            variant='accent'
-            className='uppercase font-medium shadow'
-            size='lg'
-          >
-            {t('CTAs.logIn')}
-          </Button>
-        </Link>
-        <MobileNav />
+        <div className='flex justify-end gap-8 flex-1 lg:flex-none '>
+          <Link href={'#newsletter'} className='hidden md:block'>
+            <Button
+              variant='accent'
+              className='uppercase font-medium shadow'
+              size='lg'
+            >
+              {t('CTAs.logIn')}
+            </Button>
+          </Link>
+          <MobileNav />
+        </div>
       </nav>
     </header>
   );
