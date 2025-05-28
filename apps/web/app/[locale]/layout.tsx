@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: './',
     siteName: siteConfig.title,
-    images: [siteConfig.socialBanner],
+    // images: [siteConfig.socialBanner],
     locale: 'en',
     type: 'website',
   },
@@ -91,6 +91,6 @@ export const metadata: Metadata = {
   twitter: {
     title: siteConfig.title,
     card: 'summary_large_image',
-    images: [siteConfig.socialBanner],
+    // images: [siteConfig.socialBanner],
   },
 };

@@ -62,6 +62,10 @@ async function loadGoogleFont(font: string, text: string) {
 }
 
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') {
+    return new Response('Not implemented', { status: 501 });
+  }
+
   const imagePath = path.join(
     process.cwd(),
     '/public/static/favicons/android-chrome-512x512.png'

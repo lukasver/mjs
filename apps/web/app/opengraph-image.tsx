@@ -69,7 +69,7 @@ async function loadGoogleFont(font: string, text: string) {
   throw new Error('failed to load font data');
 }
 
-export async function GET() {
+export default async function Image() {
   const imagePath = path.join(
     process.cwd(),
     '/public/static/favicons/android-chrome-512x512.png'
