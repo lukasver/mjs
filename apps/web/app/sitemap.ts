@@ -1,6 +1,6 @@
 import { siteConfig } from "@/data/config/site.settings";
-import { MetadataRoute } from "next";
 import { routing } from "@/lib/i18n/routing";
+import { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 type SitemapItem = MetadataRoute.Sitemap[number];
@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		"terms",
 		"privacy",
 		"about",
+		"faq",
 	].map(
 		(route) =>
 			({

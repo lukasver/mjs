@@ -1,24 +1,24 @@
-'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+"use client";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 /**
  * Context for managing active link state across components
  */
 interface ActiveLinkContextType {
-  activeLink: string;
-  setActiveLink: (link: string) => void;
+	activeLink: string;
+	setActiveLink: (link: string) => void;
 }
 
 const ActiveLinkContext = createContext<ActiveLinkContextType | undefined>(
-  undefined
+	undefined,
 );
 
 /**
  * Props for the ActiveLinkProvider component
  */
 interface ActiveLinkProviderProps {
-  children: ReactNode;
-  initialActiveLink?: string;
+	children: ReactNode;
+	initialActiveLink?: string;
 }
 
 /**
@@ -27,16 +27,16 @@ interface ActiveLinkProviderProps {
  * @param initialActiveLink - Optional initial active link value
  */
 export const ActiveLinkProvider = ({
-  children,
-  initialActiveLink = '',
+	children,
+	initialActiveLink = "",
 }: ActiveLinkProviderProps) => {
-  const [activeLink, setActiveLink] = useState<string>(initialActiveLink);
+	const [activeLink, setActiveLink] = useState<string>(initialActiveLink);
 
-  return (
-    <ActiveLinkContext.Provider value={{ activeLink, setActiveLink }}>
-      {children}
-    </ActiveLinkContext.Provider>
-  );
+	return (
+		<ActiveLinkContext.Provider value={{ activeLink, setActiveLink }}>
+			{children}
+		</ActiveLinkContext.Provider>
+	);
 };
 
 /**
@@ -45,11 +45,11 @@ export const ActiveLinkProvider = ({
  * @throws Error if used outside of ActiveLinkProvider
  */
 export const useActiveLink = (): ActiveLinkContextType => {
-  const context = useContext(ActiveLinkContext);
+	const context = useContext(ActiveLinkContext);
 
-  if (context === undefined) {
-    throw new Error('useActiveLink must be used within an ActiveLinkProvider');
-  }
+	if (context === undefined) {
+		throw new Error("useActiveLink must be used within an ActiveLinkProvider");
+	}
 
-  return context;
+	return context;
 };

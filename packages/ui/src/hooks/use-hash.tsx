@@ -1,21 +1,21 @@
-'use client';
-import { useState, useEffect } from 'react';
+"use client";
+import { useEffect, useState } from "react";
 
 type UseHash = [
-  string,
-  React.Dispatch<React.SetStateAction<`#${string}` | ''>>
+	string,
+	React.Dispatch<React.SetStateAction<`#${string}` | "">>,
 ];
 
 export const useHash = (): UseHash => {
-  const [hash, setHash] = useState<`#${string}` | ''>(
-    window.location.hash as `#${string}`
-  );
-  useEffect(() => {
-    const onHashChange = () => {
-      setHash(window.location.hash as `#${string}`);
-    };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
-  return [hash, setHash];
+	const [hash, setHash] = useState<`#${string}` | "">(
+		window.location.hash as `#${string}`,
+	);
+	useEffect(() => {
+		const onHashChange = () => {
+			setHash(window.location.hash as `#${string}`);
+		};
+		window.addEventListener("hashchange", onHashChange);
+		return () => window.removeEventListener("hashchange", onHashChange);
+	}, []);
+	return [hash, setHash];
 };

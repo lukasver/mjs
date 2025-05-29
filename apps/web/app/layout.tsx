@@ -1,9 +1,9 @@
-import '@/css/styles.css';
+import "@/css/styles.css";
 
 export default async function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return <>{children}</>;
+	return <>{children}</>;
 }

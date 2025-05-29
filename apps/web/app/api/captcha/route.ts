@@ -1,8 +1,8 @@
+import { siteConfig } from "@/data/config/site.settings";
+import { templates } from "@mjs/emails";
 import { createChallenge, verifySolution } from "altcha-lib";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { templates } from "@mjs/emails";
-import { siteConfig } from "@/data/config/site.settings";
 
 const resend = new Resend(process.env.EMAIL_API_KEY);
 
