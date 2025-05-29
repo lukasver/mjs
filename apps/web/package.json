@@ -21,6 +21,7 @@
 		"@types/react-dom": "^19.1.0",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/og": "^0.6.8",
+		"@vercel/speed-insights": "^1.2.0",
 		"altcha": "^2.0.2",
 		"altcha-lib": "^1.2.0",
 		"class-variance-authority": "^0.7.1",
