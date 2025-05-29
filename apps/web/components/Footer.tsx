@@ -144,6 +144,7 @@ export default async function Footer({ className }: { className?: string }) {
             <span>
               {t('Footer.copyright', { year: new Date().getFullYear() })}
             </span>
+            ocale
             {/* <span>{` • `}</span>
 						<span>{`© ${new Date().getFullYear()}`}</span> */}
           </div>

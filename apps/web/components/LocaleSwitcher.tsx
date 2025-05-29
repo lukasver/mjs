@@ -75,7 +75,7 @@ export default function LocaleSwitcher({
           {/* <ChevronDown className='h-4 w-4 shrink-0 opacity-50' /> */}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-[125px] p-0'>
+      <PopoverContent className='w-[125px] p-0 bg-primary'>
         <Command>
           <CommandList>
             <CommandEmpty>No language found.</CommandEmpty>

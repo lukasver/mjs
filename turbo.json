@@ -63,7 +63,9 @@
 			"env": [
 				"EMAIL_API_KEY",
 				"ALTCHA_HMAC_KEY",
-				"EMAIL_FROM"
+				"EMAIL_FROM",
+				"EMAILOCTOPUS_API_KEY",
+				"EMAILOCTOPUS_LIST_ID"
 			]
 		}
 	}

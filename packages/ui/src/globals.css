@@ -40,8 +40,17 @@
   --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite
     alternate;
-
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-radius: var(--radius);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-background: var(--background);
 }
 
 @keyframes rainbow {
@@ -71,168 +80,72 @@
   }
 }
 
+/**
+   * Fancy overlay gradients & animation.
+   */
+@property --fancy-x {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+@property --fancy-y {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+
 @utility perspective-left {
   box-shadow: var(--hard-shadow);
   transform: perspective(400em) rotateY(-15deg) rotateX(6deg) skew(-8deg, 4deg)
     translate3d(-4%, -2%, 0) scale(0.8);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility perspective-right {
   box-shadow: var(--hard-shadow-left);
   transform: perspective(400em) rotateY(15deg) rotateX(6deg) skew(8deg, -4deg)
     translate3d(4%, -2%, 0) scale(0.8);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility perspective-bottom {
   box-shadow: var(--hard-shadow);
   transform: translateY(-4%) perspective(400em) rotateX(18deg) scale(0.9);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility perspective-bottom-lg {
   box-shadow: var(--hard-shadow);
   transform: perspective(400em) translate3d(0, -6%, 0) rotateX(34deg) scale(0.8);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility perspective-paper {
   box-shadow: var(--hard-shadow);
   transform: rotateX(40deg) rotate(40deg) scale(0.8);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility perspective-paper-left {
   box-shadow: var(--hard-shadow-left);
   transform: rotateX(40deg) rotate(-40deg) scale(0.8);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility hard-shadow {
   box-shadow: var(--hard-shadow);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility hard-shadow-left {
   box-shadow: var(--hard-shadow-left);
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility faq {
   & li h3 {
     @apply font-semibold text-lg;
   }
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility nav-link-active {
   @apply opacity-80 py-2 rounded-sm text-secondary-500 dark:text-slate-400;
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility nav-link {
   @apply opacity-100 text-slate-900 dark:text-slate-200 hover:text-secondary-700 dark:hover:text-secondary-100 transition-all;
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility fancy-heading {
@@ -253,16 +166,6 @@
       color: transparent;
     }
   }
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
 }
 
 @utility dark {
@@ -275,16 +178,6 @@
       background-clip: text;
       color: transparent;
     }
-  }
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
   }
 
   & .fancy-overlay::after {
@@ -301,24 +194,6 @@
 }
 
 @utility fancy-overlay {
-  /**
-	 * Fancy heading gradients
-	 */
-
-  /**
-	 * Fancy overlay gradients & animation.
-	 */
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   &::after {
     --maximum-opacity: 0.1;
 
@@ -347,17 +222,6 @@
 }
 
 @utility fancy-overlay--muted {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   &::after {
     --maximum-opacity: 0.05;
     animation: roundabout 5s ease-in-out both;
@@ -365,17 +229,6 @@
 }
 
 @utility fancy-link {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   /**
 	 * Fancy links
 	 * with a gradient background and underline
@@ -406,17 +259,6 @@
 }
 
 @utility fancy-text-black {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   /**
 	 * Fancy Text
 	 */
@@ -424,73 +266,22 @@
 }
 
 @utility fancy-text-blue {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
   @apply bg-clip-text bg-linear-to-r text-transparent from-sky-400 to-blue-700;
 }
 
 @utility fancy-text-pink {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
   @apply bg-clip-text bg-linear-to-r text-transparent from-pink-500 to-yellow-500;
 }
 
 @utility fancy-text-white {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
   @apply bg-clip-text bg-linear-to-r text-transparent from-gray-100 to-neutral-400;
 }
 
 @utility fancy-text-purple {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
   @apply bg-clip-text bg-linear-to-r text-transparent from-purple-500 to-fuchsia-800 dark:from-purple-400 dark:to-fuchsia-600;
 }
 
 @utility fancy-glass {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   /**
 	 * Fancy glass
 	 * with a gradient background and blur
@@ -529,16 +320,6 @@
 }
 
 @utility fancy-glass-contrast {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
   --glass-color: 0, 0, 200;
 
   background: radial-gradient(
@@ -585,52 +366,6 @@
 }
 
 @layer base {
-  :root {
-    --hard-shadow: 0px 29px 52px 0px rgba(0, 0, 0, 0.4),
-      22px 25px 16px 0px rgba(0, 0, 0, 0.2);
-    --hard-shadow-left: 0px 29px 52px 0px rgba(0, 0, 0, 0.4),
-      -22px 25px 16px 0px rgba(0, 0, 0, 0.2);
-    --input-shadow: inset -2px 2px 4px 0px rgba(0, 0, 0, 0.25);
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-  }
-
   *,
   ::before,
   ::after {
@@ -643,22 +378,11 @@
   h4,
   h5,
   h6 {
-    @apply font-semibold font-display;
+    @apply font-semibold font-head;
   }
 }
 
 @layer utilities {
-  @property --fancy-x {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-  @property --fancy-y {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
   @keyframes roundabout {
     0% {
       --fancy-x: 60%;

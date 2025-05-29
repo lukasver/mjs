@@ -25,6 +25,21 @@ export const POST = async (req: Request) => {
 
 	const { name, email, subject, message, captcha } = body;
 
+	if (captcha && !name && !email && !subject && !message) {
+		// Verify the submitted payload
+		const verified = await verifySolution(captcha, hmacKey);
+		if (verified) {
+			return NextResponse.json({
+				success: true,
+			});
+		} else {
+			return NextResponse.json({
+				success: false,
+				error: "Captacha verification failed",
+			});
+		}
+	}
+
 	if (!name || !email || !subject || !message) {
 		return NextResponse.json(
 			{ error: "All fields are required", success: false },

@@ -83,7 +83,12 @@
 		"placeholder": "Enter your email address",
 		"button": "Subscribe",
 		"footer": "already joined",
-		"success": "Thank you for subscribing!"
+		"success": "Thank you for subscribing!",
+		"errors": {
+			"email": "Please enter a valid email address"
+		},
+		"alreadySubscribed": "You have already subscribed to the newsletter",
+		"alreadySubscribedShort": "Already subscribed"
 	},
 	"CTAs": {
 		"logIn": "LOG IN",
@@ -155,6 +160,52 @@
 				"required": "Message is required",
 				"minLength": "Message must be at least 10 characters.",
 				"maxLength": "Message must be less than 1000 characters."
+			}
+		}
+	},
+	"Faq": {
+		"title": "Frequently Asked Questions",
+		"description": "Find answers to common inquiries about our Web3 Mahjong Game:",
+		"items": {
+			"0": {
+				"question": "What is Mahjong Stars?",
+				"answer": "Mahjong Stars is a Web3-enabled, AI-powered multiplayer mahjong platform that allows players to play, train AI avatars, and compete in global tournaments, both live and autonomously."
+			},
+			"1": {
+				"question": "What makes Mahjong Stars unique?",
+				"answer": "AI avatars that learn your playstyle, 24/7 gameplay via AI bots, NFT and crypto integration, built-in social gaming mechanics, and multi-platform access through a Unity-based app."
+			},
+			"2": {
+				"question": "What is the role of AI in the game?",
+				"answer": "AI avatars replicate your unique playstyle, allowing you to compete even when offline. You can train your AI to improve its strategy, creating a personalised gaming assistant."
+			},
+			"3": {
+				"question": "What are StarsPoints and how do they work?",
+				"answer": "StarsPoints are the in-game currency:\n- Purchasable via fiat or crypto\n- Used for game access, AI bots, items, and fees\n- Have no value outside the platform\n- Drive revenue through gameplay usage"
+			},
+			"4": {
+				"question": "How does Mahjong Stars generate revenue?",
+				"answer": "Revenue is generated from entry fees, premium AI services, in-game item sales, and NFT transaction fees."
+			},
+			"5": {
+				"question": "What is $MJS in this context?",
+				"answer": "$MJS is the platform\u2019s utility token, used to buy in-game items, trade NFTs, stake for revenue share and rewards, and support the game economy."
+			},
+			"6": {
+				"question": "Is there an NFT component?",
+				"answer": "Yes. Players can unlock, trade, and rent NFTs. Withdrawal NFTs allow converting in-game earnings to real-world value through third-party platforms."
+			},
+			"7": {
+				"question": "How big is the potential market?",
+				"answer": "Over 600 million global mahjong players. The Web3 gaming sector is projected to surpass $30B in 2025, offering massive opportunity."
+			},
+			"8": {
+				"question": "Who is behind the project?",
+				"answer": "The team includes experts from Mahjong Logic, PokerStars Asia, and Coinbase Asia, with deep experience in gaming and Web3."
+			},
+			"9": {
+				"question": "What\u2019s the roadmap for 2025?",
+				"answer": "Q1: Beta build release\nQ2: Fundraising and partnerships\nQ3: V2 launch and NFT marketplace\nQ4: $MJS token launch and exchange listings"
 			}
 		}
 	},

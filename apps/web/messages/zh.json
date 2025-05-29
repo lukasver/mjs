@@ -78,12 +78,17 @@
 		}
 	},
 	"Newsletter": {
-		"title": "不要错过任何更新！",
-		"description": "订阅我们的通讯以获取最新公告、新闻和独家优惠。",
-		"placeholder": "输入您的邮箱地址",
-		"button": "订阅",
-		"footer": "已订阅",
-		"success": "感谢您的订阅！"
+		"title": "不要錯過任何更新！",
+		"description": "訂閱我們的電子報，接收最新公告、新聞和獨家優惠。",
+		"placeholder": "輸入您的電子郵件地址",
+		"button": "訂閱",
+		"footer": "已加入",
+		"success": "感謝您的訂閱！",
+		"errors": {
+			"email": "請輸入有效的電子郵件地址"
+		},
+		"alreadySubscribed": "您已經訂閱了電子報",
+		"alreadySubscribedShort": "已訂閱"
 	},
 	"CTAs": {
 		"logIn": "登录",
@@ -155,6 +160,52 @@
 				"required": "訊息為必填項",
 				"minLength": "訊息必須至少10個字符.",
 				"maxLength": "訊息必須少於1000個字符。"
+			}
+		}
+	},
+	"Faq": {
+		"title": "常見問題",
+		"description": "查找關於我們Web3麻將遊戲的常見問題答案：",
+		"items": {
+			"0": {
+				"question": "什麼是Mahjong Stars？",
+				"answer": "Mahjong Stars是一個Web3啟用的AI驅動多人麻將平台，允許玩家遊玩、訓練AI頭像，並在全球錦標賽中競爭，包括直播和自主模式。"
+			},
+			"1": {
+				"question": "Mahjong Stars有什麼獨特之處？",
+				"answer": "學習您遊戲風格的AI頭像、通過AI機器人的24/7遊戲、NFT和加密貨幣整合、內建社交遊戲機制，以及通過Unity應用程式的跨平台訪問。"
+			},
+			"2": {
+				"question": "AI在遊戲中的作用是什麼？",
+				"answer": "AI頭像複製您獨特的遊戲風格，即使您離線也能讓您競爭。您可以訓練您的AI來改善其策略，創建個人化的遊戲助手。"
+			},
+			"3": {
+				"question": "什麼是StarsPoints，它們如何運作？",
+				"answer": "StarsPoints是遊戲內貨幣：\n- 可通過法定貨幣或加密貨幣購買\n- 用於遊戲訪問、AI機器人、物品和費用\n- 在平台外沒有價值\n- 通過遊戲使用推動收入"
+			},
+			"4": {
+				"question": "Mahjong Stars如何產生收入？",
+				"answer": "收入來自入場費、高級AI服務、遊戲內物品銷售和NFT交易費用。"
+			},
+			"5": {
+				"question": "在這種情況下$MJS是什麼？",
+				"answer": "$MJS是平台的實用代幣，用於購買遊戲內物品、交易NFT、質押以獲得收入分享和獎勵，以及支持遊戲經濟。"
+			},
+			"6": {
+				"question": "有NFT組件嗎？",
+				"answer": "是的。玩家可以解鎖、交易和出租NFT。提取NFT允許通過第三方平台將遊戲內收益轉換為現實世界價值。"
+			},
+			"7": {
+				"question": "潛在市場有多大？",
+				"answer": "全球超過6億麻將玩家。Web3遊戲行業預計在2025年將超過300億美元，提供巨大機會。"
+			},
+			"8": {
+				"question": "誰是項目的幕後推手？",
+				"answer": "團隊包括來自Mahjong Logic、PokerStars Asia和Coinbase Asia的專家，在遊戲和Web3方面擁有深厚經驗。"
+			},
+			"9": {
+				"question": "2025年的路線圖是什麼？",
+				"answer": "第一季：Beta版本發布\n第二季：籌資和合作夥伴關係\n第三季：V2發布和NFT市場\n第四季：$MJS代幣發布和交易所上市"
 			}
 		}
 	},

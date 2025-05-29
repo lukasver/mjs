@@ -2,8 +2,37 @@
 
 import Image from '@/components/Image';
 import { LandingNewsletterInput } from '@/components/landing/newsletter/LandingNewsletterInput';
+import { Button } from '@mjs/ui/primitives/button';
 import { GlowBg } from '@mjs/ui/primitives/glow-bg';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@mjs/ui/primitives/popover';
+import { Skeleton } from '@mjs/ui/primitives/skeleton';
+import { toast } from '@mjs/ui/primitives/sonner';
+import { useAppForm } from '@mjs/ui/primitives/tanstack-form';
 import clsx from 'clsx';
+import { useLocale, useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+import { useCallback, useRef, useState, useTransition } from 'react';
+import { z } from 'zod';
+import { useLocalStorage } from '@mjs/ui/hooks';
+
+const DynamicAltcha = dynamic(() => import('@/components/Altcha'), {
+  ssr: false,
+  loading: () => <Skeleton className='w-64 h-20' />,
+});
+
+const getFormSchema = (t: ReturnType<typeof useTranslations>) =>
+  z.object({
+    email: z
+      .string()
+      .email({ message: t('errors.email') })
+      .min(1, { message: t('errors.email') })
+      .trim(),
+    token: z.string(),
+  });
 
 /**
  * A component meant to be used in the landing page.
@@ -27,7 +56,6 @@ export const LandingNewsletterSection = ({
   withAvatars = false,
   variant = 'primary',
   backgroundGlowVariant = 'primary',
-  onSubmit = () => {},
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -46,8 +74,121 @@ export const LandingNewsletterSection = ({
   withAvatars?: boolean;
   variant?: 'primary' | 'secondary';
   backgroundGlowVariant?: 'primary' | 'secondary';
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
+  const locale = useLocale();
+  const t = useTranslations('Newsletter');
+  const [LSCanSubmit, setLSCanSubmit] = useLocalStorage('mjs-newsletter', true);
+
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const form = useAppForm({
+    validators: { onSubmit: getFormSchema(t) },
+    defaultValues: {
+      email: '',
+      token: '',
+    },
+    onSubmit: ({ value }) => onSubmit(value),
+  });
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      form.handleSubmit();
+    },
+    [form]
+  );
+  const altchaRef = useRef<{ value: string | null; reset: () => void } | null>(
+    null
+  );
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const onSubmit = async (
+    values: z.infer<ReturnType<typeof getFormSchema>>
+  ) => {
+    startTransition(async () => {
+      try {
+        const result = await fetch('/api/captcha', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ captcha: values.token }),
+        }).then(
+          (res) => res.json() as unknown as { success: boolean; error?: string }
+        );
+
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to verify captcha');
+        }
+
+        const response = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: values.email }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to subscribe to newsletter');
+        }
+        setLSCanSubmit(false);
+        form.reset();
+        toast.success('Subscribed to newsletter');
+      } catch (e: unknown) {
+        toast.error('Error subscribing to newsletter');
+      }
+    });
+  };
+
+  const handleAltchaStateChange = (ev: Event | CustomEvent) => {
+    const { detail } = (ev || {}) as {
+      detail: {
+        payload: string;
+        state: 'verified' | 'unverified' | 'verifying';
+      };
+    };
+
+    try {
+      if (!detail.payload && detail.state !== 'verifying') {
+        throw new Error('Captcha is not verified');
+      }
+
+      if (detail.payload && detail.state === 'verified') {
+        form.setFieldValue('token', detail.payload);
+        form.handleSubmit();
+        setPopoverOpen(false);
+      }
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : 'Error subscribing to newsletter'
+      );
+    }
+  };
+
+  const handlePopoverOpen = () => {
+    if (popoverOpen) {
+      setPopoverOpen(false);
+      return;
+    }
+    if (!LSCanSubmit) {
+      toast.info(t('alreadySubscribed'));
+      return;
+    }
+    const email = form.getFieldValue('email');
+    const schema = getFormSchema(t);
+    const result = schema.safeParse({ email, token: '' });
+    if (!result.success) {
+      toast.error(
+        result.error.flatten().fieldErrors.email?.[0] || 'Error subscribing'
+      );
+      return;
+    }
+
+    setPopoverOpen((pv) => !pv);
+  };
+
   return (
     <section
       className={clsx(
@@ -160,14 +301,43 @@ export const LandingNewsletterSection = ({
             descriptionComponent
           )}
 
-          <LandingNewsletterInput
-            className='mt-4 max-w-sm'
-            onSubmit={onSubmit}
-            buttonLabel={buttonLabel}
-            placeholderLabel={placeholderLabel}
-            inputLabel={inputLabel}
-          />
-
+          <form.AppForm>
+            <form onSubmit={handleSubmit}>
+              <LandingNewsletterInput
+                className='mt-4 max-w-sm'
+                placeholderLabel={
+                  !LSCanSubmit ? t('alreadySubscribedShort') : placeholderLabel
+                }
+                inputLabel={inputLabel}
+                buttonLabel={buttonLabel}
+                disabled={!LSCanSubmit}
+              >
+                <Popover open={popoverOpen}>
+                  <PopoverTrigger asChild onClick={handlePopoverOpen}>
+                    <Button
+                      type='button'
+                      loading={isPending}
+                      disabled={!LSCanSubmit}
+                    >
+                      {buttonLabel}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <DynamicAltcha
+                      ref={altchaRef}
+                      language={locale}
+                      onStateChange={handleAltchaStateChange}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </LandingNewsletterInput>
+              <button
+                type='submit'
+                className='invisible size-0 opacity-0'
+                ref={buttonRef}
+              />
+            </form>
+          </form.AppForm>
           {children}
         </div>
       </div>

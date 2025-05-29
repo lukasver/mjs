@@ -1,7 +1,7 @@
 import { routing } from '@/lib/i18n/routing';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-
+import { PostHogProvider } from '@/components/PostHogProvider';
 import '@/css/styles.css';
 import { siteConfig } from '@/data/config/site.settings';
 import { Metadata } from 'next';
@@ -9,6 +9,8 @@ import { ThemeProviders } from '../theme-providers';
 
 import { AnalyticsWrapper } from '@/components/Analytics';
 import { getLangDir } from 'rtl-detect';
+import { fontClash, fontTeachers } from '../fonts';
+import { Toaster } from '@mjs/ui/primitives/sonner';
 
 export default async function RootLayout({
   children,
@@ -27,22 +29,68 @@ export default async function RootLayout({
   }
 
   return (
-    <html dir={direction} lang={locale}>
+    <html
+      lang={locale || siteConfig.language}
+      dir={direction}
+      className={`${fontClash.variable} ${fontTeachers.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <head>
+        <link
+          rel='apple-touch-icon'
+          sizes='76x76'
+          href='/static/favicons/apple-touch-icon.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href='/static/favicons/favicon-32x32.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href='/static/favicons/favicon-16x16.png'
+        />
+        <link rel='manifest' href='/static/favicons/manifest.webmanifest' />
+        <link
+          rel='mask-icon'
+          href='/static/favicons/safari-pinned-tab.svg'
+          color='#4a0000'
+        />
+        <meta name='generator' content='Shipixen' />
+        <meta name='msapplication-TileColor' content='#000000' />
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: light)'
+          content='#fff'
+        />
+        <meta
+          name='theme-color'
+          media='(prefers-color-scheme: dark)'
+          content='#000'
+        />
+        <link rel='alternate' type='application/rss+xml' href='/feed.xml' />
+      </head>
       <body className='flex flex-col bg-white text-black antialiased dark:bg-gray-950 dark:text-white min-h-screen'>
-        <NextIntlClientProvider>
-          <ThemeProviders>
-            <AnalyticsWrapper />
+        <PostHogProvider>
+          <NextIntlClientProvider>
+            <ThemeProviders>
+              <AnalyticsWrapper />
 
-            <div className='w-full flex flex-col justify-between items-center font-sans'>
-              {/* <SearchProvider> */}
-              <main className='w-full flex flex-col items-center mb-auto'>
-                {children}
-              </main>
-              {modals}
-              {/* </SearchProvider> */}
-            </div>
-          </ThemeProviders>
-        </NextIntlClientProvider>
+              <div className='w-full flex flex-col justify-between items-center font-sans'>
+                {/* <SearchProvider> */}
+                <div className='w-full flex flex-col items-center mb-auto'>
+                  {children}
+                </div>
+                {modals}
+                {/* </SearchProvider> */}
+              </div>
+            </ThemeProviders>
+          </NextIntlClientProvider>
+        </PostHogProvider>
+        <Toaster position='top-center' duration={2000} />
       </body>
     </html>
   );
@@ -66,7 +114,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: './',
     siteName: siteConfig.title,
-    // images: [siteConfig.socialBanner],
+    images: [siteConfig.socialBanner],
     locale: 'en',
     type: 'website',
   },
@@ -90,6 +138,6 @@ export const metadata: Metadata = {
   twitter: {
     title: siteConfig.title,
     card: 'summary_large_image',
-    // images: [siteConfig.socialBanner],
+    images: [siteConfig.socialBanner],
   },
 };

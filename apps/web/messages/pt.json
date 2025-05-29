@@ -79,11 +79,16 @@
 	},
 	"Newsletter": {
 		"title": "Nunca perca uma atualização!",
-		"description": "Inscreva-se em nossa newsletter para receber os últimos anúncios, notícias e ofertas exclusivas.",
-		"placeholder": "Digite seu endereço de email",
+		"description": "Inscreva-se na nossa newsletter para receber os últimos anúncios, notícias e ofertas exclusivas.",
+		"placeholder": "Digite seu endereço de e-mail",
 		"button": "Inscrever-se",
-		"footer": "já inscrito",
-		"success": "Obrigado por se inscrever!"
+		"footer": "já participaram",
+		"success": "Obrigado por se inscrever!",
+		"errors": {
+			"email": "Por favor, digite um endereço de e-mail válido"
+		},
+		"alreadySubscribed": "Você já se inscreveu na newsletter",
+		"alreadySubscribedShort": "Já inscrito"
 	},
 	"CTAs": {
 		"logIn": "ENTRAR",
@@ -155,6 +160,52 @@
 				"required": "Mensagem é obrigatória",
 				"minLength": "Mensagem deve ter pelo menos 10 caracteres.",
 				"maxLength": "Mensagem deve ter menos de 1000 caracteres."
+			}
+		}
+	},
+	"Faq": {
+		"title": "Perguntas Frequentes",
+		"description": "Encontre respostas para perguntas comuns sobre nosso Jogo Mahjong Web3:",
+		"items": {
+			"0": {
+				"question": "O que é Mahjong Stars?",
+				"answer": "Mahjong Stars é uma plataforma de mahjong multiplayer habilitada para Web3 e impulsionada por IA que permite aos jogadores jogar, treinar avatares de IA e competir em torneios globais, tanto ao vivo quanto autonomamente."
+			},
+			"1": {
+				"question": "O que torna Mahjong Stars único?",
+				"answer": "Avatares de IA que aprendem seu estilo de jogo, gameplay 24/7 via bots de IA, integração NFT e crypto, mecânicas de jogo social integradas, e acesso multiplataforma através de um app baseado em Unity."
+			},
+			"2": {
+				"question": "Qual é o papel da IA no jogo?",
+				"answer": "Os avatares de IA replicam seu estilo de jogo único, permitindo que você compita mesmo quando offline. Você pode treinar sua IA para melhorar sua estratégia, criando um assistente de jogo personalizado."
+			},
+			"3": {
+				"question": "O que são StarsPoints e como funcionam?",
+				"answer": "StarsPoints são a moeda do jogo:\n- Comprável via fiat ou crypto\n- Usado para acesso ao jogo, bots IA, itens e taxas\n- Não têm valor fora da plataforma\n- Geram receita através do uso do jogo"
+			},
+			"4": {
+				"question": "Como Mahjong Stars gera receita?",
+				"answer": "A receita é gerada a partir de taxas de entrada, serviços premium de IA, vendas de itens do jogo e taxas de transação NFT."
+			},
+			"5": {
+				"question": "O que é $MJS neste contexto?",
+				"answer": "$MJS é o token utilitário da plataforma, usado para comprar itens do jogo, negociar NFTs, fazer staking para participação na receita e recompensas, e apoiar a economia do jogo."
+			},
+			"6": {
+				"question": "Existe um componente NFT?",
+				"answer": "Sim. Jogadores podem desbloquear, negociar e alugar NFTs. NFTs de saque permitem converter ganhos do jogo em valor do mundo real através de plataformas de terceiros."
+			},
+			"7": {
+				"question": "Quão grande é o mercado potencial?",
+				"answer": "Mais de 600 milhões de jogadores de mahjong globais. O setor de jogos Web3 está projetado para superar $30B em 2025, oferecendo oportunidade massiva."
+			},
+			"8": {
+				"question": "Quem está por trás do projeto?",
+				"answer": "A equipe inclui especialistas da Mahjong Logic, PokerStars Asia e Coinbase Asia, com profunda experiência em jogos e Web3."
+			},
+			"9": {
+				"question": "Qual é o roadmap para 2025?",
+				"answer": "Q1: Lançamento da build beta\nQ2: Captação de recursos e parcerias\nQ3: Lançamento V2 e marketplace NFT\nQ4: Lançamento do token $MJS e listagens em exchanges"
 			}
 		}
 	},

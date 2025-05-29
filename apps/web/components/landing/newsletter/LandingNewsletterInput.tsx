@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@mjs/ui/primitives/button';
-import { Input } from '@mjs/ui/primitives/input';
+import { FormInput } from '@mjs/ui/primitives/form-input';
 import { Label } from '@mjs/ui/primitives/label';
 import clsx from 'clsx';
 
@@ -14,39 +14,52 @@ export const LandingNewsletterInput = ({
   placeholderLabel = 'Enter your email',
   inputLabel = 'Email address',
   variant = 'primary',
-  onSubmit = () => {},
+  children,
+  disabled = false,
 }: {
   className?: string;
   buttonLabel?: string;
   placeholderLabel?: string;
   inputLabel?: string;
   variant?: 'primary' | 'secondary';
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  children?: React.ReactNode;
+  disabled?: boolean;
 }) => {
   return (
-    <form
+    <div
       className={clsx(
-        'w-full flex flex-col sm:flex-row justify-center items-center gap-4',
+        'w-full flex flex-col sm:flex-row justify-center items-center sm:items-start gap-4',
         className
       )}
-      onSubmit={onSubmit}
     >
       <div className='grow w-full md:w-auto'>
         <Label htmlFor='email' className='sr-only'>
           {inputLabel}
         </Label>
-        <Input
+        <FormInput
+          name='email'
           type='email'
-          id='email'
-          placeholder={placeholderLabel}
-          required
-          className='w-full'
+          inputProps={{
+            id: 'email',
+            placeholder: placeholderLabel,
+            required: true,
+            autoComplete: 'email',
+            disabled: disabled,
+          }}
+          className='w-full min-w-[200px]'
         />
       </div>
 
-      <Button type='submit' className='w-full sm:w-auto' variant={variant}>
-        {buttonLabel}
-      </Button>
-    </form>
+      {children || (
+        <Button
+          type='submit'
+          className='w-full sm:w-auto'
+          variant={variant}
+          disabled={disabled}
+        >
+          {buttonLabel}
+        </Button>
+      )}
+    </div>
   );
 };
