@@ -6,22 +6,12 @@ export default function Loading() {
   return (
     <div className='min-h-screen bg-transparent flex items-center justify-center p-4'>
       {/* Always open dialog */}
-      {/* <Dialog open={true}> */}
       <div
         className={cn(
           'bg-red-900 border-red-800 text-white max-w-2xl w-full sm:max-w-[500px] z-50',
           'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg'
         )}
       >
-        {/* Header */}
-        {/* <div className='flex items-center justify-between mb-6'>
-            <div className='flex items-center gap-3'>
-              <Skeleton className='h-6 w-6 bg-red-800' />
-              <Skeleton className='h-8 w-32 bg-red-800' />
-            </div>
-            <Skeleton className='h-6 w-6 bg-red-800' />
-          </div> */}
-
         <div className='flex flex-col gap-2 text-center sm:text-left'>
           <div className='flex items-center gap-2 text-lg leading-none font-semibold'>
             <MessageSquare className='h-5 w-5' />
