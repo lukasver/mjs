@@ -82,6 +82,7 @@
 		"description": "訂閱我們的電子報，接收最新公告、新聞和獨家優惠。",
 		"placeholder": "輸入您的電子郵件地址",
 		"button": "訂閱",
+		"button2": "立即訂閱",
 		"footer": "已加入",
 		"success": "感謝您的訂閱！",
 		"errors": {

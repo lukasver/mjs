@@ -82,6 +82,7 @@
 		"description": "Abonnieren Sie unseren Newsletter, um die neuesten Ankündigungen, Nachrichten und exklusive Angebote zu erhalten.",
 		"placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
 		"button": "Abonnieren",
+		"button2": "Jetzt Abonnieren",
 		"footer": "bereits angemeldet",
 		"success": "Vielen Dank für Ihr Abonnement!",
 		"errors": {

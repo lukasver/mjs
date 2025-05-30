@@ -82,6 +82,7 @@
 		"description": "Inscreva-se na nossa newsletter para receber os últimos anúncios, notícias e ofertas exclusivas.",
 		"placeholder": "Digite seu endereço de e-mail",
 		"button": "Inscrever-se",
+		"button2": "Inscreva-se Agora",
 		"footer": "já participaram",
 		"success": "Obrigado por se inscrever!",
 		"errors": {

@@ -82,6 +82,7 @@
 		"description": "Suscríbete a nuestro boletín para recibir los últimos anuncios, noticias y ofertas exclusivas.",
 		"placeholder": "Ingresa tu dirección de correo electrónico",
 		"button": "Suscribirse",
+		"button2": "Suscríbete",
 		"footer": "ya son miembros",
 		"success": "¡Gracias por suscribirte!",
 		"errors": {
