@@ -27,6 +27,6 @@ export default async (req: NextRequest) => {
 
 export const config = {
 	matcher: [
-		"/((?!api|sitemap|robots|manifest.webmanifest|_next/static|_next/image|favicon.ico|icon*|apple-touch-*|public|assets|workers|.well-known).*)",
+		"/((?!api|sitemap|ingest|robots|manifest.webmanifest|opengraph-image|_next/static|_next/image|favicon.ico|icon*|apple-touch-*|public|static|workers|.well-known).*)",
 	],
 };

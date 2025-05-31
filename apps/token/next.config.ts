@@ -13,15 +13,15 @@ const CRYPTO_NODES = {
 };
 
 const CRYPTO_NODES_CSP = Object.values(CRYPTO_NODES).join(" ");
-const WALLETS_CSP = `wss://*.walletconnect.org wss://*.walletconnect.com https://*.walletconnect.org https://*.walletconnect.com`;
+const WALLETS_CSP = `wss://*.walletconnect.org wss://*.walletconnect.com https://*.walletconnect.org https://*.walletconnect.com https://*.thirdweb.com`;
 const EXTERNAL_PROVIDERS = `min-api.cryptocompare.com`;
-const ANALYTICS_PROVIDERS = `*.plausible.io`;
+const ANALYTICS_PROVIDERS = `eu.posthog.com`;
 const GOOGLE_CSP = `https://fonts.googleapis.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha https://www.google.com/recaptcha/enterprise.js https://www.gstatic.com/recaptcha/releases/`;
 const MAIN_DOMAIN =
 	process.env.NODE_ENV === "production"
-		? `https://*.smat.io https://api.beta.smat.io`
-		: `https://*.smat.io https://api.stage.smat.io http://localhost:3000 http://proxyman.debug:3000`;
-const ADOBE = `https://*.adobesign.com/api/rest/v6/`;
+		? `https://*.mahjongstars.com https://mjs-web.vercel.app`
+		: `https://*.mahjongstars.com https://*.vercel.app http://localhost:3000 http://proxyman.debug:3000`;
+const E_SIGN_DOMAIN = `https://*.documenso.com/`;
 const MINIO_DOMAIN =
 	process.env.NODE_ENV === "production" && process.env.IS_STAGE !== "true"
 		? `https://cdn.beta.smat.io`
@@ -29,12 +29,12 @@ const MINIO_DOMAIN =
 
 const cspHeader = `
     default-src 'self' ${MAIN_DOMAIN};
-    connect-src 'self' ${MAIN_DOMAIN} ${ANALYTICS_PROVIDERS} ${EXTERNAL_PROVIDERS} ${WALLETS_CSP} ${CRYPTO_NODES_CSP} ${ADOBE} ${MINIO_DOMAIN};
+    connect-src 'self' ${MAIN_DOMAIN} ${ANALYTICS_PROVIDERS} ${EXTERNAL_PROVIDERS} ${WALLETS_CSP} ${CRYPTO_NODES_CSP} ${E_SIGN_DOMAIN} ${MINIO_DOMAIN};
     frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha https://*.adobesign.com;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' ${ANALYTICS_PROVIDERS} ${GOOGLE_CSP} ${ADOBE};
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' ${ANALYTICS_PROVIDERS} ${GOOGLE_CSP} ${E_SIGN_DOMAIN};
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
-    img-src 'self' data: blob: ${MAIN_DOMAIN} https://*.walletconnect.org https://*.walletconnect.com https://purecatamphetamine.github.io/;
+    img-src 'self' data: blob: ${MAIN_DOMAIN} https://*.ipfscdn.io https://*.walletconnect.org https://*.walletconnect.com https://purecatamphetamine.github.io/;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
@@ -73,6 +73,10 @@ export default () => {
 					hostname: "picsum.photos",
 					port: "",
 				},
+				{
+					protocol: "https",
+					hostname: "*.ipfscdn.io",
+				},
 			],
 		},
 		experimental: {
@@ -87,5 +91,10 @@ export default () => {
 			}),
 		},
 		// productionBrowserSourceMaps: !!(process.env.NODE_ENV === "production"),
+		// fixes wallet connect dependency issue https://docs.walletconnect.com/web3modal/nextjs/about#extra-configuration
+		webpack: (config) => {
+			config.externals.push("pino-pretty", "lokijs", "encoding");
+			return config;
+		},
 	} as NextConfig);
 };

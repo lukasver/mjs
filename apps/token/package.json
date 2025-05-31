@@ -15,12 +15,15 @@
 		"@react-email/components": "0.0.41",
 		"@t3-oss/env-nextjs": "^0.13.4",
 		"@tanstack/react-query": "^5.76.1",
+		"@vercel/og": "^0.6.8",
 		"alchemy-sdk": "^3.5.9",
 		"better-auth": "^1.2.8",
 		"ethers": "^6.14.1",
 		"handlebars": "^4.7.8",
+		"image-size": "^2.0.2",
 		"lucide-react": "^0.511.0",
 		"luxon": "^3.4.4",
+		"mime-types": "^2.1.35",
 		"next": "15.3.2",
 		"next-intl": "^4.1.0",
 		"next-safe-action": "^7.10.8",
@@ -34,6 +37,8 @@
 		"react-easy-crop": "^5.0.5",
 		"resend": "^4.5.1",
 		"server-only": "^0.0.1",
+		"sharp": "^0.34.2",
+		"thirdweb": "^5.102.0",
 		"usehooks-ts": "^3.1.1",
 		"viem": "2.x",
 		"wagmi": "^2.15.4",
@@ -67,7 +72,11 @@
 		"seed": "bun run prisma/seed.ts"
 	},
 	"browserslist": {
-		"production": [">0.2%", "not dead", "not op_mini all"],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
@@ -79,6 +88,7 @@
 		"@playwright/test": "^1.42.1",
 		"@total-typescript/ts-reset": "^0.6.1",
 		"@types/luxon": "^3.4.2",
+		"@types/mime-types": "^2.1.4",
 		"@types/node": "^22.15.19",
 		"@types/react": "^19.1.5",
 		"@types/react-dom": "^19.1.5",
