@@ -7,6 +7,7 @@ import { nextCookies } from "better-auth/next-js";
 import { passkey } from "better-auth/plugins/passkey";
 import { headers } from "next/headers";
 import { createEmailService } from "./email";
+import { COOKIE_PREFIX } from "@/common/config/contants";
 
 const email = createEmailService(env.EMAIL_API_KEY);
 

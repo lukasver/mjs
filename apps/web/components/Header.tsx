@@ -14,7 +14,7 @@ const Header = async ({ className }: { className?: string }) => {
   return (
     <header
       className={cn(
-        'flex items-center justify-between py-10 flex-wrap w-full mb-20 lg:mb-32 pt-6 p-6 max-w-full container-wide gap-4 bg-transparent',
+        'flex items-center justify-between py-10 flex-wrap w-full mb-20 lg:mb-32 pt-6 p-6 max-w-full container-wide gap-4 bg-transparent flex-nowrap',
         className
       )}
     >
