@@ -29,9 +29,9 @@ export const createOrganizationJsonLd = (): WithContext<Organization> => {
     legalName: 'WASABI GAMES DMCC',
     url:
       process.env.NODE_ENV === 'development'
-        ? 'http://mahjongstars.com'
-        : 'https://mahjongstars.com',
-    email: 'support@mahjongstars.com',
+        ? 'http://www.mahjongstars.com'
+        : 'https://www.mahjongstars.com',
+    email: process.env.NEXT_PUBLIC_SUPPORT_EMAIL,
     description: 'Join the Web3 Mahjong Game',
     sameAs: [
       'https://x.com/mahjongstars',
@@ -40,7 +40,7 @@ export const createOrganizationJsonLd = (): WithContext<Organization> => {
     ].filter(Boolean),
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'support@mahjongstars.com',
+      email: process.env.NEXT_PUBLIC_SUPPORT_EMAIL,
       contactType: 'customer service',
     },
   };

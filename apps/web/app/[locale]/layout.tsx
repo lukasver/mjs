@@ -13,6 +13,20 @@ import { getLangDir } from 'rtl-detect';
 import { fontClash, fontTeachers } from '../fonts';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
+/**
+ * Generate language alternates for SEO metadata
+ */
+function generateLanguageAlternates() {
+  const languages: Record<string, string> = {};
+  routing.locales.forEach((locale) => {
+    if (locale !== routing.defaultLocale) {
+      // For other locales, include the locale prefix
+      languages[locale] = `/${locale}`;
+    }
+  });
+  return languages;
+}
+
 export default async function RootLayout({
   children,
   params,
@@ -126,6 +140,7 @@ export const metadata: Metadata = {
     types: {
       'application/rss+xml': `${siteConfig.siteUrl}/feed.xml`,
     },
+    languages: generateLanguageAlternates(),
   },
   robots: {
     index: true,
