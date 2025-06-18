@@ -6,15 +6,19 @@ const domain =
   process.env.NEXT_PUBLIC_DOMAIN?.split('://')?.[1] ||
   'mahjongstars.com';
 
+const siteUrl = `http${
+  process.env.NODE_ENV === 'development' ? '' : 's'
+}://${domain}`;
+
+console.debug('🚀 ~ metadata.js:13 ~ siteUrl:', siteUrl);
+
 const metadata = {
   title: 'Mahjong Stars',
   description: 'Join the Web3 Mahjong Game',
   domain,
   logoTitle: 'Mahjong Stars',
   businessName: 'Mahjong Stars',
-  siteUrl: `http${
-    process.env.NODE_ENV === 'development' ? '' : 's'
-  }://${domain}`,
+  siteUrl,
   siteRepo: '',
   socialBanner: '/api/og',
   supportEmail:
