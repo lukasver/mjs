@@ -10,8 +10,6 @@ const siteUrl = `http${
   process.env.NODE_ENV === 'development' ? '' : 's'
 }://${domain}`;
 
-console.debug('🚀 ~ metadata.js:13 ~ siteUrl:', siteUrl);
-
 const metadata = {
   title: 'Mahjong Stars',
   description: 'Join the Web3 Mahjong Game',
