@@ -29,7 +29,10 @@ export default async function Home() {
       </LandingSocialProofBand> */}
 
       <div className={cn('w-full')}>
-        <Header className='fixed top-0 left-0 right-0 mb-0 lg:mb-0 mx-auto z-110 bg-transparent' />
+        <Header
+          className='fixed top-0 left-0 right-0 mb-0 lg:mb-0 mx-auto z-110 bg-transparent'
+          home
+        />
         <main
           className={cn(
             'grid',

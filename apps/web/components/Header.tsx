@@ -9,12 +9,18 @@ import { getTranslations } from 'next-intl/server';
 import Link from './Link';
 import MobileNav from './MobileNav';
 
-const Header = async ({ className }: { className?: string }) => {
+const Header = async ({
+  className,
+  home = false,
+}: {
+  className?: string;
+  home?: boolean;
+}) => {
   const t = await getTranslations();
   return (
     <header
       className={cn(
-        'flex items-center justify-between py-10 flex-wrap w-full mb-20 lg:mb-32 pt-6 p-6 max-w-full container-wide gap-4 bg-transparent flex-nowrap',
+        'flex items-center justify-between py-10 w-full mb-20 lg:mb-32 pt-6 p-6 max-w-full container-wide gap-4 bg-transparent flex-nowrap',
         className
       )}
     >
@@ -53,7 +59,10 @@ const Header = async ({ className }: { className?: string }) => {
           {/* <SearchButton />*/}
           {/* <ThemeSwitch /> */}
           <div className='flex justify-end gap-8 flex-1 lg:flex-none '>
-            <Link href={'#newsletter'} className='hidden md:block'>
+            <Link
+              href={home ? '#newsletter' : '/#newsletter'}
+              className='hidden md:block'
+            >
               <Button
                 variant='accent'
                 className='uppercase font-medium shadow'

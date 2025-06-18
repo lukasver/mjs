@@ -1,5 +1,6 @@
 // const { withContentlayer } = require("next-contentlayer2");
 import createMDX from '@next/mdx';
+import mdxConfig from './mdx.config';
 
 import { type NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
@@ -9,6 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 const withMDX = createMDX({
   extension: /\.(md|mdx)$/,
+  options: mdxConfig,
 });
 
 // You might need to insert additional domains in script-src if you are using external services
