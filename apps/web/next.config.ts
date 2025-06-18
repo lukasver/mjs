@@ -1,9 +1,14 @@
 // const { withContentlayer } = require("next-contentlayer2");
+import createMDX from '@next/mdx';
+
 import { type NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
+});
+const withMDX = createMDX({
+  extension: /\.(md|mdx)$/,
 });
 
 // You might need to insert additional domains in script-src if you are using external services
@@ -83,6 +88,7 @@ const corsHeaders = [
 export default () => {
   const plugins = [
     withBundleAnalyzer,
+    withMDX,
     createNextIntlPlugin('./lib/i18n/request.ts'),
   ];
   return plugins.reduce((acc, next) => next(acc), {

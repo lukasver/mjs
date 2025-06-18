@@ -8,6 +8,13 @@ body {
 }
 
 @layer utilities {
+  .prose {
+    --tw-prose-body: var(--primary-foreground);
+    --tw-prose-headings: var(--primary-foreground);
+    --tw-prose-lead: oklch(44.6% 0.03 256.802);
+    --tw-prose-bold: var(--color-secondary-300);
+  }
+
   .gradient-y-primary {
   }
 
