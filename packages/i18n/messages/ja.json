@@ -1,1 +1,20 @@
-{}
+{
+  "Footer": {
+    "links": {
+      "home": "ホーム",
+      "docs": "ドキュメント",
+      "whoWeAre": "会社概要",
+      "termsAndConditions": "利用規約",
+      "privacyPolicy": "プライバシーポリシー",
+      "contact": "お問い合わせ"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "Docs": {},
+  "Web": {},
+  "Token": {},
+  "Global": {
+    "soon": "近日公開",
+    "search": "検索..."
+  }
+}

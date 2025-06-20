@@ -2,6 +2,7 @@
 	"Footer": {
 		"links": {
 			"home": "Home",
+			"docs": "Docs",
 			"whoWeAre": "Who We Are",
 			"termsAndConditions": "Terms and Conditions",
 			"privacyPolicy": "Privacy Policy",
@@ -9,7 +10,11 @@
 		},
 		"copyright": "©{year} WASABI GAMES DMCC"
 	},
+	"Docs": {},
+	"Web": {},
+	"Token": {},
 	"Global": {
-		"soon": "Coming Soon"
+		"soon": "Coming Soon",
+		"search": "Search..."
 	}
 }

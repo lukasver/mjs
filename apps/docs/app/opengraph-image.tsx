@@ -1,5 +1,4 @@
 import path from 'path';
-import { metadata } from '@/lib/site-config';
 import { ImageResponse } from '@vercel/og';
 import { readFile } from 'fs/promises';
 import sizeOf from 'image-size';
@@ -76,15 +75,14 @@ export default async function Image() {
   );
   const bgPath = path.join(process.cwd(), '/public/static/images/bg2.png');
 
-  const title = metadata.title;
-  const description = metadata.description;
+  const title = 'Documentation';
+  const description = 'Mahjong Stars';
 
   const [logo, bg, teachersTitle, teachersDescription] = await Promise.all([
     readFile(imagePath),
     readFile(bgPath),
     loadGoogleFont('Teachers:wght@700', title),
     loadGoogleFont('Teachers', description),
-    // readFile(path.join(process.cwd(), '/public/fonts/clash.ttf')),
   ]);
 
   const mimeType = mime.lookup(imagePath);

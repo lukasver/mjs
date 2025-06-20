@@ -27,7 +27,7 @@
 }
 
 .dark {
-  --background: var(--color-slate-900);
+  --background: var(--primary-darkest);
   --background-foreground: var(--color-white);
 
   --x-color-nextra-bg: var(--background);
@@ -49,19 +49,24 @@ body {
   color: var(--background-foreground);
 }
 
-/* @theme inline {
-  --border: yellow !important;
-} */
-
 @layer utilities {
   .nextra-search {
     background: var(--color-secondary-200);
-    border-color: yellow !important;
     border-radius: var(--radius);
   }
   .nextra-search:focus {
     outline: 2px solid black;
     outline-offset: 2px;
+  }
+
+  .dark {
+    .nextra-search {
+      background: var(--color-secondary-700);
+      border-radius: var(--radius);
+    }
+    .nextra-search:focus {
+      border-color: var(--color-secondary-200) !important;
+    }
   }
 }
 

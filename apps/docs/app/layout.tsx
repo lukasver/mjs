@@ -1,5 +1,5 @@
 import { Layout } from 'nextra-theme-docs';
-import { Head } from 'nextra/components';
+import { Head, Search } from 'nextra/components';
 import { Banner } from '@/components/banner';
 import { getPageMap } from 'nextra/page-map';
 // import 'nextra-theme-docs/style.css';
@@ -8,6 +8,7 @@ import {
   getDictionary,
   getDirection,
   getLocaleNames,
+  getTranslations,
 } from '../i18n/get-dictionaries';
 import { Metadata } from 'next';
 import { Navbar } from '@/components/header';
@@ -17,6 +18,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PostHogProvider } from '@/components/posthog-provider';
 import { TranslationsProvider } from '@/i18n/provider';
 import { Locale } from '@/i18n';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export const metadata: Metadata = {
   // Define your metadata here
@@ -31,9 +33,10 @@ export default async function RootLayout({
   params: { lang: string };
 }) {
   const lang = (await params)?.lang || 'en';
-  const [dictionary, pageMap] = await Promise.all([
+  const [dictionary, pageMap, t] = await Promise.all([
     getDictionary(lang as Locale),
     getPageMap(`/${lang}`),
+    getTranslations(),
   ]);
 
   return (
@@ -90,20 +93,23 @@ export default async function RootLayout({
       <body>
         <PostHogProvider>
           <TranslationsProvider translations={dictionary}>
-            <Layout
-              i18n={getLocaleNames()}
-              banner={<Banner />}
-              navbar={<Navbar />}
-              pageMap={pageMap}
-              editLink={false}
-              docsRepositoryBase='https://github.com/mahjongstars/docs'
-              footer={<Footer />}
-              navigation={true}
+            <ViewTransition>
+              <Layout
+                i18n={getLocaleNames()}
+                banner={<Banner />}
+                navbar={<Navbar />}
+                search={<Search placeholder={t('Global.search')} />}
+                pageMap={pageMap}
+                editLink={false}
+                docsRepositoryBase='https://github.com/mahjongstars/docs'
+                footer={<Footer />}
+                navigation={true}
 
-              // ... Your additional layout options
-            >
-              {children}
-            </Layout>
+                // ... Your additional layout options
+              >
+                {children}
+              </Layout>
+            </ViewTransition>
           </TranslationsProvider>
         </PostHogProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}

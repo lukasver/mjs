@@ -1,1 +1,20 @@
-{}
+{
+  "Footer": {
+    "links": {
+      "home": "Inicio",
+      "docs": "Documentación",
+      "whoWeAre": "Quiénes Somos",
+      "termsAndConditions": "Términos y Condiciones",
+      "privacyPolicy": "Política de Privacidad",
+      "contact": "Contacto"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "Docs": {},
+  "Web": {},
+  "Token": {},
+  "Global": {
+    "soon": "Próximamente",
+    "search": "Buscar..."
+  }
+}

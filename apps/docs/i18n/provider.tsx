@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, type ReactNode } from 'react';
 
 /**
  * A recursive type for a dictionary, which can have string values or nested dictionaries.
@@ -10,6 +10,8 @@ export type Dictionary = {
 };
 
 const TranslationsContext = createContext<Dictionary | null>(null);
+
+type Tfn = (key: string, values?: { [key: string]: string | number }) => string;
 
 /**
  * Provides the translations to its children components.
@@ -25,6 +27,8 @@ export const TranslationsProvider = ({
   children: ReactNode;
   translations: Dictionary;
 }) => {
+  console.debug('🚀 ~ provider.tsx:29 ~ translations:', translations);
+
   return (
     <TranslationsContext.Provider value={translations}>
       {children}
@@ -37,7 +41,7 @@ export const TranslationsProvider = ({
  * It must be used within a `TranslationsProvider`.
  * @returns {{ t: (key: string) => string }} An object with a `t` function.
  */
-export const useTranslations = (): { t: (key: string) => string } => {
+export const useTranslations = (): { t: Tfn } => {
   const context = useContext(TranslationsContext);
 
   if (context === null) {
@@ -52,24 +56,37 @@ export const useTranslations = (): { t: (key: string) => string } => {
    * @param {string} key - The key for the translation (e.g., 'home.title').
    * @returns {string} The translated string, or the key itself if not found.
    */
-  const t = (key: string): string => {
-    const keys = key.split('.');
-    let result: string | Dictionary | undefined = context;
+  const t = useCallback(
+    (key: Parameters<Tfn>[0], values?: Parameters<Tfn>[1]): ReturnType<Tfn> => {
+      const keys = key.split('.');
+      let result: string | Dictionary | undefined = context;
 
-    for (const k of keys) {
-      if (typeof result === 'object' && result !== null && k in result) {
-        result = result[k] as string | Dictionary;
-      } else {
-        return key;
+      // console.debug('🚀 ~ provider.tsx:59 ~ context:', context);
+
+      for (const k of keys) {
+        if (typeof result === 'object' && result !== null && k in result) {
+          result = result[k] as string | Dictionary;
+        } else {
+          return key;
+        }
       }
-    }
 
-    if (typeof result === 'string') {
-      return result;
-    }
+      if (typeof result === 'string') {
+        if (!values) {
+          return result;
+        }
 
-    return key;
-  };
+        return Object.entries(values).reduce(
+          (str, [valueKey, value]) =>
+            str.replace(`{${valueKey}}`, String(value)),
+          result
+        );
+      }
+
+      return key;
+    },
+    [!!context]
+  );
 
   return { t };
 };

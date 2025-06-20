@@ -12,7 +12,7 @@ const siteUrl = `http${
 
 const metadata = {
   title: 'Mahjong Stars',
-  description: 'Join the Web3 Mahjong Game',
+  description: 'Documentation site for Mahjong Stars',
   domain,
   logoTitle: 'Mahjong Stars',
   businessName: 'Mahjong Stars',
