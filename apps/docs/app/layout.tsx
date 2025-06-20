@@ -2,14 +2,15 @@ import { Layout } from 'nextra-theme-docs';
 import { Head } from 'nextra/components';
 import { Banner } from '@/components/banner';
 import { getPageMap } from 'nextra/page-map';
-import 'nextra-theme-docs/style.css';
+// import 'nextra-theme-docs/style.css';
+import '@/app/styles.css';
 import {
   getDictionary,
   getDirection,
   getLocaleNames,
 } from '../i18n/get-dictionaries';
 import { Metadata } from 'next';
-import { Navbar } from '@/components/navbar';
+import { Navbar } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { fontClash, fontTeachers } from './fonts';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -95,7 +96,7 @@ export default async function RootLayout({
               navbar={<Navbar />}
               pageMap={pageMap}
               editLink={false}
-              // docsRepositoryBase='https://github.com/shuding/nextra/tree/main/docs'
+              docsRepositoryBase='https://github.com/mahjongstars/docs'
               footer={<Footer />}
               navigation={true}
 

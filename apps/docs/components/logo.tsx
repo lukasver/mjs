@@ -4,14 +4,14 @@ import { cn } from '@mjs/ui/lib/utils';
 
 export const Logo = ({ className }: { className?: string }) => {
   return (
-    <figure className={cn(className, 'bg-amber-600! dark:bg-none')}>
+    <figure className={cn(className, 'dark:bg-none')}>
       <Image
-        src={MahjongStarsLogo}
         alt='Mahjong Stars Logo'
+        {...MahjongStarsLogo}
+        height={80}
         width={100}
-        height={100}
+        priority
       />
-      <h2 className='text-2xl font-bold text-blue-400'>Mahjong Stars</h2>
     </figure>
   );
 };

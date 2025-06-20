@@ -1,5 +1,5 @@
 'use client';
-import { Footer as FooterComponent } from 'nextra-theme-docs';
+import { Footer as FooterComponent, LocaleSwitch } from 'nextra-theme-docs';
 import { cn } from '@mjs/ui/lib/utils';
 import { Suspense } from 'react';
 import { Skeleton } from '@mjs/ui/primitives/skeleton';
@@ -9,11 +9,10 @@ import { useTranslations } from '@/i18n/provider';
 import { metadata as siteConfig } from '@/lib/site-config';
 
 import { SocialFooter } from '@mjs/ui/components/socials';
-import { Button } from '@mjs/ui/primitives/button';
 
 export const Footer = () => {
   return (
-    <FooterComponent>
+    <FooterComponent className='m-0! p-0!'>
       <AppFooter />
     </FooterComponent>
   );
@@ -46,7 +45,7 @@ const AppFooter = ({ className }: { className?: string }) => {
                 <li key={link.title}>
                   <ActiveLink
                     href={link.href}
-                    className={'nav-link text-4xl'}
+                    className={'nav-link text-4xl text-white dark:text-white'}
                     activeClassName={'nav-link-active'}
                   >
                     <span>{link.title}</span>
@@ -57,8 +56,7 @@ const AppFooter = ({ className }: { className?: string }) => {
           </ActiveLinkProvider>
           <div>
             <Suspense fallback={<Skeleton className='w-[125px] h-8' />}>
-              {/* <LocaleSwitcherRSC /> */}
-              <div>Locale switcher</div>
+              <LocaleSwitch />
             </Suspense>
           </div>
         </div>
@@ -72,13 +70,10 @@ const AppFooter = ({ className }: { className?: string }) => {
 
         <div className='py-8 px-2 flex flex-col items-center'>
           <SocialFooter config={siteConfig} />
-          <Button>ANDA?</Button>
           <div className='w-full text-center lg:flex lg:justify-center p-4 mb-2 space-x-2 text-sm text-gray-500 dark:text-gray-400'>
             <span>
               {t('Footer.copyright', { year: new Date().getFullYear() })}
             </span>
-            {/* <span>{` • `}</span>
-          <span>{`© ${new Date().getFullYear()}`}</span> */}
           </div>
         </div>
       </div>
