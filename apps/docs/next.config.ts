@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next';
 import nextra from 'nextra';
-import { i18n } from './i18n';
+import { i18n } from './lib/i18n';
 
 const withNextra = nextra({});
 

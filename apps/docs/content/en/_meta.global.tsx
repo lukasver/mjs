@@ -21,14 +21,14 @@ const meta: MetaRecord = {
   },
   game: {
     type: 'doc',
-    title: 'The Game',
+    // title: 'The Game',
     theme: {
       typesetting: 'article',
     },
   },
   tokenomics: {
     type: 'doc',
-    title: 'Tokenomics',
+    // title: 'Tokenomics',
     theme: {
       typesetting: 'article',
       sidebar: true,

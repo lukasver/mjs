@@ -8,6 +8,7 @@
 :root {
   --background: var(--color-slate-100);
   --background-foreground: var(--color-black);
+
   /* --secondary: var(--color-secondary); */
   --x-color-nextra-bg: var(--background);
   --x-color-primary-50: var(--color-primary-50);
@@ -30,6 +31,8 @@
   --background: var(--primary-darkest);
   --background-foreground: var(--color-white);
 
+  --nextra-bg: 20, 20, 20;
+
   --x-color-nextra-bg: var(--background);
   --x-color-primary-50: var(--color-secondary-50);
   --x-color-primary-100: var(--color-secondary-100);
@@ -42,6 +45,10 @@
   --x-color-primary-800: var(--color-secondary-800);
   --x-color-primary-900: var(--color-secondary-900);
   --x-color-slate-100: var(--color-secondary);
+}
+
+@theme inline {
+  --color-nextra-bg: var(--background) !important;
 }
 
 body {
@@ -59,11 +66,21 @@ body {
     outline-offset: 2px;
   }
 
+  .nextra-navbar {
+    --x-color-nextra-bg: var(--color-primary);
+    background: var(--color-primary) !important;
+  }
+
   .dark {
     .nextra-search {
       background: var(--color-secondary-700);
       border-radius: var(--radius);
     }
+
+    .nextra-navbar {
+      background: var(--color-primary-700);
+    }
+
     .nextra-search:focus {
       border-color: var(--color-secondary-200) !important;
     }

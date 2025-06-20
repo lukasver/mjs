@@ -1,6 +1,6 @@
 import { LocaleSwitch, Navbar as NavbarComponent } from 'nextra-theme-docs';
 import { Logo } from './logo';
-import { getTranslations } from '@/i18n/get-dictionaries';
+import { getTranslations } from '@/lib/i18n/get-dictionaries';
 
 export const Navbar = async () => {
   const t = await getTranslations();

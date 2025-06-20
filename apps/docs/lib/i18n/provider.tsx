@@ -27,8 +27,6 @@ export const TranslationsProvider = ({
   children: ReactNode;
   translations: Dictionary;
 }) => {
-  console.debug('🚀 ~ provider.tsx:29 ~ translations:', translations);
-
   return (
     <TranslationsContext.Provider value={translations}>
       {children}
