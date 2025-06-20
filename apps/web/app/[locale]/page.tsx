@@ -11,6 +11,8 @@ import { cn } from '@mjs/ui/lib/utils';
 import { Button } from '@mjs/ui/primitives/button';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
+import Characters from '@/public/static/images/chars1.webp';
+import Background from '@/public/static/images/bg.webp';
 
 export default async function Home() {
   const t = await getTranslations();
@@ -68,9 +70,8 @@ export default async function Home() {
                   </Link>
                 </div>
                 <Image
-                  src='/static/images/chars1.webp'
+                  {...Characters}
                   alt='hero-characters'
-                  fill
                   priority
                   sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw'
                   className={cn(
@@ -84,16 +85,16 @@ export default async function Home() {
               </div>
             </div>
             <Image
-              src='/static/images/bg.webp'
               alt='bg'
               className='w-full h-full absolute inset-0'
               priority
-              fill
+              // fill
               sizes='100vw'
               style={{
                 objectFit: 'cover',
                 zIndex: -1,
               }}
+              {...Background}
             />
           </section>
 
