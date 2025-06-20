@@ -1,0 +1,17 @@
+{
+  "name": "@mjs/i18n",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./messages/*": "./messages/*.json"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0"
+}

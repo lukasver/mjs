@@ -32,4 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# pagefind
+public/_pagefind
+_pagefind/
+
 .env*

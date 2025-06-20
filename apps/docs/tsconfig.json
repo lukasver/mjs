@@ -7,7 +7,9 @@
 			}
 		],
 		"paths": {
-			"@mjs/ui/*": ["../../packages/ui/src/*"]
+			"@/*": ["./*"],
+			"@mjs/ui/*": ["../../packages/ui/src/*"],
+			"next-mdx-import-source-file": ["./mdx-components.ts"]
 		}
 	},
 	"include": [
