@@ -1,0 +1,19 @@
+---
+title: React Hooks for Data Fetching
+searchable: false
+---
+
+The name "SWR" is derived from `stale-while-revalidate`, a HTTP cache
+invalidation strategy popularized by
+[HTTP RFC 5861](https://tools.ietf.org/html/rfc5861). SWR is a strategy to first
+return the data from cache (stale), then send the fetch request (revalidate),
+and finally come with the up-to-date data.
+
+Mit SWR können Sie wichtige Aspekte der Benutzererfahrung in Webanwendungen verbessern:
+
+- **Schnell** und **reaktiv**: Daten werden sofort aus dem Cache geladen, während im Hintergrund eine Aktualisierung stattfindet.
+- **Automatische Aktualisierung**: Die Daten werden automatisch aktualisiert, wenn der Benutzer zwischen verschiedenen Tabs wechselt oder die Netzwerkverbindung wiederhergestellt wird.
+- **Echtzeit**: Die Daten werden in Echtzeit aktualisiert, wenn sich die Quelle ändert.
+- **Typsicher**: Vollständige TypeScript-Unterstützung mit generischen Typen.
+- **REST & GraphQL**: Unterstützt sowohl REST als auch GraphQL APIs.
+- **Pagination & Infinite Loading**: Hilft bei der Handhabung von paginierten und unendlich scrollenden Listen.

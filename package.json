@@ -12,6 +12,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@types/mdx": "^2.0.13",
 		"turbo": "^2.5.3"
 	},
 	"overrides": {

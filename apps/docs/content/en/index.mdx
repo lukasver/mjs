@@ -1,0 +1,34 @@
+---
+title: React Hooks for Data Fetching
+searchable: true
+icon: LightningIcon
+description:
+  The `_meta` file in Nextra allows you to customize page sidebar titles, order,
+  and theme visibility, enhancing site organization and user experience.
+---
+
+import { compileMdx } from 'nextra/compile';
+import { Callout } from 'nextra/components';
+import { MDXRemote } from 'nextra/mdx-remote';
+
+# Heading 1
+
+Nulla ad mollit sit adipisicing qui duis cillum fugiat pariatur ex sunt magna velit.
+
+The name "SWR" is derived from `stale-while-revalidate`, a HTTP cache
+invalidation strategy popularized by
+[HTTP RFC 5861](https://tools.ietf.org/html/rfc5861). SWR is a strategy to first
+return the data from cache (stale), then send the fetch request (revalidate),
+and finally come with the up-to-date data.
+
+<Callout emoji="🏆">
+With SWR, you can enhance key aspects of user experience in web applications:
+
+- **Fast** and **reactive**: Data is loaded immediately from cache while background revalidation occurs.
+- **Auto Revalidation**: Data automatically updates when users switch between tabs or network connectivity is restored.
+- **Real-time**: Data updates in real-time when the source changes.
+- **Type-safe**: Full TypeScript support with generic types.
+- **REST & GraphQL**: Supports both REST and GraphQL APIs.
+- **Pagination & Infinite Loading**: Helps handle paginated and infinite scrolling lists.
+
+</Callout>
