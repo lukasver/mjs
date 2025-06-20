@@ -10,6 +10,7 @@
 			"@/theme/*": ["./theme/*"],
 			"@/app/*": ["./app/*"],
 			"@/demo/*": ["./demo/*"],
+			"@/public/*": ["./public/*"],
 			"contentlayer/generated": ["./.contentlayer/generated"],
 			"@mjs/ui/*": ["../../packages/ui/src/*"],
 			"@mjs/emails": ["../../packages/transactional/emails/index.tsx"]

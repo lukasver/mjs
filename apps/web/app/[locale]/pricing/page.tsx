@@ -2,7 +2,7 @@
 import { cn } from '@mjs/ui/lib/utils';
 import { useState } from 'react';
 
-import { CheckIcon } from '@/components/icons/PricingCheckIcon';
+import { Icons } from '@mjs/ui/components/icons';
 import { Button } from '@mjs/ui/primitives/button';
 import { Label } from '@mjs/ui/primitives/label';
 import { RadioGroup, RadioGroupItem } from '@mjs/ui/primitives/radio-group';
@@ -91,7 +91,7 @@ export default function PricingPage() {
             <ul className='mt-10 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-700 dark:text-gray-400'>
               {tier.features.map((feature) => (
                 <li key={feature} className='flex items-center gap-x-2 text-sm'>
-                  <CheckIcon
+                  <Icons.pricingCheck
                     className='h-6 w-6 flex-none text-primary-500'
                     aria-hidden='true'
                   />

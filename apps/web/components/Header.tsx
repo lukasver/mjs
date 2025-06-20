@@ -8,6 +8,7 @@ import { Button } from '@mjs/ui/primitives/button';
 import { getTranslations } from 'next-intl/server';
 import Link from './Link';
 import MobileNav from './MobileNav';
+import Logo from '@/public/static/images/logo-wt.webp';
 
 const Header = async ({
   className,
@@ -28,10 +29,10 @@ const Header = async ({
         <Link href='/' aria-label={siteConfig.logoTitle}>
           <div className='flex items-center gap-3 justify-between'>
             <Image
-              src='/static/images/logo-wt.webp'
               alt='Mahjong Stars logo'
-              height={141}
-              width={47}
+              // height={141}
+              // width={47}
+              {...Logo}
               className='group-hover:animate-wiggle hover:animate-wiggle h-8 w-auto'
             />
 
