@@ -1,7 +1,6 @@
 import 'server-only';
 import type { Dictionaries, Dictionary, Locale } from '.';
 import { getLangDir } from 'rtl-detect';
-import { cookies } from 'next/headers';
 
 // We enumerate all dictionaries here for better linting and TypeScript support
 // We also get the default import for cleaner types
@@ -32,9 +31,7 @@ export const getLocaleNames = (): { locale: string; name: string }[] => {
   ];
 };
 
-export const getTranslations = async () => {
-  const cookieStore = await cookies();
-  const lang = cookieStore.get('NEXT_LOCALE')?.value || 'en';
+export const getTranslations = async (lang: Locale) => {
   const dictionary = await getDictionary(lang as Locale);
 
   const t = (

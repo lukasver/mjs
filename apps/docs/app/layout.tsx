@@ -18,7 +18,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PostHogProvider } from '@/components/posthog-provider';
 import { TranslationsProvider } from '@/lib/i18n/provider';
 import { Locale } from '@/lib/i18n';
-import { unstable_ViewTransition as ViewTransition } from 'react';
+// import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export const metadata: Metadata = {
   // Define your metadata here
@@ -36,7 +36,7 @@ export default async function RootLayout({
   const [dictionary, pageMap, t] = await Promise.all([
     getDictionary(lang as Locale),
     getPageMap(`/${lang}`),
-    getTranslations(),
+    getTranslations(lang as Locale),
   ]);
 
   return (
@@ -83,23 +83,23 @@ export default async function RootLayout({
       <body>
         <PostHogProvider>
           <TranslationsProvider translations={dictionary}>
-            <ViewTransition>
-              <Layout
-                i18n={getLocaleNames()}
-                banner={<Banner />}
-                navbar={<Navbar />}
-                search={<Search placeholder={t('Global.search')} />}
-                pageMap={pageMap}
-                editLink={false}
-                docsRepositoryBase='https://github.com/mahjongstars/docs'
-                footer={<Footer />}
-                navigation={true}
+            {/* <ViewTransition> */}
+            <Layout
+              i18n={getLocaleNames()}
+              banner={<Banner />}
+              navbar={<Navbar lang={lang as Locale} />}
+              search={<Search placeholder={t('Global.search')} />}
+              pageMap={pageMap}
+              editLink={false}
+              docsRepositoryBase='https://github.com/mahjongstars/docs'
+              footer={<Footer />}
+              navigation={true}
 
-                // ... Your additional layout options
-              >
-                {children}
-              </Layout>
-            </ViewTransition>
+              // ... Your additional layout options
+            >
+              {children}
+            </Layout>
+            {/* </ViewTransition> */}
           </TranslationsProvider>
         </PostHogProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}

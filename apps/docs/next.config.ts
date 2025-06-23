@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     scrollRestoration: true,
-    viewTransition: true,
+    // viewTransition: true,
   },
   // PostHog rewrites to proxy ingest requests
   async rewrites() {

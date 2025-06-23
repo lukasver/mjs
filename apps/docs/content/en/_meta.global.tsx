@@ -21,7 +21,7 @@ const meta: MetaRecord = {
   },
   game: {
     type: 'doc',
-    // title: 'The Game',
+    title: 'The Game',
     theme: {
       typesetting: 'article',
     },
