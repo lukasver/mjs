@@ -14,6 +14,9 @@ export const getRemoteFilePaths = async (path: string) => {
     }
 
     const files = await response.json();
+
+    console.debug('🚀 ~ utils.ts:18 ~ files:', files);
+
     const fileNames = files
       .filter((item: any) => item.type === 'file')
       .map((item: any) => item.name);

@@ -12,9 +12,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const getRemotePageMap = async () => {
+  // Get only english filepath
   const filePaths = await getRemoteFilePaths(
-    'mahjongstars/docs/contents/test?ref=main'
+    'mahjongstars/docs/contents/test/en?ref=main'
   );
+
   const { mdxPages, pageMap } = convertToPageMap({
     filePaths,
     basePath: 'r',

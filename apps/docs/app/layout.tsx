@@ -42,10 +42,7 @@ export default async function RootLayout({
       remotePageMap.pageMap,
     ]),
     getTranslations(lang as Locale),
-    gst,
   ]);
-
-  console.debug('🚀 ~ layout.tsx:44 ~ pageMap:', pageMap);
 
   return (
     <html

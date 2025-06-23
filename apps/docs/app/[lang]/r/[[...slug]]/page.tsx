@@ -19,12 +19,14 @@ const { wrapper: Wrapper, ...components } = getMDXComponents({
 type PageProps = Readonly<{
   params: Promise<{
     slug?: string[];
+    lang: string;
   }>;
 }>;
 
 export default async function Page(props: PageProps) {
   const params = await props.params;
   const route = params.slug?.join('/') ?? '';
+  const lang = params.lang;
 
   // @ts-expect-error wontfix
   const filePath = remotePageMap.pages[route];
@@ -33,7 +35,7 @@ export default async function Page(props: PageProps) {
     notFound();
   }
   const response = await fetch(
-    `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${filePath}`
+    `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}/${lang}/${filePath}`
   );
   const data = await response.text();
 
