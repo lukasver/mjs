@@ -11,6 +11,10 @@ import {
   InstagramIcon,
   LinkedinIcon,
   YoutubeIcon,
+  ArrowLeft,
+  RefreshCw,
+  Home,
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -30,6 +34,10 @@ export const Icons = {
   instagram: InstagramIcon,
   linkedin: LinkedinIcon,
   youtube: YoutubeIcon,
+  home: Home,
+  arrowLeft: ArrowLeft,
+  refreshCw: RefreshCw,
+  alertTriangle: AlertTriangle,
   threads: ({ className }: { className?: string }) => {
     return (
       <svg

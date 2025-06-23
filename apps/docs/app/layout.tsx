@@ -18,6 +18,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PostHogProvider } from '@/components/posthog-provider';
 import { TranslationsProvider } from '@/lib/i18n/provider';
 import { Locale } from '@/lib/i18n';
+import remotePageMap from '@/data/remote-page-map.json';
 // import { unstable_ViewTransition as ViewTransition } from 'react';
 
 export const metadata: Metadata = {
@@ -33,9 +34,13 @@ export default async function RootLayout({
   params: { lang: string };
 }) {
   const lang = (await params)?.lang || 'en';
+
   const [dictionary, pageMap, t] = await Promise.all([
     getDictionary(lang as Locale),
-    getPageMap(`/${lang}`),
+    getPageMap(`/${lang}`).then(async (pageMap) => [
+      ...pageMap,
+      remotePageMap.pageMap,
+    ]),
     getTranslations(lang as Locale),
   ]);
 
