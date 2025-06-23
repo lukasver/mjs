@@ -2,7 +2,9 @@ import type { NextConfig } from 'next';
 import nextra from 'nextra';
 import { i18n } from './lib/i18n';
 
-const withNextra = nextra({});
+const withNextra = nextra({
+  search: { codeblocks: false },
+});
 
 const nextConfig: NextConfig = {
   typescript: {
