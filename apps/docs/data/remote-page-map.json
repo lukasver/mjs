@@ -1,0 +1,40 @@
+{
+  "pages": {
+    "": "index.mdx",
+    "simple": "simple.mdx",
+    "test": "test.mdx"
+  },
+  "pageMap": {
+    "name": "r",
+    "route": "/r",
+    "children": [
+      {
+        "data": {
+          "simple": {
+            "type": "doc",
+            "title": "Simple",
+            "theme": {
+              "typesetting": "article"
+            }
+          }
+        }
+      },
+      {
+        "name": "index",
+        "route": "/r",
+        "title": "Index"
+      },
+      {
+        "name": "simple",
+        "route": "/r/simple",
+        "title": "Simple"
+      },
+      {
+        "name": "test",
+        "route": "/r/test",
+        "title": "Test"
+      }
+    ],
+    "title": "R"
+  }
+}
