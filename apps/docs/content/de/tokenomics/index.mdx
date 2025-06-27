@@ -1,0 +1,27 @@
+---
+title: Tokenökonomie
+searchable: false
+icon: LightningIcon
+asIndexPage: true
+description:
+  Die Anleitung zu den Dateikonventionen von Nextra beschreibt die Struktur und
+  Organisation von Dateien und Verzeichnissen in einem Nextra-Projekt,
+  einschließlich der Verwendung von `page.mdx`, `_meta.js` und
+  `mdx-components.js`-Dateien sowie der Verzeichnisse `content` und `src`.
+---
+
+import {
+  FileIcon,
+  FolderIcon,
+  MdxIcon,
+  GlobeIcon,
+  CPPIcon,
+} from 'nextra/icons';
+import { OverviewPage } from '@/components/overview-page';
+
+# Tokenökonomie
+
+<OverviewPage
+  filePath={metadata.filePath}
+  icons={{ FileIcon, FolderIcon, MdxIcon, GlobeIcon, CPPIcon }}
+/>

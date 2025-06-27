@@ -1,0 +1,32 @@
+{
+	"name": "@mjs/monorepo",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"check-types": "turbo run check-types",
+		"format": "biome check .",
+		"format:fix": "biome check . --write",
+		"clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo/.cache"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/mdx": "^2.0.13",
+		"turbo": "^2.5.3"
+	},
+	"overrides": {
+		"react": "19.1.0",
+		"react-dom": "19.1.0",
+		"next": "15.3.2",
+		"typescript": "5.8.3",
+		"next-contentlayer2": "0.5.7",
+		"contentlayer2": "0.5.7",
+		"@types/react": "19.1.5",
+		"@types/react-dom": "19.1.0"
+	},
+	"packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
+	"engines": {
+		"node": "23.7.0"
+	}
+}

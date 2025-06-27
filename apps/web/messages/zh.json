@@ -1,0 +1,436 @@
+{
+  "About": {
+    "title": "什么是麻将之星？",
+    "description": "探索麻将之星，一个将古老麻将与现代玩法相结合的Web3平台。挑战他人，收集独特的NFT角色，并在充满活力的在线世界中赚取奖励。通过区块链的力量在全球范围内连接，获得革命性的游戏体验。"
+  },
+  "CTAs": {
+    "logIn": "登录",
+    "findMoreCharacters": "查找更多角色"
+  },
+  "Characters": {
+    "title": "认识我们的部分角色",
+    "tonyKong": {
+      "quote": "我不追逐运气。我创造它。",
+      "name": "Tony Kong",
+      "description": "Tony认为自己是无可争议的麻将大师，他确切地知道如何将一手烂牌变成一手好牌。如果你敢，就挑战他！"
+    },
+    "anneWan": {
+      "quote": "街头风格，牌桌策略。看我两者都赢。",
+      "name": "Anne Wan",
+      "description": "Anne Wan大胆、爱玩，并且始终走在潮流前沿。她为麻将世界带来了新鲜、无畏的活力——在聪明的行动和对泡泡茶、运动鞋和所有时尚事物的热爱之间取得平衡。Anne不仅仅是为了赢而玩——她是为了表达自己而玩。"
+    },
+    "mrsChen": {
+      "quote": "我忘记的赢牌比你玩过的牌还多。",
+      "name": "陈太太",
+      "description": "陈太太是一位严肃的麻将老手，在你出生之前就已经在牌桌上叱咤风云了。她极具战略性，而且有点吓人，只需一个眼神就能赢得尊重——而且她的坏脾气猫也同样爱评判。低估她，后果自负。"
+    },
+    "uncleCai": {
+      "quote": "当你在数牌的时候，我正在数我的赢局。",
+      "name": "蔡叔",
+      "description": "蔡叔是一位见多识广的麻将大师，他见过一切——而且通常会赢得一切。他悠闲自得，头脑敏锐，喜欢扇着扇子，让别人着急。他老派的风格、金链子和冷幽默使他成为牌桌上和街头上的传奇人物。"
+    }
+  },
+  "ContactForm": {
+    "title": "联系我们",
+    "description": "给我们留言，我们会尽快回复你。",
+    "fields": {
+      "name": {
+        "label": "姓名",
+        "placeholder": "Tony Kong"
+      },
+      "email": {
+        "label": "电子邮件",
+        "placeholder": "tony@mahjongstars.com"
+      },
+      "subject": {
+        "label": "主题",
+        "placeholder": "这是关于什么？"
+      },
+      "message": {
+        "label": "消息",
+        "placeholder": "我很想了解更多关于你的麻将游戏以及我如何参与其中！"
+      }
+    },
+    "captcha": {
+      "label": "我不是机器人",
+      "protection": "受ALTCHA保护"
+    },
+    "buttons": {
+      "cancel": "取消",
+      "send": "发送消息"
+    },
+    "messages": {
+      "success": {
+        "title": "消息已发送！",
+        "description": "感谢你的消息。我们会尽快回复你。"
+      },
+      "error": {
+        "title": "出了点问题。请重试。",
+        "captchaFailed": "验证码失败"
+      }
+    },
+    "validation": {
+      "name": {
+        "required": "姓名是必填项",
+        "minLength": "姓名必须至少包含2个字符。"
+      },
+      "email": {
+        "required": "电子邮件是必填项",
+        "invalid": "请输入有效的电子邮件地址。"
+      },
+      "subject": {
+        "required": "主题是必填项",
+        "minLength": "主题必须至少包含5个字符。"
+      },
+      "message": {
+        "required": "消息是必填项",
+        "minLength": "消息必须至少包含10个字符。",
+        "maxLength": "消息必须少于1000个字符。"
+      }
+    }
+  },
+  "Faq": {
+    "title": "常见问题",
+    "description": "查找有关我们的Web3麻将游戏的常见问题的答案：",
+    "items": {
+      "0": {
+        "question": "什么是麻将之星？",
+        "answer": "麻将之星是一个支持Web3、由AI驱动的多人麻将平台，允许玩家进行游戏、训练AI头像，并参加全球锦标赛，包括直播和自主比赛。"
+      },
+      "1": {
+        "question": "是什么让麻将之星与众不同？",
+        "answer": "学习你的游戏风格的AI头像、通过AI机器人实现的24/7游戏、NFT和加密货币集成、内置的社交游戏机制，以及通过基于Unity的应用程序实现的多平台访问。"
+      },
+      "2": {
+        "question": "AI在游戏中扮演什么角色？",
+        "answer": "AI头像复制你独特的游戏风格，即使在你离线时也能让你参与竞争。你可以训练你的AI来提高其策略，从而创建一个个性化的游戏助手。"
+      },
+      "3": {
+        "question": "什么是StarsPoints，它们是如何运作的？",
+        "answer": "StarsPoints是游戏中的货币：\n- 可以通过法币或加密货币购买\n- 用于游戏访问、AI机器人、物品和费用\n- 在平台之外没有价值\n- 通过游戏使用来推动收入"
+      },
+      "4": {
+        "question": "麻将之星如何产生收入？",
+        "answer": "收入来自参赛费、高级AI服务、游戏内物品销售和NFT交易费。"
+      },
+      "5": {
+        "question": "在此上下文中，$MJS是什么？",
+        "answer": "$MJS是该平台的实用代币，用于购买游戏内物品、交易NFT、质押以获得收入分成和奖励，并支持游戏经济。"
+      },
+      "6": {
+        "question": "是否有NFT组件？",
+        "answer": "是的。玩家可以解锁、交易和租赁NFT。提款NFT允许通过第三方平台将游戏内收益转换为现实世界的价值。"
+      },
+      "7": {
+        "question": "潜在市场有多大？",
+        "answer": "全球超过6亿麻将玩家。Web3游戏领域预计将在2025年超过300亿美元，提供巨大的机会。"
+      },
+      "8": {
+        "question": "谁在幕后支持这个项目？",
+        "answer": "该团队包括来自Mahjong Logic、PokerStars Asia和Coinbase Asia的专家，他们在游戏和Web3方面拥有丰富的经验。"
+      },
+      "9": {
+        "question": "2025年的路线图是什么？",
+        "answer": "第一季度：Beta版本发布\n第二季度：筹款和合作\n第三季度：V2发布和NFT市场\n第四季度：$MJS代币发布和交易所上市"
+      }
+    }
+  },
+  "Footer": {
+    "links": {
+      "home": "首页",
+      "whoWeAre": "关于我们",
+      "termsAndConditions": "条款和条件",
+      "privacyPolicy": "隐私政策",
+      "contact": "联系我们",
+      "docs": "文档"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "GameFeatures": {
+    "title": "游戏特色",
+    "features": {
+      "stayInGame": {
+        "title": "留在游戏中，保持领先",
+        "description": "随时玩。攀登排行榜，提高你的技能。"
+      },
+      "trainableAI": {
+        "title": "可训练的AI，以你的方式玩游戏",
+        "description": "自定义AI，学习并适应你的游戏风格。"
+      },
+      "collectCharacters": {
+        "title": "收集难忘的角色",
+        "description": "用你的区块链解锁稀有角色和专属物品。"
+      },
+      "bringFriends": {
+        "title": "带你的朋友来牌桌",
+        "description": "挑战朋友，分享欢笑，并在丰富的比赛中战斗。"
+      }
+    }
+  },
+  "GameVariants": {
+    "title": "麻将游戏",
+    "variants": {
+      "shenzhen": {
+        "title": "深圳麻将规则，又名香港麻将",
+        "description": "体验这种快节奏麻将变体的刺激，在这里你战略性地保留你的杠子。"
+      },
+      "riichi": {
+        "title": "立直麻将规则",
+        "description": "激动人心的日本麻将变体。2025年稍后推出。"
+      }
+    }
+  },
+  "Global": {
+    "soon": "即将推出",
+    "search": "搜索..."
+  },
+  "Hero": {
+    "title": "<span>加入Web3</span> <span>麻将游戏</span>",
+    "subtitle": "在麻将之星挑战你的朋友，酷炫角色主宰游戏！"
+  },
+  "Navigation": {
+    "links": {
+      "home": "首页",
+      "features": "特色",
+      "game": "游戏",
+      "character": "角色",
+      "support": "支持"
+    },
+    "buttons": {
+      "login": "登录",
+      "playNow": "立即游戏"
+    }
+  },
+  "Newsletter": {
+    "title": "绝不错过更新！",
+    "description": "订阅我们的新闻通讯，获取最新的公告、新闻和独家优惠。",
+    "placeholder": "输入你的电子邮件地址",
+    "button": "订阅",
+    "button2": "立即订阅",
+    "footer": "已加入",
+    "success": "感谢你的订阅！",
+    "errors": {
+      "email": "请输入有效的电子邮件地址"
+    },
+    "alreadySubscribed": "你已经订阅了新闻通讯",
+    "alreadySubscribedShort": "已订阅"
+  },
+  "default": {
+    "Navigation": {
+      "links": {
+        "home": "首页",
+        "features": "特色",
+        "game": "游戏",
+        "character": "角色",
+        "support": "支持"
+      },
+      "buttons": {
+        "login": "登录",
+        "playNow": "立即游戏"
+      }
+    },
+    "Hero": {
+      "title": "<span>加入Web3</span> <span>麻将游戏</span>",
+      "subtitle": "在麻将之星挑战你的朋友，酷炫角色主宰游戏！"
+    },
+    "About": {
+      "title": "什么是麻将之星？",
+      "description": "探索麻将之星，一个将古老麻将与现代玩法相结合的Web3平台。挑战他人，收集独特的NFT角色，并在充满活力的在线世界中赚取奖励。通过区块链的力量在全球范围内连接，获得革命性的游戏体验。"
+    },
+    "GameFeatures": {
+      "title": "游戏特色",
+      "features": {
+        "stayInGame": {
+          "title": "留在游戏中，保持领先",
+          "description": "随时玩。攀登排行榜，提高你的技能。"
+        },
+        "trainableAI": {
+          "title": "可训练的AI，以你的方式玩游戏",
+          "description": "自定义AI，学习并适应你的游戏风格。"
+        },
+        "collectCharacters": {
+          "title": "收集难忘的角色",
+          "description": "用你的区块链解锁稀有角色和专属物品。"
+        },
+        "bringFriends": {
+          "title": "带你的朋友来牌桌",
+          "description": "挑战朋友，分享欢笑，并在丰富的比赛中战斗。"
+        }
+      }
+    },
+    "GameVariants": {
+      "title": "麻将游戏",
+      "variants": {
+        "shenzhen": {
+          "title": "深圳麻将规则，又名香港麻将",
+          "description": "体验这种快节奏麻将变体的刺激，在这里你战略性地保留你的杠子。"
+        },
+        "riichi": {
+          "title": "立直麻将规则",
+          "description": "激动人心的日本麻将变体。2025年稍后推出。"
+        }
+      }
+    },
+    "Characters": {
+      "title": "认识我们的部分角色",
+      "tonyKong": {
+        "quote": "我不追逐运气。我创造它。",
+        "name": "Tony Kong",
+        "description": "Tony认为自己是无可争议的麻将大师，他确切地知道如何将一手烂牌变成一手好牌。如果你敢，就挑战他！"
+      },
+      "anneWan": {
+        "quote": "街头风格，牌桌策略。看我两者都赢。",
+        "name": "Anne Wan",
+        "description": "Anne Wan大胆、爱玩，并且始终走在潮流前沿。她为麻将世界带来了新鲜、无畏的活力——在聪明的行动和对泡泡茶、运动鞋和所有时尚事物的热爱之间取得平衡。Anne不仅仅是为了赢而玩——她是为了表达自己而玩。"
+      },
+      "mrsChen": {
+        "quote": "我忘记的赢牌比你玩过的牌还多。",
+        "name": "陈太太",
+        "description": "陈太太是一位严肃的麻将老手，在你出生之前就已经在牌桌上叱咤风云了。她极具战略性，而且有点吓人，只需一个眼神就能赢得尊重——而且她的坏脾气猫也同样爱评判。低估她，后果自负。"
+      },
+      "uncleCai": {
+        "quote": "当你在数牌的时候，我正在数我的赢局。",
+        "name": "蔡叔",
+        "description": "蔡叔是一位见多识广的麻将大师，他见过一切——而且通常会赢得一切。他悠闲自得，头脑敏锐，喜欢扇着扇子，让别人着急。他老派的风格、金链子和冷幽默使他成为牌桌上和街头上的传奇人物。"
+      }
+    },
+    "Newsletter": {
+      "title": "绝不错过更新！",
+      "description": "订阅我们的新闻通讯，获取最新的公告、新闻和独家优惠。",
+      "placeholder": "输入你的电子邮件地址",
+      "button": "订阅",
+      "button2": "立即订阅",
+      "footer": "已加入",
+      "success": "感谢你的订阅！",
+      "errors": {
+        "email": "请输入有效的电子邮件地址"
+      },
+      "alreadySubscribed": "你已经订阅了新闻通讯",
+      "alreadySubscribedShort": "已订阅"
+    },
+    "CTAs": {
+      "logIn": "登录",
+      "findMoreCharacters": "查找更多角色"
+    },
+    "Footer": {
+      "links": {
+        "home": "首页",
+        "whoWeAre": "关于我们",
+        "termsAndConditions": "条款和条件",
+        "privacyPolicy": "隐私政策",
+        "contact": "联系我们",
+        "docs": "文档"
+      },
+      "copyright": "©{year} WASABI GAMES DMCC"
+    },
+    "ContactForm": {
+      "title": "联系我们",
+      "description": "给我们留言，我们会尽快回复你。",
+      "fields": {
+        "name": {
+          "label": "姓名",
+          "placeholder": "Tony Kong"
+        },
+        "email": {
+          "label": "电子邮件",
+          "placeholder": "tony@mahjongstars.com"
+        },
+        "subject": {
+          "label": "主题",
+          "placeholder": "这是关于什么？"
+        },
+        "message": {
+          "label": "消息",
+          "placeholder": "我很想了解更多关于你的麻将游戏以及我如何参与其中！"
+        }
+      },
+      "captcha": {
+        "label": "我不是机器人",
+        "protection": "受ALTCHA保护"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "send": "发送消息"
+      },
+      "messages": {
+        "success": {
+          "title": "消息已发送！",
+          "description": "感谢你的消息。我们会尽快回复你。"
+        },
+        "error": {
+          "title": "出了点问题。请重试。",
+          "captchaFailed": "验证码失败"
+        }
+      },
+      "validation": {
+        "name": {
+          "required": "姓名是必填项",
+          "minLength": "姓名必须至少包含2个字符。"
+        },
+        "email": {
+          "required": "电子邮件是必填项",
+          "invalid": "请输入有效的电子邮件地址。"
+        },
+        "subject": {
+          "required": "主题是必填项",
+          "minLength": "主题必须至少包含5个字符。"
+        },
+        "message": {
+          "required": "消息是必填项",
+          "minLength": "消息必须至少包含10个字符。",
+          "maxLength": "消息必须少于1000个字符。"
+        }
+      }
+    },
+    "Faq": {
+      "title": "常见问题",
+      "description": "查找有关我们的Web3麻将游戏的常见问题的答案：",
+      "items": {
+        "0": {
+          "question": "什么是麻将之星？",
+          "answer": "麻将之星是一个支持Web3、由AI驱动的多人麻将平台，允许玩家进行游戏、训练AI头像，并参加全球锦标赛，包括直播和自主比赛。"
+        },
+        "1": {
+          "question": "是什么让麻将之星与众不同？",
+          "answer": "学习你的游戏风格的AI头像、通过AI机器人实现的24/7游戏、NFT和加密货币集成、内置的社交游戏机制，以及通过基于Unity的应用程序实现的多平台访问。"
+        },
+        "2": {
+          "question": "AI在游戏中扮演什么角色？",
+          "answer": "AI头像复制你独特的游戏风格，即使在你离线时也能让你参与竞争。你可以训练你的AI来提高其策略，从而创建一个个性化的游戏助手。"
+        },
+        "3": {
+          "question": "什么是StarsPoints，它们是如何运作的？",
+          "answer": "StarsPoints是游戏中的货币：\n- 可以通过法币或加密货币购买\n- 用于游戏访问、AI机器人、物品和费用\n- 在平台之外没有价值\n- 通过游戏使用来推动收入"
+        },
+        "4": {
+          "question": "麻将之星如何产生收入？",
+          "answer": "收入来自参赛费、高级AI服务、游戏内物品销售和NFT交易费。"
+        },
+        "5": {
+          "question": "在此上下文中，$MJS是什么？",
+          "answer": "$MJS是该平台的实用代币，用于购买游戏内物品、交易NFT、质押以获得收入分成和奖励，并支持游戏经济。"
+        },
+        "6": {
+          "question": "是否有NFT组件？",
+          "answer": "是的。玩家可以解锁、交易和租赁NFT。提款NFT允许通过第三方平台将游戏内收益转换为现实世界的价值。"
+        },
+        "7": {
+          "question": "潜在市场有多大？",
+          "answer": "全球超过6亿麻将玩家。Web3游戏领域预计将在2025年超过300亿美元，提供巨大的机会。"
+        },
+        "8": {
+          "question": "谁在幕后支持这个项目？",
+          "answer": "该团队包括来自Mahjong Logic、PokerStars Asia和Coinbase Asia的专家，他们在游戏和Web3方面拥有丰富的经验。"
+        },
+        "9": {
+          "question": "2025年的路线图是什么？",
+          "answer": "第一季度：Beta版本发布\n第二季度：筹款和合作\n第三季度：V2发布和NFT市场\n第四季度：$MJS代币发布和交易所上市"
+        }
+      }
+    },
+    "Global": {
+      "soon": "即将推出",
+      "search": "搜索..."
+    }
+  }
+}

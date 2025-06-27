@@ -1,0 +1,216 @@
+{
+  "Navigation": {
+    "links": {
+      "home": "HOME",
+      "features": "FEATURES",
+      "game": "GAME",
+      "character": "CHARACTER",
+      "support": "SUPPORT"
+    },
+    "buttons": {
+      "login": "LOG IN",
+      "playNow": "PLAY NOW"
+    }
+  },
+  "Hero": {
+    "title": "<span>Join the Web3</span> <span>Mahjong Game</span>",
+    "subtitle": "Challenge Your Friends at Mahjong Stars Where Cool Characters Rule the Game!"
+  },
+  "About": {
+    "title": "What's Mahjong Stars?",
+    "description": "Explore Mahjong Stars, a Web3 platform where ancient Mahjong meets modern play. Challenge others, collect unique NFT characters, and earn rewards in a dynamic online world. Connect globally through the power of blockchain for a revolutionary gaming experience."
+  },
+  "GameFeatures": {
+    "title": "IN-GAME FEATURES",
+    "features": {
+      "stayInGame": {
+        "title": "Stay in the Game Stay on Top",
+        "description": "Play anytime. Climb the leaderboard and grow your skill."
+      },
+      "trainableAI": {
+        "title": "Trainable AI That Plays Your Way",
+        "description": "Customize an AI to learn and adapt to your playing style."
+      },
+      "collectCharacters": {
+        "title": "Collect the Unforgettable",
+        "description": "Unlock rare characters and exclusive items with your blockchain."
+      },
+      "bringFriends": {
+        "title": "Bring Your Friends to the Table",
+        "description": "Challenge friends, share laughs, and battle through rich matches."
+      }
+    }
+  },
+  "GameVariants": {
+    "title": "THE MAHJONG GAME",
+    "variants": {
+      "shenzhen": {
+        "title": "Shenzhen Mahjong Rules, aka Hong Kong",
+        "description": "Experience the fast-paced excitement of this Mahjong variant where you strategically preserve your Kongs."
+      },
+      "riichi": {
+        "title": "Riichi Mahjong Rules",
+        "description": "The thrilling Japanese Mahjong variant. Coming later 2025."
+      }
+    }
+  },
+  "Characters": {
+    "title": "MEET SOME OF OUR CHARACTERS",
+    "tonyKong": {
+      "quote": "I don't chase luck. I create it.",
+      "name": "Tony Kong",
+      "description": "Believing himself the undisputed Master of Mahjong, Tony knows exactly how to turn a bad hand into a winning game. Challenge him if you dare!"
+    },
+    "anneWan": {
+      "quote": "Style on the streets, strategy at the table. Watch me win both.",
+      "name": "Anne Wan",
+      "description": "Anne Wan is bold, playful, and always on-trend. She brings a fresh, fearless energy to the Mahjong world — balancing smart moves with a love for bubble tea, sneakers, and all things stylish. Anne doesn't just play to win — she plays to express herself."
+    },
+    "mrsChen": {
+      "quote": "I've forgotten more winning hands than you've ever played.",
+      "name": "Mrs Chen",
+      "description": "Mrs. Chen is a no-nonsense Mahjong veteran who's been crushing tables since before you were born. Fiercely strategic and a little terrifying, she commands respect with just a look — and her grumpy cat is just as judgmental. Underestimate her at your own risk."
+    },
+    "uncleCai": {
+      "quote": "While you're counting tiles, I'm counting my wins.",
+      "name": "Uncle Cai",
+      "description": "Uncle Cai is a streetwise Mahjong master who's seen it all — and usually wins it all. Laid-back with a sharp mind, he prefers to fan himself and let others sweat. His old-school swag, gold chain, and deadpan humor make him a legend both at the table and on the streets."
+    }
+  },
+  "Newsletter": {
+    "title": "Never miss an update!",
+    "description": "Subscribe to our newsletter to get the latest announcements, news and exclusive offers.",
+    "placeholder": "Enter your email address",
+    "button": "Subscribe",
+    "button2": "Subscribe Now",
+    "footer": "already joined",
+    "success": "Thank you for subscribing!",
+    "errors": {
+      "email": "Please enter a valid email address"
+    },
+    "alreadySubscribed": "You have already subscribed to the newsletter",
+    "alreadySubscribedShort": "Already subscribed"
+  },
+  "CTAs": {
+    "logIn": "LOG IN",
+    "findMoreCharacters": "to find more characters"
+  },
+  "Footer": {
+    "links": {
+      "home": "Home",
+      "whoWeAre": "Who We Are",
+      "termsAndConditions": "Terms and Conditions",
+      "privacyPolicy": "Privacy Policy",
+      "contact": "Contact"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "ContactForm": {
+    "title": "Contact Us",
+    "description": "Send us a message and we'll get back to you as soon as possible.",
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Tony Kong"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "tony@mahjongstars.com"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "What's this about?"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "I would love to learn more about your mahjong game and how I can get involved!"
+      }
+    },
+    "captcha": {
+      "label": "I'm not a robot",
+      "protection": "Protected by ALTCHA"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "send": "Send Message"
+    },
+    "messages": {
+      "success": {
+        "title": "Message sent!",
+        "description": "Thank you for your message. We'll get back to you soon."
+      },
+      "error": {
+        "title": "Something went wrong. Please try again.",
+        "captchaFailed": "Captcha failed"
+      }
+    },
+    "validation": {
+      "name": {
+        "required": "Name is required",
+        "minLength": "Name must be at least 2 characters."
+      },
+      "email": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address."
+      },
+      "subject": {
+        "required": "Subject is required",
+        "minLength": "Subject must be at least 5 characters."
+      },
+      "message": {
+        "required": "Message is required",
+        "minLength": "Message must be at least 10 characters.",
+        "maxLength": "Message must be less than 1000 characters."
+      }
+    }
+  },
+  "Faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Find answers to common inquiries about our Web3 Mahjong Game:",
+    "items": {
+      "0": {
+        "question": "What is Mahjong Stars?",
+        "answer": "Mahjong Stars is a Web3-enabled, AI-powered multiplayer mahjong platform that allows players to play, train AI avatars, and compete in global tournaments, both live and autonomously."
+      },
+      "1": {
+        "question": "What makes Mahjong Stars unique?",
+        "answer": "AI avatars that learn your playstyle, 24/7 gameplay via AI bots, NFT and crypto integration, built-in social gaming mechanics, and multi-platform access through a Unity-based app."
+      },
+      "2": {
+        "question": "What is the role of AI in the game?",
+        "answer": "AI avatars replicate your unique playstyle, allowing you to compete even when offline. You can train your AI to improve its strategy, creating a personalised gaming assistant."
+      },
+      "3": {
+        "question": "What are StarsPoints and how do they work?",
+        "answer": "StarsPoints are the in-game currency:\n- Purchasable via fiat or crypto\n- Used for game access, AI bots, items, and fees\n- Have no value outside the platform\n- Drive revenue through gameplay usage"
+      },
+      "4": {
+        "question": "How does Mahjong Stars generate revenue?",
+        "answer": "Revenue is generated from entry fees, premium AI services, in-game item sales, and NFT transaction fees."
+      },
+      "5": {
+        "question": "What is $MJS in this context?",
+        "answer": "$MJS is the platform\u2019s utility token, used to buy in-game items, trade NFTs, stake for revenue share and rewards, and support the game economy."
+      },
+      "6": {
+        "question": "Is there an NFT component?",
+        "answer": "Yes. Players can unlock, trade, and rent NFTs. Withdrawal NFTs allow converting in-game earnings to real-world value through third-party platforms."
+      },
+      "7": {
+        "question": "How big is the potential market?",
+        "answer": "Over 600 million global mahjong players. The Web3 gaming sector is projected to surpass $30B in 2025, offering massive opportunity."
+      },
+      "8": {
+        "question": "Who is behind the project?",
+        "answer": "The team includes experts from Mahjong Logic, PokerStars Asia, and Coinbase Asia, with deep experience in gaming and Web3."
+      },
+      "9": {
+        "question": "What\u2019s the roadmap for 2025?",
+        "answer": "Q1: Beta build release\nQ2: Fundraising and partnerships\nQ3: V2 launch and NFT marketplace\nQ4: $MJS token launch and exchange listings"
+      }
+    }
+  },
+  "Global": {
+    "soon": "Coming Soon"
+  }
+}

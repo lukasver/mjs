@@ -1,0 +1,24 @@
+---
+title: Tokenomia
+searchable: false
+icon: LightningIcon
+asIndexPage: true
+description:
+  La guida alle convenzioni sui file di Nextra descrive in dettaglio la struttura e l'organizzazione dei file e delle directory all'interno di un progetto Nextra, incluso l'utilizzo dei file `page.mdx`, `_meta.js` e `mdx-components.js`, nonché le directory `content` e `src`.
+---
+
+import {
+  FileIcon,
+  FolderIcon,
+  MdxIcon,
+  GlobeIcon,
+  CPPIcon,
+} from 'nextra/icons';
+import { OverviewPage } from '@/components/overview-page';
+
+# Tokenomia
+
+<OverviewPage
+  filePath={metadata.filePath}
+  icons={{ FileIcon, FolderIcon, MdxIcon, GlobeIcon, CPPIcon }}
+/>

@@ -1,0 +1,27 @@
+---
+title: Tokenomics
+searchable: false
+icon: LightningIcon
+asIndexPage: true
+description: |
+  Le guide des conventions de fichiers de Nextra détaille la structure et
+  l'organisation des fichiers et des répertoires au sein d'un projet Nextra,
+  y compris l'utilisation des fichiers `page.mdx`, `_meta.js` et
+  `mdx-components.js`, ainsi que des répertoires `content` et `src`.
+---
+
+import {
+  FileIcon,
+  FolderIcon,
+  MdxIcon,
+  GlobeIcon,
+  CPPIcon,
+} from 'nextra/icons';
+import { OverviewPage } from '@/components/overview-page';
+
+# Tokenomics
+
+<OverviewPage
+  filePath={metadata.filePath}
+  icons={{ FileIcon, FolderIcon, MdxIcon, GlobeIcon, CPPIcon }}
+/>

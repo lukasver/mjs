@@ -1,0 +1,216 @@
+{
+  "Navigation": {
+    "links": {
+      "home": "HOME",
+      "features": "FUNKTIONEN",
+      "game": "SPIEL",
+      "character": "CHARAKTER",
+      "support": "SUPPORT"
+    },
+    "buttons": {
+      "login": "EINLOGGEN",
+      "playNow": "JETZT SPIELEN"
+    }
+  },
+  "Hero": {
+    "title": "<span>Tritt dem Web3</span> <span>Mahjong Spiel bei</span>",
+    "subtitle": "Fordere deine Freunde bei Mahjong Stars heraus, wo coole Charaktere das Spiel beherrschen!"
+  },
+  "About": {
+    "title": "Was ist Mahjong Stars?",
+    "description": "Entdecke Mahjong Stars, eine Web3-Plattform, auf der uraltes Mahjong auf modernes Spielen trifft. Fordere andere heraus, sammle einzigartige NFT-Charaktere und verdiene Belohnungen in einer dynamischen Online-Welt. Verbinde dich global durch die Kraft der Blockchain für ein revolutionäres Spielerlebnis."
+  },
+  "GameFeatures": {
+    "title": "IN-GAME FEATURES",
+    "features": {
+      "stayInGame": {
+        "title": "Bleib im Spiel, bleib an der Spitze",
+        "description": "Spiele jederzeit. Erklimme die Rangliste und verbessere deine Fähigkeiten."
+      },
+      "trainableAI": {
+        "title": "Trainierbare KI, die so spielt, wie du es willst",
+        "description": "Passe eine KI an, die lernt und sich an deinen Spielstil anpasst."
+      },
+      "collectCharacters": {
+        "title": "Sammle das Unvergessliche",
+        "description": "Schalte seltene Charaktere und exklusive Gegenstände mit deiner Blockchain frei."
+      },
+      "bringFriends": {
+        "title": "Bring deine Freunde an den Tisch",
+        "description": "Fordere Freunde heraus, teile Lacher und kämpfe dich durch spannende Matches."
+      }
+    }
+  },
+  "GameVariants": {
+    "title": "DAS MAHJONG SPIEL",
+    "variants": {
+      "shenzhen": {
+        "title": "Shenzhen Mahjong Regeln, aka Hong Kong",
+        "description": "Erlebe die rasante Spannung dieser Mahjong-Variante, bei der du deine Kongs strategisch bewahrst."
+      },
+      "riichi": {
+        "title": "Riichi Mahjong Regeln",
+        "description": "Die aufregende japanische Mahjong-Variante. Kommt später 2025."
+      }
+    }
+  },
+  "Characters": {
+    "title": "LERNE EINIGE UNSERER CHARAKTERE KENNEN",
+    "tonyKong": {
+      "quote": "Ich jage nicht dem Glück hinterher. Ich erschaffe es.",
+      "name": "Tony Kong",
+      "description": "Tony hält sich selbst für den unbestrittenen Meister des Mahjong und weiß genau, wie man eine schlechte Hand in ein gewonnenes Spiel verwandelt. Fordere ihn heraus, wenn du dich traust!"
+    },
+    "anneWan": {
+      "quote": "Style auf der Straße, Strategie am Tisch. Sieh zu, wie ich beides gewinne.",
+      "name": "Anne Wan",
+      "description": "Anne Wan ist mutig, verspielt und immer im Trend. Sie bringt eine frische, furchtlose Energie in die Mahjong-Welt – sie balanciert clevere Züge mit einer Liebe für Bubble Tea, Sneakers und alles, was stilvoll ist. Anne spielt nicht nur, um zu gewinnen – sie spielt, um sich auszudrücken."
+    },
+    "mrsChen": {
+      "quote": "Ich habe mehr gewinnende Hände vergessen, als du jemals gespielt hast.",
+      "name": "Mrs Chen",
+      "description": "Mrs. Chen ist eine knallharte Mahjong-Veteranin, die schon Tische abräumt, bevor du geboren wurdest. Sie ist äußerst strategisch und ein wenig furchteinflößend und verschafft sich schon mit einem Blick Respekt – und ihre mürrische Katze ist genauso urteilend. Unterschätze sie auf eigene Gefahr."
+    },
+    "uncleCai": {
+      "quote": "Während du Ziegel zählst, zähle ich meine Gewinne.",
+      "name": "Uncle Cai",
+      "description": "Uncle Cai ist ein gerissener Mahjong-Meister, der schon alles gesehen hat – und normalerweise alles gewinnt. Er ist lässig mit einem scharfen Verstand und zieht es vor, sich selbst zu fächeln und andere schwitzen zu lassen. Sein Old-School-Swag, seine Goldkette und sein trockener Humor machen ihn zu einer Legende, sowohl am Tisch als auch auf der Straße."
+    }
+  },
+  "Newsletter": {
+    "title": "Verpasse nie ein Update!",
+    "description": "Abonniere unseren Newsletter, um die neuesten Ankündigungen, Nachrichten und exklusiven Angebote zu erhalten.",
+    "placeholder": "Gib deine E-Mail-Adresse ein",
+    "button": "Abonnieren",
+    "button2": "Jetzt Abonnieren",
+    "footer": "bereits beigetreten",
+    "success": "Danke für dein Abonnement!",
+    "errors": {
+      "email": "Bitte gib eine gültige E-Mail-Adresse ein"
+    },
+    "alreadySubscribed": "Du hast den Newsletter bereits abonniert",
+    "alreadySubscribedShort": "Bereits abonniert"
+  },
+  "CTAs": {
+    "logIn": "EINLOGGEN",
+    "findMoreCharacters": "um weitere Charaktere zu finden"
+  },
+  "Footer": {
+    "links": {
+      "home": "Home",
+      "whoWeAre": "Wer wir sind",
+      "termsAndConditions": "Allgemeine Geschäftsbedingungen",
+      "privacyPolicy": "Datenschutzbestimmungen",
+      "contact": "Kontakt"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "ContactForm": {
+    "title": "Kontaktiere uns",
+    "description": "Sende uns eine Nachricht und wir melden uns so schnell wie möglich bei dir.",
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Tony Kong"
+      },
+      "email": {
+        "label": "E-Mail",
+        "placeholder": "tony@mahjongstars.com"
+      },
+      "subject": {
+        "label": "Betreff",
+        "placeholder": "Worum geht es?"
+      },
+      "message": {
+        "label": "Nachricht",
+        "placeholder": "Ich würde gerne mehr über dein Mahjong-Spiel erfahren und wie ich mich beteiligen kann!"
+      }
+    },
+    "captcha": {
+      "label": "Ich bin kein Roboter",
+      "protection": "Geschützt durch ALTCHA"
+    },
+    "buttons": {
+      "cancel": "Abbrechen",
+      "send": "Nachricht Senden"
+    },
+    "messages": {
+      "success": {
+        "title": "Nachricht gesendet!",
+        "description": "Vielen Dank für deine Nachricht. Wir werden uns bald bei dir melden."
+      },
+      "error": {
+        "title": "Etwas ist schief gelaufen. Bitte versuche es erneut.",
+        "captchaFailed": "Captcha fehlgeschlagen"
+      }
+    },
+    "validation": {
+      "name": {
+        "required": "Name ist erforderlich",
+        "minLength": "Der Name muss mindestens 2 Zeichen lang sein."
+      },
+      "email": {
+        "required": "E-Mail ist erforderlich",
+        "invalid": "Bitte gib eine gültige E-Mail-Adresse ein."
+      },
+      "subject": {
+        "required": "Betreff ist erforderlich",
+        "minLength": "Der Betreff muss mindestens 5 Zeichen lang sein."
+      },
+      "message": {
+        "required": "Nachricht ist erforderlich",
+        "minLength": "Die Nachricht muss mindestens 10 Zeichen lang sein.",
+        "maxLength": "Die Nachricht darf nicht länger als 1000 Zeichen sein."
+      }
+    }
+  },
+  "Faq": {
+    "title": "Häufig gestellte Fragen",
+    "description": "Hier findest du Antworten auf häufige Fragen zu unserem Web3 Mahjong Spiel:",
+    "items": {
+      "0": {
+        "question": "Was ist Mahjong Stars?",
+        "answer": "Mahjong Stars ist eine Web3-fähige, KI-gestützte Multiplayer-Mahjong-Plattform, die es Spielern ermöglicht, zu spielen, KI-Avatare zu trainieren und an globalen Turnieren teilzunehmen, sowohl live als auch autonom."
+      },
+      "1": {
+        "question": "Was macht Mahjong Stars einzigartig?",
+        "answer": "KI-Avatare, die deinen Spielstil lernen, 24/7 Gameplay über KI-Bots, NFT- und Krypto-Integration, integrierte Social-Gaming-Mechaniken und Multi-Plattform-Zugang über eine Unity-basierte App."
+      },
+      "2": {
+        "question": "Welche Rolle spielt KI im Spiel?",
+        "answer": "KI-Avatare replizieren deinen einzigartigen Spielstil, sodass du auch offline spielen kannst. Du kannst deine KI trainieren, um ihre Strategie zu verbessern, und so einen personalisierten Gaming-Assistenten erstellen."
+      },
+      "3": {
+        "question": "Was sind StarsPoints und wie funktionieren sie?",
+        "answer": "StarsPoints sind die In-Game-Währung:\n- Kaufbar über Fiat oder Krypto\n- Wird für Spielzugang, KI-Bots, Gegenstände und Gebühren verwendet\n- Hat keinen Wert außerhalb der Plattform\n- Steigert den Umsatz durch Gameplay-Nutzung"
+      },
+      "4": {
+        "question": "Wie generiert Mahjong Stars Einnahmen?",
+        "answer": "Die Einnahmen werden aus Teilnahmegebühren, Premium-KI-Diensten, In-Game-Item-Verkäufen und NFT-Transaktionsgebühren generiert."
+      },
+      "5": {
+        "question": "Was ist $MJS in diesem Zusammenhang?",
+        "answer": "$MJS ist der Utility-Token der Plattform, der verwendet wird, um In-Game-Items zu kaufen, NFTs zu handeln, für Umsatzbeteiligung und Belohnungen zu setzen und die Spielökonomie zu unterstützen."
+      },
+      "6": {
+        "question": "Gibt es eine NFT-Komponente?",
+        "answer": "Ja. Spieler können NFTs freischalten, handeln und mieten. Withdrawal NFTs ermöglichen die Umwandlung von In-Game-Einnahmen in realen Wert über Drittanbieter-Plattformen."
+      },
+      "7": {
+        "question": "Wie groß ist der potenzielle Markt?",
+        "answer": "Über 600 Millionen globale Mahjong-Spieler. Der Web3-Gaming-Sektor wird voraussichtlich 30 Milliarden Dollar im Jahr 2025 übersteigen und bietet massive Chancen."
+      },
+      "8": {
+        "question": "Wer steckt hinter dem Projekt?",
+        "answer": "Das Team besteht aus Experten von Mahjong Logic, PokerStars Asia und Coinbase Asia mit umfassender Erfahrung in den Bereichen Gaming und Web3."
+      },
+      "9": {
+        "question": "Wie sieht die Roadmap für 2025 aus?",
+        "answer": "Q1: Beta-Build-Veröffentlichung\nQ2: Fundraising und Partnerschaften\nQ3: V2-Launch und NFT-Marktplatz\nQ4: $MJS-Token-Launch und Börsennotierungen"
+      }
+    }
+  },
+  "Global": {
+    "soon": "Kommt bald"
+  }
+}

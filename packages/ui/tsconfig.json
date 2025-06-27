@@ -1,0 +1,11 @@
+{
+	"extends": "@mjs/typescript-config/react-library.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@mjs/ui/*": ["./src/*"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["dist", "build", "node_modules"]
+}

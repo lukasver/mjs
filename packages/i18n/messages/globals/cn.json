@@ -1,0 +1,17 @@
+{
+  "Footer": {
+    "links": {
+      "home": "首页",
+      "docs": "文档",
+      "whoWeAre": "关于我们",
+      "termsAndConditions": "条款和条件",
+      "privacyPolicy": "隐私政策",
+      "contact": "联系我们"
+    },
+    "copyright": "©{year} WASABI GAMES DMCC"
+  },
+  "Global": {
+    "soon": "即将推出",
+    "search": "搜索..."
+  }
+}

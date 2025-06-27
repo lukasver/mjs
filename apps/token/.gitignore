@@ -1,0 +1,38 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# openapi
+/api-client
+
+
+
+# misc
+.DS_Store
+
+.env.local
+.env.*.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.vercel
+.next
+/tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
+
+playwright-report/
+
+
+src/__tests__/config/states/*.json
+data/*.production.json
