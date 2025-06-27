@@ -1,4 +1,7 @@
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
+// import 'nextra-theme-docs/style.css';
+import '@/app/styles.css';
+
 import type { FC } from 'react';
 import { useMDXComponents as getMDXComponents } from '@/mdx-components';
 import { ScrollProgress } from '@mjs/ui/components/scroll-progress';
@@ -46,6 +49,8 @@ const Page: FC<PageProps> = async (props) => {
   if (params.lang.length > 2) {
     return null;
   }
+  // const t = await getTranslations(params.lang as Locale);
+  // const pageMap = await getPageMap(params.lang ? `/${params.lang}` : '/en');
   const result = await importMdx({
     mdxPath: params.mdxPath,
     lang: params.lang,
@@ -58,10 +63,26 @@ const Page: FC<PageProps> = async (props) => {
   const { default: MDXContent, toc, metadata } = result;
 
   return (
+    // <Layout
+    //   i18n={getLocaleNames()}
+    //   banner={<Banner />}
+    //   navbar={<Navbar lang={params.lang as Locale} />}
+    //   search={<Search placeholder={t('Global.search')} />}
+    //   sidebar={{
+    //     defaultOpen: true,
+    //     defaultMenuCollapseLevel: 1,
+    //   }}
+    //   pageMap={pageMap}
+    //   editLink={false}
+    //   docsRepositoryBase='https://github.com/mahjongstars/docs'
+    //   footer={<Footer />}
+    //   navigation={true}
+    // >
     <Wrapper toc={toc} metadata={metadata}>
       <MDXContent {...props} params={params} />
       <ScrollProgress className='mt-[63px]' />
     </Wrapper>
+    // </Layout>
   );
 };
 
