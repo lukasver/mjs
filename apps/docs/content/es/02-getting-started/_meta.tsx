@@ -8,7 +8,7 @@ const meta: MetaRecord = {
     type: 'doc',
   },
   support: {
-    title: 'Soporte',
+    type: 'doc',
   },
 };
 

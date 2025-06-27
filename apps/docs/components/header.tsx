@@ -10,6 +10,7 @@ import { Locale } from '@/lib/i18n';
 import { ShinyButton } from '@mjs/ui/components/shiny-button';
 import Link from 'next/link';
 import { Icons } from '@mjs/ui/components/icons';
+import { applyUTM } from '@/lib/utm';
 
 export const Navbar = async ({ lang }: { lang: Locale }) => {
   const t = await getTranslations(lang);
@@ -22,7 +23,17 @@ export const Navbar = async ({ lang }: { lang: Locale }) => {
       // projectIcon={<Icons.boxes className='w-5 h-5' />}
       // ... Your additional navbar options
     >
-      <Link href={`/web/${lang && lang !== 'en' ? `${lang}/` : ''}#newsletter`}>
+      <Link
+        href={applyUTM(
+          `/web/${lang && lang !== 'en' ? `${lang}/` : ''}#newsletter`,
+          {
+            source: 'docs',
+            medium: 'header',
+            campaign: 'newsletter_signup',
+            content: 'cta_button',
+          }
+        )}
+      >
         <ShinyButton className='bg-accent font-head aspect-square md:aspect-auto md:px-6 md:py-2 px-2 py-2 '>
           <span className='hidden md:block'>{t('Global.subscribe')}</span>
           <Icons.subscribe className='md:hidden size-5' />

@@ -1,3 +1,4 @@
+import { applyUTM } from '@/lib/utm';
 import type { MetaRecord } from 'nextra';
 
 const meta: MetaRecord = {
@@ -9,12 +10,10 @@ const meta: MetaRecord = {
     display: 'normal',
     theme: {
       breadcrumb: false,
-      // toc: false,
     },
   },
   '#': {
     type: 'separator',
-    // title: 'My Items' // Title is optional
   },
   '02-getting-started': {
     type: 'doc',
@@ -42,41 +41,35 @@ const meta: MetaRecord = {
   },
   '##': {
     type: 'separator',
-    // title: 'My Items' // Title is optional
   },
   '10-faq': {
     type: 'doc',
   },
   tokenomics: {
     type: 'doc',
-    // title: 'Tokenomics',
     display: 'hidden',
   },
   '###': {
     type: 'separator',
-    // title: 'My Items' // Title is optional
   },
   contact: {
-    title: 'Contactez-nous',
-    href: '/web/contact',
+    title: 'Contact Us',
+    href: applyUTM('/web/contact', {
+      source: 'docs',
+      medium: 'sidebar',
+      campaign: 'contact_inquiry',
+      content: 'sidebar_nav',
+    }),
   },
   subscribe: {
-    title: 'Abonnez-vous',
-    href: '/web/#newsletter',
+    title: 'Subscribe',
+    href: applyUTM('/web/#newsletter', {
+      source: 'docs',
+      medium: 'sidebar',
+      campaign: 'newsletter_signup',
+      content: 'sidebar_nav',
+    }),
   },
-
-  // play: {
-  //   type: 'menu',
-  //   title: 'Play',
-  //   items: {
-  //     contributors: {
-  //       href: 'https://github.com/vercel/swr/graphs/contributors',
-  //     },
-  //     now: {
-  //       href: 'https://mahjongstars.com/play',
-  //     },
-  //   },
-  // },
 };
 
 export default meta;

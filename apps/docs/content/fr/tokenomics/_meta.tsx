@@ -3,7 +3,7 @@ import type { MetaRecord } from 'nextra';
 const meta: MetaRecord = {
   // index: {
   //   type: 'doc',
-  //   title: 'Informations',
+  //   title: 'Information',
   //   display: 'normal',
   //   theme: {
   //     breadcrumb: false,
@@ -11,10 +11,10 @@ const meta: MetaRecord = {
   // },
   starpoints: {
     type: 'doc',
-    title: 'Points étoiles',
+    title: 'Star Points',
   },
   mjs: {
-    title: 'Jeton $MJS',
+    title: '$MJS Token',
     type: 'doc',
   },
 };

@@ -284,8 +284,30 @@ async function main() {
   console.log('\nAnalyzing locale structures...');
   const hashPromises = targetLocales.map(async (locale) => {
     const localeDir = join(contentDir, locale);
-    const localeHash = await getDirectoryStructureHash(localeDir);
 
+    // If we need to renew ALL locales, then renew
+    if (process.env.RENEW === 'all') {
+      return {
+        locale,
+        localeDir,
+        localeHash: 'all',
+        needsUpdate: true,
+      };
+    }
+
+    // If we need to renew a specific locale, then renew
+    const renewLocales = process.env.RENEW?.split(',') || [];
+    if (renewLocales.includes(locale)) {
+      return {
+        locale,
+        localeDir,
+        localeHash: 'all',
+        needsUpdate: true,
+      };
+    }
+
+    // Otherwise, check if the locale needs an update
+    const localeHash = await getDirectoryStructureHash(localeDir);
     return {
       locale,
       localeDir,
@@ -347,7 +369,7 @@ async function main() {
       await copyDirectoryStructure(referenceDir, localeDir);
       await translateAndSaveRecursive(locale, localeDir, ['mdx', 'tsx']);
       // timer to avoid rate limiting
-      await sleep(1000);
+      await sleep(500);
       return { locale, success: true };
     }
   );
