@@ -1,13 +1,11 @@
 import { Head } from 'nextra/components';
 // import 'nextra-theme-docs/style.css';
 import '@/app/styles.css';
-import { getDictionary, getDirection } from '../lib/i18n/get-dictionaries';
+import { getDirection } from '../lib/i18n/get-dictionaries';
 import { Metadata } from 'next';
 import { fontClash, fontTeachers } from './fonts';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PostHogProvider } from '@/components/posthog-provider';
-import { TranslationsProvider } from '@/lib/i18n/provider';
-import { Locale } from '@/lib/i18n';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { genPageMetadata } from './seo';
 import { metadata as siteConfig } from '@/lib/site-config';
@@ -16,10 +14,6 @@ export const metadata: Metadata = genPageMetadata({
   title: siteConfig.title,
   description: siteConfig.description,
 });
-// {
-// Define your metadata here
-// For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
-// };
 
 export default async function RootLayout({
   children,
@@ -29,8 +23,6 @@ export default async function RootLayout({
   params: { lang: string };
 }) {
   const lang = (await params)?.lang || 'en';
-
-  const dictionary = await getDictionary(lang as Locale);
 
   return (
     <html
@@ -42,9 +34,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${fontClash.variable} ${fontTeachers.variable} scroll-smooth`}
     >
-      <Head
-      // ... Your additional head options
-      >
+      <Head>
         {/* Your additional tags should be passed as `children` of `<Head>` element */}
         <link
           rel='apple-touch-icon'
@@ -75,9 +65,7 @@ export default async function RootLayout({
       </Head>
       <body>
         <PostHogProvider>
-          <TranslationsProvider translations={dictionary}>
-            <ViewTransition>{children}</ViewTransition>
-          </TranslationsProvider>
+          <ViewTransition>{children}</ViewTransition>
         </PostHogProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
       </body>

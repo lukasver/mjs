@@ -12,6 +12,11 @@
   },
   "Global": {
     "soon": "Bientôt disponible",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "subscribe": "Abonnez-vous maintenant",
+    "contact": "Contactez-nous",
+    "banner": {
+      "title": "Le jeton $MJS arrive bientôt 🚀"
+    }
   }
 }

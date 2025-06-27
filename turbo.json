@@ -83,7 +83,8 @@
 			],
 			"env": [
 				"GITHUB_TOKEN",
-				"ENABLE_REMOTE"
+				"ENABLE_REMOTE",
+				"RENEW"
 			]
 		},
 		"@mjs/token#build": {

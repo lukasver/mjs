@@ -53,7 +53,7 @@ const meta: MetaRecord = {
     type: 'separator',
   },
   contact: {
-    title: 'Contact Us',
+    title: 'お問い合わせ',
     href: applyUTM('/web/contact', {
       source: 'docs',
       medium: 'sidebar',
@@ -62,7 +62,7 @@ const meta: MetaRecord = {
     }),
   },
   subscribe: {
-    title: 'Subscribe',
+    title: '購読する',
     href: applyUTM('/web/#newsletter', {
       source: 'docs',
       medium: 'sidebar',
