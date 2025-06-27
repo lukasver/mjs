@@ -36,7 +36,7 @@ async function layout({
   return (
     <Layout
       i18n={getLocaleNames()}
-      banner={<Banner />}
+      banner={<Banner lang={lang as Locale} />}
       navbar={<Navbar lang={lang as Locale} />}
       search={<Search placeholder={t('Global.search')} />}
       sidebar={{

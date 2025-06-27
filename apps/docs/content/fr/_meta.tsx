@@ -57,11 +57,11 @@ const meta: MetaRecord = {
     // title: 'My Items' // Title is optional
   },
   contact: {
-    title: 'Contact Us',
+    title: 'Contactez-nous',
     href: '/web/contact',
   },
   subscribe: {
-    title: 'Subscribe',
+    title: 'Abonnez-vous',
     href: '/web/#newsletter',
   },
 

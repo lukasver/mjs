@@ -2,12 +2,32 @@ import { readdir, stat, mkdir, copyFile, rm } from 'fs/promises';
 import { join, relative } from 'path';
 import { createHash } from 'crypto';
 import { translateAndSave, getPrompt } from './translate';
+import mime from 'mime-types';
 
 // we need to read the contents folder for en language, since its going to be used as reference
 // Iterate over all langauges and for each langauge
 // ensure the folder/file structure is the same as in en (some performant way like deterministic hash or other)
 // If content structure is the same, then do nothing for that language
 // If content structure is different, then copy all files recursively from contents/en to the new folder ONLY
+
+const [mdxTranslationPrompt, metaTranslationPrompt] = await Promise.all([
+  getPrompt(join(import.meta.dirname, 'mdx-translation.md')),
+  getPrompt(join(import.meta.dirname, '_meta-translation.md')),
+]);
+
+const getTranslationPrompt = (fileExtension: string) => {
+  if (!fileExtension) {
+    return '';
+  }
+  switch (fileExtension) {
+    case 'mdx':
+      return mdxTranslationPrompt;
+    case 'tsx':
+      return metaTranslationPrompt;
+    default:
+      return '';
+  }
+};
 
 /**
  * Get a deterministic hash representing the directory structure
@@ -107,15 +127,12 @@ async function translateAndSaveRecursive(
   options: { perf?: boolean; batchSize?: number } = {}
 ): Promise<void> {
   const { perf = true, batchSize = 5 } = options;
-  // const contentDir = join(import.meta.dirname, '..', 'content');
-  // const referenceDir = join(contentDir, 'en');
-  const translationPrompt = await getPrompt(
-    join(import.meta.dirname, 'mdx-translation.md')
-  );
+
   const translationTasks: Array<{
     relativePath: string;
     sourceFile: string;
     targetFile: string;
+    fileExtension: string;
   }> = [];
 
   async function collectTranslationTasks(currentPath: string) {
@@ -137,6 +154,7 @@ async function translateAndSaveRecursive(
               relativePath,
               sourceFile: fullPath,
               targetFile: fullPath,
+              fileExtension,
             });
           }
         }
@@ -171,15 +189,18 @@ async function translateAndSaveRecursive(
     );
 
     const batchPromises = batch.map(
-      async ({ relativePath, sourceFile, targetFile }) => {
+      async ({ relativePath, sourceFile, targetFile, fileExtension }) => {
         try {
           console.log(`Translating ${relativePath} to ${locale}...`);
           await translateAndSave(
             locale,
-            translationPrompt,
+            getTranslationPrompt(fileExtension),
             sourceFile,
             targetFile,
-            { perf: true }
+            {
+              perf: true,
+              mimeType: mime.lookup(fileExtension) || 'text/plain',
+            }
           );
           return { relativePath, success: true };
         } catch (error) {
@@ -324,7 +345,7 @@ async function main() {
     async ({ locale, localeDir }) => {
       console.log(`\nStarting update for ${locale}...`);
       await copyDirectoryStructure(referenceDir, localeDir);
-      await translateAndSaveRecursive(locale, localeDir, ['mdx']);
+      await translateAndSaveRecursive(locale, localeDir, ['mdx', 'tsx']);
       // timer to avoid rate limiting
       await sleep(1000);
       return { locale, success: true };
