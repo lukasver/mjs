@@ -22,7 +22,7 @@ export const Navbar = async ({ lang }: { lang: Locale }) => {
       // projectIcon={<Icons.boxes className='w-5 h-5' />}
       // ... Your additional navbar options
     >
-      <Link href='/web/#newsletter'>
+      <Link href={`/web/${lang && lang !== 'en' ? `${lang}/` : ''}#newsletter`}>
         <ShinyButton className='bg-accent font-head aspect-square md:aspect-auto md:px-6 md:py-2 px-2 py-2 '>
           <span className='hidden md:block'>{t('Global.subscribe')}</span>
           <Icons.subscribe className='md:hidden size-5' />

@@ -64,7 +64,10 @@ export async function translateAndSave(
   prompt: string,
   sourceFile: string,
   destinationFile?: string,
-  { perf }: { perf?: boolean } = { perf: true }
+  { perf, mimeType }: { perf?: boolean; mimeType?: string } = {
+    perf: true,
+    mimeType: 'text/plain',
+  }
 ) {
   try {
     const file = await fs.readFile(sourceFile);
@@ -79,12 +82,12 @@ export async function translateAndSave(
           content: [
             {
               type: 'text',
-              text: `Translate the following .mdx schema from English to "${language}" locale language`,
+              text: `Translate the following documentfrom English to "${language}" locale language`,
             },
             {
               type: 'file',
               data: file,
-              mimeType: 'text/mdx',
+              mimeType: mimeType || `text/plain`,
             },
           ],
         },
