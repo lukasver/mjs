@@ -24,7 +24,7 @@ const importMdx = async (params: { mdxPath: string[]; lang: string }) => {
 
 export async function generateMetadata(props: PageProps) {
   const params = await props.params;
-  if (params.lang.length > 2) {
+  if (params.lang?.length > 2) {
     return null;
   }
 
