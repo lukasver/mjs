@@ -18,6 +18,7 @@
 		"@mjs/i18n": "workspace:*",
 		"@mjs/ui": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.10",
+		"@vercel/analytics": "^1.5.0",
 		"@vercel/og": "^0.6.8",
 		"@vercel/speed-insights": "^1.2.0",
 		"image-size": "^2.0.2",

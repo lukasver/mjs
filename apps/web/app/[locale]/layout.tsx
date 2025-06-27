@@ -8,7 +8,6 @@ import { Metadata } from 'next';
 import { ThemeProviders } from '../theme-providers';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 
-import { AnalyticsWrapper } from '@/components/Analytics';
 import { Toaster } from '@mjs/ui/primitives/sonner';
 import { getLangDir } from 'rtl-detect';
 import { fontClash, fontTeachers } from '../fonts';
@@ -93,8 +92,6 @@ export default async function RootLayout({
         <PostHogProvider>
           <NextIntlClientProvider>
             <ThemeProviders>
-              <AnalyticsWrapper />
-
               <div className='w-full flex flex-col justify-between items-center font-sans'>
                 {/* <SearchProvider> */}
                 <div className='w-full flex flex-col items-center mb-auto'>

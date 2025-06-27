@@ -8,7 +8,7 @@ export default async function VideoPage() {
   const t = await getTranslations();
   return (
     <VideoBackground>
-      <div className='h-full w-full grid place-content-center'>
+      <div className='grid place-content-center h-screen aspect-video'>
         <p>hola</p>
       </div>
       {/* <div className='z-40! h-[784px] grid grid-cols-4 gap-2 grid-rows-5 container mx-auto py-8 px-4'>

@@ -182,7 +182,12 @@
   },
   "Global": {
     "soon": "Prossimamente",
-    "search": "Cerca..."
+    "search": "Cerca...",
+    "subscribe": "Iscriviti ora",
+    "contact": "Contattaci",
+    "banner": {
+      "title": "Il token $MJS sta arrivando presto 🚀"
+    }
   },
   "Hero": {
     "title": "<span>Unisciti al</span> <span>Gioco di Mahjong Web3</span>",
@@ -430,7 +435,12 @@
     },
     "Global": {
       "soon": "Prossimamente",
-      "search": "Cerca..."
+      "search": "Cerca...",
+      "subscribe": "Iscriviti ora",
+      "contact": "Contattaci",
+      "banner": {
+        "title": "Il token $MJS sta arrivando presto 🚀"
+      }
     }
   }
 }

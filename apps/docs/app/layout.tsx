@@ -4,8 +4,10 @@ import '@/app/styles.css';
 import { getDirection } from '../lib/i18n/get-dictionaries';
 import { Metadata } from 'next';
 import { fontClash, fontTeachers } from './fonts';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PostHogProvider } from '@/components/posthog-provider';
+
 import { unstable_ViewTransition as ViewTransition } from 'react';
 import { genPageMetadata } from './seo';
 import { metadata as siteConfig } from '@/lib/site-config';
@@ -67,6 +69,7 @@ export default async function RootLayout({
         <PostHogProvider>
           <ViewTransition>{children}</ViewTransition>
         </PostHogProvider>
+        {process.env.NODE_ENV === 'production' && <VercelAnalytics />}
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
       </body>
     </html>

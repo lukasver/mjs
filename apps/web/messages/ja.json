@@ -182,7 +182,12 @@
   },
   "Global": {
     "soon": "近日公開",
-    "search": "検索..."
+    "search": "検索...",
+    "subscribe": "今すぐ登録",
+    "contact": "お問い合わせ",
+    "banner": {
+      "title": "$MJSトークンが近日公開予定です 🚀"
+    }
   },
   "Hero": {
     "title": "<span>Web3に</span> <span>麻雀ゲームで参加しよう</span>",
@@ -430,7 +435,12 @@
     },
     "Global": {
       "soon": "近日公開",
-      "search": "検索..."
+      "search": "検索...",
+      "subscribe": "今すぐ登録",
+      "contact": "お問い合わせ",
+      "banner": {
+        "title": "$MJSトークンが近日公開予定です 🚀"
+      }
     }
   }
 }

@@ -182,7 +182,12 @@
   },
   "Global": {
     "soon": "Bientôt disponible",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "subscribe": "Abonnez-vous maintenant",
+    "contact": "Contactez-nous",
+    "banner": {
+      "title": "Le jeton $MJS arrive bientôt 🚀"
+    }
   },
   "Hero": {
     "title": "<span>Rejoignez le jeu de Mahjong Web3</span> <span></span>",
@@ -430,7 +435,12 @@
     },
     "Global": {
       "soon": "Bientôt disponible",
-      "search": "Rechercher..."
+      "search": "Rechercher...",
+      "subscribe": "Abonnez-vous maintenant",
+      "contact": "Contactez-nous",
+      "banner": {
+        "title": "Le jeton $MJS arrive bientôt 🚀"
+      }
     }
   }
 }

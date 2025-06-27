@@ -182,7 +182,12 @@
   },
   "Global": {
     "soon": "Kommt bald",
-    "search": "Suchen..."
+    "search": "Suchen...",
+    "subscribe": "Jetzt abonnieren",
+    "contact": "Kontaktieren Sie uns",
+    "banner": {
+      "title": "$MJS Token kommt bald 🚀"
+    }
   },
   "Hero": {
     "title": "<span>Tritt dem Web3</span> <span>Mahjong Spiel bei</span>",
@@ -430,7 +435,12 @@
     },
     "Global": {
       "soon": "Kommt bald",
-      "search": "Suchen..."
+      "search": "Suchen...",
+      "subscribe": "Jetzt abonnieren",
+      "contact": "Kontaktieren Sie uns",
+      "banner": {
+        "title": "$MJS Token kommt bald 🚀"
+      }
     }
   }
 }

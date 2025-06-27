@@ -22,8 +22,8 @@ function VideoBackground({
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className='absolute inset-0 z-20'>{children}</div>
-      <div className='absolute inset-0 z-10'>
+      {children}
+      <div className='absolute inset-0 z-50'>
         <VideoComponent />
       </div>
     </motion.main>
@@ -45,6 +45,9 @@ const VideoComponent = () => {
       return () => video.removeEventListener('loadeddata', handleLoadedData);
     }
   }, []);
+
+  console.debug('🚀 ~ VideoBackground.tsx:49 ~ videoLoaded:', videoLoaded);
+
   return (
     <div className='w-screen xl:flex xl:justify-center relative aspect-video'>
       {!videoLoaded && (
@@ -68,7 +71,7 @@ const VideoComponent = () => {
           <source src={'/static/videos/comingsoon.mp4'} type='video/mp4' />
           Your browser does not support the video tag.
         </video>
-        <div
+        {/* <div
           className='absolute inset-0'
           style={{
             background: `linear-gradient(90deg, 
@@ -78,7 +81,7 @@ const VideoComponent = () => {
         #770205 100%
       )`,
           }}
-        />
+        /> */}
       </div>
     </div>
   );

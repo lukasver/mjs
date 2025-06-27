@@ -183,7 +183,11 @@
   "Global": {
     "soon": "Coming Soon",
     "search": "Search...",
-    "subscribe": "Subscribe now"
+    "subscribe": "Subscribe now",
+    "contact": "Contact us",
+    "banner": {
+      "title": "$MJS Token is coming soon 🚀"
+    }
   },
   "Hero": {
     "title": "<span>Join the Web3</span> <span>Mahjong Game</span>",
@@ -432,7 +436,11 @@
     "Global": {
       "soon": "Coming Soon",
       "search": "Search...",
-      "subscribe": "Subscribe now"
+      "subscribe": "Subscribe now",
+      "contact": "Contact us",
+      "banner": {
+        "title": "$MJS Token is coming soon 🚀"
+      }
     }
   }
 }
