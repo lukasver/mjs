@@ -19,7 +19,7 @@ export default async function Footer({ className }: { className?: string }) {
           'flex flex-col gap-4 justify-between items-center w-full md:my-10 p-6'
         )}
       >
-        <div className='w-full flex flex-col md:flex-row justify-between gap-6 mt-12  p-6 max-w-full container-wide'>
+        <div className='w-full flex flex-col md:flex-row justify-between gap-6 mt-12 p-6 max-w-full container-wide'>
           <ActiveLinkProvider>
             <ul className='space-y-2'>
               {getFooterLinks(t).map(({ links }) =>

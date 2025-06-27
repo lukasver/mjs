@@ -3,17 +3,7 @@ import type { FC } from 'react';
 import { useMDXComponents as getMDXComponents } from '@/mdx-components';
 import { ScrollProgress } from '@mjs/ui/components/scroll-progress';
 
-export const generateStaticParams = async () => {
-  try {
-    const generateParams = await generateStaticParamsFor('mdxPath');
-    const result = await generateParams();
-    console.debug('🚀 ~ page.tsx:8 ~ result:', result);
-    return result;
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-};
+export const generateStaticParams = generateStaticParamsFor('mdxPath');
 
 const importMdx = async (params: { mdxPath: string[]; lang: string }) => {
   let result = {};

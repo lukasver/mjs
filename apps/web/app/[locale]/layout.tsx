@@ -6,6 +6,7 @@ import '@/css/styles.css';
 import { siteConfig } from '@/data/config/site.settings';
 import { Metadata } from 'next';
 import { ThemeProviders } from '../theme-providers';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 
 import { AnalyticsWrapper } from '@/components/Analytics';
 import { Toaster } from '@mjs/ui/primitives/sonner';
@@ -106,6 +107,7 @@ export default async function RootLayout({
           </NextIntlClientProvider>
         </PostHogProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
+        {process.env.NODE_ENV === 'production' && <VercelAnalytics />}
         <Toaster position='top-center' duration={2000} />
       </body>
     </html>
