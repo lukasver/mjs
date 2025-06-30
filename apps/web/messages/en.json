@@ -189,11 +189,11 @@
   "Footer": {
     "links": {
       "home": "Home",
+      "docs": "Docs",
       "whoWeAre": "Who We Are",
       "termsAndConditions": "Terms and Conditions",
       "privacyPolicy": "Privacy Policy",
-      "contact": "Contact",
-      "docs": "Docs"
+      "contact": "Contact"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
@@ -369,17 +369,6 @@
       "logIn": "LOG IN",
       "findMoreCharacters": "to find more characters"
     },
-    "Footer": {
-      "links": {
-        "home": "Home",
-        "whoWeAre": "Who We Are",
-        "termsAndConditions": "Terms and Conditions",
-        "privacyPolicy": "Privacy Policy",
-        "contact": "Contact",
-        "docs": "Docs"
-      },
-      "copyright": "©{year} WASABI GAMES DMCC"
-    },
     "ContactForm": {
       "title": "Contact Us",
       "description": "Send us a message and we'll get back to you as soon as possible.",
@@ -535,6 +524,17 @@
           "14": "Real value, digital pain. Welcome to Mahjong Stars."
         }
       }
+    },
+    "Footer": {
+      "links": {
+        "home": "Home",
+        "docs": "Docs",
+        "whoWeAre": "Who We Are",
+        "termsAndConditions": "Terms and Conditions",
+        "privacyPolicy": "Privacy Policy",
+        "contact": "Contact"
+      },
+      "copyright": "©{year} WASABI GAMES DMCC"
     },
     "Global": {
       "soon": "Coming Soon",

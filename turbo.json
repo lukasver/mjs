@@ -68,7 +68,8 @@
 				"ALTCHA_HMAC_KEY",
 				"EMAIL_FROM",
 				"EMAILOCTOPUS_API_KEY",
-				"EMAILOCTOPUS_LIST_ID"
+				"EMAILOCTOPUS_LIST_ID",
+				"MOBILE_OPTIMIZED"
 			]
 		},
 		"@mjs/docs#build": {

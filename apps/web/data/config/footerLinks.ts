@@ -7,7 +7,6 @@ export const getFooterLinks = (
   href: string;
   title: string;
 }> => {
-  console.debug('🚀 ~ footerLinks.ts:8 ~ locale:', locale);
   return [
     { href: '#home', title: t('Footer.links.home') },
     {

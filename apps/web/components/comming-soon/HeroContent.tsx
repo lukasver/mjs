@@ -50,7 +50,7 @@ function HeroContent({
             </div>
 
             {/* Right Side - Character Space (video shows through) */}
-            <div className='h-full relative'>{children}</div>
+            {/* <div className='h-full relative'>{children}</div> */}
           </div>
         </div>
       </div>
@@ -80,6 +80,9 @@ function HeroContent({
           </div>
         </FadeAnimation>
       </div>
+
+      {/* Bubbles */}
+      {children}
     </div>
   );
 }

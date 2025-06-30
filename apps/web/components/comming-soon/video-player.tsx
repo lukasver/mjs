@@ -10,7 +10,10 @@ function VideoPlayer({
   poster,
 }: {
   src: { src: string; type: string } | { src: string; type: string }[];
-  mobileSrc: { src: string; type: string } | { src: string; type: string }[];
+  mobileSrc:
+    | { src: string; type: string }
+    | { src: string; type: string }[]
+    | null;
   className?: string;
   poster?: string;
 }) {
@@ -18,6 +21,9 @@ function VideoPlayer({
   const isMobile = width < 768;
 
   if (isMobile) {
+    if (!mobileSrc) {
+      return null;
+    }
     return (
       <>
         <video
@@ -41,7 +47,9 @@ function VideoPlayer({
         <div
           className={cn(
             'absolute inset-0 z-50 h-[75%] sm:hidden',
-            isMobile && 'bg-gradient-to-t from-[#79080A] to-20% to-transparent'
+            isMobile &&
+              mobileSrc &&
+              'bg-gradient-to-t from-[#79080A] from-5% via-[#79080A] via-5% to-transparent to-10%'
           )}
         />
       </>

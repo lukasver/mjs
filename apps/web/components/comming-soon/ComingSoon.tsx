@@ -6,7 +6,21 @@ import VideoPlayer from './video-player';
 import Link from 'next/link';
 import poster from '@/public/static/images/poster.webp';
 import ErrorBoundary from '@mjs/ui/components/error-boundary';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
+
+const MOBILE_OPTIMIZED = process.env.MOBILE_OPTIMIZED === 'true';
+
+const BackgroundImage = ({ poster }: { poster: StaticImageData }) => {
+  return (
+    <Image
+      {...poster}
+      alt='poster'
+      height={1080}
+      width={1920}
+      className='absolute inset-0 w-full object-contain h-full bg-cover sm:bg-center bg-no-repeat max-w-screen'
+    />
+  );
+};
 
 /**
  * Returns mNumber (1, 2, or 3) based on the current month.
@@ -39,17 +53,7 @@ export default async function CommingSoon() {
 
   return (
     <div className='relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
-      <ErrorBoundary
-        fallback={
-          <Image
-            {...poster}
-            alt='poster'
-            height={1080}
-            width={1920}
-            className='absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat max-w-screen'
-          />
-        }
-      >
+      <ErrorBoundary fallback={<BackgroundImage poster={poster} />}>
         <VideoPlayer
           src={[
             {
@@ -61,27 +65,26 @@ export default async function CommingSoon() {
               type: 'video/mp4',
             },
           ]}
-          mobileSrc={[
-            {
-              src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
-              type: 'video/webm',
-            },
-            {
-              src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
-              type: 'video/mp4',
-            },
-          ]}
+          mobileSrc={
+            MOBILE_OPTIMIZED
+              ? null
+              : [
+                  {
+                    src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
+                    type: 'video/webm',
+                  },
+                  {
+                    src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
+                    type: 'video/mp4',
+                  },
+                ]
+          }
           poster={poster.src}
         />
       </ErrorBoundary>
 
       {/* Static Image Background - Mobile */}
-      {/* <div
-        className='absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat md:hidden'
-        style={{
-          backgroundImage: `url('${poster.src}?height=1080&width=1920')`,
-        }}
-      /> */}
+      {MOBILE_OPTIMIZED && <BackgroundImage poster={poster} />}
       {/* Overlay */}
       <div className='absolute inset-0 bg-red-900/20' />
 
@@ -103,9 +106,11 @@ export default async function CommingSoon() {
           })}
           lines={lines}
         >
-          <SpeechBubbleContainer messages={lines}>
-            <SpeechBubble />
-          </SpeechBubbleContainer>
+          <div className='absolute top-55 left-10 md:top-10 md:left-auto md:right-10 lg:top-[10%] lg:right-[10%]'>
+            <SpeechBubbleContainer messages={lines}>
+              <SpeechBubble />
+            </SpeechBubbleContainer>
+          </div>
         </HeroContent>
       </main>
     </div>
