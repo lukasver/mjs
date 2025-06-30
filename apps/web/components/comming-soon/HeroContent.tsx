@@ -40,7 +40,7 @@ function HeroContent({
                 </FadeAnimation>
                 <FadeAnimation delay={3.5} duration={2}>
                   <>
-                    <NewsletterForm />
+                    <NewsletterForm className='lg:mb-6' />
                     <p className='text-white/90 text-sm font-common font-medium'>
                       {props.agreeTerms}
                     </p>
@@ -48,9 +48,6 @@ function HeroContent({
                 </FadeAnimation>
               </div>
             </div>
-
-            {/* Right Side - Character Space (video shows through) */}
-            {/* <div className='h-full relative'>{children}</div> */}
           </div>
         </div>
       </div>
