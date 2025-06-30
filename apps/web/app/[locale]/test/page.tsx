@@ -1,40 +1,42 @@
 // import { siteConfig } from "@/config/site"
 // import { Icons } from "@/components/icons"
-import VideoBackground from '@/components/VideoBackground';
-import { getTranslations } from 'next-intl/server';
+import ComingSoon from '@/components/comming-soon/ComingSoon';
 
 /// Try making video background container "contents" propoerty
 export default async function VideoPage() {
-  const t = await getTranslations();
   return (
-    <VideoBackground>
-      <div className='grid place-content-center h-screen aspect-video'>
-        <p>hola</p>
-      </div>
-      {/* <div className='z-40! h-[784px] grid grid-cols-4 gap-2 grid-rows-5 container mx-auto py-8 px-4'>
-        <HeroText
-          className='row-span-3 col-start-1 col-end-3 text-left'
-          id={'hero'}
-        >
-          <span>Mahjong</span>
-          <span>Stars is</span>
-          <span>coming</span> <span>soon!</span>
-        </HeroText> */}
-      {/* <div
-          id='newsletter'
-          className='row-span-2 flex justify-center col-start-1 col-end-3'
-        >
-          <LandingNewsletterSection
-            title={t('Newsletter.title')}
-            description={t('Newsletter.description')}
-            buttonLabel={t('Newsletter.button')}
-            placeholderLabel={t('Newsletter.placeholder')}
-          >
-            <p className='text-sm'>{t('Newsletter.footer')}</p>
-          </LandingNewsletterSection>
-        </div> */}
-      {/* </div> */}
-    </VideoBackground>
+    <ComingSoon />
+    // <VideoBackground className='relative'>
+    //   <div className='absolute inset-0 z-50'>
+    //     <div className='aspect-video w-screen grid place-content-center grid-cols-2 grid-rows-2'>
+    //       <div className='col-span-1 row-start-1 place-self-center'>
+    //         <HeroText className='p-10'>Mahjong Stars is coming soon!</HeroText>
+    //       </div>
+    //       <div
+    //         id={'bubbles'}
+    //         className='col-span-1 row-start-1 place-self-center'
+    //       >
+    //         <div className='w-10 h-10 bg-red-500 rounded-full'>bubble</div>
+    //       </div>
+    //       <div
+    //         id='newsletter'
+    //         className='col-span-1 row-start-2 place-self-center'
+    //       >
+    //         <LandingNewsletterSection
+    //           title={t('Newsletter.title')}
+    //           description={
+    //             'Subscribe and maybe, just maybe, we’ll let you in on it first.'
+    //             // t('Newsletter.description')
+    //           }
+    //           buttonLabel={t('Newsletter.button')}
+    //           placeholderLabel={t('Newsletter.placeholder')}
+    //         >
+    //           <p className='text-sm'>{t('Newsletter.footer')}</p>
+    //         </LandingNewsletterSection>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </VideoBackground>
   );
 }
 

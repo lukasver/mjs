@@ -1,7 +1,7 @@
 import { Button } from '../primitives/button';
 import { Icons } from './icons';
 
-type SocialFooterProps = {
+export type SocialFooterProps = {
   config: Partial<{
     twitter: string;
     instagram: string;
