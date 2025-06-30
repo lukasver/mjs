@@ -20,7 +20,7 @@ const SpeechBubble = ({ className }: { className?: string }) => {
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className={cn(
-            'absolute z-30 -top-10 -right-10 3xl:-right-40 3xl:-top-40',
+            'absolute z-30 -top-20 -right-20 xl:-right-10 xl:-top-10 2xl:-right-40 2xl:-top-40',
             className
           )}
         >

@@ -161,12 +161,12 @@ const NewsletterForm: FC<{
         <form
           onSubmit={handleSubmit}
           className={cn(
-            'flex bg-white rounded-lg font-common',
+            'flex bg-white rounded-lg font-common flex-col sm:flex-row',
             `shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)]`,
             className
           )}
         >
-          <div className='grow w-full md:w-auto'>
+          <div className='grow w-full md:w-auto mb-0'>
             <Label htmlFor='email' className='sr-only'>
               {inputLabel}
             </Label>
@@ -182,7 +182,7 @@ const NewsletterForm: FC<{
                 autoComplete: 'email',
                 disabled: disabled || isPending || !LSCanSubmit,
                 className: cn(
-                  'flex-1 bg-white/90 border-0 text-black placeholder:text-gray-600 rounded-tl-lg rounded-bl-lg rounded-tr-none rounded-br-none mb-0',
+                  'flex-1 bg-white/90 border-0 text-black placeholder:text-gray-600 rounded-tl-lg rounded-bl-lg rounded-tr-none rounded-br-none',
                   `shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)]`
                 ),
               }}

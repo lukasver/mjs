@@ -19,25 +19,32 @@ function VideoPlayer({
 
   if (isMobile) {
     return (
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className={cn(
-          'absolute inset-0 w-full h-full object-contain',
-          className
-        )}
-        {...(poster ? { poster } : {})}
-      >
-        {Array.isArray(mobileSrc) ? (
-          mobileSrc.map((props) => <source key={props.src} {...props} />)
-        ) : (
-          <source {...mobileSrc} />
-        )}
-        Your browser does not support the video tag.
-        <div className='absolute inset-0 bg-gradient-to-br from-red-600 to-red-800' />
-      </video>
+      <>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={cn(
+            'absolute w-full h-full object-contain bottom-[25%] md:bottom-auto md:inset-0',
+            className
+          )}
+          {...(poster ? { poster } : {})}
+        >
+          {Array.isArray(mobileSrc) ? (
+            mobileSrc.map((props) => <source key={props.src} {...props} />)
+          ) : (
+            <source {...mobileSrc} />
+          )}
+          Your browser does not support the video tag.
+        </video>
+        <div
+          className={cn(
+            'absolute inset-0 z-50 h-[75%] sm:hidden',
+            isMobile && 'bg-gradient-to-t from-[#79080A] to-20% to-transparent'
+          )}
+        />
+      </>
     );
   }
 
@@ -49,7 +56,7 @@ function VideoPlayer({
       playsInline
       style={{ height: 'inherit' }}
       className={cn(
-        'absolute inset-0 w-full object-cover xl:object-contain hidden md:block 3xl:min-h-screen',
+        'absolute inset-0 w-full xl:object-contain hidden md:block 3xl:min-h-screen',
         className
       )}
       {...(poster ? { poster } : {})}

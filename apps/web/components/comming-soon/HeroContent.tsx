@@ -16,10 +16,7 @@ function HeroContent({
 }) {
   return (
     <div
-      className={cn(
-        'relative z-10 flex flex-col min-h-[768px] 2xl:min-h-screen',
-        className
-      )}
+      className={cn('relative z-10 flex flex-col 2xl:min-h-screen', className)}
     >
       {/* Desktop Layout */}
       <div className='hidden lg:flex flex-1 items-center'>
@@ -59,26 +56,25 @@ function HeroContent({
       </div>
 
       {/* Mobile Layout */}
-      <div className='lg:hidden flex flex-col min-h-screen'>
-        {/* Hero Text - Top */}
-        <div className='flex-1 flex items-start justify-center pt-12 px-6'>
+      <div className='lg:hidden flex flex-col h-screen sm:h-auto'>
+        <div className='flex-1 flex items-start lg:justify-center pt-8 lg:pt-12 px-6'>
           <EnterAnimation>
             <h1
-              className='text-4xl sm:text-5xl font-bold text-white text-center leading-tight'
+              className='text-4xl sm:text-5xl font-bold text-white text-left lg:text-center leading-tight'
               dangerouslySetInnerHTML={{ __html: props.title }}
             />
           </EnterAnimation>
         </div>
 
-        {/* Character Space - Middle (video shows through) */}
-        <div className='flex-1' />
+        <div className='flex-1 hidden lg:block' />
 
-        {/* Subscription Form - Bottom */}
         <FadeAnimation delay={0.2}>
-          <div className='bg-gradient-to-t from-red-900/90 to-transparent p-6 space-y-4'>
-            <p className='text-white/90 text-center'>{props.description}</p>
+          <div className='lg:bg-gradient-to-t lg:from-red-900/90 lg:to-transparent p-6 space-y-4 max-w-sm'>
+            <p className='text-white/90 text-left lg:text-center'>
+              {props.description}
+            </p>
             <NewsletterForm className='space-y-3 w-full flex-col' />
-            <p className='text-white/70 text-xs text-center'>
+            <p className='text-white/70 text-xs text-left lg:text-center'>
               {props.agreeTerms}
             </p>
           </div>
