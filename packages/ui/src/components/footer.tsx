@@ -10,21 +10,25 @@ export const Footer = ({
   copyright,
   siteConfig,
   children,
+  element,
 }: {
   className?: string;
   links: { href: string; title: string }[];
   copyright: React.ReactNode;
   siteConfig: SiteConfig;
   children: React.ReactNode;
+  element?: 'footer' | 'div';
 }) => {
+  const El = element || 'footer';
+
   return (
-    <div className={cn('mt-auto w-full', className)}>
+    <El className={cn('mt-auto w-full', className)}>
       <div
         className={cn(
           'flex flex-col gap-4 justify-between items-center w-full md:my-10 p-6'
         )}
       >
-        <div className='w-full flex flex-col md:flex-row justify-between gap-6 mt-12  p-6 max-w-full container-wide'>
+        <nav className='w-full flex flex-col md:flex-row justify-between gap-6 mt-12  p-6 max-w-full container-wide'>
           <ActiveLinkProvider>
             <ul className='space-y-2'>
               {links.map((link) => (
@@ -43,7 +47,7 @@ export const Footer = ({
             </ul>
           </ActiveLinkProvider>
           <div>{children}</div>
-        </div>
+        </nav>
       </div>
 
       <div>
@@ -59,6 +63,6 @@ export const Footer = ({
           </div>
         </div>
       </div>
-    </div>
+    </El>
   );
 };

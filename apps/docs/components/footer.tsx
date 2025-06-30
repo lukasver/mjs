@@ -16,6 +16,7 @@ export const Footer = async ({ locale }: { locale: Locale }) => {
         links={getFooterLinks(t)}
         copyright={t('Footer.copyright', { year: new Date().getFullYear() })}
         siteConfig={siteConfig}
+        element='div'
       >
         <Suspense fallback={<Skeleton className='w-[125px] h-8' />}>
           <LocaleSwitch />

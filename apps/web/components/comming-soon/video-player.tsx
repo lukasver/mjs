@@ -16,34 +16,30 @@ function VideoPlayer({
 }) {
   const { width } = useWindowSize();
   const isMobile = width < 768;
-  console.debug('🚀 ~ video-player.tsx:55 ~ isMobile:', isMobile);
 
   if (isMobile) {
-    <video
-      autoPlay
-      muted
-      loop
-      playsInline
-      className={cn(
-        'absolute inset-0 w-full h-full object-contain hidden md:block min-h-screen',
-        className
-      )}
-      {...(poster ? { poster } : {})}
-    >
-      {Array.isArray(mobileSrc) ? (
-        mobileSrc.map((props) => <source key={props.src} {...props} />)
-      ) : (
-        <source {...mobileSrc} />
-      )}
-      Your browser does not support the video tag.
-      <div className='absolute inset-0 bg-gradient-to-br from-red-600 to-red-800' />
-      {/* Left gradient overlay to hide video edges */}
-      {/* <div className='absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-red-800 to-transparent z-5 hidden md:block' /> */}
-      {/* Right gradient overlay to hide video edges */}
-      {/* <div className='absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-red-800 to-transparent z-5 hidden md:block' /> */}
-    </video>;
+    return (
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className={cn(
+          'absolute inset-0 w-full h-full object-contain',
+          className
+        )}
+        {...(poster ? { poster } : {})}
+      >
+        {Array.isArray(mobileSrc) ? (
+          mobileSrc.map((props) => <source key={props.src} {...props} />)
+        ) : (
+          <source {...mobileSrc} />
+        )}
+        Your browser does not support the video tag.
+        <div className='absolute inset-0 bg-gradient-to-br from-red-600 to-red-800' />
+      </video>
+    );
   }
-  console.log('DESKTOP');
 
   return (
     <video
@@ -51,8 +47,9 @@ function VideoPlayer({
       muted
       loop
       playsInline
+      style={{ height: 'inherit' }}
       className={cn(
-        'absolute inset-0 w-full h-full object-contain hidden md:block min-h-screen',
+        'absolute inset-0 w-full object-cover xl:object-contain hidden md:block 3xl:min-h-screen',
         className
       )}
       {...(poster ? { poster } : {})}
@@ -63,11 +60,6 @@ function VideoPlayer({
         <source {...src} />
       )}
       Your browser does not support the video tag.
-      <div className='absolute inset-0 bg-gradient-to-br from-red-600 to-red-800' />
-      {/* Left gradient overlay to hide video edges */}
-      {/* <div className='absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-red-800 to-transparent z-5 hidden md:block' /> */}
-      {/* Right gradient overlay to hide video edges */}
-      {/* <div className='absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-red-800 to-transparent z-5 hidden md:block' /> */}
     </video>
   );
 }

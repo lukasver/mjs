@@ -14,8 +14,12 @@ import { Suspense } from 'react';
 import Characters from '@/public/static/images/chars1.webp';
 import Background from '@/public/static/images/bg.webp';
 
-export default async function Home() {
-  const t = await getTranslations();
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const [{ locale }, t] = await Promise.all([params, getTranslations()]);
   return (
     <div className='flex flex-col w-full items-center fancy-overlay'>
       {/* <LandingSocialProofBand invert={false} className='hidden md:flex'>
@@ -205,7 +209,7 @@ export default async function Home() {
             </LandingNewsletterSection>
           </div>
         </main>
-        <Footer />
+        <Footer locale={locale} />
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import SpeechBubbleContainer from './speech-bubble-container';
 import VideoPlayer from './video-player';
 import Link from 'next/link';
 import poster from '@/public/static/images/poster.webp';
+import ErrorBoundary from '@mjs/ui/components/error-boundary';
+import Image from 'next/image';
 
 /**
  * Returns mNumber (1, 2, or 3) based on the current month.
@@ -36,39 +38,50 @@ export default async function CommingSoon() {
   });
 
   return (
-    <div className='relative w-screen overflow-hidden h-[calc(100dvh-10px)]'>
-      {/* Video Background - Desktop */}
-      <VideoPlayer
-        src={[
-          {
-            src: `/static/videos/comingsoon-${mNumber}.webm`,
-            type: 'video/webm',
-          },
-          {
-            src: `/static/videos/comingsoon-${mNumber}.mp4`,
-            type: 'video/mp4',
-          },
-        ]}
-        mobileSrc={[
-          {
-            src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
-            type: 'video/webm',
-          },
-          {
-            src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
-            type: 'video/mp4',
-          },
-        ]}
-        className='absolute inset-0 w-full h-full object-contain hidden md:block min-h-screen'
-        poster={poster.src}
-      />
+    <div className='relative w-screen overflow-hidden h-[700px] xl:h-[calc(100dvh-10px)]'>
+      <ErrorBoundary
+        fallback={
+          <Image
+            {...poster}
+            alt='poster'
+            height={1080}
+            width={1920}
+            className='absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat max-w-screen'
+          />
+        }
+      >
+        <VideoPlayer
+          src={[
+            {
+              src: `/static/videos/comingsoon-${mNumber}.webm`,
+              type: 'video/webm',
+            },
+            {
+              src: `/static/videos/comingsoon-${mNumber}.mp4`,
+              type: 'video/mp4',
+            },
+          ]}
+          mobileSrc={[
+            {
+              src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
+              type: 'video/webm',
+            },
+            {
+              src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
+              type: 'video/mp4',
+            },
+          ]}
+          poster={poster.src}
+        />
+      </ErrorBoundary>
+
       {/* Static Image Background - Mobile */}
-      <div
+      {/* <div
         className='absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat md:hidden'
         style={{
           backgroundImage: `url('${poster.src}?height=1080&width=1920')`,
         }}
-      />
+      /> */}
       {/* Overlay */}
       <div className='absolute inset-0 bg-red-900/20' />
 

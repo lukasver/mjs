@@ -7,12 +7,19 @@ import { Footer as AppFooter } from '@mjs/ui/components/footer';
 
 import LocaleSwitcher from './LocaleSwitcher';
 import { cn } from '@mjs/ui/lib/utils';
+import { Locale } from 'next-intl';
 
-export default async function Footer({ className }: { className?: string }) {
+export default async function Footer({
+  className,
+  locale,
+}: {
+  className?: string;
+  locale?: Locale;
+}) {
   const t = await getTranslations();
   return (
     <AppFooter
-      links={getFooterLinks(t)}
+      links={getFooterLinks(t, locale)}
       copyright={t('Footer.copyright', { year: new Date().getFullYear() })}
       siteConfig={metadata}
       className={cn('bg-black', className)}
