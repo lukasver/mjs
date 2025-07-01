@@ -32,7 +32,10 @@ export function WebMSupportDetector({
           !userAgent?.includes('chrome') &&
           !userAgent?.includes('chromium') &&
           !userAgent?.includes('edg') &&
-          !userAgent?.includes('firefox')
+          !userAgent?.includes('firefox') &&
+          !userAgent?.includes('mobile') &&
+          !userAgent?.includes('iphone') &&
+          !userAgent?.includes('ipad')
         );
       };
 
