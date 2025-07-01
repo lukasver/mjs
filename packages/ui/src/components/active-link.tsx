@@ -23,6 +23,7 @@ const ActiveLink = ({
   const { activeLink, setActiveLink } = useActiveLink();
 
   const child = Children.only(children);
+  // @ts-expect-error wontfix
   const childClassName = child.props.className || '';
   const [className, setClassName] = useState(childClassName);
 
@@ -53,6 +54,7 @@ const ActiveLink = ({
   return (
     <Link {...props} href={props.href} onClick={handleHashChange(props.href)}>
       {React.cloneElement(child, {
+        // @ts-expect-error wontfix
         className: className || null,
       })}
     </Link>
