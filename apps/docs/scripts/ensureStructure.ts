@@ -1,7 +1,7 @@
 import { readdir, stat, mkdir, copyFile, rm } from 'fs/promises';
 import { join, relative } from 'path';
 import { createHash } from 'crypto';
-import { translateAndSave, getPrompt } from './translate';
+import { translateAndSave, getPrompt } from '@mjs/utils';
 import mime from 'mime-types';
 
 // we need to read the contents folder for en language, since its going to be used as reference

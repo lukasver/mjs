@@ -3,15 +3,15 @@
     "links": {
       "home": "Startseite",
       "docs": "Dokumentation",
-      "whoWeAre": "Wer Wir Sind",
-      "termsAndConditions": "Allgemeine Geschäftsbedingungen",
+      "whoWeAre": "Über uns",
+      "termsAndConditions": "Nutzungsbedingungen",
       "privacyPolicy": "Datenschutzrichtlinie",
       "contact": "Kontakt"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
-    "soon": "Demnächst Verfügbar",
+    "soon": "Demnächst verfügbar",
     "search": "Suchen...",
     "subscribe": "Jetzt abonnieren"
   }

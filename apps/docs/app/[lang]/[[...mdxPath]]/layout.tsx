@@ -53,7 +53,7 @@ async function layout({
         pageMap={pageMap}
         editLink={false}
         docsRepositoryBase='https://github.com/mahjongstars/docs'
-        footer={<Footer />}
+        footer={<Footer locale={lang as Locale} />}
         navigation={true}
       >
         {children}

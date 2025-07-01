@@ -2,6 +2,7 @@
   "name": "@mjs/i18n",
   "version": "0.0.1",
   "description": "Localized messages for the MJS apps",
+  "type": "module",
   "exports": {
     "./web/*.json": "./dist/web/*.json",
     "./docs/*.json": "./dist/docs/*.json",
@@ -9,14 +10,16 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpx tsx build.ts"
+    "build": "pnpx tsx build.ts",
+    "translate": "pnpx tsx translate.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
-    "@lingual/i18n-check": "^0.8.4"
+    "@lingual/i18n-check": "^0.8.4",
+    "@mjs/utils": "workspace:*"
   },
   "private": true,
   "peerDependencies": {

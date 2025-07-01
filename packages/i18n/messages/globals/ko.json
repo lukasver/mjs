@@ -3,9 +3,9 @@
     "links": {
       "home": "홈",
       "docs": "문서",
-      "whoWeAre": "회사 소개",
-      "termsAndConditions": "이용 약관",
-      "privacyPolicy": "개인 정보 정책",
+      "whoWeAre": "회사소개",
+      "termsAndConditions": "이용약관",
+      "privacyPolicy": "개인정보처리방침",
       "contact": "문의하기"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
@@ -14,9 +14,10 @@
     "soon": "곧 출시 예정",
     "search": "검색...",
     "subscribe": "지금 구독하기",
+    "subscribePlaceholder": "이메일 주소를 입력하세요",
     "contact": "문의하기",
     "banner": {
-      "title": "$MJS 토큰이 곧 출시됩니다 🚀"
+      "title": "$MJS 토큰 곧 출시 🚀"
     }
   }
 }

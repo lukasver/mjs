@@ -3,16 +3,16 @@
     "links": {
       "home": "Accueil",
       "docs": "Docs",
-      "whoWeAre": "Qui Nous Sommes",
-      "termsAndConditions": "Conditions Générales",
-      "privacyPolicy": "Politique de Confidentialité",
+      "whoWeAre": "Qui sommes-nous ?",
+      "termsAndConditions": "Conditions générales d'utilisation",
+      "privacyPolicy": "Politique de confidentialité",
       "contact": "Contact"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
-    "soon": "Bientôt Disponible",
+    "soon": "Bientôt disponible",
     "search": "Rechercher...",
-    "subscribe": "S'abonner maintenant"
+    "subscribe": "S'abonner"
   }
 }

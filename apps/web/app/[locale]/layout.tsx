@@ -12,6 +12,7 @@ import { Toaster } from '@mjs/ui/primitives/sonner';
 import { getLangDir } from 'rtl-detect';
 import { fontClash, fontTeachers } from '../fonts';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Footer from '@/components/Footer';
 
 /**
  * Generate language alternates for SEO metadata
@@ -93,12 +94,14 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <ThemeProviders>
               <div className='w-full flex flex-col justify-between items-center font-sans'>
-                {/* <SearchProvider> */}
                 <div className='w-full flex flex-col items-center mb-auto'>
                   {children}
+                  <Footer
+                    className='[&>div>div]:mt-0! [&>div]:my-0!'
+                    locale={locale}
+                  />
                 </div>
                 {modals}
-                {/* </SearchProvider> */}
               </div>
             </ThemeProviders>
           </NextIntlClientProvider>

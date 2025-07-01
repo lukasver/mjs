@@ -1,0 +1,29 @@
+{
+  "name": "@mjs/utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./dist": "./dist/index.mjs"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@mjs/typescript-config": "workspace:*",
+    "@types/node": "^24.0.7",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^1.2.19",
+    "ai": "^4.3.16",
+    "handlebars": "^4.7.8"
+  }
+}
