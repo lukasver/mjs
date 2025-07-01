@@ -25,19 +25,14 @@ export function WebMSupportDetector({
     const checkBrowserSupport = () => {
       // Check if it's Safari
       const isSafari = () => {
-        const userAgent = navigator.userAgent.toLowerCase();
-
-        console.debug(
-          '🚀 ~ web-support-detector.tsx:30 ~ userAgent:',
-          userAgent
-        );
+        const userAgent = navigator?.userAgent?.toLowerCase();
 
         return (
-          userAgent.includes('safari') &&
-          !userAgent.includes('chrome') &&
-          !userAgent.includes('chromium') &&
-          !userAgent.includes('edg') &&
-          !userAgent.includes('firefox')
+          userAgent?.includes('safari') &&
+          !userAgent?.includes('chrome') &&
+          !userAgent?.includes('chromium') &&
+          !userAgent?.includes('edg') &&
+          !userAgent?.includes('firefox')
         );
       };
 
