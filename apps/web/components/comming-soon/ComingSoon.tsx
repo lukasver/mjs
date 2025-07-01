@@ -7,6 +7,7 @@ import Link from 'next/link';
 import poster from '@/public/static/images/poster.webp';
 import ErrorBoundary from '@mjs/ui/components/error-boundary';
 import Image, { StaticImageData } from 'next/image';
+import { WebMSupportDetector } from '../web-support-detector';
 
 const MOBILE_OPTIMIZED = process.env.MOBILE_OPTIMIZED === 'true';
 
@@ -52,67 +53,72 @@ export default async function CommingSoon() {
   });
 
   return (
-    <div className='bg-[#770205] relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
-      <ErrorBoundary fallback={<BackgroundImage poster={poster} />}>
-        <VideoPlayer
-          src={[
-            {
-              src: `/static/videos/comingsoon-${mNumber}.webm`,
-              type: 'video/webm',
-            },
-            {
-              src: `/static/videos/comingsoon-${mNumber}.mp4`,
-              type: 'video/mp4',
-            },
-          ]}
-          mobileSrc={
-            MOBILE_OPTIMIZED
-              ? null
-              : [
-                  {
-                    src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
-                    type: 'video/webm',
-                  },
-                  {
-                    src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
-                    type: 'video/mp4',
-                  },
-                ]
-          }
-          poster={poster.src}
-        />
-      </ErrorBoundary>
+    <WebMSupportDetector
+      webmBackgroundColor='bg-[#770205]'
+      fallbackBackgroundColor='bg-[#830409]'
+    >
+      <div className='relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
+        <ErrorBoundary fallback={<BackgroundImage poster={poster} />}>
+          <VideoPlayer
+            src={[
+              {
+                src: `/static/videos/comingsoon-${mNumber}.webm`,
+                type: 'video/webm',
+              },
+              {
+                src: `/static/videos/comingsoon-${mNumber}.mp4`,
+                type: 'video/mp4',
+              },
+            ]}
+            mobileSrc={
+              MOBILE_OPTIMIZED
+                ? null
+                : [
+                    {
+                      src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
+                      type: 'video/webm',
+                    },
+                    {
+                      src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
+                      type: 'video/mp4',
+                    },
+                  ]
+            }
+            poster={poster.src}
+          />
+        </ErrorBoundary>
 
-      {/* Static Image Background - Mobile */}
-      {MOBILE_OPTIMIZED && <BackgroundImage poster={poster} />}
-      {/* Overlay */}
-      <div className='absolute inset-0 bg-red-900/20' />
+        {/* Static Image Background - Mobile */}
+        {MOBILE_OPTIMIZED && <BackgroundImage poster={poster} />}
+        {/* Overlay */}
+        <div className='absolute inset-0 bg-red-900/20' />
 
-      <main id='newsletter'>
-        <HeroContent
-          title={t(title)}
-          description={t('Bubbles.description')}
-          agreeTerms={t.rich('Bubbles.agreeTerms', {
-            terms: (chunks) => (
-              <Link href='/terms' className='underline hover:text-white'>
-                {chunks}
-              </Link>
-            ),
-            privacy: (chunks) => (
-              <Link href='/privacy' className='underline hover:text-white'>
-                {chunks}
-              </Link>
-            ),
-          })}
-          lines={lines}
-        >
-          <div className='absolute top-55 left-10 md:top-10 md:left-auto md:right-10 lg:top-[10%] lg:right-[10%]'>
-            <SpeechBubbleContainer messages={lines}>
-              <SpeechBubble />
-            </SpeechBubbleContainer>
-          </div>
-        </HeroContent>
-      </main>
-    </div>
+        <main id='newsletter'>
+          <HeroContent
+            title={t(title)}
+            description={t('Bubbles.description')}
+            agreeTerms={t.rich('Bubbles.agreeTerms', {
+              terms: (chunks) => (
+                <Link href='/terms' className='underline hover:text-white'>
+                  {chunks}
+                </Link>
+              ),
+              privacy: (chunks) => (
+                <Link href='/privacy' className='underline hover:text-white'>
+                  {chunks}
+                </Link>
+              ),
+            })}
+            lines={lines}
+          >
+            <div className='absolute top-55 left-10 md:top-10 md:left-auto md:right-10 lg:top-[10%] lg:right-[10%]'>
+              <SpeechBubbleContainer messages={lines}>
+                <SpeechBubble />
+              </SpeechBubbleContainer>
+            </div>
+          </HeroContent>
+        </main>
+      </div>
+    </WebMSupportDetector>
   );
 }

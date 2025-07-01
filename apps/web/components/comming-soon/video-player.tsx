@@ -46,7 +46,7 @@ function VideoPlayer({
         </video>
         <div
           className={cn(
-            'absolute inset-0 z-50 h-[75%] sm:hidden',
+            'absolute inset-0 z-1 h-[75%] sm:hidden',
             isMobile &&
               mobileSrc &&
               'bg-gradient-to-t from-[#79080A] from-5% via-[#79080A] via-5% to-transparent to-10%'
