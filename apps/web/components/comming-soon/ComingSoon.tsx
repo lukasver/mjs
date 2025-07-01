@@ -52,7 +52,7 @@ export default async function CommingSoon() {
   });
 
   return (
-    <div className='relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
+    <div className='bg-[#770205] relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
       <ErrorBoundary fallback={<BackgroundImage poster={poster} />}>
         <VideoPlayer
           src={[
