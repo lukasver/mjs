@@ -34,9 +34,9 @@ export const Navbar = async ({ lang }: { lang: Locale }) => {
           }
         )}
       >
-        <ShinyButton className='bg-accent font-head aspect-square md:aspect-auto md:px-6 md:py-2 px-2 py-2 '>
+        <ShinyButton className='bg-accent font-head aspect-square size-[38px] md:size-auto md:aspect-auto md:px-6 md:py-2 px-2 py-2'>
           <span className='hidden md:block'>{t('Global.subscribe')}</span>
-          <Icons.subscribe className='md:hidden size-5' />
+          <Icons.subscribe className='md:hidden size-5!' />
         </ShinyButton>
       </Link>
       <LocaleSwitch lite className='text-white!' />
