@@ -2,7 +2,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const INITIAL_TIMER = process.env.NODE_ENV === 'development' ? 1000 : 3000;
-const INTERVAL_TIMER = process.env.NODE_ENV === 'development' ? 3000 : 15000;
+const INTERVAL_TIMER =
+  process.env.NODE_ENV === 'development'
+    ? 3000
+    : Number(process.env.NEXT_PUBLIC_BUBBLE_TIMER) || 10000;
 
 function SpeechBubbleContainer({
   children,
@@ -49,6 +52,7 @@ function SpeechBubbleContainer({
 const SpeechBubbleContext = createContext<{
   message: string;
   setMessage: (message: string) => void;
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: empty fn for context
 }>({ message: '', setMessage: () => {} });
 
 export const useSpeechBubbleMessage = () => {
