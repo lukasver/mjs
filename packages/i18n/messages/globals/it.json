@@ -2,10 +2,10 @@
   "Footer": {
     "links": {
       "home": "Home",
-      "docs": "Documentazione",
+      "docs": "Documenti",
       "whoWeAre": "Chi Siamo",
       "termsAndConditions": "Termini e Condizioni",
-      "privacyPolicy": "Politica sulla Privacy",
+      "privacyPolicy": "Informativa sulla Privacy",
       "contact": "Contatti"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
@@ -14,9 +14,10 @@
     "soon": "Prossimamente",
     "search": "Cerca...",
     "subscribe": "Iscriviti ora",
+    "subscribePlaceholder": "Inserisci la tua email",
     "contact": "Contattaci",
     "banner": {
-      "title": "Il token $MJS sta arrivando presto 🚀"
+      "title": "Il token $MJS è in arrivo 🚀"
     }
   }
 }

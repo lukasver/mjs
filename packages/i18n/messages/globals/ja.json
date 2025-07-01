@@ -3,7 +3,7 @@
     "links": {
       "home": "ホーム",
       "docs": "ドキュメント",
-      "whoWeAre": "会社概要",
+      "whoWeAre": "私たちについて",
       "termsAndConditions": "利用規約",
       "privacyPolicy": "プライバシーポリシー",
       "contact": "お問い合わせ"
@@ -14,9 +14,10 @@
     "soon": "近日公開",
     "search": "検索...",
     "subscribe": "今すぐ登録",
+    "subscribePlaceholder": "メールアドレスを入力",
     "contact": "お問い合わせ",
     "banner": {
-      "title": "$MJSトークンが近日公開予定です 🚀"
+      "title": "$MJSトークンは近日公開🚀"
     }
   }
 }

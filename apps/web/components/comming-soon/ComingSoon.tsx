@@ -30,7 +30,7 @@ function getMNumber(date: Date = new Date()): 1 | 2 | 3 {
   // July is month 6 (0-indexed)
   const month = date.getMonth();
   // Calculate offset from July
-  const offset = (month - 5 + 12) % 3;
+  const offset = (month - 6 + 12) % 3;
   return (offset + 1) as 1 | 2 | 3;
 }
 

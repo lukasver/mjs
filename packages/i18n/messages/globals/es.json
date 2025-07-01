@@ -14,9 +14,10 @@
     "soon": "Próximamente",
     "search": "Buscar...",
     "subscribe": "Suscríbete ahora",
+    "subscribePlaceholder": "Introduce tu correo electrónico",
     "contact": "Contáctanos",
     "banner": {
-      "title": "El token $MJS llegará pronto 🚀"
+      "title": "El token $MJS llega pronto 🚀"
     }
   }
 }

@@ -4,7 +4,7 @@
       "home": "首页",
       "docs": "文档",
       "whoWeAre": "关于我们",
-      "termsAndConditions": "条款和条件",
+      "termsAndConditions": "条款与条件",
       "privacyPolicy": "隐私政策",
       "contact": "联系我们"
     },
@@ -14,6 +14,7 @@
     "soon": "即将推出",
     "search": "搜索...",
     "subscribe": "立即订阅",
+    "subscribePlaceholder": "输入您的邮箱",
     "contact": "联系我们",
     "banner": {
       "title": "$MJS 代币即将推出 🚀"
