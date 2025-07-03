@@ -9,7 +9,7 @@
       "2": "Don’t panic. The game is almost here",
       "3": "She’s ready. You better be."
     },
-    "description": "Subscribe and maybe, just maybe, we'll let you in on it first.",
+    "description": "Subscribe and maybe, <br /> just maybe, we'll let you in on it first.",
     "agreeTerms": "By clicking 'Subscribe', you agree to our <terms>Terms & Conditions</terms> and <privacy>Privacy Policy</privacy>.",
     "lines": {
       "1": {
@@ -486,7 +486,7 @@
         "2": "Don’t panic. The game is almost here",
         "3": "She’s ready. You better be."
       },
-      "description": "Subscribe and maybe, just maybe, we'll let you in on it first.",
+      "description": "Subscribe and maybe, <br /> just maybe, we'll let you in on it first.",
       "agreeTerms": "By clicking 'Subscribe', you agree to our <terms>Terms & Conditions</terms> and <privacy>Privacy Policy</privacy>.",
       "lines": {
         "1": {

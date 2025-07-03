@@ -5,9 +5,13 @@ import SpeechBubbleContainer from './speech-bubble-container';
 import VideoPlayer from './video-player';
 import Link from 'next/link';
 import poster from '@/public/static/images/poster.webp';
+import mobilePoster from '@/public/static/images/mobileposter.webp';
 import ErrorBoundary from '@mjs/ui/components/error-boundary';
 import Image, { StaticImageData } from 'next/image';
 import { WebMSupportDetector } from '../web-support-detector';
+import { Suspense } from 'react';
+import { headers } from 'next/headers';
+import { userAgent } from 'next/server';
 
 const MOBILE_OPTIMIZED = process.env.MOBILE_OPTIMIZED === 'true';
 
@@ -59,33 +63,9 @@ export default async function CommingSoon() {
     >
       <div className='relative w-screen h-screen sm:h-[468px] lg:h-auto overflow-hidden xl:h-[calc(100dvh-10px)]'>
         <ErrorBoundary fallback={<BackgroundImage poster={poster} />}>
-          <VideoPlayer
-            src={[
-              {
-                src: `/static/videos/comingsoon-${mNumber}.webm`,
-                type: 'video/webm',
-              },
-              {
-                src: `/static/videos/comingsoon-${mNumber}.mp4`,
-                type: 'video/mp4',
-              },
-            ]}
-            mobileSrc={
-              MOBILE_OPTIMIZED
-                ? null
-                : [
-                    {
-                      src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
-                      type: 'video/webm',
-                    },
-                    {
-                      src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
-                      type: 'video/mp4',
-                    },
-                  ]
-            }
-            poster={poster.src}
-          />
+          <Suspense fallback={null}>
+            <DynamicVideo mNumber={mNumber} />
+          </Suspense>
         </ErrorBoundary>
 
         {/* Static Image Background - Mobile */}
@@ -96,7 +76,15 @@ export default async function CommingSoon() {
         <main id='newsletter'>
           <HeroContent
             title={t(title)}
-            description={t('Bubbles.description')}
+            description={t.markup('Bubbles.description', {
+              // @ts-expect-error wontfix
+              br: (chunks) => (
+                <>
+                  <br />
+                  {chunks}
+                </>
+              ),
+            })}
             agreeTerms={t.rich('Bubbles.agreeTerms', {
               terms: (chunks) => (
                 <Link href='/terms' className='underline hover:text-white'>
@@ -122,3 +110,37 @@ export default async function CommingSoon() {
     </WebMSupportDetector>
   );
 }
+
+const DynamicVideo = async ({ mNumber }: { mNumber: 1 | 2 | 3 }) => {
+  const headersList = await headers();
+  const agent = userAgent({ headers: headersList });
+  return (
+    <VideoPlayer
+      src={[
+        {
+          src: `/static/videos/comingsoon-${mNumber}.webm`,
+          type: 'video/webm',
+        },
+        {
+          src: `/static/videos/comingsoon-${mNumber}.mp4`,
+          type: 'video/mp4',
+        },
+      ]}
+      mobileSrc={
+        MOBILE_OPTIMIZED
+          ? null
+          : [
+              {
+                src: `/static/videos/comingsoon-mobile-${mNumber}.webm`,
+                type: 'video/webm',
+              },
+              {
+                src: `/static/videos/comingsoon-mobile-${mNumber}.mp4`,
+                type: 'video/mp4',
+              },
+            ]
+      }
+      poster={agent?.device?.type === 'mobile' ? mobilePoster.src : poster.src}
+    />
+  );
+};

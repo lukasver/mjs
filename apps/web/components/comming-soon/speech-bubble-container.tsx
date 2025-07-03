@@ -1,11 +1,11 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const INITIAL_TIMER = process.env.NODE_ENV === 'development' ? 1000 : 3000;
-const INTERVAL_TIMER =
-  process.env.NODE_ENV === 'development'
-    ? 3000
-    : Number(process.env.NEXT_PUBLIC_BUBBLE_TIMER) || 10000;
+const debug = false;
+const INITIAL_TIMER = debug ? 1000 : 3000;
+const INTERVAL_TIMER = debug
+  ? 3000
+  : Number(process.env.NEXT_PUBLIC_BUBBLE_TIMER) || 10000;
 
 function SpeechBubbleContainer({
   children,
