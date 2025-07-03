@@ -35,7 +35,7 @@ const SpeechBubble = ({
           )}
         >
           <div className='px-8 py-4 relative bg-white/10 backdrop-blur-md border-2 border-white/90 rounded-2xl md:rounded-3xl shadow-2xl w-full'>
-            <p className='text-white text-xl xl:text-2xl font-medium'>
+            <p className='text-white text-xl xl:text-2xl font-normal'>
               {message}
             </p>
             <div className='text-white/30'>
