@@ -1,6 +1,8 @@
 import { cn } from '@mjs/ui/lib/utils';
 import NewsletterForm from './newsletter';
 import { EnterAnimation, FadeAnimation } from '@mjs/ui/components/motion';
+import { HeroTextMobile } from './hero-text-mobile';
+import SpeechBubbleContainer from './speech-bubble-container';
 
 function HeroContent({
   children,
@@ -53,17 +55,16 @@ function HeroContent({
             </div>
           </div>
         </div>
+        {/* Bubbles */}
+        {children}
       </div>
 
       {/* Mobile Layout */}
-      <div className='lg:hidden flex flex-col h-screen sm:h-auto'>
+      <div className='lg:hidden flex flex-col h-screen sm:h-auto relative'>
         <div className='flex-1 flex items-start lg:justify-center pt-8 lg:pt-12 px-6'>
-          <EnterAnimation>
-            <h1
-              className='text-4xl/[90%] sm:text-5xl/[90%] font-semibold text-white text-left lg:text-center'
-              dangerouslySetInnerHTML={{ __html: props.title }}
-            />
-          </EnterAnimation>
+          <SpeechBubbleContainer messages={props.lines || []}>
+            <HeroTextMobile title={props.title} />
+          </SpeechBubbleContainer>
         </div>
 
         <div className='flex-1 hidden lg:block' />
@@ -88,7 +89,7 @@ function HeroContent({
       </div>
 
       {/* Bubbles */}
-      {children}
+      {/* {children} */}
     </div>
   );
 }

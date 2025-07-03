@@ -2,16 +2,25 @@
 import { cn } from '@mjs/ui/lib/utils';
 import { useSpeechBubbleMessage } from './speech-bubble-container';
 import { AnimatePresence, motion } from 'motion/react';
+import { Dispatch, SetStateAction } from 'react';
 
 /**
  * Renders an animated speech bubble with a message using Motion for React.
  * The bubble fades in and moves up when appearing, and fades out and moves down when disappearing.
  */
-const SpeechBubble = ({ className }: { className?: string }) => {
+const SpeechBubble = ({
+  className,
+  show = true,
+  onExitComplete,
+}: {
+  className?: string;
+  show?: boolean;
+  onExitComplete?: Dispatch<SetStateAction<boolean>>;
+}) => {
   const message = useSpeechBubbleMessage();
-  const isVisible = Boolean(message);
+  const isVisible = Boolean(message) && show;
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={() => onExitComplete?.(true)}>
       {isVisible && (
         <motion.div
           key='speech-bubble'
@@ -20,13 +29,12 @@ const SpeechBubble = ({ className }: { className?: string }) => {
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className={cn(
-            // 'absolute z-30 -top-20 -right-20 xl:-right-10 xl:-top-10 2xl:-right-40 2xl:-top-40',
-            'shadow-[3px_4px_20.4px_0px_rgba(74,0,0,1)] rounded-3xl',
+            'shadow-[3px_4px_20.4px_0px_rgba(74,0,0,1)] rounded-2xl md:rounded-3xl',
             'z-30 w-full max-w-screen',
             className
           )}
         >
-          <div className='px-8 py-4 relative bg-white/10 backdrop-blur-md border-2 border-white/90 rounded-3xl shadow-2xl max-w-xs lg:max-w-sm'>
+          <div className='px-8 py-4 relative bg-white/10 backdrop-blur-md border-2 border-white/90 rounded-2xl md:rounded-3xl shadow-2xl w-full'>
             <p className='text-white text-xl xl:text-2xl font-medium'>
               {message}
             </p>
@@ -46,26 +54,6 @@ const SpeechBubble = ({ className }: { className?: string }) => {
                   stroke='white'
                 />
               </svg>
-
-              {/* <svg
-                className='absolute -bottom-3 left-8 w-5 h-3 z-10'
-                viewBox='0 0 20 12'
-                fill='white'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  d='M0 0L10 12L20 0Z'
-                  fill='currentColor'
-                  fillOpacity='0.7'
-                  style={{ filter: 'blur(0.5px)' }}
-                />
-                <path
-                  d='M0 0L10 12L20 0Z'
-                  stroke='currentColor'
-                  strokeOpacity='0.3'
-                  strokeWidth='1'
-                />
-              </svg> */}
             </div>
           </div>
         </motion.div>
