@@ -27,7 +27,7 @@ export function HeroTextMobile({ title }: { title: string }) {
   const showBubble = hasH1Exited && !!message;
 
   return (
-    <>
+    <div className='relative w-full'>
       <AnimatePresence onExitComplete={() => setHasH1Exited(true)}>
         {showH1 && (
           <motion.div
@@ -46,7 +46,9 @@ export function HeroTextMobile({ title }: { title: string }) {
           </motion.div>
         )}
       </AnimatePresence>
-      <SpeechBubble show={showBubble} onExitComplete={setBubbleExited} />
-    </>
+      <div className='absolute top-24 left-0 right-0'>
+        <SpeechBubble show={showBubble} onExitComplete={setBubbleExited} />
+      </div>
+    </div>
   );
 }

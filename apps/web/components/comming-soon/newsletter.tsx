@@ -11,7 +11,7 @@ import { toast } from '@mjs/ui/primitives/sonner';
 import dynamic from 'next/dynamic';
 import { useCallback, useRef } from 'react';
 import { z } from 'zod';
-import { PopoverClose, PopoverContent } from '@mjs/ui/primitives/popover';
+import { PopoverContent } from '@mjs/ui/primitives/popover';
 import { Popover, PopoverTrigger } from '@mjs/ui/primitives/popover';
 import { Label } from '@mjs/ui/primitives/label';
 import { FormInput } from '@mjs/ui/primitives/form-input';
@@ -56,14 +56,6 @@ const NewsletterForm: FC<{
     onSubmit: ({ value }) => onSubmit(value),
   });
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      form.handleSubmit();
-    },
-    [form]
-  );
   const altchaRef = useRef<{ value: string | null; reset: () => void } | null>(
     null
   );
@@ -97,13 +89,18 @@ const NewsletterForm: FC<{
         });
 
         if (!response.ok) {
+          if (response.status === 409) {
+            throw new Error(t('Newsletter.alreadySubscribed'));
+          }
           throw new Error('Failed to subscribe to newsletter');
         }
         setLSCanSubmit(false);
         form.reset();
         toast.success('Subscribed to newsletter');
-      } catch (_e: unknown) {
-        toast.error('Error subscribing to newsletter');
+      } catch (e: unknown) {
+        toast.error(
+          e instanceof Error ? e.message : 'Error subscribing to newsletter'
+        );
       }
     });
   };
@@ -155,11 +152,29 @@ const NewsletterForm: FC<{
     setPopoverOpen((pv) => !pv);
   };
 
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handlePopoverOpen();
+    },
+    [handlePopoverOpen]
+  );
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      form.handleSubmit();
+    },
+    [form]
+  );
+
   return (
     <Popover open={popoverOpen}>
       <form.AppForm>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleFormSubmit}
           className={cn(
             'flex bg-white rounded-lg font-common flex-col sm:flex-row',
             `shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)]`,
@@ -210,11 +225,6 @@ const NewsletterForm: FC<{
         </form>
       </form.AppForm>
       <PopoverContent>
-        <PopoverClose asChild>
-          <Button type='button' className='w-full'>
-            Close
-          </Button>
-        </PopoverClose>
         <DynamicAltcha
           ref={altchaRef}
           language={locale}

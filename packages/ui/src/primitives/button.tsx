@@ -3,16 +3,8 @@
 import { cn } from '@mjs/ui/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { type VariantProps, cva } from 'class-variance-authority';
-import dynamic from 'next/dynamic';
 import * as React from 'react';
-// import { Loader2 } from "lucide-react";
-
-const DynamicLoader2 = dynamic(
-  () => import('lucide-react').then((mod) => mod.Loader2),
-  {
-    ssr: false,
-  }
-);
+import { Icons } from '../components/icons';
 
 const buttonVariants = cva(
   'cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -76,10 +68,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <DynamicLoader2
+        <Icons.loader
           className={cn(loading ? 'text-foreground animate-spin' : 'hidden')}
         />
-        <span className={cn('contents', loading && 'sr-only')}>
+        <span className={cn('contents', loading && 'sr-only hidden!')}>
           {props.children}
         </span>
       </Comp>

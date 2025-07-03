@@ -16,6 +16,7 @@ import {
   Home,
   AlertTriangle,
   Rss,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -40,6 +41,7 @@ export const Icons = {
   arrowLeft: ArrowLeft,
   refreshCw: RefreshCw,
   alertTriangle: AlertTriangle,
+  loader: Loader2,
   threads: ({ className }: { className?: string }) => {
     return (
       <svg
