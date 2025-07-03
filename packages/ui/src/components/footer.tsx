@@ -16,7 +16,7 @@ export const Footer = ({
   links: { href: string; title: string }[];
   copyright: React.ReactNode;
   siteConfig: SiteConfig;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   element?: 'footer' | 'div';
 }) => {
   const El = element || 'footer';
@@ -46,7 +46,7 @@ export const Footer = ({
               ))}
             </ul>
           </ActiveLinkProvider>
-          <div>{children}</div>
+          {children && <div>{children}</div>}
         </nav>
       </div>
 

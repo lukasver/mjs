@@ -1,0 +1,50 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@mjs/ui/primitives/card';
+import { Progress } from '@mjs/ui/primitives/progress';
+import { getTranslations } from 'next-intl/server';
+
+export async function FundraisingProgress({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
+  // In a real app, these would come from your API or blockchain data
+  const t = await getTranslations();
+  const raised = 3250000;
+  const goal = 5000000;
+  const percentage = Math.round((raised / goal) * 100);
+
+  return (
+    <Card className='border-zinc-800 bg-zinc-900/50'>
+      <CardHeader>
+        <CardTitle>Fundraising Progress</CardTitle>
+        <CardDescription>Current ICO round ends in 14 days</CardDescription>
+      </CardHeader>
+      <CardContent className='space-y-6'>
+        <div className='space-y-2'>
+          <div className='flex items-center justify-between text-sm'>
+            <div>
+              <span className='text-2xl font-bold text-purple-400'>
+                ${raised.toLocaleString()}
+              </span>
+              <span className='text-zinc-400'> / ${goal.toLocaleString()}</span>
+            </div>
+            <div className='text-right font-medium'>{percentage}%</div>
+          </div>
+          <Progress
+            value={percentage}
+            className='h-2 bg-zinc-800'
+            indicatorClassName='bg-purple-500'
+          />
+        </div>
+
+        {children}
+      </CardContent>
+    </Card>
+  );
+}

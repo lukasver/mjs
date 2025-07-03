@@ -20,7 +20,6 @@ export type SocialFooterProps = {
  * Socials for the footer
  */
 export const SocialFooter = ({ config }: SocialFooterProps) => {
-  console.log(config);
   return (
     <div className='mb-3 flex flex-wrap justify-center gap-4'>
       {config.twitter && (

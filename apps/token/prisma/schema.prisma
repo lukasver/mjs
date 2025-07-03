@@ -20,30 +20,40 @@ generator zod {
 }
 
 model User {
-  id        String    @id @default(cuid()) @db.Text
-  createdAt DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
-  deletedAt DateTime? @db.Timestamptz(6)
+  id         String    @id @default(cuid()) @db.Text
+  /// externalId is used to link the user to an external system
+  externalId String?
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt  DateTime? @db.Timestamptz(6)
 
-  name          String
-  email         String  @unique
+  name String
+
+  walletAddress String @unique
+
+  email         String
   emailVerified Boolean @default(false)
-  image         String?
+
+  image String?
 
   // registrationStep  RegistrationStep        @default(REGISTRATION_NEW_ACCOUNT)
-  isSiwe           Boolean            @default(false)
+  // isSiwe           Boolean            @default(false)
   profile          Profile?
   sales            Sale[]
   // isEmailVerify     EmailVerificationStatus @default(NOTVERIFIED)
   userRole         UserRole[]
   transactionAudit TransactionAudit[]
-  kycVerification  KycVerification?
-  sessions         Session[]
-  accounts         Account[]
+
+  kycVerification KycVerification?
+  sessions        Session[]
+  accounts        Account[]
 
   transactions         SaleTransactions[] @relation("UserTransactions")
   transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
   Document             Document[]
+
+  isSiwe Boolean?
+  // passkeys    Passkey[]
 
   @@map("users")
 }
@@ -102,16 +112,16 @@ model Profile {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  firstName     String?
-  lastName      String?
-  user          User      @relation(fields: [userId], references: [id])
-  userId        String    @unique
-  email         String?
+  firstName   String?
+  lastName    String?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String    @unique
+  email       String?
   // check
-  walletAddress String?
-  address       Address?
-  phoneNumber   String?
-  dateOfBirth   DateTime?
+  // walletAddress String?
+  address     Address?
+  phoneNumber String?
+  dateOfBirth DateTime?
 
   @@map("profile")
 }
@@ -470,3 +480,19 @@ enum KycStatus {
   VERIFIED
   REJECTED
 }
+
+// model Passkey {
+//   id           String    @id
+//   name         String?
+//   publicKey    String
+//   userId       String
+//   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   credentialID String
+//   counter      Int
+//   deviceType   String
+//   backedUp     Boolean
+//   transports   String?
+//   createdAt    DateTime?
+
+//   @@map("passkey")
+// }

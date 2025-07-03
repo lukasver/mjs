@@ -79,7 +79,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <DynamicLoader2
           className={cn(loading ? 'text-foreground animate-spin' : 'hidden')}
         />
-        <span className={cn('contents', loading && 'sr-only')}>
+        <span className={cn('contents', loading && 'sr-only invisible')}>
           {props.children}
         </span>
       </Comp>
