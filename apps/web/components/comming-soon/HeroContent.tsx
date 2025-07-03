@@ -26,7 +26,7 @@ function HeroContent({
             <div className='space-y-8 md:space-y-20'>
               <EnterAnimation duration={1}>
                 <h1
-                  className='text-6xl xl:text-8xl font-bold text-white '
+                  className='text-6xl/[90%] xl:text-8xl/[90%] font-semibold text-white'
                   dangerouslySetInnerHTML={{ __html: props.title }}
                 />
               </EnterAnimation>
@@ -34,14 +34,17 @@ function HeroContent({
               {/* Subscription Form */}
               <div className='space-y-4 max-w-md font-head'>
                 <FadeAnimation delay={1.5} duration={2}>
-                  <p className='text-white/90 text-lg lg:text-xl'>
-                    {props.description}
-                  </p>
+                  <p
+                    className='text-white/90 text-lg lg:text-xl font-normal font-head'
+                    dangerouslySetInnerHTML={{
+                      __html: props.description || '',
+                    }}
+                  />
                 </FadeAnimation>
                 <FadeAnimation delay={3.5} duration={2}>
                   <>
                     <NewsletterForm className='lg:mb-6' />
-                    <p className='text-white/90 text-sm font-common font-medium'>
+                    <p className='text-white/90 text-sm  font-common font-semibold whitespace-nowrap'>
                       {props.agreeTerms}
                     </p>
                   </>
@@ -57,7 +60,7 @@ function HeroContent({
         <div className='flex-1 flex items-start lg:justify-center pt-8 lg:pt-12 px-6'>
           <EnterAnimation>
             <h1
-              className='text-4xl sm:text-5xl font-bold text-white text-left lg:text-center leading-tight'
+              className='text-4xl/[90%] sm:text-5xl/[90%] font-semibold text-white text-left lg:text-center'
               dangerouslySetInnerHTML={{ __html: props.title }}
             />
           </EnterAnimation>
@@ -67,11 +70,17 @@ function HeroContent({
 
         <FadeAnimation delay={0.2}>
           <div className='lg:bg-gradient-to-t lg:from-red-900/90 lg:to-transparent p-6 space-y-4 max-w-sm'>
-            <p className='text-white/90 text-left lg:text-center'>
-              {props.description}
-            </p>
+            {props.description && (
+              <p
+                className='text-white/90 text-left lg:text-center'
+                dangerouslySetInnerHTML={{
+                  __html: props.description,
+                }}
+              />
+            )}
+
             <NewsletterForm className='space-y-3 w-full flex-col' />
-            <p className='text-white/70 text-xs text-left lg:text-center'>
+            <p className='text-white/80 text-xs text-center lg:text-center font-common font-semibold'>
               {props.agreeTerms}
             </p>
           </div>

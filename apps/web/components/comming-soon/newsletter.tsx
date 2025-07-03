@@ -192,7 +192,10 @@ const NewsletterForm: FC<{
           <PopoverTrigger asChild onClick={handlePopoverOpen}>
             <Button
               type='button'
-              className='text-white px-8 font-semibold border-1 border-solid border-white mb-0'
+              className={cn(
+                'text-white px-8 font-semibold border-1 border-solid border-white mb-0',
+                'uppercase font-semibold font-common'
+              )}
               loading={isPending}
               disabled={!LSCanSubmit}
             >
