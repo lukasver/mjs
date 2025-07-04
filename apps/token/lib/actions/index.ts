@@ -1,59 +1,61 @@
 'use server';
 import 'server-only';
-import { LoginSchema } from '../../common/schemas/login';
-import { zfd } from 'zod-form-data';
-import { auth, thirdwebAuth } from '../auth/better-auth/auth';
-import { actionClient } from './config';
-import { headers } from 'next/headers';
+import { actionClient, authActionClient } from './config';
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import { createThirdwebClient, getUser } from 'thirdweb';
+import { getUser } from 'thirdweb';
 import { getUserEmail } from 'thirdweb/wallets';
-import { env } from '@/common/config/env';
+import {
+  deleteSessionCookie,
+  generateAuthPayload,
+  generateJWT,
+  getSessionCookie,
+  serverClient,
+  setSessionCookie,
+  verifyAuthPayload,
+} from '../auth/thirdweb';
 
-const thirdwebClientOptions = createThirdwebClient({
-  // clientId: env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
-  secretKey: env.THIRDWEB_API_SECRET,
-});
+const client = serverClient;
 
-export const signIn = actionClient
-  .schema(LoginSchema)
-  .action(async ({ parsedInput }) => {
-    const response = await auth.api.signInEmail({
-      body: {
-        email: parsedInput.username,
-        password: parsedInput.password,
-      },
-    });
-    return response;
-  });
+// export const signIn = actionClient
+//   .schema(LoginSchema)
+//   .action(async ({ parsedInput }) => {
+//     const response = await auth.api.signInEmail({
+//       body: {
+//         email: parsedInput.username,
+//         password: parsedInput.password,
+//       },
+//     });
+//     return response;
+//   });
 
-export const signUp = actionClient
-  .schema(
-    zfd.formData({
-      username: zfd.text(),
-      password: zfd.text(),
-    })
-  )
-  .action(async ({ parsedInput }) => {
-    const response = await auth.api.signUpEmail({
-      returnHeaders: true,
-      body: {
-        email: parsedInput.username,
-        password: parsedInput.password,
-        name: parsedInput.username,
-      },
-    });
+// export const signUp = actionClient
+//   .schema(
+//     zfd.formData({
+//       username: zfd.text(),
+//       password: zfd.text(),
+//     })
+//   )
+//   .action(async ({ parsedInput }) => {
+//     const response = await auth.api.signUpEmail({
+//       returnHeaders: true,
+//       body: {
+//         email: parsedInput.username,
+//         password: parsedInput.password,
+//         name: parsedInput.username,
+//       },
+//     });
 
-    return response.response;
-  });
+//     return response.response;
+//   });
 
 export const isLoggedIn = actionClient.action(async () => {
-  const data = await auth.api.getSession({
-    headers: await headers(),
-  });
-  // If active session, return true
-  return data?.session && data.session.expiresAt > new Date();
+  // const data = await auth.api.getSession({
+  //   headers: await headers(),
+  // });
+  const data = await getSessionCookie();
+  // TODO! If active session, return true check in DB if user is logged in with a valid session.
+  return !!data; // data?.session && data.session.expiresAt > new Date();
 });
 
 const LoginParams = z.object({
@@ -74,26 +76,23 @@ const LoginParams = z.object({
   }),
 });
 
+export type LoginParams = z.infer<typeof LoginParams>;
+
 export const login = actionClient
   .schema(LoginParams)
   .action(async ({ parsedInput }) => {
-    const verifiedPayload = await thirdwebAuth.verifyPayload(parsedInput);
+    const verifiedPayload = await verifyAuthPayload(parsedInput);
 
     if (!verifiedPayload.valid) {
       redirect('/?error=invalid_payload');
     }
-
-    const response = await auth.api.signInAnonymous({
-      headers: await headers(),
-      query: {
-        walletAddress: verifiedPayload.payload.address,
-        chainId: verifiedPayload.payload.chain_id,
-      },
+    const { payload } = verifiedPayload;
+    // Here should go the JWT logic
+    const jwt = await generateJWT(payload, {
+      address: payload.address,
+      ...(payload.chain_id && { chainId: payload.chain_id }),
     });
-
-    response?.user.id;
-
-    console.debug('🚀 ~ index.ts:64 ~ response:', response);
+    await setSessionCookie(jwt);
     redirect('/dashboard');
   });
 
@@ -105,35 +104,37 @@ export const generatePayload = actionClient
     })
   )
   .action(async ({ parsedInput: { chainId, address } }) => {
-    return await thirdwebAuth.generatePayload({ chainId, address });
+    return await generateAuthPayload({ chainId, address });
   });
 
 export const logout = actionClient.action(async () => {
-  console.debug('🚀 ~ auth.ts:65 ~ logout');
-  await auth.api.signOut({
-    headers: await headers(),
-  });
+  // await auth.api.signOut({
+  //   headers: await headers(),
+  // });
+  //TODO do other session related stuff to logout
+  await deleteSessionCookie();
   redirect('/');
 });
 
-export const getCurrentUser = actionClient
-  .schema(
-    z.object({
-      address: z.string(),
-    })
-  )
-  .action(async ({ parsedInput }) => {
+export const getCurrentUser = authActionClient.action(
+  async ({ ctx: { address } }) => {
+    console.debug('🚀 ~ index.ts:119 ~ address:', address);
+
     const user = await getUser({
-      client: thirdwebClientOptions,
-      walletAddress: parsedInput.address,
+      client,
+      email: address,
+      // walletAddress: address,
     });
 
-    return user;
-  });
+    console.debug('🚀 ~ index.ts:123 ~ user:', user);
 
-export const getCurrentUserEmail = actionClient.action(async () => {
+    return user;
+  }
+);
+
+export const getCurrentUserEmail = authActionClient.action(async () => {
   const email = await getUserEmail({
-    client: thirdwebClientOptions,
+    client,
   });
   return email;
 });

@@ -7,7 +7,6 @@ import {
   useActiveWallet,
   useDisconnect,
 } from 'thirdweb/react';
-import { client } from '../../lib/auth/thirdweb/thirdweb';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -19,6 +18,7 @@ import { ConnectWalletThirdweb } from '../connect-wallet';
 import { Icons } from '@mjs/ui/components/icons';
 import { Button } from '@mjs/ui/primitives/button';
 import { logout } from '../../lib/actions';
+import { client } from '@/lib/auth/thirdweb-client';
 
 function AccountProvider({ children }: { children: React.ReactNode }) {
   const { activeAccount, status } = useActiveAccount();

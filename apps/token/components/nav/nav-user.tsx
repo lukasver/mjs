@@ -27,10 +27,14 @@ import {
 } from '@mjs/ui/primitives/sidebar';
 import { useUser } from '../hooks/use-user';
 import MahjongStarsIcon from '@/public/static/favicons/favicon-48x48.png';
+import { AccountAddress, AccountAvatar } from 'thirdweb/react';
+import { shortenAddress } from 'thirdweb/utils';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const [user, { loading }] = useUser();
+
+  console.debug('🚀 ~ nav-user.tsx:37 ~ user:', user);
 
   return (
     <SidebarMenu>
@@ -41,20 +45,12 @@ export function NavUser() {
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <Avatar className='h-8 w-8 rounded-lg'>
-                <AvatarImage
-                  src={user?.image || MahjongStarsIcon.src}
-                  alt={user?.name || 'Avatar'}
-                />
-                <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
-              </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>{user?.name}</span>
-                <span className='truncate text-xs'>
-                  {user?.email?.startsWith('0x')
-                    ? user?.walletAddress
-                    : user?.email}
-                </span>
+                <EmailIndicator
+                  isSiwe={!!user?.isAnonymous}
+                  email={user?.email}
+                />
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -67,13 +63,18 @@ export function NavUser() {
           >
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
-                <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
-                </Avatar>
+                <AvatarIndicator
+                  image={user?.image || undefined}
+                  name={user?.name || undefined}
+                  isSiwe={!!user?.isAnonymous}
+                />
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-semibold'>{user.name}</span>
-                  <span className='truncate text-xs'>{user.email}</span>
+                  <span className='truncate font-semibold'>
+                    {user?.name || 'Anonymous'}
+                  </span>
+                  {user?.email && (
+                    <span className='truncate text-xs'>{user.email}</span>
+                  )}
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -110,3 +111,40 @@ export function NavUser() {
     </SidebarMenu>
   );
 }
+
+type EmailIndicatorProps = {
+  email?: string;
+  isSiwe?: boolean;
+};
+
+const EmailIndicator = (props: EmailIndicatorProps) => {
+  const { isSiwe = false, email } = props;
+
+  if (isSiwe) {
+    return <AccountAddress formatFn={shortenAddress} />;
+  }
+
+  if (!email) {
+    return null;
+  }
+  return <span className='truncate text-xs'>{email}</span>;
+};
+
+type AvatarIndicatorProps = {
+  isSiwe?: boolean;
+  image?: string;
+  name?: string;
+};
+const AvatarIndicator = (props: AvatarIndicatorProps) => {
+  const { isSiwe = false, image, name } = props;
+  if (isSiwe) {
+    return <AccountAvatar />;
+  }
+
+  return (
+    <Avatar className='h-8 w-8 rounded-lg'>
+      <AvatarImage src={image || MahjongStarsIcon.src} alt={name || 'Avatar'} />
+      <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+    </Avatar>
+  );
+};

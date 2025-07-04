@@ -161,15 +161,6 @@ const NewsletterForm: FC<{
     [handlePopoverOpen]
   );
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      form.handleSubmit();
-    },
-    [form]
-  );
-
   return (
     <Popover open={popoverOpen}>
       <form.AppForm>

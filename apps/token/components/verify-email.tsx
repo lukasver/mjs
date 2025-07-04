@@ -1,7 +1,6 @@
 'use client';
 
 import { logout } from '../lib/actions';
-import { authClient } from '../lib/auth/better-auth/auth-client';
 import { Button } from '@mjs/ui/primitives/button';
 import {
   Card,
@@ -27,11 +26,12 @@ export function VerifyEmail() {
   const router = useRouter();
   const onSubmit = async ({ token }: { token: string }) => {
     startTransition(async () => {
-      const { data, error } = await authClient.verifyEmail({
-        query: {
-          token,
-        },
-      });
+      const error = {};
+      // const { data, error } = await authClient.verifyEmail({
+      //   query: {
+      //     token,
+      //   },
+      // });
 
       console.debug('🚀 ~ verify-email.tsx:33 ~ error:', error);
 

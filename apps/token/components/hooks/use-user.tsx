@@ -1,17 +1,47 @@
 'use client';
 
-import { authClient } from '@/lib/auth/better-auth/auth-client';
-
-const { useSession } = authClient;
+import { getCurrentUser } from '@/lib/actions';
+import { User } from '@prisma/client';
+import { useEffect, useState } from 'react';
 
 export function useUser() {
-  const { data, isPending, refetch } = useSession();
+  const [user, setUser] = useState<{
+    data: User | null;
+    loading: boolean;
+    error: string | null;
+  }>({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setUser((p) => ({ ...p, loading: true }));
+        const res = await getCurrentUser();
+        if (res?.data) {
+          setUser((p) => ({ ...p, data: res?.data, loading: false }));
+        } else {
+          setUser((p) => ({ ...p, data: null, loading: false }));
+        }
+      } catch (e) {
+        setUser((p) => ({
+          ...p,
+          data: null,
+          loading: false,
+          error: e instanceof Error ? e.message : 'Unknown error',
+        }));
+      }
+    })();
+  }, []);
+
+  // const { data, isPending, refetch } = useSession();
   return [
-    data?.user,
+    user?.data || null,
     {
-      loading: isPending,
-      refetch,
-      session: data?.session,
+      loading: user.loading,
+      // refetch,
     },
   ] as const;
 }

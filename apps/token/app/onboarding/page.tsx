@@ -1,11 +1,12 @@
 import { VerifyEmail } from '../../components/verify-email';
-import { getSession } from '../../lib/auth/better-auth/auth';
+// import { getSession } from '../../lib/auth/better-auth/auth';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Onboarding() {
-  const session = await getSession();
+  // const session = await getSession();
+  const session = {};
 
   if (!session) {
     redirect('/?error=unauthorized');

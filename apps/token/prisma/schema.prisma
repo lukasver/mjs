@@ -38,6 +38,7 @@ model User {
 
   // registrationStep  RegistrationStep        @default(REGISTRATION_NEW_ACCOUNT)
   // isSiwe           Boolean            @default(false)
+
   profile          Profile?
   sales            Sale[]
   // isEmailVerify     EmailVerificationStatus @default(NOTVERIFIED)
@@ -52,10 +53,23 @@ model User {
   transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
   Document             Document[]
 
-  isSiwe Boolean?
+  isSiwe        Boolean?
   // passkeys    Passkey[]
+  WalletAddress WalletAddress[]
 
   @@map("users")
+}
+
+model WalletAddress {
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  address       User   @relation(fields: [walletAddress], references: [walletAddress], onDelete: Cascade)
+  walletAddress String
+  chainId       Int
+
+  @@unique([walletAddress, chainId])
 }
 
 model Session {

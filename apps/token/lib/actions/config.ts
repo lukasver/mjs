@@ -1,10 +1,10 @@
 // https://next-safe-action.dev/docs/safe-action-client/extend-a-client
-import { auth } from '../auth/better-auth/auth';
+// import { auth } from '../auth/better-auth/auth';
 
 import { invariant } from '@epic-web/invariant';
 import { createSafeActionClient } from 'next-safe-action';
-import { headers } from 'next/headers';
 import log from '../services/logger.server';
+import { getSessionCookie, verifyJwt } from '../auth/thirdweb';
 
 export const actionClient = createSafeActionClient({
   // Can also be an async function.
@@ -35,15 +35,17 @@ export const actionClient = createSafeActionClient({
  * This action client is used with service actions that require an authed call.
  */
 export const authActionClient = actionClient.use(async ({ next }) => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSessionCookie();
+  //TODO! here we should also check if the session is valid in the DB and query the session user.
   invariant(session, 'Session not found');
-  invariant(session.user, 'User not found');
+  const verified = await verifyJwt(session);
+  invariant(verified.valid, 'Invalid session');
+  // invariant(session.user, 'User not found');
   return next({
     ctx: {
       session: session,
-      user: session.user,
+      address: verified.parsedJWT.sub,
+      user: verified.parsedJWT.ctx,
     },
   });
 });

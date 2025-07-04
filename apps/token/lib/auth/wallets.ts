@@ -1,16 +1,7 @@
 import { env } from '@/common/config/env';
 import { metadata } from '@/common/config/site';
-import { createThirdwebClient } from 'thirdweb';
 import { createWallet, inAppWallet } from 'thirdweb/wallets';
 import MahjongStarsLogo from '@/public/static/logo-wt.webp';
-
-// Replace this with your client ID string
-// refer to https://portal.thirdweb.com/typescript/v5/client on how to get a client ID
-const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
-
-if (!clientId) {
-  throw new Error('No client ID provided');
-}
 
 export const wallets = [
   inAppWallet({
@@ -44,8 +35,3 @@ export const wallets = [
   createWallet('io.rabby'),
   // createWallet('io.zerion.wallet'),
 ];
-
-// secretKey for serverside usage, wont be available in client
-export const client = createThirdwebClient({
-  clientId,
-});

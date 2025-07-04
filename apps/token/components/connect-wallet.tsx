@@ -1,10 +1,16 @@
 'use client';
-import { client, wallets } from '../lib/auth/thirdweb/thirdweb';
 import { bscTestnet, sepolia } from 'thirdweb/chains';
 import { ConnectButton } from 'thirdweb/react';
 import { metadata } from '../common/config/site';
-import { generatePayload, isLoggedIn, login, logout } from '../lib/actions';
 import { Wallet } from 'thirdweb/wallets';
+import { wallets } from '@/lib/auth/wallets';
+import {
+  isLoggedIn,
+  doLogin,
+  getLoginPayload,
+  doLogout,
+} from '@/lib/auth/functions';
+import { client } from '@/lib/auth/thirdweb-client';
 
 const localeMapping = {
   en: 'en_US',
@@ -50,24 +56,10 @@ export const ConnectWalletThirdweb = ({
       // For SIWE
       auth={{
         // The following methods run on the server (not client)!
-        isLoggedIn: async () => {
-          const authResult = await isLoggedIn();
-          if (!authResult) return false;
-          return true;
-        },
-        doLogin: async (params) => {
-          await login(params);
-        },
-        getLoginPayload: async ({ address, chainId }) => {
-          const data = (await generatePayload({ address, chainId }))?.data;
-          if (!data) {
-            throw new Error('Failed to generate payload');
-          }
-          return data;
-        },
-        doLogout: async () => {
-          await logout();
-        },
+        isLoggedIn,
+        doLogin,
+        getLoginPayload,
+        doLogout,
       }}
     />
   );
