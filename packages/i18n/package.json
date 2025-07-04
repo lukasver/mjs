@@ -16,7 +16,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.11.0",
   "devDependencies": {
     "@lingual/i18n-check": "^0.8.4",
     "@mjs/utils": "workspace:*"
