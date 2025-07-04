@@ -11,6 +11,7 @@ import {
   doLogout,
 } from '@/lib/auth/functions';
 import { client } from '@/lib/auth/thirdweb-client';
+import useActiveAccount from './hooks/use-active-account';
 
 const localeMapping = {
   en: 'en_US',
@@ -26,7 +27,7 @@ const localeMapping = {
   // it: 'it_IT',
 } as const;
 
-export const ConnectWalletThirdweb = ({
+export const ConnectWallet = ({
   locale,
   onConnect,
 }: {
@@ -34,6 +35,7 @@ export const ConnectWalletThirdweb = ({
   onConnect?: (wallet: Wallet) => void;
 }) => {
   const mappedLocale = locale ? localeMapping[locale] : 'en_US';
+  const { signout } = useActiveAccount();
 
   return (
     <ConnectButton
@@ -45,11 +47,22 @@ export const ConnectWalletThirdweb = ({
       }}
       connectButton={{ label: 'Connect' }}
       connectModal={{ size: 'compact' }}
-      accountAbstraction={{
-        chain: bscTestnet, // ethereum, // replace with the chain you want
-        sponsorGas: false,
+      // accountAbstraction={{
+      //   chain: bscTestnet, // ethereum, // replace with the chain you want
+      //   sponsorGas: false,
+      //   // factoryAddress: '0x8f75517e97e0bB99A2E2132FDe0bBaC5815Bac70',
+      // }}
+
+      detailsModal={{
+        // https://portal.thirdweb.com/references/typescript/v5/ConnectButton_detailsModalOptions
+        manageWallet: {
+          allowLinkingProfiles: false,
+        },
       }}
       autoConnect={false}
+      onDisconnect={async () => {
+        await signout();
+      }}
       locale={mappedLocale}
       onConnect={onConnect}
       chains={[bscTestnet, sepolia]}

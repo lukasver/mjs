@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -6,15 +7,19 @@ import {
   CardTitle,
 } from '@mjs/ui/primitives/card';
 import { Progress } from '@mjs/ui/primitives/progress';
-import { getTranslations } from 'next-intl/server';
+import { useSales } from '../hooks/use-sales';
 
 export async function FundraisingProgress({
   children,
 }: {
   children?: React.ReactNode;
 }) {
+  const { data, isLoading, error } = useSales({ active: false });
+
+  console.debug('🚀 ~ fundraising-prisLoadingta:', data, isLoading, error);
+
   // In a real app, these would come from your API or blockchain data
-  const t = await getTranslations();
+  // const t = await getTranslations();
   const raised = 3250000;
   const goal = 5000000;
   const percentage = Math.round((raised / goal) * 100);

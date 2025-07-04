@@ -1,47 +1,29 @@
 'use client';
 
 import { getCurrentUser } from '@/lib/actions';
-import { User } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-export function useUser() {
-  const [user, setUser] = useState<{
-    data: User | null;
-    loading: boolean;
-    error: string | null;
-  }>({
-    data: null,
-    loading: true,
-    error: null,
+const DEFAULT_STALE_TIME = 1000 * 60 * 5; // 5 minutes
+
+export function useUser({
+  enabled = true,
+  staleTime = DEFAULT_STALE_TIME,
+}: {
+  enabled?: boolean;
+  staleTime?: number;
+} = {}) {
+  const {
+    data,
+    error: _error,
+    isLoading,
+  } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => getCurrentUser(),
+    staleTime,
+    enabled,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setUser((p) => ({ ...p, loading: true }));
-        const res = await getCurrentUser();
-        if (res?.data) {
-          setUser((p) => ({ ...p, data: res?.data, loading: false }));
-        } else {
-          setUser((p) => ({ ...p, data: null, loading: false }));
-        }
-      } catch (e) {
-        setUser((p) => ({
-          ...p,
-          data: null,
-          loading: false,
-          error: e instanceof Error ? e.message : 'Unknown error',
-        }));
-      }
-    })();
-  }, []);
+  const error = _error || data?.serverError || data?.validationErrors;
 
-  // const { data, isPending, refetch } = useSession();
-  return [
-    user?.data || null,
-    {
-      loading: user.loading,
-      // refetch,
-    },
-  ] as const;
+  return { data: data?.data, error, isLoading };
 }

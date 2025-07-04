@@ -1,6 +1,6 @@
 'use client';
 
-import { ConnectWalletThirdweb } from '../../../components/connect-wallet';
+import { ConnectWallet } from '@/components/connect-wallet';
 
 import { ThemeSwitcher } from '@mjs/ui/components/theme-switcher';
 import { Separator } from '@mjs/ui/primitives/separator';
@@ -20,7 +20,7 @@ export function DashboardHeader({ children }: { children: React.ReactNode }) {
             <Separator orientation='vertical' className='h-8' />
           </>
         ) : null}
-        <ConnectWalletThirdweb />
+        <ConnectWallet />
       </div>
     </header>
   );

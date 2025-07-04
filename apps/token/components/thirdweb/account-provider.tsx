@@ -1,12 +1,8 @@
 'use client';
 
-import React, { useTransition } from 'react';
+import React from 'react';
 import useActiveAccount from '../hooks/use-active-account';
-import {
-  AccountProvider as AccountProviderThirdweb,
-  useActiveWallet,
-  useDisconnect,
-} from 'thirdweb/react';
+import { AccountProvider as AccountProviderThirdweb } from 'thirdweb/react';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -14,25 +10,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@mjs/ui/primitives/alert-dialog';
-import { ConnectWalletThirdweb } from '../connect-wallet';
+import { ConnectWallet } from '@/components/connect-wallet';
 import { Icons } from '@mjs/ui/components/icons';
 import { Button } from '@mjs/ui/primitives/button';
-import { logout } from '../../lib/actions';
 import { client } from '@/lib/auth/thirdweb-client';
 
 function AccountProvider({ children }: { children: React.ReactNode }) {
-  const { activeAccount, status } = useActiveAccount();
-  const wallet = useActiveWallet();
-  const { disconnect } = useDisconnect();
-  const [isPending, startTransition] = useTransition();
+  const { activeAccount, status, signout, isLoading } = useActiveAccount();
 
-  const handleClose = () => {
-    startTransition(async () => {
-      if (wallet) {
-        disconnect(wallet);
-      }
-      await logout();
-    });
+  const handleClose = async () => {
+    await signout();
   };
 
   if (status === 'disconnected') {
@@ -49,14 +36,14 @@ function AccountProvider({ children }: { children: React.ReactNode }) {
                 size='icon'
                 tabIndex={-1}
                 onClick={handleClose}
-                loading={isPending}
+                loading={isLoading}
               >
                 <Icons.x className='w-4 h-4' />
               </Button>
             </div>
             {/* <AlertDialogDescription>Lorem</AlertDialogDescription> */}
           </AlertDialogHeader>
-          <ConnectWalletThirdweb />
+          <ConnectWallet />
         </AlertDialogContent>
       </AlertDialog>
     );

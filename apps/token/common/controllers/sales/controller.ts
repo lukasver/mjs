@@ -1,17 +1,21 @@
-import { AppNextApiRequest } from '@/_pages/api/_config';
-import prisma from '../../db/prisma';
+import { prisma } from '@/db';
 import { LogSeverity } from '../../enums';
-import logger from '@/services/logger.service';
+import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
-import { Sale, SaleStatus } from '@prisma/client';
+import { Sale, SaleStatus, Currency } from '@prisma/client';
 import { DateTime } from 'luxon';
-import { NextApiResponse } from 'next';
-import { DbError, HttpError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
 import {
   changeActiveSaleToFinish,
   checkSaleDateIsNotExpired,
 } from './functions';
+import { ActionCtx, GetSalesDto, GetSaleDto } from '@/common/dtos/sales';
+import { Failure, Success } from '@/common/dtos/utils';
+import {
+  CreateSaleDto,
+  UpdateSaleStatusDto,
+  UpdateSaleDto,
+  DeleteSaleDto,
+} from '@/common/dtos/sales';
 
 const QUERY_MAPPING = {
   active: {
@@ -40,9 +44,18 @@ const QUERY_MAPPING = {
 };
 
 class SalesController {
-  async getSales(req: AppNextApiRequest, res: NextApiResponse): Promise<void> {
+  async getSales(
+    { active }: GetSalesDto,
+    _ctx: ActionCtx
+  ): Promise<
+    | Success<{
+        sales: Sale[];
+        quantity: number;
+      }>
+    | Failure
+  > {
     let query = {};
-    const isActiveSaleReq = req.query?.active;
+    const isActiveSaleReq = active;
     if (isActiveSaleReq) {
       query = QUERY_MAPPING['active'];
     }
@@ -80,78 +93,86 @@ class SalesController {
         }
       }
 
-      res.status(HttpStatusCode.OK).json({
+      return Success({
         sales,
         quantity: sales?.length,
       });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error?.status,
-        message: error?.message,
-      });
+      return Failure({ error });
     }
-    return;
   }
 
-  async getSale(req: AppNextApiRequest, res: NextApiResponse): Promise<void> {
-    const { saleId } = req.query;
-
-    if (!saleId) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale uuid missing');
+  /**
+   * Fetch a single sale and its information by id.
+   * @param dto - The DTO containing the sale id.
+   * @param _ctx - The action context (unused).
+   * @returns Success with sale and saleInformation, or Failure on error.
+   */
+  async getSale(
+    { id }: GetSaleDto,
+    _ctx: ActionCtx
+  ): Promise<
+    | Success<{
+        sale: Sale;
+        saleInformation: unknown;
+      }>
+    | Failure
+  > {
+    if (!id) {
+      return Failure('Sale id missing', 400, 'Sale id missing');
     }
     try {
       const sale = await prisma.sale.findUnique({
-        where: { uuid: String(saleId) },
+        where: { id: String(id) },
       });
-
       invariant(sale, 'Sale not found in DB');
       const saleInformation = await prisma.saleInformation.findUnique({
-        where: { saleId: sale.uuid },
+        where: { saleId: sale.id },
       });
-
-      res.status(HttpStatusCode.OK).json({ sale, saleInformation });
+      return Success({ sale, saleInformation });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-        ...(error?.payload && { payload: error.payload }),
-      });
+      return Failure(error);
     }
   }
-  async createSale(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    if (!req.body) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale data missing');
-    }
 
-    const {
-      name,
-      tokenName,
-      tokenSymbol,
-      tokenContractAddress,
-      tokenPricePerUnit,
-      toWalletsAddress,
-      saleCurrency,
-      saleStartDate,
-      saleClosingDate,
-      initialTokenQuantity,
-      availableTokenQuantity,
-      minimumTokenBuyPerUser,
-      maximumTokenBuyPerUser,
-      saftCheckbox,
-      saftContract,
-    } = req.body;
-    if (Number.isNaN(Number(tokenPricePerUnit))) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'Invalid value as price per unit'
-      );
-    }
+  /**
+   * Create a new sale.
+   */
+  async createSale(
+    dto: CreateSaleDto,
+    ctx: ActionCtx
+  ): Promise<Success<{ sale: Sale }> | Failure> {
     try {
+      const {
+        name,
+        tokenName,
+        tokenSymbol,
+        tokenContractAddress,
+        tokenPricePerUnit,
+        toWalletsAddress,
+        saleCurrency,
+        saleStartDate,
+        saleClosingDate,
+        initialTokenQuantity,
+        availableTokenQuantity,
+        minimumTokenBuyPerUser,
+        maximumTokenBuyPerUser,
+        saftCheckbox,
+        saftContract,
+        tokenId,
+      } = dto;
+      if (Number.isNaN(Number(tokenPricePerUnit))) {
+        return Failure(
+          'Invalid value as price per unit',
+          400,
+          'Invalid value as price per unit'
+        );
+      }
+      if (!Object.values(Currency).includes(saleCurrency as Currency)) {
+        return Failure('Invalid sale currency', 400, 'Invalid sale currency');
+      }
       const sale = await prisma.sale.create({
         data: {
           name,
@@ -160,171 +181,145 @@ class SalesController {
           tokenContractAddress,
           tokenPricePerUnit: parseFloat(Number(tokenPricePerUnit).toFixed(2)),
           toWalletsAddress,
-          saleCurrency,
+          saleCurrency: saleCurrency as Currency,
           saleStartDate: new Date(saleStartDate),
           saleClosingDate: new Date(saleClosingDate),
           initialTokenQuantity,
           availableTokenQuantity,
           minimumTokenBuyPerUser,
           maximumTokenBuyPerUser,
-          createdBy: req.user.id || req.user.sub!,
+          createdBy: ctx.userId || '',
           saftCheckbox,
           saftContract,
+          tokenId,
         },
       });
       if (!sale) {
-        throw new DbError('Error while creating sale');
+        return Failure(
+          'Error while creating sale',
+          500,
+          'Error while creating sale'
+        );
       }
-      res.status(HttpStatusCode.CREATED).json({ sale });
+      return Success({ sale }, { status: 201 });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-      });
+      return Failure(error);
     }
-    return;
   }
+
+  /**
+   * Update the status of a sale.
+   */
   async updateSaleStatus(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { saleId } = req.query;
-    const { status } = req.body;
-    if (!saleId) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale uuid missing');
+    { id, status }: UpdateSaleStatusDto,
+    _ctx: ActionCtx
+  ): Promise<Success<{ sale: Sale }> | Failure> {
+    if (!id) {
+      return Failure('Sale id missing', 400, 'Sale id missing');
     }
     if (!status || !Object.keys(SaleStatus).includes(String(status))) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        `Status should be one of: ${Object.keys(SaleStatus).join(' ')}`
+      return Failure(
+        `Status should be one of: ${Object.keys(SaleStatus).join(' ')}`,
+        400
       );
     }
-    //If request ask to open a sale, check if there is another one open first
     if (status === SaleStatus.OPEN) {
       const openSale = await prisma.sale.findFirst({
-        where: {
-          status: SaleStatus.OPEN,
-        },
+        where: { status: SaleStatus.OPEN },
       });
       if (openSale) {
-        res.statusCode = HttpStatusCode.CONFLICT;
-        throw new HttpError(
-          HttpStatusCode.CONFLICT,
+        return Failure(
           'Cannot have more than one sale open at same time',
-          openSale
+          409,
+          'Cannot have more than one sale open at same time'
         );
       }
     }
-
     try {
       const sale = await prisma.sale.findFirst({
-        where: { uuid: String(saleId) },
+        where: { id: String(id) },
       });
-
       invariant(sale, 'Sale not found in DB');
-
       if (status === SaleStatus.OPEN) {
         checkSaleDateIsNotExpired(sale);
       }
-
       const updatedSale = await prisma.sale.update({
-        where: { uuid: sale.uuid },
+        where: { id: sale.id },
         data: { status: status as SaleStatus },
       });
-
-      res.status(HttpStatusCode.OK).json({ sale: updatedSale });
+      return Success({ sale: updatedSale });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-        ...(error?.payload && { payload: error.payload }),
-      });
+      return Failure(error);
     }
   }
 
+  /**
+   * Update a sale.
+   */
   async updateSale(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { saleId } = req.query;
-    const data = req.body;
-
-    if (!saleId || !data || data === undefined) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
+    { id, data }: UpdateSaleDto,
+    _ctx: ActionCtx
+  ): Promise<Success<{ sale: Sale }> | Failure> {
+    if (!id || !data || data === undefined) {
+      return Failure(
+        'Invalid request parameters',
+        400,
         'Invalid request parameters'
       );
     }
-
     try {
       const sale = await prisma.sale.findFirst({
-        where: { uuid: String(saleId) },
+        where: { id: String(id) },
       });
       invariant(sale, 'Sale not found in DB');
-
       const updatedSale = await prisma.sale.update({
-        where: { uuid: sale.uuid },
+        where: { id: sale.id },
         data,
       });
-
-      res.status(HttpStatusCode.OK).json({ sale: updatedSale });
+      return Success({ sale: updatedSale });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-        ...(error?.payload && { payload: error.payload }),
-      });
+      return Failure(error);
     }
   }
 
+  /**
+   * Delete a sale.
+   */
   async deleteSale(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { saleId } = req.query;
-    if (!saleId) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale uuid missing');
+    { id }: DeleteSaleDto,
+    _ctx: ActionCtx
+  ): Promise<Success<{ id: string }> | Failure> {
+    if (!id) {
+      return Failure('Sale id missing', 400, 'Sale id missing');
     }
     try {
       const sale = await prisma.sale.findUnique({
-        where: {
-          uuid: String(saleId),
-        },
-        include: {
-          transactions: true,
-        },
+        where: { id: String(id) },
+        include: { transactions: true },
       });
-
       if (!sale) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale not found');
+        return Failure('Sale not found', 400, 'Sale not found');
       }
       if (sale?.transactions?.length) {
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'Cannot delete a sale with transactions associated. Change status to closed instead'
+        return Failure(
+          'Cannot delete a sale with transactions associated. Change status to closed instead',
+          400
         );
       }
       if (sale.status === SaleStatus.OPEN) {
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'Cannot delete an OPEN sale, update its status instead'
+        return Failure(
+          'Cannot delete an OPEN sale, update its status instead',
+          400
         );
       }
-      await prisma.sale.delete({
-        where: {
-          uuid: String(saleId),
-        },
-      });
-      res.status(HttpStatusCode.ACCEPTED).json({ uuid: saleId });
+      await prisma.sale.delete({ where: { id: String(id) } });
+      return Success({ id }, { status: 202 });
     } catch (error) {
       logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-      });
+      return Failure(error);
     }
   }
 }

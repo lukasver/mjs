@@ -1,62 +1,48 @@
 'use server';
 import 'server-only';
-import { actionClient, authActionClient } from './config';
+import { loginActionClient, authActionClient } from './config';
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import { getUser } from 'thirdweb';
-import { getUserEmail } from 'thirdweb/wallets';
 import {
   deleteSessionCookie,
   generateAuthPayload,
   generateJWT,
   getSessionCookie,
-  serverClient,
   setSessionCookie,
   verifyAuthPayload,
 } from '../auth/thirdweb';
+import { prisma } from '@/common/db/prisma';
+import { publicUrl } from '@/common/config/env';
+import { headers } from 'next/headers';
+import { getIpAddress, getUserAgent } from '../geo';
+import { invariant } from '@epic-web/invariant';
+import salesController from '@/common/controllers/sales/controller';
+import { GetSalesDto } from '@/common/dtos/sales';
 
-const client = serverClient;
+export const isLoggedIn = loginActionClient
+  .schema(z.string())
+  .action(async ({ parsedInput }) => {
+    // const data = await auth.api.getSession({
+    //   headers: await headers(),
+    // });
+    const data = await getSessionCookie();
+    if (!data) return false;
 
-// export const signIn = actionClient
-//   .schema(LoginSchema)
-//   .action(async ({ parsedInput }) => {
-//     const response = await auth.api.signInEmail({
-//       body: {
-//         email: parsedInput.username,
-//         password: parsedInput.password,
-//       },
-//     });
-//     return response;
-//   });
-
-// export const signUp = actionClient
-//   .schema(
-//     zfd.formData({
-//       username: zfd.text(),
-//       password: zfd.text(),
-//     })
-//   )
-//   .action(async ({ parsedInput }) => {
-//     const response = await auth.api.signUpEmail({
-//       returnHeaders: true,
-//       body: {
-//         email: parsedInput.username,
-//         password: parsedInput.password,
-//         name: parsedInput.username,
-//       },
-//     });
-
-//     return response.response;
-//   });
-
-export const isLoggedIn = actionClient.action(async () => {
-  // const data = await auth.api.getSession({
-  //   headers: await headers(),
-  // });
-  const data = await getSessionCookie();
-  // TODO! If active session, return true check in DB if user is logged in with a valid session.
-  return !!data; // data?.session && data.session.expiresAt > new Date();
-});
+    const sessions = await prisma.session.findMany({
+      where: {
+        expiresAt: {
+          gt: new Date(),
+        },
+        token: data,
+        user: {
+          walletAddress: parsedInput,
+        },
+      },
+    });
+    console.debug('🚀 ~ index.ts:78 ~ sessions:', sessions);
+    // If there is at least one active session
+    return sessions.length > 0;
+  });
 
 const LoginParams = z.object({
   signature: z.string(),
@@ -78,7 +64,7 @@ const LoginParams = z.object({
 
 export type LoginParams = z.infer<typeof LoginParams>;
 
-export const login = actionClient
+export const login = loginActionClient
   .schema(LoginParams)
   .action(async ({ parsedInput }) => {
     const verifiedPayload = await verifyAuthPayload(parsedInput);
@@ -86,17 +72,76 @@ export const login = actionClient
     if (!verifiedPayload.valid) {
       redirect('/?error=invalid_payload');
     }
+
     const { payload } = verifiedPayload;
     // Here should go the JWT logic
-    const jwt = await generateJWT(payload, {
-      address: payload.address,
-      ...(payload.chain_id && { chainId: payload.chain_id }),
-    });
+    const [h, jwt] = await Promise.all([
+      headers(),
+      generateJWT(payload, {
+        address: payload.address,
+        ...(payload.chain_id && { chainId: payload.chain_id }),
+      }),
+    ]);
     await setSessionCookie(jwt);
+    const email = `temp_${payload.address}@${new URL(publicUrl).hostname}`;
+    try {
+      const [user] = await Promise.all([
+        prisma.user.upsert({
+          where: {
+            walletAddress: payload.address,
+          },
+          update: {},
+          create: {
+            externalId: payload.address,
+            walletAddress: payload.address,
+            email,
+            emailVerified: false,
+            name: 'Anonymous',
+            isSiwe: true,
+            profile: {
+              create: {},
+            },
+            sessions: {
+              create: {
+                token: jwt,
+                expiresAt: new Date(payload.expiration_time),
+                ipAddress: getIpAddress(new Headers(h)),
+                userAgent: getUserAgent(new Headers(h)),
+              },
+            },
+            // ...(payload.chain_id
+            //   ? {
+            //       WalletAddress: {
+            //         connectOrCreate: {
+            //           where: {
+            //             walletAddress_chainId: {
+            //               chainId: payload.chain_id,
+            //               walletAddress: payload.address,
+            //             },
+            //           },
+            //           create: {
+            //             chainId: payload.chain_id,
+            //           },
+            //         },
+            //       },
+            //     }
+            //   : {}),
+            // userRole: {
+            //   connect: {
+
+            //   }
+            // }
+          },
+        }),
+      ]);
+      console.debug('🚀 ~ CREATED USER:', user);
+    } catch (e) {
+      console.debug('PRISMA ERROR:', e instanceof Error ? e?.message : e);
+    }
     redirect('/dashboard');
   });
 
-export const generatePayload = actionClient
+export const generatePayload = loginActionClient
   .schema(
     z.object({
       address: z.string(),
@@ -107,7 +152,7 @@ export const generatePayload = actionClient
     return await generateAuthPayload({ chainId, address });
   });
 
-export const logout = actionClient.action(async () => {
+export const logout = loginActionClient.action(async () => {
   // await auth.api.signOut({
   //   headers: await headers(),
   // });
@@ -118,23 +163,59 @@ export const logout = actionClient.action(async () => {
 
 export const getCurrentUser = authActionClient.action(
   async ({ ctx: { address } }) => {
-    console.debug('🚀 ~ index.ts:119 ~ address:', address);
-
-    const user = await getUser({
-      client,
-      email: address,
-      // walletAddress: address,
+    // const user = await getUser({
+    //   client,
+    //   email: address,
+    //   // walletAddress: address,
+    // });
+    const user = await prisma.user.findUnique({
+      where: {
+        walletAddress: address,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        externalId: true,
+        walletAddress: true,
+        emailVerified: true,
+        isSiwe: true,
+        image: true,
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            dateOfBirth: true,
+          },
+        },
+        // sessions: {
+        //   select: {},
+        // },
+      },
     });
-
-    console.debug('🚀 ~ index.ts:123 ~ user:', user);
 
     return user;
   }
 );
 
-export const getCurrentUserEmail = authActionClient.action(async () => {
-  const email = await getUserEmail({
-    client,
+export const getCurrentUserEmail = authActionClient.action(
+  async ({ ctx: { address } }) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        walletAddress: address,
+      },
+      select: {
+        email: true,
+      },
+    });
+    invariant(user, 'User not found');
+    return user.email;
+  }
+);
+
+export const getSales = authActionClient
+  .schema(GetSalesDto)
+  .action(async ({ ctx, parsedInput }) => {
+    const sales = await salesController.getSales(parsedInput, ctx);
+    return sales;
   });
-  return email;
-});

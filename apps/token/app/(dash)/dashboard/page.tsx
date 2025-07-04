@@ -9,8 +9,16 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { FundraisingProgressLoading } from '@/components/skeletons/fundraising-progress-loading';
 import { ClientComponent } from '@/components/client-component';
+import { QueryClient } from '@tanstack/react-query';
+import { getSales } from '@/lib/actions';
 
 export default async function DashboardPage(_props: PageProps) {
+  const queryClient = new QueryClient();
+  queryClient.prefetchQuery({
+    queryKey: ['sales'],
+    queryFn: () => getSales({ active: true }),
+  });
+
   const t = await getTranslations();
 
   return (

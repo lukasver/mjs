@@ -8,10 +8,9 @@ import {
   logout,
 } from '../actions';
 
-export const isLoggedIn = async () => {
-  const authResult = await isLoggedInAction();
-  if (!authResult) return false;
-  return true;
+export const isLoggedIn = async (address: string) => {
+  const authResult = await isLoggedInAction(address);
+  return !!authResult;
 };
 
 export const doLogin = async (params: LoginParams) => {
@@ -26,9 +25,6 @@ export const getLoginPayload = async ({
   address,
   chainId,
 }: GetLoginPayload) => {
-  console.debug('🚀 ~ getLoginPayload ~ chainId:', chainId);
-  console.debug('🚀 ~ getLoginPayload ~ address:', address);
-
   const data = (await generatePayload({ address, chainId }))?.data;
   if (!data) {
     throw new Error('Failed to generate payload');
@@ -37,6 +33,5 @@ export const getLoginPayload = async ({
 };
 
 export const doLogout = async () => {
-  console.debug('🚀 ~ functions.ts:65 ~ logout');
   await logout();
 };

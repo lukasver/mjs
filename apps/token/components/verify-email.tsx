@@ -1,6 +1,5 @@
 'use client';
 
-import { logout } from '../lib/actions';
 import { Button } from '@mjs/ui/primitives/button';
 import {
   Card,
@@ -11,41 +10,37 @@ import {
   CardTitle,
 } from '@mjs/ui/primitives/card';
 import { FormInput } from '@mjs/ui/primitives/form-input';
-import { toast } from '@mjs/ui/primitives/sonner';
 import { useAppForm } from '@mjs/ui/primitives/tanstack-form';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useTransition } from 'react';
-import { useActiveWallet } from 'thirdweb/react';
+import { useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
 import { z } from 'zod';
+import useActiveAccount from './hooks/use-active-account';
 
 export function VerifyEmail() {
   const searchParams = useSearchParams();
-  const wallet = useActiveWallet();
-  const [isPending, startTransition] = useTransition();
+
+  const { signout, isLoading } = useActiveAccount();
   const token = searchParams.get('token');
-  const router = useRouter();
+  // const router = useRouter();
   const onSubmit = async ({ token }: { token: string }) => {
-    startTransition(async () => {
-      const error = {};
-      // const { data, error } = await authClient.verifyEmail({
-      //   query: {
-      //     token,
-      //   },
-      // });
-
-      console.debug('🚀 ~ verify-email.tsx:33 ~ error:', error);
-
-      if (error) {
-        const message =
-          error?.code === 'INVALID_TOKEN'
-            ? 'Invalid token'
-            : 'Something went wrong';
-        toast.error(message);
-        return;
-      }
-
-      router.refresh();
-    });
+    // startTransition(async () => {
+    //   const error = {};
+    //   // const { data, error } = await authClient.verifyEmail({
+    //   //   query: {
+    //   //     token,
+    //   //   },
+    //   // });
+    //   console.debug('🚀 ~ verify-email.tsx:33 ~ error:', error);
+    //   if (error) {
+    //     const message =
+    //       error?.code === 'INVALID_TOKEN'
+    //         ? 'Invalid token'
+    //         : 'Something went wrong';
+    //     toast.error(message);
+    //     return;
+    //   }
+    //   router.refresh();
+    // });
   };
 
   // const action = useActionListener(useAction(verifyEmail));
@@ -58,17 +53,7 @@ export function VerifyEmail() {
   });
 
   const handleCancel = async () => {
-    startTransition(async () => {
-      try {
-        if (wallet) {
-          await wallet.disconnect();
-        }
-        // This SA redirects to the login page
-        await logout();
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    await signout();
   };
 
   const handleSubmit = useCallback(
@@ -104,7 +89,7 @@ export function VerifyEmail() {
             <Button
               variant='outline'
               className='flex-1'
-              disabled={isPending}
+              disabled={isLoading}
               type='button'
               onClick={handleCancel}
             >
@@ -114,7 +99,7 @@ export function VerifyEmail() {
               variant='accent'
               className='flex-1'
               type='submit'
-              loading={isPending}
+              loading={isLoading}
             >
               Continue
             </Button>

@@ -25,16 +25,15 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@mjs/ui/primitives/sidebar';
-import { useUser } from '../hooks/use-user';
 import MahjongStarsIcon from '@/public/static/favicons/favicon-48x48.png';
 import { AccountAddress, AccountAvatar } from 'thirdweb/react';
 import { shortenAddress } from 'thirdweb/utils';
+import useActiveAccount from '../hooks/use-active-account';
+import { Skeleton } from '@mjs/ui/primitives/skeleton';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const [user, { loading }] = useUser();
-
-  console.debug('🚀 ~ nav-user.tsx:37 ~ user:', user);
+  const { signout, isLoading, user } = useActiveAccount();
 
   return (
     <SidebarMenu>
@@ -47,10 +46,7 @@ export function NavUser() {
             >
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>{user?.name}</span>
-                <EmailIndicator
-                  isSiwe={!!user?.isAnonymous}
-                  email={user?.email}
-                />
+                <EmailIndicator isSiwe={!!user?.isSiwe} email={user?.email} />
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -66,15 +62,24 @@ export function NavUser() {
                 <AvatarIndicator
                   image={user?.image || undefined}
                   name={user?.name || undefined}
-                  isSiwe={!!user?.isAnonymous}
+                  isSiwe={!!user?.isSiwe}
                 />
-                <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-semibold'>
-                    {user?.name || 'Anonymous'}
-                  </span>
-                  {user?.email && (
-                    <span className='truncate text-xs'>{user.email}</span>
+                <div className='grid flex-1 text-left text-sm leading-tight gap-1'>
+                  {isLoading ? (
+                    <Skeleton className='w-24 h-4' />
+                  ) : (
+                    <span className='truncate font-semibold'>
+                      {user?.name || 'Anonymous'}
+                    </span>
                   )}
+                  {isLoading ? (
+                    <Skeleton className='w-36 h-3' />
+                  ) : user?.email ? (
+                    <EmailIndicator
+                      isSiwe={!!user?.isSiwe}
+                      email={user?.email}
+                    />
+                  ) : null}
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -101,7 +106,11 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () => {
+                await signout();
+              }}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>
@@ -127,7 +136,7 @@ const EmailIndicator = (props: EmailIndicatorProps) => {
   if (!email) {
     return null;
   }
-  return <span className='truncate text-xs'>{email}</span>;
+  return <span className='truncate text-xs max-w-sm'>{email}</span>;
 };
 
 type AvatarIndicatorProps = {

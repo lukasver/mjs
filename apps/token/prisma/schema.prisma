@@ -10,7 +10,7 @@ generator client {
 
 generator zod {
   provider               = "zod-prisma-types"
-  output                 = "../src/common/schemas/generated"
+  output                 = "../common/schemas/generated"
   useMultipleFiles       = false
   createModelTypes       = true
   // Useful for input validation but might affect performance since outputed file is huge
@@ -47,7 +47,7 @@ model User {
 
   kycVerification KycVerification?
   sessions        Session[]
-  accounts        Account[]
+  // accounts        Account[]
 
   transactions         SaleTransactions[] @relation("UserTransactions")
   transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
@@ -88,25 +88,26 @@ model Session {
   @@map("session")
 }
 
-model Account {
-  id        String   @id @default(cuid()) @db.Text
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+/// Not needed for now since we are not using better auth
+// model Account {
+//   id        String   @id @default(cuid()) @db.Text
+//   createdAt DateTime @default(now()) @db.Timestamptz(6)
+//   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
+//   accountId             String
+//   providerId            String
+//   userId                String
+//   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   accessToken           String?
+//   refreshToken          String?
+//   idToken               String?
+//   accessTokenExpiresAt  DateTime?
+//   refreshTokenExpiresAt DateTime?
+//   scope                 String?
+//   password              String?
 
-  @@map("account")
-}
+//   @@map("account")
+// }
 
 model Verification {
   id        String   @id @default(cuid()) @db.Text

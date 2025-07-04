@@ -9,6 +9,8 @@ import { Footer } from '@mjs/ui/components/footer';
 import { metadata } from '@/common/config/site';
 import { getTranslations } from 'next-intl/server';
 import { BuyTokenButton } from '@/components/buy-token-button';
+import { getCurrentUser } from '@/lib/actions';
+import { QueryClient } from '@tanstack/react-query';
 
 /**
  * Layout component for the dashboard section
@@ -19,7 +21,14 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const queryClient = new QueryClient();
   const t = await getTranslations();
+
+  queryClient.prefetchQuery({
+    queryKey: ['user'],
+    queryFn: () => getCurrentUser(),
+  });
+
   return (
     <>
       <AutoConnect />

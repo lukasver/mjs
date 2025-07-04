@@ -1,13 +1,11 @@
-import prisma from '../../db/prisma';
+import { prisma } from '@/db';
 import { Sale, SaleStatus } from '@prisma/client';
 import { DateTime } from 'luxon';
-import { HttpError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
 
 export const changeActiveSaleToFinish = async (sale: Sale): Promise<Sale[]> => {
   await prisma.sale.update({
     where: {
-      uuid: sale.uuid,
+      id: sale.id,
     },
     data: {
       status: SaleStatus.FINISHED,
@@ -19,10 +17,8 @@ export const changeActiveSaleToFinish = async (sale: Sale): Promise<Sale[]> => {
 
 export const checkSaleDateIsNotExpired = (sale: Sale) => {
   if (DateTime.fromJSDate(sale.saleClosingDate) <= DateTime.now()) {
-    throw new HttpError(
-      HttpStatusCode.BAD_REQUEST,
-      `Cannot OPEN an sale an expired sale with closing date: ${sale.saleClosingDate}`,
-      sale
+    throw new Error(
+      `Cannot OPEN an sale an expired sale with closing date: ${sale.saleClosingDate}`
     );
   }
 };
