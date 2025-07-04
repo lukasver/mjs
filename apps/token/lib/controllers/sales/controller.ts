@@ -8,14 +8,18 @@ import {
   changeActiveSaleToFinish,
   checkSaleDateIsNotExpired,
 } from './functions';
-import { ActionCtx, GetSalesDto, GetSaleDto } from '@/common/dtos/sales';
-import { Failure, Success } from '@/common/dtos/utils';
+import {
+  ActionCtx,
+  GetSalesDto,
+  GetSaleDto,
+} from '@/common/schemas/dtos/sales';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
 import {
   CreateSaleDto,
   UpdateSaleStatusDto,
   UpdateSaleDto,
   DeleteSaleDto,
-} from '@/common/dtos/sales';
+} from '@/common/schemas/dtos/sales';
 
 const QUERY_MAPPING = {
   active: {

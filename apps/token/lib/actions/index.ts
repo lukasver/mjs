@@ -17,7 +17,7 @@ import { headers } from 'next/headers';
 import { getIpAddress, getUserAgent } from '../geo';
 import { invariant } from '@epic-web/invariant';
 import salesController from '@/common/controllers/sales/controller';
-import { GetSalesDto } from '@/common/dtos/sales';
+import { GetSalesDto } from '@/common/schemas/dtos/sales';
 
 export const isLoggedIn = loginActionClient
   .schema(z.string())

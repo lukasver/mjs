@@ -2,7 +2,7 @@
 
 import { getSales } from '@/lib/actions';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { GetSalesDto } from '@/common/dtos/sales';
+import type { GetSalesDto } from '@/common/schemas/dtos/sales';
 
 const DEFAULT_STALE_TIME = 1000 * 60 * 5; // 5 minutes
 
