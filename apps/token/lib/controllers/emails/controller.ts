@@ -1,160 +1,176 @@
-import { AppNextApiRequest } from '@/_pages/api/_config';
-import prisma from '../../db/prisma';
-import { LogSeverity } from '../../enums';
-import EmailVerification from '@/components/EmailTemplates';
-import logger from '@/services/logger.service';
+import { prisma } from '@/db';
+import logger from '@/lib/services/logger.server';
+import { templates } from '@mjs/emails';
 import { invariant } from '@epic-web/invariant';
-import { EmailVerificationStatus } from '@prisma/client';
-import { NextApiResponse } from 'next';
 import { Resend } from 'resend';
-import { HttpError, isPrismaError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
+import { ActionCtx } from '@/common/schemas/dtos/sales';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
+import {
+  GetTokenVerificationDto,
+  CreateEmailVerificationDto,
+  DeleteTokenDto,
+} from '@/common/schemas/dtos/emails';
 
+/**
+ * EmailController class handles email verification operations.
+ */
 class EmailController {
+  /**
+   * Get and verify token for email verification.
+   * @param dto - The token verification data.
+   * @param ctx - The action context.
+   * @returns Success with verification response, or Failure on error.
+   */
   async getTokenVerification(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { token } = req.query;
-    invariant(req.user, 'UNAUTHORIZED');
-
+    dto: GetTokenVerificationDto,
+    ctx: ActionCtx
+  ): Promise<Success<{ response: unknown }> | Failure> {
     try {
-      const response = await prisma.emailVerification.findUnique({
+      const { token } = dto;
+      invariant(ctx.userId, 'UNAUTHORIZED');
+      invariant(token, 'Token is required');
+
+      const response = await prisma.verification.findFirst({
         where: {
-          token: String(token),
+          value: String(token),
+          identifier: ctx.userId,
         },
       });
 
       if (!response) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Token is incorrect');
+        return Failure('Token is incorrect', 400, 'Token is incorrect');
       }
-      if (response.expiredAt < new Date()) {
-        await prisma.emailVerification.delete({
-          where: { token: String(token) },
+
+      if (response.expiresAt < new Date()) {
+        await prisma.verification.delete({
+          where: { id: response.id },
         });
-        await prisma.user.update({
-          where: { sub: req.user.id },
-          data: { isEmailVerify: EmailVerificationStatus.NOTVERIFIED },
-        });
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'Token expired. Please re-enter your email to generate a new token.'
+        return Failure(
+          'Token expired. Please re-enter your email to generate a new token.',
+          400,
+          'Token expired'
         );
       }
 
       const data = await prisma.profile.upsert({
-        where: { userId: req.user.id },
+        where: { userId: ctx.userId },
         create: {
-          userId: req.user.id,
-          email: response.email,
-          ...req.body,
+          userId: ctx.userId,
+          email: response.identifier,
         },
         update: {
-          email: response.email,
-          ...req.body,
+          email: response.identifier,
         },
       });
+
       if (data) {
         await prisma.user.update({
-          where: { sub: req.user.id },
-          data: { isEmailVerify: EmailVerificationStatus.VERIFIED },
+          where: { id: ctx.userId },
+          data: { emailVerified: true },
         });
       }
-      await prisma.emailVerification.delete({
-        where: { token: String(token) },
+
+      await prisma.verification.delete({
+        where: { id: response.id },
       });
 
-      res.status(HttpStatusCode.ACCEPTED).json({ response });
+      return Success({ response });
     } catch (e) {
-      logger(e, LogSeverity.ERROR);
-      const status = e?.status || HttpStatusCode.INTERNAL_SERVER_ERROR;
-      res.status(status).json({
-        error: e?.message,
-        status,
-      });
+      logger(e);
+      return Failure(e);
     }
-    return;
   }
 
+  /**
+   * Create email verification record and send verification email.
+   * @param dto - The email verification data.
+   * @param ctx - The action context.
+   * @returns Success with message, or Failure on error.
+   */
   async createEmailVerification(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+    dto: CreateEmailVerificationDto,
+    ctx: ActionCtx
+  ): Promise<Success<{ message: string }> | Failure> {
     try {
-      invariant(req.user, 'UNAUTHORIZED');
-      if (!req.body || !req.body.email || !req.body.token) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Invalid request body');
-      }
+      invariant(ctx.userId, 'UNAUTHORIZED');
+      invariant(dto.email, 'Email is required');
+      invariant(dto.token, 'Token is required');
+      invariant(dto.userId, 'User ID is required');
 
-      const { email, token, userId } = req.body;
+      const { email, token } = dto;
 
-      const verification = await prisma.emailVerification.create({
-        data: { email, token, userId },
+      const verification = await prisma.verification.create({
+        data: {
+          identifier: email,
+          value: token,
+          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+        },
       });
 
-      if (!verification) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Error creating token');
-      }
+      invariant(verification, 'Error creating token');
 
       const updatedVerification = await prisma.user.update({
-        where: { sub: req.user.id },
-        data: { isEmailVerify: EmailVerificationStatus.PENDING },
+        where: { id: ctx.userId },
+        data: { emailVerified: false },
       });
-      if (!updatedVerification) {
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'Error changing status'
-        );
-      }
+
+      invariant(updatedVerification, 'Error changing status');
 
       const sendResponse = await sendEmail({ email, token });
-      if (!sendResponse) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Error sending email');
-      }
+      invariant(sendResponse, 'Error sending email');
 
-      res
-        .status(HttpStatusCode.CREATED)
-        .json({ message: 'Verification email sent successfully' });
+      return Success({ message: 'Verification email sent successfully' });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
-      });
+      logger(error);
+      return Failure(error);
     }
-    return;
   }
 
-  async daleteToken(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+  /**
+   * Delete email verification token.
+   * @param _dto - The delete token data (unused).
+   * @param ctx - The action context.
+   * @returns Success with message, or Failure on error.
+   */
+  async deleteToken(
+    _dto: DeleteTokenDto,
+    ctx: ActionCtx
+  ): Promise<Success<{ message: string }> | Failure> {
     try {
-      await prisma.emailVerification.delete({
-        where: { userId: req.user.id },
-      });
-      res.status(HttpStatusCode.CREATED).json({ message: 'Deleted Register' });
-    } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      if (isPrismaError(error)) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, error.message);
-      }
+      invariant(ctx.userId, 'UNAUTHORIZED');
 
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error.status,
-        message: error.message,
+      await prisma.verification.deleteMany({
+        where: { identifier: ctx.userId },
       });
+
+      return Success({ message: 'Deleted Register' });
+    } catch (error) {
+      logger(error);
+      return Failure(error);
     }
   }
 }
 
-const sendEmail = async ({ email, token }) => {
+/**
+ * Send verification email using Resend service.
+ * @param email - The recipient email address.
+ * @param token - The verification token.
+ * @returns Promise with email send response.
+ */
+const sendEmail = async ({
+  email,
+  token,
+}: {
+  email: string;
+  token: string;
+}) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
+  const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
   return await resend.emails.send({
-    from: 'SMAT S.A <devs@token.smat.io>',
+    from: 'Mahjong Stars <notifications@mjs.smat.io>',
     to: email,
-    subject: 'Verification',
-    react: EmailVerification({ token }),
+    subject: 'Email Verification',
+    react: templates.emailVerification({ url: verificationUrl }),
   });
 };
 

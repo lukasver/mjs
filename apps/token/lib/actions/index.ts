@@ -11,12 +11,10 @@ import {
   setSessionCookie,
   verifyAuthPayload,
 } from '../auth/thirdweb';
-import { prisma } from '@/common/db/prisma';
-import { publicUrl } from '@/common/config/env';
-import { headers } from 'next/headers';
-import { getIpAddress, getUserAgent } from '../geo';
+import { prisma } from '@/db';
 import { invariant } from '@epic-web/invariant';
-import salesController from '@/common/controllers/sales/controller';
+import salesController from '@/lib/controllers/sales/controller';
+import usersController from '@/lib/controllers/users/controller';
 import { GetSalesDto } from '@/common/schemas/dtos/sales';
 
 export const isLoggedIn = loginActionClient
@@ -75,66 +73,28 @@ export const login = loginActionClient
 
     const { payload } = verifiedPayload;
     // Here should go the JWT logic
-    const [h, jwt] = await Promise.all([
-      headers(),
+    const [jwt] = await Promise.all([
       generateJWT(payload, {
         address: payload.address,
         ...(payload.chain_id && { chainId: payload.chain_id }),
       }),
     ]);
     await setSessionCookie(jwt);
-    const email = `temp_${payload.address}@${new URL(publicUrl).hostname}`;
     try {
       const [user] = await Promise.all([
-        prisma.user.upsert({
-          where: {
-            walletAddress: payload.address,
+        usersController.createUser({
+          address: payload.address,
+          session: {
+            jwt,
+            expirationTime: payload.expiration_time,
           },
-          update: {},
-          create: {
-            externalId: payload.address,
-            walletAddress: payload.address,
-            email,
-            emailVerified: false,
-            name: 'Anonymous',
-            isSiwe: true,
-            profile: {
-              create: {},
-            },
-            sessions: {
-              create: {
-                token: jwt,
-                expiresAt: new Date(payload.expiration_time),
-                ipAddress: getIpAddress(new Headers(h)),
-                userAgent: getUserAgent(new Headers(h)),
-              },
-            },
-            // ...(payload.chain_id
-            //   ? {
-            //       WalletAddress: {
-            //         connectOrCreate: {
-            //           where: {
-            //             walletAddress_chainId: {
-            //               chainId: payload.chain_id,
-            //               walletAddress: payload.address,
-            //             },
-            //           },
-            //           create: {
-            //             chainId: payload.chain_id,
-            //           },
-            //         },
-            //       },
-            //     }
-            //   : {}),
-            // userRole: {
-            //   connect: {
-
-            //   }
-            // }
-          },
+          chainId: payload.chain_id ? Number(payload.chain_id) : undefined,
         }),
       ]);
-      console.debug('🚀 ~ CREATED USER:', user);
+      if (!user.success) {
+        throw new Error(user.message);
+      }
+      return user.data;
     } catch (e) {
       console.debug('PRISMA ERROR:', e instanceof Error ? e?.message : e);
     }
@@ -186,6 +146,7 @@ export const getCurrentUser = authActionClient.action(
             firstName: true,
             lastName: true,
             dateOfBirth: true,
+            address: true,
           },
         },
         // sessions: {

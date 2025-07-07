@@ -15,7 +15,9 @@
       "@/components/*": ["./components/*"],
       "@/app/*": ["./app/*"],
       "@/messages/*": ["./messages/*"],
-      "@/db": ["./common/db/prisma.ts"],
+      "@/db": ["./lib/db/prisma.ts"],
+      "@/controllers/*": ["./lib/controllers/*"],
+      "@/services/*": ["./lib/services/*"],
       "@/schemas": ["./common/schemas/generated/index.ts"]
     }
   },

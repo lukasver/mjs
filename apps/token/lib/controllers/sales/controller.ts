@@ -1,5 +1,4 @@
 import { prisma } from '@/db';
-import { LogSeverity } from '../../enums';
 import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
 import { Sale, SaleStatus, Currency } from '@prisma/client';
@@ -101,9 +100,9 @@ class SalesController {
         sales,
         quantity: sales?.length,
       });
-    } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      return Failure({ error });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
@@ -136,7 +135,7 @@ class SalesController {
       });
       return Success({ sale, saleInformation });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
+      logger(error);
       return Failure(error);
     }
   }
@@ -207,7 +206,7 @@ class SalesController {
       }
       return Success({ sale }, { status: 201 });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
+      logger(error);
       return Failure(error);
     }
   }
@@ -254,7 +253,7 @@ class SalesController {
       });
       return Success({ sale: updatedSale });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
+      logger(error);
       return Failure(error);
     }
   }
@@ -284,7 +283,7 @@ class SalesController {
       });
       return Success({ sale: updatedSale });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
+      logger(error);
       return Failure(error);
     }
   }
@@ -322,7 +321,7 @@ class SalesController {
       await prisma.sale.delete({ where: { id: String(id) } });
       return Success({ id }, { status: 202 });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
+      logger(error);
       return Failure(error);
     }
   }

@@ -1,452 +1,242 @@
-import { AppNextApiRequest } from '@/_pages/api/_config';
-import { isAdminAPI } from '@/_pages/api/auth/_utils';
-import {
-  IS_DEVELOPMENT,
-  MAX_ALLOWANCE_WITHOUT_KYC,
-} from '../../config/contants';
-import prisma from '../../db/prisma';
-import { LogSeverity } from '../../enums';
-import nodeProvider, { isValidChainId } from '@/services/crypto/node.service';
-import logger from '@/services/logger.service';
-import Handlebars from 'handlebars';
-import { DateTime } from 'luxon';
-import { NextApiRequest, NextApiResponse } from 'next';
-
-import { UserWithProfileAndAddress } from '../../types/user';
-import {
-  UrlContract,
-  createContract,
-  urlContract,
-} from '@/services/adobe.service';
+import { prisma } from '@/db';
+import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
 import {
-  Currency,
+  SaleStatus,
+  TransactionStatus,
   FOP,
   Sale,
-  SaleStatus,
+  Currency,
   SaleTransactions,
-  TransactionStatus,
 } from '@prisma/client';
-import currencyJs from 'currency.js';
-import { DbError, HttpError, getError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
-import { checkSaleDateIsNotExpired } from '../sales/functions';
+import { Prisma } from '@prisma/client';
+import { ActionCtx } from '@/common/schemas/dtos/sales';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
+import {
+  CreateTransactionDto,
+  UpdateTransactionDto,
+} from '@/common/schemas/dtos/transactions';
+import { MAX_ALLOWANCE_WITHOUT_KYC } from '@/common/config/contants';
+import { DateTime } from 'luxon';
+import Handlebars from 'handlebars';
+import { UserWithProfileAndAddress } from '@/common/types/user';
+import { urlContract, UrlContract } from '@/lib/services/adobe.service';
+import { getError } from '../errors';
 
 class TransactionsController {
-  constructor() {
-    this.createTransaction = this.createTransaction.bind(this);
-  }
-
-  async adminGetAllTransactions(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+  /**
+   * Get all transactions (admin only).
+   */
+  async getAllTransactions(_dto: unknown, ctx: ActionCtx) {
     try {
-      if (!isAdminAPI(req)) {
-        throw new HttpError(HttpStatusCode.FORBIDDEN, 'Not authorized');
-      }
+      if (!ctx.isAdmin) return Failure('Not authorized', 403, 'Not authorized');
       const transactions = await prisma.saleTransactions.findMany({
         include: {
           sale: true,
-          user: {
-            include: {
-              profile: {
-                select: {
-                  email: true,
-                },
-              },
-            },
-          },
+          user: { include: { profile: true } },
         },
       });
-      res
-        .status(HttpStatusCode.OK)
-        .json({ transactions: transactions, quantity: transactions?.length });
+      return Success({ transactions, quantity: transactions.length });
     } catch (e) {
-      logger(e, LogSeverity.ERROR);
-      res.status(e?.code || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        error: e.message,
-        status: e?.status,
-        ...(e?.payload && { payload: e.payload }),
-      });
+      logger(e);
+      return Failure(e);
     }
   }
-  async adminUpdateTransaction(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { uuid, status } = req.body;
-    if (!isAdminAPI(req)) {
-      throw new HttpError(HttpStatusCode.FORBIDDEN, 'Not authorized');
-    }
-    if (!uuid || !status) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Id and status required');
-    }
+
+  /**
+   * Update a transaction (admin only).
+   */
+  async updateTransactionStatus(
+    dto: { id: string; status: TransactionStatus },
+    ctx: ActionCtx
+  ) {
+    invariant(ctx.isAdmin, 'Not authorized');
+    invariant(dto.id, 'Id missing');
+    invariant(dto.status, 'Status missing');
     try {
       const transaction = await prisma.saleTransactions.update({
-        where: {
-          uuid: String(uuid),
-        },
-        data: {
-          status: String(status) as TransactionStatus,
-        },
-        include: {
-          sale: true,
-          user: {
-            include: {
-              profile: {
-                select: {
-                  email: true,
-                },
-              },
-            },
-          },
-        },
+        where: { id: String(dto.id) },
+        data: { status: dto.status },
+        include: { sale: true, user: { include: { profile: true } } },
       });
-      res.status(HttpStatusCode.OK).json({ transaction });
+      return Success({ transaction });
     } catch (e) {
-      logger(e, LogSeverity.ERROR);
-      res.status(e?.code || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        error: e.message,
-        status: e?.status,
-        ...(e?.payload && { payload: e.payload }),
-      });
+      logger(e);
+      return Failure(e);
     }
   }
 
-  async userTransactions(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { userId, formOfPayment, symbol, sale } = req.query;
-
-    if (!userId) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'transactions uuid missing'
-      );
-    }
-    let saleId: string | undefined;
-    const andQuery: { saleId?: typeof saleId; tokenSymbol?: string }[] = [];
-    if (sale === 'current') {
-      saleId = (await prisma.sale.findFirst({ where: { status: 'OPEN' } }))
-        ?.uuid;
-      andQuery.push({ saleId });
-    }
-    if (symbol) {
-      andQuery.push({
-        tokenSymbol: String(symbol),
-      });
-    }
-
+  /**
+   * Get all transactions for a user (optionally filtered by sale or symbol).
+   */
+  async getUserTransactions(
+    dto: {
+      userId: string;
+      formOfPayment?: FOP;
+      symbol?: string;
+      sale?: string;
+    },
+    _ctx: ActionCtx
+  ) {
     try {
+      const { userId, formOfPayment, symbol, sale } = dto;
+      invariant(userId, 'User id missing');
+      let saleId: string | undefined;
+      const andQuery: { saleId?: string; tokenSymbol?: string }[] = [];
+      if (sale === 'current') {
+        saleId = (
+          await prisma.sale.findFirst({ where: { status: SaleStatus.OPEN } })
+        )?.id;
+        andQuery.push({ saleId });
+      }
+      if (symbol) andQuery.push({ tokenSymbol: symbol });
       const transactions = await prisma.saleTransactions.findMany({
         where: {
           OR: [
+            { userId, ...(formOfPayment && { formOfPayment }) },
             {
-              userId: String(userId),
-              ...(!!formOfPayment && { formOfPayment: formOfPayment as FOP }),
-            },
-            {
-              receivingWallet: String(userId),
-              ...(!!formOfPayment && { formOfPayment: formOfPayment as FOP }),
+              receivingWallet: userId,
+              ...(formOfPayment && { formOfPayment }),
             },
           ],
           ...(andQuery.length && { AND: andQuery }),
         },
       });
-
-      res.status(HttpStatusCode.OK).json({ transactions: transactions });
+      return Success({ transactions });
     } catch (e) {
-      logger(e, LogSeverity.ERROR);
-      res.status(e?.code || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        error: e.message,
-        status: e?.status,
-        ...(e?.payload && { payload: e.payload }),
-      });
+      logger(e);
+      return Failure(e);
     }
   }
-  async createTransaction(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    let agreement: string | undefined;
-    let urlSign: UrlContract['urlSign'] = null;
-    let isSign: UrlContract['isSign'] = false;
 
-    if (!req.body || !req.body.userId || !req.body.saleId) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'Transaction data missing or incomplete'
-      );
-    }
-    const {
-      tokenSymbol,
-      boughtTokenQuantity,
-      formOfPayment,
-      receivingWallet,
-      userId,
-      saleId,
-      comment,
-      amountPaid,
-      amountPaidCurrency,
-    } = req.body;
-
-    const sale = await prisma.sale.findUnique({
-      where: { uuid: saleId },
-    });
-    if (!sale) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale not found');
-    }
-    if (
-      sale.availableTokenQuantity &&
-      sale.availableTokenQuantity < req.body.boughtTokenQuantity
-    ) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'Cannot buy more tokens than available amount',
-        sale
-      );
-    }
-    checkSaleDateIsNotExpired(sale);
-
-    const pendingTransaction = await prisma.saleTransactions.findFirst({
-      where: {
-        status: TransactionStatus.PENDING,
-        saleId,
-        userId,
-      },
-    });
-
-    if (pendingTransaction) {
-      throw new HttpError(
-        HttpStatusCode.CONFLICT,
-        'Cannot create a new transaction if user have a pending one',
-        { transaction: pendingTransaction }
-      );
-    }
-
-    const userData = await prisma.user.findUnique({
-      where: { sub: userId },
-      include: {
-        profile: {
-          include: {
-            address: true,
-          },
-        },
-      },
-    });
-
-    if (req?.user?.isSiwe || userData?.isSiwe) {
-      this.#checkMaxAllowanceWithoutKYC(boughtTokenQuantity, sale);
-    }
-
-    if (sale.saftContract && !userData?.isSiwe) {
-      const contract = sale?.saftContract;
-      const email = userData?.profile?.email;
-      invariant(email, 'User email not found in DB');
-      const saleCurrency = sale?.saleCurrency;
-      const saleTokenPricePerUnit = sale?.tokenPricePerUnit;
-
-      const purchaseData = {
-        currency: amountPaidCurrency,
-        amount: amountPaid,
-        quantity: boughtTokenQuantity,
+  /**
+   * Create a new transaction.
+   */
+  async createTransaction(dto: CreateTransactionDto, ctx: ActionCtx) {
+    try {
+      const {
+        tokenSymbol,
+        quantity,
         formOfPayment,
-      };
+        receivingWallet,
+        userId,
+        saleId,
+        comment,
+        amountPaid,
+        amountPaidCurrency,
+      } = dto;
+      invariant(userId, 'User id missing');
+      invariant(saleId, 'Sale id missing');
+      const sale = await prisma.sale.findUnique({ where: { id: saleId } });
+      invariant(sale, 'Sale not found');
 
-      userData;
-
-      const fullContract = createSaftContract({
-        contract,
-        userData,
-        contractValues: purchaseData,
-        saleCurrency,
-        saleTokenPricePerUnit,
+      if (
+        sale.availableTokenQuantity &&
+        sale.availableTokenQuantity < Number(quantity)
+      ) {
+        return Failure('Cannot buy more tokens than available amount', 400);
+      }
+      // Check for pending transaction
+      const pendingTransaction = await prisma.saleTransactions.findFirst({
+        where: { status: TransactionStatus.PENDING, saleId, userId },
       });
-      try {
-        const {
-          agreementId,
-          urlSign: url,
-          isSign: sign,
-        } = await createContract(fullContract, email);
-        agreement = agreementId;
-        urlSign = url;
-        isSign = sign;
-      } catch (error) {
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          `Error creating agreement: ${error?.message}`
+      if (pendingTransaction) {
+        invariant(
+          false,
+          'Cannot create a new transaction if user has a pending one'
         );
       }
-    }
 
-    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { isSiwe: true },
+      });
+
+      if (user?.isSiwe) {
+        this.checkMaxAllowanceWithoutKYC(quantity.toString(), sale);
+      }
+
+      // TODO: Add contract/SAFT logic if needed
+      // TODO: Calculate rawPrice, price, totalAmount correctly
       const [_updatedSale, transaction] = await Promise.all([
         prisma.sale.update({
-          where: {
-            uuid: saleId,
-          },
-          data: {
-            availableTokenQuantity: {
-              decrement: parseInt(boughtTokenQuantity),
-            },
-          },
+          where: { id: saleId },
+          data: { availableTokenQuantity: { decrement: Number(quantity) } },
         }),
         prisma.saleTransactions.create({
           data: {
             tokenSymbol,
-            boughtTokenQuantity: parseInt(boughtTokenQuantity),
+            quantity: new Prisma.Decimal(Number(quantity)),
             formOfPayment,
             receivingWallet,
             comment,
             status: TransactionStatus.PENDING,
             amountPaid,
             amountPaidCurrency,
-            agreementId: agreement || null,
-            sale: {
-              connect: {
-                uuid: saleId,
-              },
-            },
-            user: {
-              connect: {
-                sub: userId,
-              },
-            },
+            saleId,
+            userId,
+            rawPrice: '0', // TODO: calculate
+            price: new Prisma.Decimal(0), // TODO: calculate
+            totalAmount: new Prisma.Decimal(0), // TODO: calculate
           },
         }),
       ]);
-      if (!transaction) {
-        throw new DbError('Error while creating sale');
-      }
-      return res
-        .status(HttpStatusCode.CREATED)
-        .json({ transaction, agreement, urlSign, isSign });
-    } catch (error) {
-      console.error(error?.message || error);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        code: error.code,
-        error: error.message,
-        ...(error?.payload && { payload: error.payload }),
-      });
+      return Success({ transaction });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
-  async deleteTransactions(
-    _req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+
+  /**
+   * Delete all transactions (dev only).
+   */
+  async deleteAllTransactions() {
+    invariant(process.env.NODE_ENV === 'development', 'Forbidden');
     try {
-      if (!IS_DEVELOPMENT) {
-        throw new Error('NOT USABLE IN PROD');
-      }
       const transaction = await prisma.saleTransactions.deleteMany();
-
-      if (!transaction)
-        throw new HttpError(HttpStatusCode.NOT_FOUND, 'Delete tx not found');
-      res.status(200).json({
-        transaction,
-      });
-    } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error?.status,
-        error: error.message,
-        ...(error?.payload && { payload: error.payload }),
-      });
-    }
-    return;
-  }
-
-  async deleteTransaction(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { transactionId } = req.query;
-    if (!transactionId) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'Transaction uuid not provided'
-      );
-    }
-    try {
-      await prisma.saleTransactions.delete({
-        where: {
-          uuid: String(transactionId),
-        },
-      });
-      res.status(200).end();
-      return;
-    } catch (error) {
-      handleHttpError(res, error);
+      return Success({ transaction });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
-  async updateTransaction(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { uuid, statusTx, saleId, comment, confirmationId, txHash, chainId } =
-      req.body;
-
-    if (!uuid || !statusTx) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
-        'Transaction id and Status missing'
-      );
-    }
-
+  /**
+   * Delete a transaction by id.
+   */
+  async deleteTransaction(dto: { id: string }, _ctx: ActionCtx) {
     try {
-      //  "CANCELLED" operations
-      if (statusTx === TransactionStatus.CANCELLED && saleId) {
-        const transaction = await prisma.saleTransactions.findUnique({
-          where: { uuid },
-        });
-
-        await deleteTransactionAndRestoreUnits(transaction);
-
-        res.status(HttpStatusCode.OK).json({ success: true, status: 200 });
-        return;
-      }
-    } catch (error) {
-      handleHttpError(res, error);
+      invariant(dto.id, 'Transaction id missing');
+      await prisma.saleTransactions.delete({ where: { id: String(dto.id) } });
+      return Success({ id: dto.id });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
+  }
 
+  /**
+   * Update a transaction by id.
+   */
+  async updateTransactionById(
+    dto: { id: string } & UpdateTransactionDto,
+    _ctx: ActionCtx
+  ) {
     try {
-      // General operation transactions
+      invariant(dto.id, 'Transaction id missing');
       const transaction = await prisma.saleTransactions.update({
-        where: {
-          uuid: uuid,
-        },
-        include: {
-          sale: true,
-          user: true,
-          blockchain: true,
-        },
-        data: {
-          status: statusTx,
-          ...(txHash && { txHash }),
-          ...(chainId && { blockchainId: chainId }),
-          ...(comment && { comment }),
-          ...(confirmationId && { confirmationId }),
-        },
+        where: { id: String(dto.id) },
+        data: { ...dto },
       });
-
-      if (!transaction) {
-        throw new HttpError(HttpStatusCode.NOT_FOUND, 'Update tx not found');
-      }
-
-      res.status(HttpStatusCode.OK).json({
-        transaction,
-      });
-    } catch (error) {
-      handleHttpError(res, error);
+      return Success({ transaction });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
-  async pendingCronJobTransactions(
-    _req: NextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+
+  async pendingCronJobTransactions() {
     const sixHoursAgo = DateTime.local().minus({ hours: 6 }).toJSDate();
     // const oneMinuteAgo = DateTime.local().minus({ minutes: 1 }).toJSDate();
 
@@ -482,7 +272,7 @@ class TransactionsController {
             {
               status: {
                 in: [
-                  TransactionStatus.CONFIRMED_BY_USER,
+                  TransactionStatus.PAYMENT_VERIFIED,
                   TransactionStatus.PENDING,
                 ],
               },
@@ -501,73 +291,59 @@ class TransactionsController {
       });
 
       if (cryptoTransactions.length > 0) {
-        for (const tx of cryptoTransactions) {
-          // If there we know which blockchain the transaction has been broadcasted, then we can check
-          if (tx.txHash && isValidChainId(tx.blockchainId)) {
-            nodeProvider
-              .getTransaction(tx.blockchainId, tx.txHash)
-              .then((result) => {
-                //transaction was confirmed in blockchain
-                if (result && result.confirmations > 0) {
-                  prisma.saleTransactions.update({
-                    where: {
-                      uuid: tx.uuid,
-                    },
-                    data: {
-                      status: TransactionStatus.CONFIRMED,
-                    },
-                  });
-                }
-                // IF null then means transaction is pending, and by previous search, it has been pending for at least 6 hours.
-                if (result === null) {
-                  cancelTransactionAndRestoreUnits(tx);
-                }
-              });
-          } else {
-            // If we have a pending crypto transaction without txHash we can assume it was never broadcasted by the user to the blockchain
-            if (tx.status === TransactionStatus.PENDING) {
-              cancelTransactionAndRestoreUnits(tx);
-            }
-          }
-        }
+        //TODO: Implement this
+        // for (const tx of cryptoTransactions) {
+        //   // If there we know which blockchain the transaction has been broadcasted, then we can check
+        //   if (tx.txHash && isValidChainId(tx.blockchainId)) {
+        //     nodeProvider
+        //       .getTransaction(tx.blockchainId, tx.txHash)
+        //       .then((result) => {
+        //         //transaction was confirmed in blockchain
+        //         if (result && result.confirmations > 0) {
+        //           prisma.saleTransactions.update({
+        //             where: {
+        //               uuid: tx.uuid,
+        //             },
+        //             data: {
+        //               status: TransactionStatus.PAYMENT_VERIFIED,
+        //             },
+        //           });
+        //         }
+        //         // IF null then means transaction is pending, and by previous search, it has been pending for at least 6 hours.
+        //         if (result === null) {
+        //           cancelTransactionAndRestoreUnits(tx);
+        //         }
+        //       });
+        //   } else {
+        //     // If we have a pending crypto transaction without txHash we can assume it was never broadcasted by the user to the blockchain
+        //     if (tx.status === TransactionStatus.PENDING) {
+        //       cancelTransactionAndRestoreUnits(tx);
+        //     }
+        //   }
+        // }
       }
 
-      res.status(HttpStatusCode.OK).json({ success: true, status: 200 });
-      return;
-    } catch (error) {
-      handleHttpError(res, error);
+      return Success({});
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
-  async pendingContactTransactions(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+  /**
+   * Get pending contact transactions for a user in the current open sale.
+   */
+  async pendingContactTransactions(_dto: unknown, ctx: ActionCtx) {
     try {
-      if (!req.user?.id) {
-        throw new HttpError(HttpStatusCode.UNAUTHORIZED, 'Not authorized');
-      }
+      invariant(ctx.userId, 'Not authorized');
       const sale = await prisma.sale.findFirst({ where: { status: 'OPEN' } });
-      if (!sale)
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'There is no open sale'
-        );
-
+      invariant(sale, 'There is no open sale');
       const pendingTransaction = await prisma.saleTransactions.findFirst({
         where: {
-          AND: [
-            { saleId: sale.uuid, userId: req.user.id },
-            { status: 'PENDING' },
-          ],
+          AND: [{ saleId: sale.id, userId: ctx.userId }, { status: 'PENDING' }],
         },
       });
-      if (!pendingTransaction)
-        throw new HttpError(
-          HttpStatusCode.BAD_REQUEST,
-          'There are no pending transactions'
-        );
-
+      invariant(pendingTransaction, 'There are no pending transactions');
       let responseData = {};
       if (pendingTransaction.agreementId) {
         const data = await urlContract(pendingTransaction.agreementId);
@@ -576,62 +352,53 @@ class TransactionsController {
           urlSign: data.urlSign || null,
         };
       }
-
-      res.status(HttpStatusCode.OK).json(responseData);
+      return Success(responseData);
     } catch (error) {
-      if (error instanceof HttpError) {
-        res.status(HttpStatusCode.CONFLICT).json({ message: error.message });
-      } else {
-        console.error('Error in pendingContactTransactions function:', error);
-        res
-          .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-          .json({ message: 'Internal server error' });
-      }
+      return Failure(getError(error));
     }
   }
 
+  /**
+   * Get user transactions for a specific sale.
+   */
   async userTransactionsForSale(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+    dto: { saleId: string; type?: keyof typeof TransactionStatus },
+    ctx: ActionCtx
+  ) {
     try {
-      const { id } = req.query;
+      const { saleId, type } = dto;
+      invariant(ctx.userId, 'User not found');
+      invariant(saleId, 'Sale not found');
       const status: TransactionStatus =
-        TransactionStatus[String(req.query.type)] || TransactionStatus.PENDING;
-      invariant(req.user, 'User not found');
-      invariant(id, 'Sale not found');
-      const { sub } = req.user;
-
+        (type && TransactionStatus[type]) || TransactionStatus.PENDING;
       const transactions = await prisma.saleTransactions.findMany({
         where: {
-          AND: [{ saleId: String(id) }, { userId: sub }, { status }],
+          AND: [{ saleId: String(saleId) }, { userId: ctx.userId }, { status }],
         },
       });
       const transaction = transactions[0];
-
       let contract: UrlContract = { isSign: false, urlSign: null };
-
       if (transaction?.agreementId) {
         contract = await urlContract(transaction.agreementId);
       }
-
-      return res
-        .status(HttpStatusCode.OK)
-        .json({ totalCount: transactions?.length, transactions, contract });
-    } catch (e) {
-      const error = getError(e);
-      res.status(error.status).json({ message: error.message });
+      return Success({
+        totalCount: transactions?.length,
+        transactions,
+        contract,
+      });
+    } catch (error) {
+      return Failure(getError(error));
     }
   }
 
-  #checkMaxAllowanceWithoutKYC(boughtTokenQuantity: string, sale: Sale) {
+  private checkMaxAllowanceWithoutKYC(boughtTokenQuantity: string, sale: Sale) {
     if (
       !boughtTokenQuantity ||
       isNaN(parseInt(boughtTokenQuantity)) ||
       !sale?.tokenPricePerUnit
     ) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
+      invariant(
+        false,
         'Invalid token quantity or token price while checking max KYC allowance'
       );
     }
@@ -639,32 +406,32 @@ class TransactionsController {
       parseInt(boughtTokenQuantity) * sale.tokenPricePerUnit >
       MAX_ALLOWANCE_WITHOUT_KYC
     ) {
-      throw new HttpError(
-        HttpStatusCode.BAD_REQUEST,
+      invariant(
+        false,
         `SIWE users are entitled to make transactions up to ${MAX_ALLOWANCE_WITHOUT_KYC}${sale.saleCurrency} without KYC`
       );
     }
   }
 }
 
-async function cancelTransactionAndRestoreUnits(
+async function _cancelTransactionAndRestoreUnits(
   tx: SaleTransactions,
   reason?: string
 ) {
   return prisma.$transaction([
     prisma.sale.update({
       where: {
-        uuid: tx.saleId,
+        id: tx.saleId,
       },
       data: {
         availableTokenQuantity: {
-          increment: tx.boughtTokenQuantity,
+          increment: tx.quantity.toNumber(),
         },
       },
     }),
     prisma.saleTransactions.update({
       where: {
-        uuid: tx.uuid,
+        id: tx.id,
       },
       data: {
         status: TransactionStatus.CANCELLED,
@@ -676,38 +443,29 @@ async function cancelTransactionAndRestoreUnits(
   ]);
 }
 
-async function deleteTransactionAndRestoreUnits(transaction) {
-  const { uuid, saleId, boughtTokenQuantity } = transaction;
+async function deleteTransactionAndRestoreUnits(transaction: SaleTransactions) {
+  const { id, saleId, quantity } = transaction;
 
   await prisma.$transaction([
     prisma.sale.update({
       where: {
-        uuid: saleId,
+        id: saleId,
       },
       data: {
         availableTokenQuantity: {
-          increment: boughtTokenQuantity,
+          increment: quantity.toNumber(),
         },
       },
     }),
     prisma.saleTransactions.delete({
       where: {
-        uuid,
+        id,
       },
     }),
   ]);
 }
 
-function handleHttpError(res: NextApiResponse, error: any) {
-  logger(error, LogSeverity.ERROR);
-  res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-    status: error?.status,
-    error: error.message,
-    ...(error?.payload && { payload: error.payload }),
-  });
-}
-
-const createSaftContract = ({
+const _createSaftContract = ({
   contract,
   userData,
   contractValues,
@@ -730,9 +488,9 @@ const createSaftContract = ({
 
   const precision = contractValues?.formOfPayment === FOP.CRYPTO ? 8 : 2;
 
-  const saleAmount = currencyJs(contractValues?.quantity, {
-    precision,
-  }).multiply(saleTokenPricePerUnit);
+  const saleAmount = new Prisma.Decimal(contractValues?.quantity || 0)
+    .mul(new Prisma.Decimal(saleTokenPricePerUnit))
+    .toFixed(precision);
 
   const contractVariables = {
     firstname: profile?.firstName || 'XXXXX',
@@ -745,7 +503,9 @@ const createSaftContract = ({
     quantity: contractValues?.quantity || 'XXXXX',
     paidcurrency: contractValues?.currency || 'XXXXX',
     paidamount:
-      currencyJs(contractValues?.amount, { precision })?.toString() || 'XXXXX',
+      new Prisma.Decimal(contractValues?.amount || 0)
+        .toFixed(precision)
+        .toString() || 'XXXXX',
     defaultcurrency: saleCurrency || 'XXXXX',
     paidamountindefaultcurrency: saleAmount?.toString() || 'XXXXX',
     date: DateTime.now().toFormat('yyyy-MM-dd'),
@@ -757,6 +517,4 @@ const createSaftContract = ({
   return fullContract;
 };
 
-const transactionsController = new TransactionsController();
-
-export default transactionsController;
+export default new TransactionsController();

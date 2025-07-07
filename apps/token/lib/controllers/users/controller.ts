@@ -1,157 +1,225 @@
-import { AppNextApiRequest } from '@/_pages/api/_config';
-import prisma from '../../db/prisma';
-import { LogSeverity, RegistrationSteps } from '../../enums';
-import logger from '@/services/logger.service';
-import { NextApiResponse } from 'next';
-import { HttpError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
-import { checkAndAssignRole } from './functions';
+import { prisma } from '@/db';
+import logger from '@/services/logger.server';
+import { CreateUserDto, GetUserDto } from '@/common/schemas/dtos/users';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
+import { invariant } from '@epic-web/invariant';
+import { publicUrl } from '@/common/config/env';
+import { getIpAddress, getUserAgent } from '@/lib/geo';
+import { headers } from 'next/headers';
+import { UserUpdateInputSchema, Profile } from '@/common/schemas/generated';
+import { ActionCtx } from '@/common/schemas/dtos/sales';
 
 class UsersController {
-  async me(req: AppNextApiRequest, res: NextApiResponse): Promise<void> {
+  async me({ address }: GetUserDto) {
     try {
-      const user = await prisma.user.findUnique({
+      const user = await prisma.user.findUniqueOrThrow({
         where: {
-          sub: req.user.id,
+          walletAddress: address,
         },
-        include: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          externalId: true,
+          walletAddress: true,
+          emailVerified: true,
+          isSiwe: true,
+          image: true,
           profile: {
-            include: {
+            select: {
+              firstName: true,
+              lastName: true,
+              dateOfBirth: true,
               address: true,
             },
           },
+          // sessions: {
+          //   select: {},
+          // },
         },
       });
-      // if (!user)
-      //   throw new HttpError(HttpStatusCode.NOT_FOUND, 'User not found');
-      res.status(200).json({
+      return Success({
         user,
       });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error?.status,
-        error: error.message,
+      logger(error);
+      return Failure({
+        error,
       });
     }
-    return;
   }
-  async createUser(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+
+  async createSession(
+    address: string,
+    { jwt, expirationTime }: { jwt: string; expirationTime: string }
+  ) {
+    const h = await headers();
+    const session = await prisma.session.create({
+      data: {
+        token: jwt,
+        expiresAt: new Date(expirationTime),
+        ipAddress: getIpAddress(new Headers(h)),
+        userAgent: getUserAgent(new Headers(h)),
+        user: {
+          connect: {
+            walletAddress: address,
+          },
+        },
+      },
+    });
+    return session;
+  }
+
+  async createUser(payload: CreateUserDto) {
     try {
-      if (!req.body) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'User data missing');
-      }
+      invariant(payload, 'User data missing');
       //todo: promoCode implementation
-      const { address, dateOfBirth, promoCode, ...data } = req.body;
+      const {
+        address,
+        promoCode,
+        session: { jwt, expirationTime } = {},
+        chainId,
+        ..._data
+      } = payload;
 
       if (promoCode) {
-        checkAndAssignRole({ code: promoCode, user: req.user });
+        // checkAndAssignRole({ code: promoCode, user: payload });
       }
-      cleanData(data);
 
-      await prisma.address.upsert({
+      const h = new Headers(await headers());
+
+      const email = `temp_${address}@${new URL(publicUrl).hostname}`;
+      const user = await prisma.user.upsert({
         where: {
-          userId: req.user.id,
+          walletAddress: address,
         },
+        update: {},
         create: {
-          userId: req.user.id,
-          ...address,
-        },
-        update: {
-          ...address,
-        },
-      });
-
-      const user = await prisma.profile.update({
-        where: {
-          userId: req.user.id,
-        },
-        include: {
-          user: true,
-        },
-        data: {
-          ...data,
-          ...(dateOfBirth && { dateOfBirth: new Date(dateOfBirth) }),
-          user: {
-            update: {
-              registrationStep: RegistrationSteps.COMPLETED,
-            },
+          externalId: address,
+          walletAddress: address,
+          email,
+          emailVerified: false,
+          name: 'Anonymous',
+          isSiwe: true,
+          profile: {
+            create: {},
           },
+          ...(jwt && {
+            sessions: {
+              create: {
+                token: jwt,
+                expiresAt: new Date(
+                  expirationTime || new Date(Date.now() + 24 * 60 * 60 * 1000)
+                ),
+                ipAddress: getIpAddress(h),
+                userAgent: getUserAgent(h),
+              },
+            },
+          }),
+          ...(chainId
+            ? {
+                WalletAddress: {
+                  connectOrCreate: {
+                    where: {
+                      walletAddress_chainId: {
+                        chainId: chainId,
+                        walletAddress: address,
+                      },
+                    },
+                    create: {
+                      chainId: chainId,
+                    },
+                  },
+                },
+              }
+            : {}),
+          //TODO!
+          // userRole: {
+          //   connect: {
+
+          //   }
+          // }
         },
       });
 
-      if (!user) {
-        throw new HttpError(HttpStatusCode.NOT_FOUND, 'User not found');
-      }
-      res
-        .status(HttpStatusCode.CREATED)
-        .json({ status: HttpStatusCode.CREATED });
+      invariant(user, 'User could not be created');
+
+      return Success({
+        user,
+      });
     } catch (error) {
-      logger(error, LogSeverity.ERROR);
-      res.status(error?.status || HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        status: error?.status,
-        error: error?.message,
+      logger(error);
+      return Failure({
+        error,
       });
     }
-    return;
   }
 
+  /**
+   * Update user and profile information.
+   * @param dto - The update data for user and/or profile.
+   * @param ctx - The action context.
+   * @returns Success with updated user/profile, or Failure on error.
+   */
   async updateUser(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
+    dto: {
+      address: string;
+      user: typeof UserUpdateInputSchema._type;
+      profile?: Partial<Omit<Profile, 'userId'>>;
+    },
+    _ctx: ActionCtx
+  ) {
     try {
-      if (!req.body) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'User data missing');
+      if (!dto.user) {
+        return Failure('User data missing', 400, 'User data missing');
       }
 
-      //todo: sanitize body
-      if (req.body.email) {
-        const response = await prisma.profile.upsert({
-          where: { userId: req.user.id },
-          create: {
-            userId: req.user.id,
-            ...req.body,
-          },
-          update: {
-            ...req.body,
-          },
-        });
-        res.status(HttpStatusCode.CREATED).json({ profile: response });
-      }
-
-      const response = await prisma.user.upsert({
+      const _user = await prisma.user.findUniqueOrThrow({
         where: {
-          sub: req.user.id,
+          walletAddress: dto.address,
         },
-        create: {
-          sub: req.user.id,
-          ...req.body,
-        },
-        update: {
-          ...req.body,
+        select: {
+          id: true,
         },
       });
-      res.status(HttpStatusCode.CREATED).json({ user: response });
+
+      const promises = [];
+      if (dto.profile) {
+        promises.push(
+          prisma.profile.upsert({
+            where: {
+              userId: _user.id,
+            },
+            create: {
+              userId: _user.id,
+              ...dto.profile,
+            },
+            update: { ...dto.profile },
+          })
+        );
+      }
+      promises.push(
+        prisma.user.update({
+          where: { id: _user.id },
+          data: { ...dto.user },
+        })
+      );
+      const [user, profile] = (await Promise.allSettled(promises))
+        .filter((p) => p.status === 'fulfilled')
+        .map((p) => p.value);
+      return Success({ user, ...(profile && { profile }) });
     } catch (e) {
-      logger(e, LogSeverity.ERROR);
-      const status = e?.status || HttpStatusCode.INTERNAL_SERVER_ERROR;
-      res.status(status).json({
-        error: e?.message,
-        status,
-      });
+      logger(e);
+      return Failure(e);
     }
   }
 }
 
 export default new UsersController();
-const cleanData = (obj) => {
-  for (const key in obj) {
-    if (obj[key] === null || obj[key] === undefined) {
-      delete obj[key];
-    }
-  }
-};
+// const cleanData = (obj: Record<string, unknown>) => {
+//   for (const key in obj) {
+//     if (obj[key] === null || obj[key] === undefined) {
+//       delete obj[key];
+//     }
+//   }
+// };
