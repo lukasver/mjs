@@ -176,18 +176,20 @@ model Sale {
   minimumTokenBuyPerUser Int                @default(1)
   saleStartDate          DateTime
   tokenContractAddress   String?
+  tokenContractChainId   Int?
+  blockchain             Blockchain?        @relation(fields: [tokenContractChainId], references: [chainId])
   tokenName              String
   tokenTotalSupply       String?
-  tokenPricePerUnit      Float
+  tokenPricePerUnit      Decimal            @db.Decimal(36, 18)
   tokenSymbol            String
   toWalletsAddress       String
   saleClosingDate        DateTime
   createdBy              String
+  saftCheckbox           Boolean            @default(false)
+  saftContract           String?
   user                   User               @relation(fields: [createdBy], references: [id])
   transactions           SaleTransactions[]
   saleInformation        SaleInformation?
-  saftCheckbox           Boolean            @default(false)
-  saftContract           String?
   documents              Document[]
 
   token            Token             @relation(fields: [tokenId], references: [id])
@@ -323,20 +325,22 @@ model SaleTransactions {
 }
 
 model Blockchain {
-  id           String             @id @default(cuid()) @db.Text
-  name         String
-  chainId      Int                @unique
-  rpcUrl       String
-  explorerUrl  String
-  symbol       String
-  decimals     Int                @default(18)
-  isTestnet    Boolean            @default(false)
-  isEnabled    Boolean            @default(true)
-  tokens       Token[]
-  transactions SaleTransactions[]
-  createdAt    DateTime           @default(now()) @db.Timestamptz(6)
-  updatedAt    DateTime           @updatedAt @db.Timestamptz(6)
-  deletedAt    DateTime?          @db.Timestamptz(6)
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name        String
+  chainId     Int     @unique
+  rpcUrl      String
+  explorerUrl String?
+
+  isTestnet Boolean @default(false)
+  isEnabled Boolean @default(true)
+
+  transactions        SaleTransactions[]
+  TokensOnBlockchains TokensOnBlockchains[]
+  Sale                Sale[]
 
   @@map("blockchain")
 }
@@ -396,8 +400,9 @@ model Role {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  name  String     @unique
-  users UserRole[]
+  name        String     @unique
+  description String?
+  users       UserRole[]
 
   @@map("roles")
 }
@@ -422,16 +427,32 @@ model Token {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  symbol          String     @unique
-  name            String
-  decimals        Int        @default(18)
-  totalSupply     String
-  contractAddress String?
-  blockchain      Blockchain @relation(fields: [blockchainId], references: [id])
-  blockchainId    String
-  sales           Sale[]
+  symbol      String
+  totalSupply String?
+  image       String?
+
+  sales               Sale[]
+  TokensOnBlockchains TokensOnBlockchains[]
 
   @@map("tokens")
+}
+
+model TokensOnBlockchains {
+  id          String @id @default(cuid()) @db.Text
+  token       Token  @relation(fields: [tokenId], references: [id])
+  tokenId     String
+  tokenSymbol String
+
+  blockchain   Blockchain @relation(fields: [blockchainId], references: [id])
+  blockchainId String
+
+  name            String
+  isNative        Boolean @default(false)
+  decimals        Int
+  contractAddress String?
+
+  @@unique([tokenId, blockchainId])
+  @@unique([tokenSymbol, blockchainId])
 }
 
 enum RegistrationStep {

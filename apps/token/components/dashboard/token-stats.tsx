@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import { TokenStatCard } from './token-stats-card';
 import { cache } from 'react';
 import { TokenStatsLoading } from '../skeletons/large-cards-loading';
+import { getContract } from '@/lib/actions';
+import { QueryClient } from '@tanstack/react-query';
 
 const sleep = cache(
   (ms: number) =>
@@ -20,7 +22,14 @@ const sleep = cache(
     })
 );
 
-export async function TokenStats() {
+export async function TokenStats({ address }: { address: string }) {
+  const queryClient = new QueryClient();
+
+  queryClient.prefetchQuery({
+    queryKey: [`contract::${address}`],
+    queryFn: () => getContract(address),
+  });
+
   return (
     <>
       <Suspense fallback={<TokenStatsLoading />}>
@@ -36,19 +45,19 @@ export async function TokenStats() {
   );
 }
 
-//TODO! do actual data fetching
+// //TODO! do actual data fetching
 
 const TokenPriceCard = async () => {
-  const data = await sleep(1000);
+  const data = await sleep(3000);
   return <TokenStatCard data={data} title='Token Price' icon='dollar' />;
 };
 
 const TokenMarketCapCard = async () => {
-  const data = await sleep(2000);
+  const data = await sleep(3000);
   return <TokenStatCard data={data} title='Market Cap' icon='dollar' />;
 };
 
 const TokenTotalHoldersCard = async () => {
-  const data = await sleep(3000);
+  const data = await sleep(4000);
   return <TokenStatCard data={data} title='Total Holders' icon='users' />;
 };

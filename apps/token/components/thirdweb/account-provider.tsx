@@ -22,9 +22,15 @@ function AccountProvider({ children }: { children: React.ReactNode }) {
     await signout();
   };
 
+  // console.debug(
+  //   '🚀 ~ AccountProvider ~ status:',
+  //   activeAccount?.address,
+  //   status
+  // );
+
   if (status === 'disconnected') {
     return (
-      <AlertDialog defaultOpen={true}>
+      <AlertDialog open={true}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <div className='flex items-center justify-between gap-2'>
@@ -35,7 +41,9 @@ function AccountProvider({ children }: { children: React.ReactNode }) {
                 variant='ghost'
                 size='icon'
                 tabIndex={-1}
-                onClick={handleClose}
+                onClick={() => {
+                  handleClose();
+                }}
                 loading={isLoading}
               >
                 <Icons.x className='w-4 h-4' />
@@ -80,6 +88,8 @@ function AccountProvider({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
+
+  console.debug('LLEGUE ACA?');
 
   return null;
 }

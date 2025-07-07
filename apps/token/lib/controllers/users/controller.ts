@@ -8,7 +8,7 @@ import { getIpAddress, getUserAgent } from '@/lib/geo';
 import { headers } from 'next/headers';
 import { UserUpdateInputSchema, Profile } from '@/common/schemas/generated';
 import { ActionCtx } from '@/common/schemas/dtos/sales';
-import { ONE_DAY } from '@/common/config/contants';
+import { ONE_DAY } from '@/common/config/constants';
 
 class UsersController {
   async me({ address }: GetUserDto) {
@@ -44,9 +44,7 @@ class UsersController {
       });
     } catch (error) {
       logger(error);
-      return Failure({
-        error,
-      });
+      return Failure(error);
     }
   }
 
@@ -166,9 +164,7 @@ class UsersController {
       });
     } catch (error) {
       logger(error);
-      return Failure({
-        error,
-      });
+      return Failure(error);
     }
   }
 
@@ -187,9 +183,7 @@ class UsersController {
     _ctx: ActionCtx
   ) {
     try {
-      if (!dto.user) {
-        return Failure('User data missing', 400, 'User data missing');
-      }
+      invariant(dto.user, 'User data missing');
 
       const _user = await prisma.user.findUniqueOrThrow({
         where: {

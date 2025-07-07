@@ -1,4 +1,4 @@
-import { IS_CI } from '../../common/config/contants';
+import { IS_CI } from '../../common/config/constants';
 import HttpStatusCode from '../../common/controllers/httpStatusCodes';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';

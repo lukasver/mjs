@@ -1,106 +1,82 @@
-import { AppNextApiRequest } from '@/_pages/api/_config';
-import prisma from '../../db/prisma';
+import { prisma } from '@/db';
 import { invariant } from '@epic-web/invariant';
 import { SaleStatus } from '@prisma/client';
-import { NextApiResponse } from 'next';
-import { HttpError } from '../errors';
-import HttpStatusCode from '../httpStatusCodes';
+import { ActionCtx } from '@/common/schemas/dtos/sales';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
+import logger from '@/services/logger.server';
 
 class ContractController {
-  async getContract(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { userId } = req.query;
+  async getContract(_dto: unknown, ctx: ActionCtx) {
+    const { userId } = ctx;
 
     try {
       const sale = await prisma.sale.findFirst({
         where: { status: SaleStatus.OPEN },
+        select: {
+          id: true,
+        },
       });
-      invariant(sale, 'Sale not found in DB');
-      const { uuid: saleId } = sale;
-      if (!saleId) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale not open');
-      }
+      invariant(sale, 'Sale not found or not open');
 
       const existingContract = await prisma.contractStatus.findFirst({
-        where: { userId: userId as string, saleId: saleId as string },
+        where: { userId: userId as string, saleId: sale.id },
       });
 
       if (existingContract) {
-        res
-          .status(HttpStatusCode.OK)
-          .json({ contractStatus: existingContract });
+        return Success({ contractStatus: existingContract });
       } else {
-        res.status(HttpStatusCode.OK).json(null);
+        return Success(null);
       }
-    } catch (_error) {
-      res
-        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-        .json({ error: 'Internal Server Error' });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
-  async createContractStatus(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { userId, contractId } = req.body;
-    if (!userId) {
-      throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Missing userId');
-    }
+  async createContractStatus(dto: { contractId: string }, ctx: ActionCtx) {
+    const { userId } = ctx;
+    const { contractId } = dto;
+    invariant(userId, 'Missing userId');
     try {
       const sale = await prisma.sale.findFirst({
         where: { status: SaleStatus.OPEN },
+        select: {
+          id: true,
+        },
       });
 
-      invariant(sale, 'Sale not found in DB');
-      const { uuid: saleId } = sale;
-      if (!saleId) {
-        throw new HttpError(HttpStatusCode.BAD_REQUEST, 'Sale not open');
-      }
+      invariant(sale, 'Sale not found or not open');
+      const { id: saleId } = sale;
+
       const newContract = await prisma.contractStatus.create({
         data: {
-          userId: userId as string,
-          saleId: saleId as string,
-          contractId: contractId as string,
+          userId: userId,
+          saleId: saleId,
+          contractId: contractId,
           status: 'PENDING',
         },
       });
-      res.status(HttpStatusCode.OK).json({ contractStatus: newContract });
-    } catch (error) {
-      console.error(error);
-      res
-        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-        .json({ error: 'Internal Server Error' });
+      return Success({ contractStatus: newContract });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
-  async deleteContractStatus(
-    req: AppNextApiRequest,
-    res: NextApiResponse
-  ): Promise<void> {
-    const { userId } = req.query;
+  async deleteContractStatus(_dto: unknown, ctx: ActionCtx) {
+    const { userId } = ctx;
 
     try {
       const existingContracts = await prisma.contractStatus.deleteMany({
         where: {
-          userId: String(userId),
+          userId,
         },
       });
-
-      if (existingContracts.count > 0) {
-        res.status(HttpStatusCode.ACCEPTED).json('success');
-      } else {
-        res
-          .status(HttpStatusCode.NOT_FOUND)
-          .json({ message: 'Contracts not found' });
-      }
-    } catch (error) {
-      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        message: 'Internal Server Error',
-        error: error.message,
-      });
+      invariant(existingContracts.count > 0, 'Contracts not found');
+      return Success({ message: 'Contracts deleted' });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 }

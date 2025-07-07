@@ -8,19 +8,26 @@ import {
   generateAuthPayload,
   generateJWT,
   getSessionCookie,
+  serverClient,
   setSessionCookie,
   verifyAuthPayload,
+  verifyJwt,
 } from '../auth/thirdweb';
 import { prisma } from '@/db';
 import { invariant } from '@epic-web/invariant';
 import salesController from '@/lib/controllers/sales/controller';
 import usersController from '@/lib/controllers/users/controller';
 import { GetSalesDto } from '@/common/schemas/dtos/sales';
+import { authCache } from '../auth/cache';
+import { defineChain, getContract as getContractThirdweb } from 'thirdweb';
+import { bscTestnet } from 'thirdweb/chains';
+import { erc20Abi } from 'viem';
 
 export const isLoggedIn = loginActionClient
   .schema(z.string())
   .action(async ({ parsedInput }) => {
     const data = await getSessionCookie();
+    console.log('IS LOGGED IN CALLED', data);
     if (!data) return false;
 
     const sessions = await prisma.session.findMany({
@@ -110,15 +117,22 @@ export const logout = loginActionClient.action(async () => {
 
   await deleteSessionCookie();
   if (data) {
-    void prisma.session
-      .delete({
-        where: {
-          token: data,
-        },
-      })
-      .catch((e) => {
-        console.debug('🚀 ~ index.ts:122 ~ e:', e);
-      });
+    const verified = await verifyJwt(data);
+    void Promise.allSettled([
+      verified.valid && authCache.delete(verified.parsedJWT.sub),
+      prisma.session
+        .delete({
+          where: {
+            token: data,
+          },
+        })
+        .catch((e) => {
+          console.error(
+            '🚀 ~ index.ts:122 ~ e:',
+            e instanceof Error ? e.message : e
+          );
+        }),
+    ]);
   }
   redirect('/');
 });
@@ -181,4 +195,23 @@ export const getSales = authActionClient
   .action(async ({ ctx, parsedInput }) => {
     const sales = await salesController.getSales(parsedInput, ctx);
     return sales;
+  });
+
+export const getContract = authActionClient
+  .schema(z.string())
+  .action(async ({ parsedInput }) => {
+    const contract = await getContractThirdweb({
+      // the client you have created via `createThirdwebClient()`
+      client: serverClient,
+      // the chain the contract is deployed on
+      chain: defineChain(bscTestnet.id),
+      // the contract's address
+      address: parsedInput,
+      // OPTIONAL: the contract's abi
+      // abi: [...],
+      abi: erc20Abi,
+    });
+    invariant(contract, 'Contract not found');
+
+    return;
   });

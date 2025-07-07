@@ -1,7 +1,4 @@
-import { LogSeverity } from '../../enums';
-import { JWTUser } from '../../types/next-auth';
-import logger from '@/services/logger.service';
-import axios from 'axios';
+import logger from '@/services/logger.server';
 
 enum PROMO_CODES {
   AMBASSADOR = 'Strategic2023*',
@@ -9,12 +6,13 @@ enum PROMO_CODES {
 
 const ACCESS_TOKEN = process.env.ZITADEL_ADMIN_SERVICE_ACCOUNT_PAT;
 
+//TODO! pending implementatino
 export const checkAndAssignRole = ({
   code,
-  user,
+  _user,
 }: {
   code: string;
-  user: JWTUser;
+  user: unknown;
 }) => {
   if (
     !Object.values(PROMO_CODES).includes(code as PROMO_CODES) ||
@@ -23,26 +21,26 @@ export const checkAndAssignRole = ({
     return;
   }
   try {
-    axios({
-      method: 'POST',
-      url: `${process.env.ZITADEL_ISSUER}/management/v1/users/${user.id}/grants`,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-        'x-zitadel-orgid': process.env.ZITADEL_ORG_ID,
-      },
-      data: {
-        userId: user.id,
-        projectId: process.env.ZITADEL_PROJECT_ID,
-        roleKeys: Object.entries(PROMO_CODES).reduce((agg, [key, value]) => {
-          if (code === value) {
-            agg.push(key);
-          }
-          return agg;
-        }, [] as string[]),
-      },
-    });
+    // axios({
+    //   method: 'POST',
+    //   url: `${process.env.ZITADEL_ISSUER}/management/v1/users/${user.id}/grants`,
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     Authorization: `Bearer ${ACCESS_TOKEN}`,
+    //     'x-zitadel-orgid': process.env.ZITADEL_ORG_ID,
+    //   },
+    //   data: {
+    //     userId: user.id,
+    //     projectId: process.env.ZITADEL_PROJECT_ID,
+    //     roleKeys: Object.entries(PROMO_CODES).reduce((agg, [key, value]) => {
+    //       if (code === value) {
+    //         agg.push(key);
+    //       }
+    //       return agg;
+    //     }, [] as string[]),
+    //   },
+    // });
   } catch (e) {
-    logger(e, LogSeverity.ERROR);
+    logger(e);
   }
 };

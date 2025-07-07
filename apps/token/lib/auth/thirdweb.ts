@@ -4,7 +4,7 @@ import { createThirdwebClient } from 'thirdweb';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { createAuth } from 'thirdweb/auth';
 import { LoginParams } from '../actions';
-import { COOKIE_NAME, COOKIE_PREFIX } from '@/common/config/contants';
+import { COOKIE_NAME, COOKIE_PREFIX } from '@/common/config/constants';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { Duration } from 'luxon';

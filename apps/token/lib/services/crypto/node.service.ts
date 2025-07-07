@@ -1,4 +1,3 @@
-import { LogSeverity } from '../../../common/enums';
 import { Alchemy, Network } from 'alchemy-sdk';
 import * as chains from 'wagmi/chains';
 import logger from '../logger.server';
@@ -59,8 +58,7 @@ class NodeProviderService {
     const client = this[chain];
     if (!client) {
       logger(
-        `nodeProvider.getTransaction was called with an unknown chain: ${chain}`,
-        LogSeverity.ERROR
+        `nodeProvider.getTransaction was called with an unknown chain: ${chain}`
       );
       return null;
     }

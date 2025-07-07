@@ -1,4 +1,4 @@
-import { COOKIE_PREFIX } from './common/config/contants';
+import { COOKIE_PREFIX } from './common/config/constants';
 import { getSessionCookie } from './lib/auth/thirdweb';
 import log from './lib/services/logger.server';
 import { type NextRequest, NextResponse } from 'next/server';

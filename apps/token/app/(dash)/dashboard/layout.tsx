@@ -15,6 +15,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { TokenProvider } from '@/components/thirdweb/token-provider';
+import { SyncConnectedWallet } from '@/components/sync-wallets';
 
 /**
  * Layout component for the dashboard section
@@ -37,31 +39,35 @@ export default async function DashboardLayout({
     <>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <AutoConnect />
-        <AccountProvider>
-          <SidebarProvider>
-            <DashboardSidebar>
-              <Suspense fallback={null}>
-                <AdminSidebar />
-              </Suspense>
-            </DashboardSidebar>
-            <section className='flex-1 grid grid-rows-[auto_1fr_auto]'>
-              <DashboardHeader>
-                <Suspense fallback={null}>
-                  <BuyTokenButton />
-                </Suspense>
-              </DashboardHeader>
-              {children}
-              <Footer
-                siteConfig={metadata}
-                links={getFooterLinks(t)}
-                copyright={t('Footer.copyright', {
-                  year: new Date().getFullYear(),
-                })}
-                className='bg-black'
-              />
-            </section>
-          </SidebarProvider>
-        </AccountProvider>
+        <SyncConnectedWallet>
+          <AccountProvider>
+            <TokenProvider>
+              <SidebarProvider>
+                <DashboardSidebar>
+                  <Suspense fallback={null}>
+                    <AdminSidebar />
+                  </Suspense>
+                </DashboardSidebar>
+                <section className='flex-1 grid grid-rows-[auto_1fr_auto]'>
+                  <DashboardHeader>
+                    <Suspense fallback={null}>
+                      <BuyTokenButton />
+                    </Suspense>
+                  </DashboardHeader>
+                  {children}
+                  <Footer
+                    siteConfig={metadata}
+                    links={getFooterLinks(t)}
+                    copyright={t('Footer.copyright', {
+                      year: new Date().getFullYear(),
+                    })}
+                    className='bg-black'
+                  />
+                </section>
+              </SidebarProvider>
+            </TokenProvider>
+          </AccountProvider>
+        </SyncConnectedWallet>
       </HydrationBoundary>
     </>
   );

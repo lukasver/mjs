@@ -29,13 +29,17 @@ const localeMapping = {
 
 export const ConnectWallet = ({
   locale,
-  onConnect,
+  ...props
 }: {
   locale?: keyof typeof localeMapping;
   onConnect?: (wallet: Wallet) => void;
 }) => {
   const mappedLocale = locale ? localeMapping[locale] : 'en_US';
   const { signout } = useActiveAccount();
+
+  const onConnect = (wallet: Wallet) => {
+    props.onConnect?.(wallet);
+  };
 
   return (
     <ConnectButton

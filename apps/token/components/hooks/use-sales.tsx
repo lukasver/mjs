@@ -19,12 +19,16 @@ export function useSales(
     error: _error,
     isLoading,
   } = useSuspenseQuery({
-    queryKey: ['sales'],
+    queryKey: ['sales'].concat(_data.active ? ['sales::active'] : []),
     queryFn: () => getSales(_data),
     staleTime,
   });
 
   const error = _error || data?.serverError || data?.validationErrors;
 
-  return { data: data?.data, error, isLoading };
+  if (!data?.data?.success) {
+    return { data: null, error, isLoading };
+  }
+
+  return { data: data?.data.data, error, isLoading };
 }

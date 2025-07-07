@@ -1,4 +1,3 @@
-import { getTranslations } from 'next-intl/server';
 import { FundraisingProgress } from '../../../components/dashboard/fundraising-progress';
 import { IcoPhases } from '../../../components/dashboard/ico-phases';
 import { RecentTransactions } from '../../../components/dashboard/recent-transactions';
@@ -8,18 +7,18 @@ import { VisuallyHidden } from '@mjs/ui/primitives/visually-hidden';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { FundraisingProgressLoading } from '@/components/skeletons/fundraising-progress-loading';
-import { ClientComponent } from '@/components/client-component';
 import { QueryClient } from '@tanstack/react-query';
 import { getSales } from '@/lib/actions';
+import { TokenDetails } from '@/components/token-details';
 
 export default async function DashboardPage(_props: PageProps) {
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({
-    queryKey: ['sales'],
+    queryKey: ['sales', 'sales::active'],
     queryFn: () => getSales({ active: true }),
   });
 
-  const t = await getTranslations();
+  // const t = await getTranslations();
 
   return (
     <main className='p-4 relative'>
@@ -29,14 +28,9 @@ export default async function DashboardPage(_props: PageProps) {
             Dashboard
           </h1>
         </VisuallyHidden>
-        <ClientComponent />
-
-        {/* <div className='flex items-center gap-2'>
-          <AccountBlobbie />
-          <AccountAvatar />
-          <AccountName />
-          <AccountAddress />
-        </div> */}
+        <Suspense fallback={<div>Loading tdrsc...</div>}>
+          <TokenDetails />
+        </Suspense>
 
         <Suspense fallback={<FundraisingProgressLoading />}>
           <FundraisingProgress>
@@ -70,7 +64,7 @@ export default async function DashboardPage(_props: PageProps) {
         </Suspense>
 
         <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-          <TokenStats />
+          <TokenStats address={'0x8699210141B710c46eC211cDD39D2C2edDA7A63c'} />
         </div>
 
         <div className='grid gap-6 lg:grid-cols-2'>

@@ -6,13 +6,20 @@ import {
   useActiveWalletConnectionStatus,
   useActiveWallet,
   useDisconnect,
+  useProfiles,
 } from 'thirdweb/react';
 import { useUser } from './use-user';
+import { client } from '@/lib/auth/thirdweb-client';
 
 function useActiveAccount() {
-  const activeAccount = useActiveAccountThirdweb();
+  const ac = useActiveAccountThirdweb();
   const status = useActiveWalletConnectionStatus();
   const wallet = useActiveWallet();
+
+  const { data: profiles } = useProfiles({
+    client,
+  });
+
   const { disconnect } = useDisconnect();
   const [isPending, startTransition] = useTransition();
   const { data: user } = useUser({
@@ -30,7 +37,7 @@ function useActiveAccount() {
   }, [wallet, disconnect]);
 
   return {
-    activeAccount,
+    activeAccount: ac,
     status,
     isLoading: isPending || status === 'connecting',
     isConnected: status === 'connected',

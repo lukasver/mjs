@@ -1,7 +1,7 @@
 import { prisma } from '@/db';
 import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
-import { Sale, SaleStatus, Currency } from '@prisma/client';
+import { Sale, SaleStatus, Currency, Prisma } from '@prisma/client';
 import { DateTime } from 'luxon';
 import {
   changeActiveSaleToFinish,
@@ -20,12 +20,44 @@ import {
   DeleteSaleDto,
 } from '@/common/schemas/dtos/sales';
 
-const QUERY_MAPPING = {
+const QUERY_MAPPING: { active: Prisma.SaleFindFirstArgs } = {
   active: {
     where: {
       status: SaleStatus.OPEN,
     },
-    include: {
+    select: {
+      name: true,
+      status: true,
+      availableTokenQuantity: true,
+      saleCurrency: true,
+      initialTokenQuantity: true,
+      maximumTokenBuyPerUser: true,
+      minimumTokenBuyPerUser: true,
+      saleStartDate: true,
+      tokenContractAddress: true,
+      tokenName: true,
+      tokenTotalSupply: true,
+      tokenPricePerUnit: true,
+      tokenSymbol: true,
+      toWalletsAddress: true,
+      saleClosingDate: true,
+      createdBy: true,
+      saftCheckbox: true,
+      saftContract: true,
+      token: {
+        select: {
+          TokensOnBlockchains: {
+            select: {
+              id: true,
+              blockchain: {
+                select: {
+                  chainId: true,
+                },
+              },
+            },
+          },
+        },
+      },
       saleInformation: {
         select: {
           summary: true,

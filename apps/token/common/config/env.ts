@@ -55,6 +55,8 @@ export const env = createEnv({
       z.boolean().optional().default(false)
     ),
     NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string().min(1),
+    NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS: z.string().min(1),
+    NEXT_PUBLIC_MAIN_WALLET: z.string().min(1),
   },
   runtimeEnv: {
     NEXT_PUBLIC_DOMAIN: getPublicUrl(),
@@ -63,6 +65,9 @@ export const env = createEnv({
     NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
       process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
     NEXT_PUBLIC_THIRDWEB_CLIENT_ID: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
+    NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS:
+      process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS,
+    NEXT_PUBLIC_MAIN_WALLET: process.env.NEXT_PUBLIC_MAIN_WALLET,
     IS_PRODUCTION: process.env.NODE_ENV === 'production',
     IS_DEV: process.env.NODE_ENV === 'development',
     IS_TEST: process.env.NODE_ENV === 'test',

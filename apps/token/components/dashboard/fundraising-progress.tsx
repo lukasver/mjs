@@ -8,13 +8,17 @@ import {
 } from '@mjs/ui/primitives/card';
 import { Progress } from '@mjs/ui/primitives/progress';
 import { useSales } from '../hooks/use-sales';
+import { DateTime } from 'luxon';
 
 export function FundraisingProgress({
   children,
 }: {
   children?: React.ReactNode;
 }) {
-  const { data, isLoading, error } = useSales({ active: false });
+  const { data, isLoading, error } = useSales({ active: true });
+  const activeSale = data?.sales[0];
+
+  console.debug('🚀 ~ fundraising-progress.tsx:20 ~ activeSale:', activeSale);
 
   // In a real app, these would come from your API or blockchain data
   // const t = await getTranslations();
@@ -22,11 +26,18 @@ export function FundraisingProgress({
   const goal = 5000000;
   const percentage = Math.round((raised / goal) * 100);
 
+  if (!activeSale) return null;
   return (
     <Card className='border-zinc-800 bg-zinc-900/50'>
       <CardHeader>
-        <CardTitle>Fundraising Progress</CardTitle>
-        <CardDescription>Current ICO round ends in 14 days</CardDescription>
+        <CardTitle>{activeSale.name}</CardTitle>
+        <CardDescription>
+          Current ICO round ends in{' '}
+          {Math.floor(
+            DateTime.fromJSDate(activeSale.saleClosingDate).diffNow('days').days
+          )}{' '}
+          days
+        </CardDescription>
       </CardHeader>
       <CardContent className='space-y-6'>
         <div className='space-y-2'>

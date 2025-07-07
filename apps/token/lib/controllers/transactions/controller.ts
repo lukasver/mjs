@@ -16,12 +16,11 @@ import {
   CreateTransactionDto,
   UpdateTransactionDto,
 } from '@/common/schemas/dtos/transactions';
-import { MAX_ALLOWANCE_WITHOUT_KYC } from '@/common/config/contants';
+import { MAX_ALLOWANCE_WITHOUT_KYC } from '@/common/config/constants';
 import { DateTime } from 'luxon';
 import Handlebars from 'handlebars';
 import { UserWithProfileAndAddress } from '@/common/types/user';
 import { urlContract, UrlContract } from '@/lib/services/adobe.service';
-import { getError } from '../errors';
 
 class TransactionsController {
   /**
@@ -29,7 +28,7 @@ class TransactionsController {
    */
   async getAllTransactions(_dto: unknown, ctx: ActionCtx) {
     try {
-      if (!ctx.isAdmin) return Failure('Not authorized', 403, 'Not authorized');
+      invariant(ctx.isAdmin, 'Forbidden');
       const transactions = await prisma.saleTransactions.findMany({
         include: {
           sale: true,
@@ -50,7 +49,7 @@ class TransactionsController {
     dto: { id: string; status: TransactionStatus },
     ctx: ActionCtx
   ) {
-    invariant(ctx.isAdmin, 'Not authorized');
+    invariant(ctx.isAdmin, 'Forbidden');
     invariant(dto.id, 'Id missing');
     invariant(dto.status, 'Status missing');
     try {
@@ -353,8 +352,9 @@ class TransactionsController {
         };
       }
       return Success(responseData);
-    } catch (error) {
-      return Failure(getError(error));
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
@@ -386,8 +386,9 @@ class TransactionsController {
         transactions,
         contract,
       });
-    } catch (error) {
-      return Failure(getError(error));
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 
