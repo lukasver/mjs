@@ -5,6 +5,16 @@ import { invariant } from '@epic-web/invariant';
 import { createSafeActionClient } from 'next-safe-action';
 import log from '../services/logger.server';
 import { getSessionCookie, verifyJwt } from '../auth/thirdweb';
+import { Cacheable } from 'cacheable';
+import { ONE_MINUTE } from '@/common/config/contants';
+import { prisma } from '@/db';
+
+const cacheTTL = ONE_MINUTE;
+
+const cache = new Cacheable({
+  namespace: 'auth::action:',
+  ttl: cacheTTL,
+});
 
 export const loginActionClient = createSafeActionClient({
   // Can also be an async function.
@@ -43,9 +53,26 @@ export const authActionClient = createSafeActionClient({
     const verified = await verifyJwt(token);
     invariant(verified.valid, 'Invalid jwt');
     // invariant(session.user, 'User not found');
+
+    // We need to fetch an user that matches the address and token, with a valid session.
+
+    const user = await prisma.user.findUnique({
+      where: {
+        walletAddress: verified.parsedJWT.sub,
+      },
+      select: {
+        id: true,
+        walletAddress: true,
+        email: true,
+      },
+    });
+    invariant(user, 'User not found');
+
     return next({
       ctx: {
-        address: verified.parsedJWT.sub,
+        address: user.walletAddress,
+        email: user.email,
+        userId: user.id,
         jwtContent: verified.parsedJWT.ctx,
       },
     });

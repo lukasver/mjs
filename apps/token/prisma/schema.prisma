@@ -78,13 +78,13 @@ model Session {
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   expiresAt DateTime
-  token     String
+  token     String   @unique
   ipAddress String?
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
+  @@unique([token, userId])
   @@map("session")
 }
 
@@ -129,7 +129,7 @@ model Profile {
 
   firstName   String?
   lastName    String?
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String    @unique
   email       String?
   // check

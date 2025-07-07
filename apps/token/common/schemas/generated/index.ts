@@ -1331,18 +1331,35 @@ export const SessionOrderByWithRelationInputSchema: z.ZodType<Prisma.SessionOrde
 export const SessionWhereUniqueInputSchema: z.ZodType<Prisma.SessionWhereUniqueInput> = z.union([
   z.object({
     id: z.string().cuid(),
-    token: z.string()
+    token: z.string(),
+    token_userId: z.lazy(() => SessionTokenUserIdCompoundUniqueInputSchema)
+  }),
+  z.object({
+    id: z.string().cuid(),
+    token: z.string(),
+  }),
+  z.object({
+    id: z.string().cuid(),
+    token_userId: z.lazy(() => SessionTokenUserIdCompoundUniqueInputSchema),
   }),
   z.object({
     id: z.string().cuid(),
   }),
   z.object({
     token: z.string(),
+    token_userId: z.lazy(() => SessionTokenUserIdCompoundUniqueInputSchema),
+  }),
+  z.object({
+    token: z.string(),
+  }),
+  z.object({
+    token_userId: z.lazy(() => SessionTokenUserIdCompoundUniqueInputSchema),
   }),
 ])
 .and(z.object({
   id: z.string().cuid().optional(),
   token: z.string().optional(),
+  token_userId: z.lazy(() => SessionTokenUserIdCompoundUniqueInputSchema).optional(),
   AND: z.union([ z.lazy(() => SessionWhereInputSchema),z.lazy(() => SessionWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => SessionWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => SessionWhereInputSchema),z.lazy(() => SessionWhereInputSchema).array() ]).optional(),
@@ -5191,6 +5208,11 @@ export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFi
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
   _max: z.lazy(() => NestedIntFilterSchema).optional()
+}).strict();
+
+export const SessionTokenUserIdCompoundUniqueInputSchema: z.ZodType<Prisma.SessionTokenUserIdCompoundUniqueInput> = z.object({
+  token: z.string(),
+  userId: z.string()
 }).strict();
 
 export const SessionCountOrderByAggregateInputSchema: z.ZodType<Prisma.SessionCountOrderByAggregateInput> = z.object({

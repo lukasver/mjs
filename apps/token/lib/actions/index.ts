@@ -20,9 +20,6 @@ import { GetSalesDto } from '@/common/schemas/dtos/sales';
 export const isLoggedIn = loginActionClient
   .schema(z.string())
   .action(async ({ parsedInput }) => {
-    // const data = await auth.api.getSession({
-    //   headers: await headers(),
-    // });
     const data = await getSessionCookie();
     if (!data) return false;
 
@@ -36,8 +33,11 @@ export const isLoggedIn = loginActionClient
           walletAddress: parsedInput,
         },
       },
+      select: {
+        id: true,
+        expiresAt: true,
+      },
     });
-    console.debug('🚀 ~ index.ts:78 ~ sessions:', sessions);
     // If there is at least one active session
     return sessions.length > 0;
   });
@@ -72,6 +72,7 @@ export const login = loginActionClient
     }
 
     const { payload } = verifiedPayload;
+
     // Here should go the JWT logic
     const [jwt] = await Promise.all([
       generateJWT(payload, {
@@ -80,24 +81,16 @@ export const login = loginActionClient
       }),
     ]);
     await setSessionCookie(jwt);
-    try {
-      const [user] = await Promise.all([
-        usersController.createUser({
-          address: payload.address,
-          session: {
-            jwt,
-            expirationTime: payload.expiration_time,
-          },
-          chainId: payload.chain_id ? Number(payload.chain_id) : undefined,
-        }),
-      ]);
-      if (!user.success) {
-        throw new Error(user.message);
-      }
-      return user.data;
-    } catch (e) {
-      console.debug('PRISMA ERROR:', e instanceof Error ? e?.message : e);
-    }
+    const user = await usersController.createUser({
+      address: payload.address,
+      session: {
+        jwt,
+        expirationTime: payload.expiration_time,
+      },
+      chainId: payload.chain_id ? Number(payload.chain_id) : undefined,
+    });
+    invariant(user, 'User could not be found/created');
+    console.debug('Redirecting to dashboard...');
     redirect('/dashboard');
   });
 
@@ -113,11 +106,20 @@ export const generatePayload = loginActionClient
   });
 
 export const logout = loginActionClient.action(async () => {
-  // await auth.api.signOut({
-  //   headers: await headers(),
-  // });
-  //TODO do other session related stuff to logout
+  const data = String((await getSessionCookie()) || '');
+
   await deleteSessionCookie();
+  if (data) {
+    void prisma.session
+      .delete({
+        where: {
+          token: data,
+        },
+      })
+      .catch((e) => {
+        console.debug('🚀 ~ index.ts:122 ~ e:', e);
+      });
+  }
   redirect('/');
 });
 

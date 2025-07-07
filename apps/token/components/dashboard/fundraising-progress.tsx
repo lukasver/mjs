@@ -9,14 +9,12 @@ import {
 import { Progress } from '@mjs/ui/primitives/progress';
 import { useSales } from '../hooks/use-sales';
 
-export async function FundraisingProgress({
+export function FundraisingProgress({
   children,
 }: {
   children?: React.ReactNode;
 }) {
   const { data, isLoading, error } = useSales({ active: false });
-
-  console.debug('🚀 ~ fundraising-prisLoadingta:', data, isLoading, error);
 
   // In a real app, these would come from your API or blockchain data
   // const t = await getTranslations();

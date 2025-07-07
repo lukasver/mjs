@@ -8,6 +8,7 @@ import { getIpAddress, getUserAgent } from '@/lib/geo';
 import { headers } from 'next/headers';
 import { UserUpdateInputSchema, Profile } from '@/common/schemas/generated';
 import { ActionCtx } from '@/common/schemas/dtos/sales';
+import { ONE_DAY } from '@/common/config/contants';
 
 class UsersController {
   async me({ address }: GetUserDto) {
@@ -57,7 +58,7 @@ class UsersController {
     const session = await prisma.session.create({
       data: {
         token: jwt,
-        expiresAt: new Date(expirationTime),
+        expiresAt: new Date(expirationTime || Date.now() + ONE_DAY),
         ipAddress: getIpAddress(new Headers(h)),
         userAgent: getUserAgent(new Headers(h)),
         user: {
@@ -89,11 +90,29 @@ class UsersController {
       const h = new Headers(await headers());
 
       const email = `temp_${address}@${new URL(publicUrl).hostname}`;
+      const ipAddress = getIpAddress(h);
+      const userAgent = getUserAgent(h);
       const user = await prisma.user.upsert({
         where: {
           walletAddress: address,
         },
-        update: {},
+        update: {
+          ...(jwt && {
+            sessions: {
+              connectOrCreate: {
+                where: {
+                  token: jwt,
+                },
+                create: {
+                  token: jwt,
+                  expiresAt: new Date(expirationTime || Date.now() + ONE_DAY),
+                  ipAddress,
+                  userAgent,
+                },
+              },
+            },
+          }),
+        },
         create: {
           externalId: address,
           walletAddress: address,
@@ -108,11 +127,9 @@ class UsersController {
             sessions: {
               create: {
                 token: jwt,
-                expiresAt: new Date(
-                  expirationTime || new Date(Date.now() + 24 * 60 * 60 * 1000)
-                ),
-                ipAddress: getIpAddress(h),
-                userAgent: getUserAgent(h),
+                expiresAt: new Date(expirationTime || Date.now() + ONE_DAY),
+                ipAddress,
+                userAgent,
               },
             },
           }),

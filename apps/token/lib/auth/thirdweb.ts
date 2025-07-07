@@ -7,6 +7,7 @@ import { LoginParams } from '../actions';
 import { COOKIE_NAME, COOKIE_PREFIX } from '@/common/config/contants';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
+import { Duration } from 'luxon';
 
 // secretKey for serverside usage, wont be available in client
 export const serverClient = createThirdwebClient({
@@ -22,6 +23,16 @@ const auth = createAuth({
     client: serverClient,
     privateKey: env.THIRDWEB_ADMIN_PRIVATE_KEY,
   }),
+  jwt: {
+    // One day
+    expirationTimeSeconds: Duration.fromObject({ days: 1 }).as('seconds'),
+  },
+  // login: {
+  //   payloadExpirationTimeSeconds: Duration.fromObject({ days: 1 }).as(
+  //     'seconds'
+  //   ),
+  //   uri: publicUrl,
+  // },
 });
 
 export const generateAuthPayload = async ({

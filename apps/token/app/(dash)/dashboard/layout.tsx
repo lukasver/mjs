@@ -10,7 +10,11 @@ import { metadata } from '@/common/config/site';
 import { getTranslations } from 'next-intl/server';
 import { BuyTokenButton } from '@/components/buy-token-button';
 import { getCurrentUser } from '@/lib/actions';
-import { QueryClient } from '@tanstack/react-query';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 /**
  * Layout component for the dashboard section
@@ -31,32 +35,34 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <AutoConnect />
-      <AccountProvider>
-        <SidebarProvider>
-          <DashboardSidebar>
-            <Suspense fallback={null}>
-              <AdminSidebar />
-            </Suspense>
-          </DashboardSidebar>
-          <section className='flex-1 grid grid-rows-[auto_1fr_auto]'>
-            <DashboardHeader>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <AutoConnect />
+        <AccountProvider>
+          <SidebarProvider>
+            <DashboardSidebar>
               <Suspense fallback={null}>
-                <BuyTokenButton />
+                <AdminSidebar />
               </Suspense>
-            </DashboardHeader>
-            {children}
-            <Footer
-              siteConfig={metadata}
-              links={getFooterLinks(t)}
-              copyright={t('Footer.copyright', {
-                year: new Date().getFullYear(),
-              })}
-              className='bg-black'
-            />
-          </section>
-        </SidebarProvider>
-      </AccountProvider>
+            </DashboardSidebar>
+            <section className='flex-1 grid grid-rows-[auto_1fr_auto]'>
+              <DashboardHeader>
+                <Suspense fallback={null}>
+                  <BuyTokenButton />
+                </Suspense>
+              </DashboardHeader>
+              {children}
+              <Footer
+                siteConfig={metadata}
+                links={getFooterLinks(t)}
+                copyright={t('Footer.copyright', {
+                  year: new Date().getFullYear(),
+                })}
+                className='bg-black'
+              />
+            </section>
+          </SidebarProvider>
+        </AccountProvider>
+      </HydrationBoundary>
     </>
   );
 }
