@@ -8,6 +8,14 @@ import {
 import type React from 'react';
 import { ThirdwebProvider } from 'thirdweb/react';
 
+import { SidebarProvider } from '@mjs/ui/primitives/sidebar';
+
+import AccountProvider from '@/components/thirdweb/account-provider';
+import AutoConnect from '@/components/thirdweb/autoconnect';
+
+import { TokenProvider } from '@/components/thirdweb/token-provider';
+import { SyncConnectedWallet } from '@/components/sync-wallets';
+
 let browserQueryClient: QueryClient | undefined = undefined;
 
 function getQueryClient() {
@@ -43,5 +51,20 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ThirdwebProvider>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ThirdwebProvider>
+  );
+}
+
+export function PagesProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <AutoConnect />
+      <SyncConnectedWallet>
+        <AccountProvider>
+          <TokenProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+          </TokenProvider>
+        </AccountProvider>
+      </SyncConnectedWallet>
+    </>
   );
 }

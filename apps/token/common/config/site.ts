@@ -38,4 +38,15 @@ const metadata = {
   locale: 'en',
 };
 
-export { metadata };
+const getFooterLinks = (t: (k: string) => string) => {
+  return [
+    { href: '/web', title: t('Footer.links.home') },
+    { href: '/docs', title: t('Footer.links.docs') },
+    { href: '/web/about', title: t('Footer.links.whoWeAre') },
+    { href: '/web/terms', title: t('Footer.links.termsAndConditions') },
+    { href: '/web/privacy', title: t('Footer.links.privacyPolicy') },
+    { href: '/web/contact', title: t('Footer.links.contact') },
+  ];
+};
+
+export { metadata, getFooterLinks };

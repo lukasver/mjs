@@ -26,6 +26,8 @@ export default async (req: NextRequest) => {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
+  //TODO! see if we can check if user is admin from here
+
   switch (req.nextUrl.pathname) {
     case '/':
       return NextResponse.redirect(new URL('/dashboard', req.url));

@@ -1,31 +1,32 @@
-import { DashboardSidebar } from '../../../components/sidebar';
-import { Suspense } from 'react';
-import AdminSidebar from './admin-sidebar';
-import { DashboardHeader } from './header';
-import { Footer } from '@mjs/ui/components/footer';
+import AdminSidebar from '@/app/(dash)/dashboard/admin-sidebar';
+import { DashboardHeader } from '@/app/(dash)/dashboard/header';
+import { PagesProviders } from '@/app/providers';
 import { getFooterLinks, metadata } from '@/common/config/site';
-import { getTranslations } from 'next-intl/server';
 import { BuyTokenButton } from '@/components/buy-token-button';
+import { DashboardSidebar } from '@/components/sidebar';
 import { getCurrentUser } from '@/lib/actions';
+import { isAdmin } from '@/lib/utils';
+import { Footer } from '@mjs/ui/components/footer';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { PagesProviders } from '@/app/providers';
+import { getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
+import React, { Suspense } from 'react';
 
-/**
- * Layout component for the dashboard section
- * Provides Wagmi context and ensures wallet connectivity
- */
-export default async function DashboardLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const queryClient = new QueryClient();
-  const t = await getTranslations();
+  const [user, t] = await Promise.all([getCurrentUser(), getTranslations()]);
 
+  if (!user?.data || !isAdmin(user.data.roles)) {
+    redirect('/?error=unauthorized');
+  }
   queryClient.prefetchQuery({
     queryKey: ['user'],
     queryFn: () => getCurrentUser(),
