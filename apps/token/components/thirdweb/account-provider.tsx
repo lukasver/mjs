@@ -22,12 +22,6 @@ function AccountProvider({ children }: { children: React.ReactNode }) {
     await signout();
   };
 
-  // console.debug(
-  //   '🚀 ~ AccountProvider ~ status:',
-  //   activeAccount?.address,
-  //   status
-  // );
-
   if (status === 'disconnected') {
     return (
       <AlertDialog open={true}>

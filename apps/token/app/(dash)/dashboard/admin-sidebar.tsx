@@ -1,11 +1,13 @@
+'use client';
+
+import { useUser } from '@/components/hooks/use-user';
 import { NavAdmin } from '../../../components/nav/nav-admin';
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
 } from '@mjs/ui/primitives/sidebar';
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { isAdmin } from '@/lib/utils';
 
 const items = [
   {
@@ -36,7 +38,10 @@ const items = [
   },
 ];
 export default async function AdminSidebar() {
-  await sleep(1000);
+  const { data } = useUser();
+
+  const isAllowed = isAdmin(data?.roles);
+  if (!isAllowed) return null;
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Administration</SidebarGroupLabel>

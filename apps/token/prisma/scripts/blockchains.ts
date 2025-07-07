@@ -62,7 +62,6 @@ export async function seedBlockchains(prisma: PrismaClient) {
       });
     })
   );
-  console.debug('🚀 ~ blockchains.ts:66 ~ relations:', relations);
 
   // Testnet tokens
   await prisma.token.create({

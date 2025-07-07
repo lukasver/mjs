@@ -76,7 +76,7 @@ export default async function DashboardLayout({
 const getFooterLinks = (t: (k: string) => string) => {
   return [
     { href: '/web', title: t('Footer.links.home') },
-    { href: '/', title: t('Footer.links.docs') },
+    { href: '/docs', title: t('Footer.links.docs') },
     { href: '/web/about', title: t('Footer.links.whoWeAre') },
     { href: '/web/terms', title: t('Footer.links.termsAndConditions') },
     { href: '/web/privacy', title: t('Footer.links.privacyPolicy') },

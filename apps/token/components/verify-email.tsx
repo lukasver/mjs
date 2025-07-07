@@ -30,7 +30,7 @@ export function VerifyEmail() {
     //   //     token,
     //   //   },
     //   // });
-    //   console.debug('🚀 ~ verify-email.tsx:33 ~ error:', error);
+    //   console.debug('verify-email.tsx:33 ~ error:', error);
     //   if (error) {
     //     const message =
     //       error?.code === 'INVALID_TOKEN'

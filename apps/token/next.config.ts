@@ -90,6 +90,32 @@ export default () => {
         },
       }),
     },
+    async redirects() {
+      return [
+        {
+          source: '/web/:path*',
+          destination: `${process.env.NEXT_PUBLIC_LANDING_PAGE_DOMAIN!}/:path*`,
+          permanent: process.env.NODE_ENV === 'production',
+        },
+        {
+          source: '/:locale*/web/:path*',
+          destination: `${process.env
+            .NEXT_PUBLIC_LANDING_PAGE_DOMAIN!}/:locale*/:path*`,
+          permanent: process.env.NODE_ENV === 'production',
+        },
+        {
+          source: '/docs/:path*',
+          destination: `${process.env.NEXT_PUBLIC_DOCS_DOMAIN!}/:path*`,
+          permanent: process.env.NODE_ENV === 'production',
+        },
+        {
+          source: '/:locale*/docs/:path*',
+          destination: `${process.env
+            .NEXT_PUBLIC_DOCS_DOMAIN!}/:locale*/:path*`,
+          permanent: process.env.NODE_ENV === 'production',
+        },
+      ];
+    },
     // productionBrowserSourceMaps: !!(process.env.NODE_ENV === "production"),
     // fixes wallet connect dependency issue https://docs.walletconnect.com/web3modal/nextjs/about#extra-configuration
     webpack: (config) => {

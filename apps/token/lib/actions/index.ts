@@ -22,6 +22,7 @@ import { authCache } from '../auth/cache';
 import { defineChain, getContract as getContractThirdweb } from 'thirdweb';
 import { bscTestnet } from 'thirdweb/chains';
 import { erc20Abi } from 'viem';
+import { ROLES } from '@/common/config/constants';
 
 export const isLoggedIn = loginActionClient
   .schema(z.string())
@@ -165,13 +166,24 @@ export const getCurrentUser = authActionClient.action(
             address: true,
           },
         },
+        userRole: {
+          select: {
+            role: true,
+          },
+        },
         // sessions: {
         //   select: {},
         // },
       },
     });
+    invariant(user, 'User not found');
+    const { userRole, ...rest } = user;
+    const roles = userRole.reduce((acc, role) => {
+      acc[role.role.name as keyof typeof ROLES] = role.role.id;
+      return acc;
+    }, {} as Record<keyof typeof ROLES, string>);
 
-    return user;
+    return { ...rest, roles };
   }
 );
 

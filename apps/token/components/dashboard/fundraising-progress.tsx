@@ -15,10 +15,8 @@ export function FundraisingProgress({
 }: {
   children?: React.ReactNode;
 }) {
-  const { data, isLoading, error } = useSales({ active: true });
+  const { data } = useSales({ active: true });
   const activeSale = data?.sales[0];
-
-  console.debug('🚀 ~ fundraising-progress.tsx:20 ~ activeSale:', activeSale);
 
   // In a real app, these would come from your API or blockchain data
   // const t = await getTranslations();
@@ -26,13 +24,6 @@ export function FundraisingProgress({
   const total = activeSale?.initialTokenQuantity || 0;
   const sold = total - available;
   const percentage = Math.round((sold / total) * 100);
-
-  console.debug(
-    '🚀 ~ fundraising-progress.tsx:29 ~ percentage:',
-    available,
-    total,
-    percentage
-  );
 
   if (!activeSale) return null;
   return (
