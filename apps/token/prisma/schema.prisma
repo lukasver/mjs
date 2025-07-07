@@ -169,9 +169,9 @@ model Sale {
 
   name                   String
   status                 SaleStatus         @default(CREATED)
-  availableTokenQuantity Int?
   saleCurrency           Currency           @default(CHF)
   initialTokenQuantity   Int
+  availableTokenQuantity Int
   maximumTokenBuyPerUser Int?
   minimumTokenBuyPerUser Int                @default(1)
   saleStartDate          DateTime

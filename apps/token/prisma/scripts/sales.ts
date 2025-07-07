@@ -49,9 +49,11 @@ export async function seedOpenSale(prisma: PrismaClient) {
       saleStartDate: DateTime.now().toISO(),
       saleClosingDate: DateTime.now().plus({ year: 1 }).toISO(),
       saleCurrency: 'USD',
-      tokenName: 'Smat',
-      tokenSymbol: 'SMAT',
+      tokenName: token.name,
+      tokenSymbol: token.token.symbol,
       initialTokenQuantity: 29_166_667,
+      // When created should be the same as initialTokenQuantity
+      availableTokenQuantity: 29_166_667,
       toWalletsAddress: process.env.NEXT_PUBLIC_TEST_WALLET!,
       tokenPricePerUnit: Prisma.Decimal('0.012'),
       saftCheckbox: false,

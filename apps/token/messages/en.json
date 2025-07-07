@@ -21,9 +21,6 @@
 		"increasableField2": "This field will only be increasable",
 		"privateDocument": "To unlock this information, please click on “View more information” and sign the NDA."
 	},
-	"SMAT": {
-		"slogan": "The real asset platform"
-	},
 	"globalNetWrokError": {
 		"error": "Oop something went wrongs"
 	},
