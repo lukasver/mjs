@@ -1,6 +1,3 @@
-import { SignStatus } from '../../common/enums';
-import axios, { AxiosRequestConfig } from 'axios';
-
 const ADOBE_API_BASE_URL = process.env.NEXT_PUBLIC_ADOBE_BASE_URL;
 const ADOBE_API_KEY = process.env.ADOBE_TOKEN;
 const ADOBE_USERNAME = process.env.NEXT_PUBLIC_ADOBE_USERNAME;

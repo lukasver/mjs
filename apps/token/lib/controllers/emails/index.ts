@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import logger from '@/lib/services/logger.server';
 import { templates } from '@mjs/emails';

@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
@@ -20,7 +21,7 @@ import {
 import { MAX_ALLOWANCE_WITHOUT_KYC } from '@/common/config/constants';
 import { DateTime } from 'luxon';
 import Handlebars from 'handlebars';
-import { urlContract, UrlContract } from '@/lib/services/adobe.service';
+// import { urlContract, UrlContract } from '@/lib/services/adobe.service';
 
 class TransactionsController {
   /**

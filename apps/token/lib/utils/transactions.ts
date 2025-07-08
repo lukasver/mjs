@@ -1,8 +1,9 @@
-import { TransactionModalTypes } from '../../common/enums';
 import { JWTUser } from '../../common/types/next-auth';
 
-import { UrlContract } from '@/services/adobe.service';
+// import { UrlContract } from '@/services/adobe.service';
 import { FOP, SaleTransactions, TransactionStatus } from '@prisma/client';
+import { TransactionModalTypes } from '@/common/types';
+import { TransactionStatusSchema } from '@/common/schemas/generated';
 
 const fopMapping = {
   [FOP.CRYPTO]: TransactionModalTypes.CryptoWarning,
@@ -17,7 +18,7 @@ const fopMapping = {
 export const getTransactionModalTypeToOpen = (
   transaction?: SaleTransactions,
   user?: JWTUser,
-  contract?: UrlContract
+  contract?: any // TODO: FIX UrlContract
 ): null | TransactionModalTypes => {
   if (!transaction || !user) return null;
 
@@ -49,11 +50,15 @@ export const getTransactionModalTypeToOpen = (
           return fopMapping[transaction.formOfPayment];
         }
 
-      case TransactionStatus.CANCELLED:
+      case TransactionStatusSchema.enum.CANCELLED:
         return null; //TODO! IMPLEMENT
-      case TransactionStatus.DELIVERED:
+      case TransactionStatusSchema.enum.TOKENS_ALLOCATED:
         return null; //TODO! IMPLEMENT
-      case TransactionStatus.CONFIRMED_BY_USER:
+      case TransactionStatusSchema.enum.PAYMENT_SUBMITTED:
+        return null; //TODO! IMPLEMENT
+      case TransactionStatusSchema.enum.PAYMENT_VERIFIED:
+        return null; //TODO! IMPLEMENT
+      case TransactionStatusSchema.enum.REJECTED:
         return null; //TODO! IMPLEMENT
       default:
         return null;

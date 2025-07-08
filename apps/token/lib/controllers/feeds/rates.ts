@@ -1,3 +1,4 @@
+import 'server-only';
 import { Currency } from '@prisma/client';
 
 export class RatesController {

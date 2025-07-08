@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import { invariant } from '@epic-web/invariant';
 import { SaleStatus } from '@prisma/client';

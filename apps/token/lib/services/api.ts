@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  getActiveSale,
   getContract,
   getCurrentUser,
   getExchangeRate,
@@ -39,17 +40,17 @@ export function useSales() {
 
 export const useActiveSale = () => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['sales', 'active'],
-    queryFn: () => getSales({ active: true }),
+    queryKey: ['sale::active'],
+    queryFn: () => getActiveSale(),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
-  return { data: data?.data, error: e, status };
+  return { data: data?.data?.sales[0], error: e, status };
 };
 
 export const useSale = (id: string) => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['sales', `sale::${id}`],
+    queryKey: [`sale::${id}`],
     queryFn: () => getSale({ id }),
     staleTime: DEFAULT_STALE_TIME,
   });

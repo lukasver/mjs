@@ -1,6 +1,5 @@
 'use client';
 
-import { useUser } from '@/components/hooks/use-user';
 import { NavAdmin } from '../../../components/nav/nav-admin';
 import {
   SidebarGroup,
@@ -8,6 +7,7 @@ import {
   SidebarMenu,
 } from '@mjs/ui/primitives/sidebar';
 import { isAdmin } from '@/lib/utils';
+import { useUser } from '@/lib/services/api';
 
 const items = [
   {

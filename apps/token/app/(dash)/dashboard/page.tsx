@@ -8,14 +8,14 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { FundraisingProgressLoading } from '@/components/skeletons/fundraising-progress-loading';
 import { QueryClient } from '@tanstack/react-query';
-import { getSales } from '@/lib/actions';
+import { getActiveSale } from '@/lib/actions';
 import { TokenDetails } from '@/components/token-details';
 
 export default async function DashboardPage(_props: PageProps) {
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({
-    queryKey: ['sales', 'sales::active'],
-    queryFn: () => getSales({ active: true }),
+    queryKey: ['sale::active'],
+    queryFn: () => getActiveSale(),
   });
 
   // const t = await getTranslations();

@@ -31,7 +31,7 @@ import { constants, BigNumber } from 'ethers';
 import { getAddress } from 'ethers/lib/utils';
 import { KeyedMutator } from 'swr';
 import { IS_DEVELOPMENT, IS_PRODUCTION } from '../../common/config';
-import { UrlContract } from '../adobe.service';
+// import { UrlContract } from '../adobe.service';
 import amountCalculatorService from '../pricefeeds/amount.service';
 import { getNetworkToken } from './config';
 

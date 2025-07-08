@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';

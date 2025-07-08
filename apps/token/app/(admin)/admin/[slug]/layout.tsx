@@ -28,7 +28,7 @@ export default async function AdminLayout({
     redirect('/?error=unauthorized');
   }
   queryClient.prefetchQuery({
-    queryKey: ['user'],
+    queryKey: ['user', 'me'],
     queryFn: () => getCurrentUser(),
   });
 

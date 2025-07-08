@@ -1,4 +1,5 @@
 'use client';
+import { useActiveSale } from '@/lib/services/api';
 import {
   Card,
   CardContent,
@@ -7,7 +8,6 @@ import {
   CardTitle,
 } from '@mjs/ui/primitives/card';
 import { Progress } from '@mjs/ui/primitives/progress';
-import { useSales } from '../hooks/use-sales';
 import { DateTime } from 'luxon';
 
 export function FundraisingProgress({
@@ -15,8 +15,7 @@ export function FundraisingProgress({
 }: {
   children?: React.ReactNode;
 }) {
-  const { data } = useSales({ active: true });
-  const activeSale = data?.sales[0];
+  const { data: activeSale } = useActiveSale();
 
   // In a real app, these would come from your API or blockchain data
   // const t = await getTranslations();

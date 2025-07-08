@@ -27,7 +27,7 @@ export default async function DashboardLayout({
   const t = await getTranslations();
 
   queryClient.prefetchQuery({
-    queryKey: ['user'],
+    queryKey: ['user', 'me'],
     queryFn: () => getCurrentUser(),
   });
 

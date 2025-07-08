@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { TokenStatCard } from './token-stats-card';
 import { cache } from 'react';
 import { TokenStatsLoading } from '../skeletons/large-cards-loading';
-import { getContract } from '@/lib/actions';
+import { getWeb3Contract } from '@/lib/actions';
 import { QueryClient } from '@tanstack/react-query';
 
 const sleep = cache(
@@ -27,7 +27,7 @@ export async function TokenStats({ address }: { address: string }) {
 
   queryClient.prefetchQuery({
     queryKey: [`contract::${address}`],
-    queryFn: () => getContract(address),
+    queryFn: () => getWeb3Contract(address),
   });
 
   return (

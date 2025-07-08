@@ -252,6 +252,14 @@ export const getSale = authActionClient
     return sales.data;
   });
 
+export const getActiveSale = authActionClient.action(async ({ ctx }) => {
+  const sales = await salesController.getSales({ active: true }, ctx);
+  if (!sales.success) {
+    throw new Error(sales.message);
+  }
+  return sales.data;
+});
+
 export const getWeb3Contract = authActionClient
   .schema(z.string())
   .action(async ({ parsedInput }) => {

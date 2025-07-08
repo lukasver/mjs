@@ -6,9 +6,9 @@ import { TokenIcon, TokenName, TokenSymbol } from 'thirdweb/react';
 import { defineChain } from 'thirdweb';
 import { cn } from '@mjs/ui/lib/utils';
 import ErrorBoundary from '@mjs/ui/components/error-boundary';
-import { useSales } from './hooks/use-sales';
 import { bscTestnet } from 'thirdweb/chains';
 import { Separator } from '@mjs/ui/primitives/separator';
+import { useActiveSale } from '@/lib/services/api';
 
 interface TokenDetailsProps {
   classes?: {
@@ -17,8 +17,8 @@ interface TokenDetailsProps {
   };
 }
 export function TokenDetails({ classes }: TokenDetailsProps) {
-  const { data, error } = useSales({ active: true });
-  const sale = data?.sales[0];
+  const { data: activeSale, error } = useActiveSale();
+  const sale = activeSale;
   const address = sale?.tokenContractAddress!;
   const chainId = sale?.tokenContractChainId || bscTestnet.id;
 

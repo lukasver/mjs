@@ -5,15 +5,15 @@ import {
   useActiveWalletChain,
 } from 'thirdweb/react';
 import { client } from '@/lib/auth/thirdweb-client';
-import { useSales } from '../hooks/use-sales';
+import { useActiveSale } from '@/lib/services/api';
 
 export const TokenProvider = ({ children }: { children: React.ReactNode }) => {
   const chain = useActiveWalletChain();
-  const sale = useSales({ active: true });
+  const { data: activeSale } = useActiveSale();
 
   return (
     <TokenProviderThirdweb
-      address={sale?.data?.sales[0]?.tokenContractAddress || ''}
+      address={activeSale?.tokenContractAddress || ''}
       client={client}
       chain={chain}
     >
