@@ -3,6 +3,7 @@ import NewsletterForm from './newsletter';
 import { EnterAnimation, FadeAnimation } from '@mjs/ui/components/motion';
 import { HeroTextMobile } from './hero-text-mobile';
 import SpeechBubbleContainer from './speech-bubble-container';
+import { useLocale } from 'next-intl';
 
 function HeroContent({
   children,
@@ -16,6 +17,9 @@ function HeroContent({
   agreeTerms?: React.ReactNode;
   lines?: string[];
 }) {
+  const locale = useLocale();
+  const isEnglish = locale === 'en';
+
   return (
     <div
       className={cn('relative z-10 flex flex-col xl:min-h-screen', className)}
@@ -28,7 +32,10 @@ function HeroContent({
             <div className='space-y-8 md:space-y-20'>
               <EnterAnimation duration={1}>
                 <h1
-                  className='text-6xl/[90%] xl:text-8xl/[90%] font-semibold text-white'
+                  className={cn(
+                    'text-6xl/[90%] xl:text-8xl/[90%] font-semibold text-white',
+                    isEnglish && 'text-6xl/[78%] xl:text-8xl/[78%]'
+                  )}
                   dangerouslySetInnerHTML={{ __html: props.title }}
                 />
               </EnterAnimation>
