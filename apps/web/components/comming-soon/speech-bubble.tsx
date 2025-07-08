@@ -3,6 +3,7 @@ import { cn } from '@mjs/ui/lib/utils';
 import { useSpeechBubbleMessage } from './speech-bubble-container';
 import { AnimatePresence, motion } from 'motion/react';
 import { Dispatch, SetStateAction } from 'react';
+import { useWindowSize } from 'usehooks-ts';
 
 /**
  * Renders an animated speech bubble with a message using Motion for React.
@@ -18,7 +19,10 @@ const SpeechBubble = ({
   onExitComplete?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const message = useSpeechBubbleMessage();
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
   const isVisible = Boolean(message) && show;
+
   return (
     <AnimatePresence onExitComplete={() => onExitComplete?.(true)}>
       {isVisible && (
@@ -40,18 +44,23 @@ const SpeechBubble = ({
             </p>
             <div className='text-white/30'>
               {/* Speech bubble tail */}
+
               <svg
-                width='47'
-                height='52'
-                viewBox='0 0 57 52'
-                xmlns='http://www.w3.org/2000/svg'
+                width='40'
+                height='27'
+                viewBox='0 0 40 27'
                 stroke='white'
                 strokeWidth='4'
-                className='absolute -bottom-5 left-5 w-10 h-5 z-10 fill-white/30'
+                xmlns='http://www.w3.org/2000/svg'
+                className={cn(
+                  'absolute -bottom-5 left-5 w-10 h-5 z-10 fill-white/60',
+                  isMobile && 'left-30!'
+                )}
               >
                 <path
-                  d='M3.9994 0.5C22.9995 0.5 -8.00119 48 3.99941 50.5C16 53 21.9994 0.499296 46.4994 0.5'
+                  d='M0.0585938 1.79102C2.73274 1.79102 4.74716 4.22369 4.24855 6.85094L2.0948 18.1993C0.88627 24.5672 9.23425 28.0623 12.9231 22.7328L20.2605 12.132C24.7432 5.65567 32.1182 1.79102 39.9946 1.79102'
                   stroke='white'
+                  stroke-width='2'
                 />
               </svg>
             </div>

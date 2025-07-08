@@ -36,7 +36,7 @@ export const Footer = ({
                   <ActiveLink
                     href={link.href}
                     className={
-                      'nav-link text-2xl md:text-4xl text-white dark:text-white font-common font-medium'
+                      'nav-link text-xl md:text-3xl text-white dark:text-white font-common font-medium'
                     }
                     activeClassName={'nav-link-active'}
                   >
