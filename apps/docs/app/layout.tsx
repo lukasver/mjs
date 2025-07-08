@@ -1,7 +1,6 @@
 import { Head } from 'nextra/components';
 // import 'nextra-theme-docs/style.css';
 import '@/app/styles.css';
-import { getDirection } from '../lib/i18n/get-dictionaries';
 import { Metadata } from 'next';
 import { fontClash, fontTeachers } from './fonts';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
@@ -16,21 +15,22 @@ export const metadata: Metadata = genPageMetadata({
   description: siteConfig.description,
 });
 
+export const generateStaticParams = async () => {
+  const paths = await import('@/lib/i18n').then((m) => m.i18n.locales);
+  return paths.map((locale) => ({ lang: locale }));
+};
+
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
 }) {
-  const lang = (await params)?.lang || 'en';
-
   return (
     <html
       // Not required, but good for SEO
-      lang={lang || 'en'}
+      lang={'en'}
       // Required to be set
-      dir={getDirection(lang) || 'ltr'}
+      dir={'ltr'}
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
       className={`${fontClash.variable} ${fontTeachers.variable} scroll-smooth`}
