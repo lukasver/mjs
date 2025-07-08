@@ -15,6 +15,8 @@ import AutoConnect from '@/components/thirdweb/autoconnect';
 
 import { TokenProvider } from '@/components/thirdweb/token-provider';
 import { SyncConnectedWallet } from '@/components/sync-wallets';
+import { DEFAULT_STALE_TIME } from '@/common/config/constants';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
@@ -38,7 +40,7 @@ function makeQueryClient() {
       queries: {
         // With SSR, we usually want to set some default staleTime
         // above 0 to avoid refetching immediately on the client
-        staleTime: 60 * 1000,
+        staleTime: DEFAULT_STALE_TIME,
       },
     },
   });
@@ -59,11 +61,13 @@ export function PagesProviders({ children }: { children: React.ReactNode }) {
     <>
       <AutoConnect />
       <SyncConnectedWallet>
-        <AccountProvider>
-          <TokenProvider>
-            <SidebarProvider>{children}</SidebarProvider>
-          </TokenProvider>
-        </AccountProvider>
+        <NuqsAdapter>
+          <AccountProvider>
+            <TokenProvider>
+              <SidebarProvider>{children}</SidebarProvider>
+            </TokenProvider>
+          </AccountProvider>
+        </NuqsAdapter>
       </SyncConnectedWallet>
     </>
   );

@@ -485,7 +485,7 @@ export const updateSale = adminClient
  * @warning ADMIN REQUIRED
  */
 export const createSaleInformation = adminClient
-  .schema(CreateSaleInformationDto)
+  .schema(CreateSaleInformationDto.extend({ saleId: z.string() }))
   .action(async ({ ctx, parsedInput }) => {
     const sales = await salesInformationController.upsertSaleInformation(
       parsedInput,

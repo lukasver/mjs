@@ -25,7 +25,10 @@ export default async function RootLayout({
         className={`${fontClash.variable} ${fontTeachers.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <Toaster />
+          </Providers>
         </NextIntlClientProvider>
         <Toaster
           position='top-center'

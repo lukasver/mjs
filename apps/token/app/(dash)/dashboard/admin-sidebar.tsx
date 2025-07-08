@@ -16,12 +16,12 @@ const items = [
     icon: 'sale',
     items: [
       {
-        title: 'Sale list',
+        title: 'List',
         url: '/admin/sales',
       },
       {
         title: 'New sale',
-        url: '/admin/sales/details',
+        url: '/admin/sales/create',
       },
     ],
   },

@@ -6,7 +6,7 @@ export const CreateSaleInformationDto = SaleInformationSchema.omit({
   createdAt: true,
   updatedAt: true,
   deletedAt: true,
-});
+}).partial();
 export type CreateSaleInformationDto = z.infer<typeof CreateSaleInformationDto>;
 
 export const UpdateSaleInformationDto = SaleInformationSchema.partial();

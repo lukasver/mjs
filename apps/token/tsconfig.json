@@ -18,7 +18,8 @@
       "@/db": ["./lib/db/prisma.ts"],
       "@/controllers/*": ["./lib/controllers/*"],
       "@/services/*": ["./lib/services/*"],
-      "@/schemas": ["./common/schemas/generated/index.ts"]
+      "@/schemas": ["./common/schemas/generated/index.ts"],
+      "@/utils/*": ["./lib/utils/*"]
     }
   },
   "include": [
