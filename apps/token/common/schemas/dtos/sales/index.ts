@@ -17,9 +17,11 @@ export const ActionCtx = z
 
 export type ActionCtx = z.infer<typeof ActionCtx>;
 
-export const GetSalesDto = z.object({
-  active: z.boolean().optional().default(true),
-});
+export const GetSalesDto = z
+  .object({
+    active: z.boolean().optional().default(false),
+  })
+  .optional();
 
 export type GetSalesDto = z.infer<typeof GetSalesDto>;
 

@@ -4,6 +4,7 @@ import {
   UpdateSaleInformationDto,
 } from '@/common/schemas/dtos/sales/information';
 import { Success, Failure } from '@/common/schemas/dtos/utils';
+import { ActionCtx } from '@/common/schemas/dtos/sales';
 
 class SalesInformationController {
   /**
@@ -11,7 +12,8 @@ class SalesInformationController {
    * @param dto - Data for creating/updating sale information.
    */
   async upsertSaleInformation(
-    dto: CreateSaleInformationDto & { saleId: string }
+    dto: CreateSaleInformationDto & { saleId: string },
+    _ctx: ActionCtx
   ) {
     try {
       if (!dto.saleId) {
@@ -39,7 +41,11 @@ class SalesInformationController {
    * @param saleId - The sale id to update information for.
    * @param dto - Partial update data.
    */
-  async updateSaleInformation(saleId: string, dto: UpdateSaleInformationDto) {
+  async updateSaleInformation(
+    saleId: string,
+    dto: UpdateSaleInformationDto,
+    _ctx: ActionCtx
+  ) {
     try {
       if (!saleId) {
         return Failure('Sale id missing', 400, 'Sale id missing');

@@ -356,6 +356,7 @@ model ContractStatus {
   contractId String
   status     ContractSignatureStatus
 
+  @@unique([userId, contractId])
   @@map("contract_status")
 }
 

@@ -63,8 +63,8 @@ class ContractController {
     }
   }
 
-  async deleteContractStatus(_dto: unknown, ctx: ActionCtx) {
-    const { userId } = ctx;
+  async deleteContractStatus(dto: { userId: string }, _ctx: ActionCtx) {
+    const { userId } = dto;
 
     try {
       const existingContracts = await prisma.contractStatus.deleteMany({
@@ -78,6 +78,11 @@ class ContractController {
       logger(e);
       return Failure(e);
     }
+  }
+
+  async confirmSignature(_dto: unknown, _ctx: ActionCtx) {
+    //TODO! implement this with documenso
+    return Success({ message: 'Signature confirmed' });
   }
 }
 

@@ -176,18 +176,17 @@ class UsersController {
    */
   async updateUser(
     dto: {
-      address: string;
       user: typeof UserUpdateInputSchema._type;
       profile?: Partial<Omit<Profile, 'userId'>>;
     },
-    _ctx: ActionCtx
+    ctx: ActionCtx
   ) {
     try {
       invariant(dto.user, 'User data missing');
 
       const _user = await prisma.user.findUniqueOrThrow({
         where: {
-          walletAddress: dto.address,
+          walletAddress: ctx.address,
         },
         select: {
           id: true,

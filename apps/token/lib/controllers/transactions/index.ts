@@ -14,12 +14,12 @@ import { ActionCtx } from '@/common/schemas/dtos/sales';
 import { Failure, Success } from '@/common/schemas/dtos/utils';
 import {
   CreateTransactionDto,
+  GetTransactionDto,
   UpdateTransactionDto,
 } from '@/common/schemas/dtos/transactions';
 import { MAX_ALLOWANCE_WITHOUT_KYC } from '@/common/config/constants';
 import { DateTime } from 'luxon';
 import Handlebars from 'handlebars';
-import { UserWithProfileAndAddress } from '@/common/types/user';
 import { urlContract, UrlContract } from '@/lib/services/adobe.service';
 
 class TransactionsController {
@@ -39,6 +39,35 @@ class TransactionsController {
     } catch (e) {
       logger(e);
       return Failure(e);
+    }
+  }
+
+  /**
+   * Update a transaction status (admin only).
+   * @param dto - Transaction update data
+   * @param ctx - Action context
+   */
+  async adminUpdateTransaction(dto: UpdateTransactionDto, ctx: ActionCtx) {
+    try {
+      invariant(ctx.isAdmin, 'Forbidden');
+      invariant(dto.id, 'Id missing');
+      invariant(dto.status, 'Status missing');
+      const transaction = await prisma.saleTransactions.update({
+        where: { id: String(dto.id) },
+        data: { status: dto.status },
+        include: {
+          sale: true,
+          user: {
+            include: {
+              profile: true,
+            },
+          },
+        },
+      });
+      return Success({ transaction });
+    } catch (error) {
+      logger(error);
+      return Failure(error);
     }
   }
 
@@ -68,19 +97,11 @@ class TransactionsController {
   /**
    * Get all transactions for a user (optionally filtered by sale or symbol).
    */
-  async getUserTransactions(
-    dto: {
-      userId: string;
-      formOfPayment?: FOP;
-      symbol?: string;
-      sale?: string;
-    },
-    _ctx: ActionCtx
-  ) {
+  async getUserTransactions(dto: GetTransactionDto, _ctx: ActionCtx) {
     try {
-      const { userId, formOfPayment, symbol, sale } = dto;
+      const { userId, formOfPayment, tokenSymbol: symbol, saleId: sale } = dto;
       invariant(userId, 'User id missing');
-      let saleId: string | undefined;
+      let saleId: string | undefined = sale;
       const andQuery: { saleId?: string; tokenSymbol?: string }[] = [];
       if (sale === 'current') {
         saleId = (
@@ -111,7 +132,7 @@ class TransactionsController {
   /**
    * Create a new transaction.
    */
-  async createTransaction(dto: CreateTransactionDto, ctx: ActionCtx) {
+  async createTransaction(dto: CreateTransactionDto, _ctx: ActionCtx) {
     try {
       const {
         tokenSymbol,
@@ -474,7 +495,8 @@ const _createSaftContract = ({
   saleTokenPricePerUnit,
 }: {
   contract: string;
-  userData: UserWithProfileAndAddress;
+  //TODO! check this was UserWithProfileAndAddress
+  userData: any;
   contractValues: {
     currency: Currency;
     amount: string | number;
