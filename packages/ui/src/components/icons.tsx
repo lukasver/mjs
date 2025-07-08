@@ -16,6 +16,10 @@ import {
   Home,
   AlertTriangle,
   Rss,
+  Loader2,
+  X,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -26,6 +30,9 @@ export type Icon =
 export const Icons = {
   sale: HandCoins,
   subscribe: Rss,
+  arrowUp: ArrowUp,
+  arrowDown: ArrowDown,
+  x: X,
   transaction: Wallet2,
   dollar: DollarSign,
   bitcoin: Bitcoin,
@@ -40,6 +47,7 @@ export const Icons = {
   arrowLeft: ArrowLeft,
   refreshCw: RefreshCw,
   alertTriangle: AlertTriangle,
+  loader: Loader2,
   threads: ({ className }: { className?: string }) => {
     return (
       <svg

@@ -95,16 +95,6 @@
     "logIn": "LOG IN",
     "findMoreCharacters": "to find more characters"
   },
-  "Footer": {
-    "links": {
-      "home": "Home",
-      "whoWeAre": "Who We Are",
-      "termsAndConditions": "Terms and Conditions",
-      "privacyPolicy": "Privacy Policy",
-      "contact": "Contact"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
   "ContactForm": {
     "title": "Contact Us",
     "description": "Send us a message and we'll get back to you as soon as possible.",
@@ -210,7 +200,61 @@
       }
     }
   },
-  "Global": {
-    "soon": "Coming Soon"
+  "Bubbles": {
+    "title": {
+      "1": "Mahjong <br /> Stars is <br /> coming <br /> soon!",
+      "2": "Don’t panic. The game is almost here",
+      "3": "She’s ready. You better be."
+    },
+    "description": "Subscribe and maybe, <br /> just maybe, we'll let you in on it first.",
+    "agreeTerms": "By clicking 'Subscribe', you agree to our <terms>Terms & Conditions</terms> and <privacy>Privacy Policy</privacy>.",
+    "lines": {
+      "1": {
+        "_character": "Bubble Girl",
+        "_tone": "Stylish, flirty, curious. She’s seeing secret things on her phone and reacting with hype but no details",
+        "1": "Omg… wait, is that the shop? 👀",
+        "2": "The colors? Insane",
+        "3": "I NEED that tile effect. Like, now",
+        "4": "Wait… are those characters… customizable?",
+        "5": "This table looks rich. I want it",
+        "6": "Early testers are gonna have so much to flex",
+        "7": "Someone just flipped a 4-win combo. I'm screaming",
+        "8": "Is that boba in the game too? No way",
+        "9": "I can't even… this is wild",
+        "10": "Wish I could show you what I'm seeing…"
+      },
+      "2": {
+        "_character": "Nervous Sweater Guy",
+        "_tone": "Don’t panic. The game’s almost here",
+        "1": "It's called Bang Bang Mahjong. I swear it's real!",
+        "2": "Granny's in this game. I'm already scared",
+        "3": "They said you can unlock special moves!?!",
+        "4": "You can play against AI too… they're fast",
+        "5": "Is it weird I want to buy a digital slipper?",
+        "6": "Dude… I think the shop has tables??",
+        "7": "I saw the points system. It's kinda genius",
+        "8": "There's a character called Jenny… she's cold",
+        "9": "I think you can win stuff that actually matters…",
+        "10": "Wait… are NFTs really in this?!"
+      },
+      "3": {
+        "_character": "Granny + her cat",
+        "_tone": "Grumpy. Wise. Ruthlessly honest",
+        "1": "Fast hands win. Yours are shaking",
+        "2": "Bang Bang Mahjong. You'll bang your head trying to keep up",
+        "3": "No luck here. Just skill. Which you don't have",
+        "4": "Don't just match. Think. If you can",
+        "5": "Speed matters. But not if you're stupid",
+        "6": "You can buy effects, but not talent",
+        "7": "Skins are cute. Wins are better",
+        "8": "Spend on a table if it helps you focus. You'll need it",
+        "9": "Special moves are fun. Unless I'm using mine on you",
+        "10": "Points, perks, upgrades. All wasted if you don't play smart",
+        "11": "Yes, you can play bots. They play better than most of you",
+        "12": "Earn points. Trade for NFTs. But don't get greedy",
+        "13": "Sell your tile set if you want. You'll still lose to me",
+        "14": "Real value, digital pain. Welcome to Mahjong Stars"
+      }
+    }
   }
 }

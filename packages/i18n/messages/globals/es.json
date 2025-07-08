@@ -12,6 +12,12 @@
   },
   "Global": {
     "soon": "Próximamente",
-    "search": "Buscar..."
+    "search": "Buscar...",
+    "subscribe": "Suscríbete ahora",
+    "subscribePlaceholder": "Introduce tu correo electrónico",
+    "contact": "Contáctanos",
+    "banner": {
+      "title": "El token $MJS llega pronto 🚀"
+    }
   }
 }

@@ -2,16 +2,22 @@
   "Footer": {
     "links": {
       "home": "Accueil",
-      "docs": "Documentation",
-      "whoWeAre": "Qui sommes-nous",
-      "termsAndConditions": "Termes et Conditions",
-      "privacyPolicy": "Politique de Confidentialité",
+      "docs": "Docs",
+      "whoWeAre": "Qui sommes-nous ?",
+      "termsAndConditions": "Conditions générales d'utilisation",
+      "privacyPolicy": "Politique de confidentialité",
       "contact": "Contact"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
     "soon": "Bientôt disponible",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "subscribe": "Abonnez-vous maintenant",
+    "subscribePlaceholder": "Entrez votre email",
+    "contact": "Contactez-nous",
+    "banner": {
+      "title": "Le jeton $MJS arrive bientôt 🚀"
+    }
   }
 }

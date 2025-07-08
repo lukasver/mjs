@@ -1,4 +1,6 @@
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
+import '@/app/styles.css';
+
 import type { FC } from 'react';
 import { useMDXComponents as getMDXComponents } from '@/mdx-components';
 import { ScrollProgress } from '@mjs/ui/components/scroll-progress';
@@ -22,7 +24,7 @@ const importMdx = async (params: { mdxPath: string[]; lang: string }) => {
 
 export async function generateMetadata(props: PageProps) {
   const params = await props.params;
-  if (params.lang.length > 2) {
+  if (params.lang?.length > 2) {
     return null;
   }
 
@@ -46,6 +48,7 @@ const Page: FC<PageProps> = async (props) => {
   if (params.lang.length > 2) {
     return null;
   }
+
   const result = await importMdx({
     mdxPath: params.mdxPath,
     lang: params.lang,
@@ -66,3 +69,6 @@ const Page: FC<PageProps> = async (props) => {
 };
 
 export default Page;
+
+export const dynamicParams = false;
+export const dynamic = 'force-static';

@@ -1,18 +1,18 @@
 {
   "Footer": {
     "links": {
-      "home": "首頁",
-      "docs": "文檔",
-      "whoWeAre": "關於我們",
-      "termsAndConditions": "條款和條件",
-      "privacyPolicy": "隱私政策",
-      "contact": "聯繫"
+      "home": "首页",
+      "docs": "文档",
+      "whoWeAre": "关于我们",
+      "termsAndConditions": "条款与条件",
+      "privacyPolicy": "隐私政策",
+      "contact": "联系我们"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
-    "soon": "即將推出",
-    "search": "搜尋...",
-    "subscribe": "立即訂閱"
+    "soon": "即将推出",
+    "search": "搜索...",
+    "subscribe": "立即订阅"
   }
 }

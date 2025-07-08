@@ -2,7 +2,7 @@
   "Footer": {
     "links": {
       "home": "Inicio",
-      "docs": "Documentos",
+      "docs": "Documentación",
       "whoWeAre": "Quiénes Somos",
       "termsAndConditions": "Términos y Condiciones",
       "privacyPolicy": "Política de Privacidad",
@@ -13,6 +13,6 @@
   "Global": {
     "soon": "Próximamente",
     "search": "Buscar...",
-    "subscribe": "Suscríbirse ahora"
+    "subscribe": "Suscríbete ahora"
   }
 }

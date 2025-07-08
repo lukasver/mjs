@@ -4,14 +4,20 @@
       "home": "Startseite",
       "docs": "Dokumentation",
       "whoWeAre": "Über uns",
-      "termsAndConditions": "Allgemeine Geschäftsbedingungen",
-      "privacyPolicy": "Datenschutz-Bestimmungen",
+      "termsAndConditions": "Nutzungsbedingungen",
+      "privacyPolicy": "Datenschutzrichtlinie",
       "contact": "Kontakt"
     },
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
-    "soon": "Kommt bald",
-    "search": "Suchen..."
+    "soon": "Bald verfügbar",
+    "search": "Suchen...",
+    "subscribe": "Jetzt abonnieren",
+    "subscribePlaceholder": "E-Mail-Adresse eingeben",
+    "contact": "Kontaktieren Sie uns",
+    "banner": {
+      "title": "$MJS Token kommt bald 🚀"
+    }
   }
 }

@@ -59,8 +59,6 @@ export const useTranslations = (): { t: Tfn } => {
       const keys = key.split('.');
       let result: string | Dictionary | undefined = context;
 
-      // console.debug('🚀 ~ provider.tsx:59 ~ context:', context);
-
       for (const k of keys) {
         if (typeof result === 'object' && result !== null && k in result) {
           result = result[k] as string | Dictionary;

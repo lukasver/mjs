@@ -3,7 +3,7 @@
     "links": {
       "home": "Главная",
       "docs": "Документация",
-      "whoWeAre": "О Нас",
+      "whoWeAre": "О нас",
       "termsAndConditions": "Условия использования",
       "privacyPolicy": "Политика конфиденциальности",
       "contact": "Контакты"
@@ -13,6 +13,6 @@
   "Global": {
     "soon": "Скоро",
     "search": "Поиск...",
-    "subscribe": "Подписаться сейчас"
+    "subscribe": "Подписаться"
   }
 }

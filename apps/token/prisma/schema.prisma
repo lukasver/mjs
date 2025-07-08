@@ -10,7 +10,7 @@ generator client {
 
 generator zod {
   provider               = "zod-prisma-types"
-  output                 = "../src/common/schemas/generated"
+  output                 = "../common/schemas/generated"
   useMultipleFiles       = false
   createModelTypes       = true
   // Useful for input validation but might affect performance since outputed file is huge
@@ -20,32 +20,56 @@ generator zod {
 }
 
 model User {
-  id        String    @id @default(cuid()) @db.Text
-  createdAt DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
-  deletedAt DateTime? @db.Timestamptz(6)
+  id         String    @id @default(cuid()) @db.Text
+  /// externalId is used to link the user to an external system
+  externalId String?
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt  DateTime? @db.Timestamptz(6)
 
-  name          String
-  email         String  @unique
+  name String
+
+  walletAddress String @unique
+
+  email         String
   emailVerified Boolean @default(false)
-  image         String?
+
+  image String?
 
   // registrationStep  RegistrationStep        @default(REGISTRATION_NEW_ACCOUNT)
-  isSiwe           Boolean            @default(false)
+  // isSiwe           Boolean            @default(false)
+
   profile          Profile?
   sales            Sale[]
   // isEmailVerify     EmailVerificationStatus @default(NOTVERIFIED)
   userRole         UserRole[]
   transactionAudit TransactionAudit[]
-  kycVerification  KycVerification?
-  sessions         Session[]
-  accounts         Account[]
+
+  kycVerification KycVerification?
+  sessions        Session[]
+  // accounts        Account[]
 
   transactions         SaleTransactions[] @relation("UserTransactions")
   transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
   Document             Document[]
 
+  isSiwe        Boolean?
+  // passkeys    Passkey[]
+  WalletAddress WalletAddress[]
+
   @@map("users")
+}
+
+model WalletAddress {
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  address       User   @relation(fields: [walletAddress], references: [walletAddress], onDelete: Cascade)
+  walletAddress String
+  chainId       Int
+
+  @@unique([walletAddress, chainId])
 }
 
 model Session {
@@ -54,35 +78,36 @@ model Session {
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   expiresAt DateTime
-  token     String
+  token     String   @unique
   ipAddress String?
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
+  @@unique([token, userId])
   @@map("session")
 }
 
-model Account {
-  id        String   @id @default(cuid()) @db.Text
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+/// Not needed for now since we are not using better auth
+// model Account {
+//   id        String   @id @default(cuid()) @db.Text
+//   createdAt DateTime @default(now()) @db.Timestamptz(6)
+//   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
+//   accountId             String
+//   providerId            String
+//   userId                String
+//   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   accessToken           String?
+//   refreshToken          String?
+//   idToken               String?
+//   accessTokenExpiresAt  DateTime?
+//   refreshTokenExpiresAt DateTime?
+//   scope                 String?
+//   password              String?
 
-  @@map("account")
-}
+//   @@map("account")
+// }
 
 model Verification {
   id        String   @id @default(cuid()) @db.Text
@@ -102,16 +127,16 @@ model Profile {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  firstName     String?
-  lastName      String?
-  user          User      @relation(fields: [userId], references: [id])
-  userId        String    @unique
-  email         String?
+  firstName   String?
+  lastName    String?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String    @unique
+  email       String?
   // check
-  walletAddress String?
-  address       Address?
-  phoneNumber   String?
-  dateOfBirth   DateTime?
+  // walletAddress String?
+  address     Address?
+  phoneNumber String?
+  dateOfBirth DateTime?
 
   @@map("profile")
 }
@@ -144,25 +169,27 @@ model Sale {
 
   name                   String
   status                 SaleStatus         @default(CREATED)
-  availableTokenQuantity Int?
   saleCurrency           Currency           @default(CHF)
   initialTokenQuantity   Int
+  availableTokenQuantity Int
   maximumTokenBuyPerUser Int?
   minimumTokenBuyPerUser Int                @default(1)
   saleStartDate          DateTime
   tokenContractAddress   String?
+  tokenContractChainId   Int?
+  blockchain             Blockchain?        @relation(fields: [tokenContractChainId], references: [chainId])
   tokenName              String
   tokenTotalSupply       String?
-  tokenPricePerUnit      Float
+  tokenPricePerUnit      Decimal            @db.Decimal(36, 18)
   tokenSymbol            String
   toWalletsAddress       String
   saleClosingDate        DateTime
   createdBy              String
+  saftCheckbox           Boolean            @default(false)
+  saftContract           String?
   user                   User               @relation(fields: [createdBy], references: [id])
   transactions           SaleTransactions[]
   saleInformation        SaleInformation?
-  saftCheckbox           Boolean            @default(false)
-  saftContract           String?
   documents              Document[]
 
   token            Token             @relation(fields: [tokenId], references: [id])
@@ -298,20 +325,22 @@ model SaleTransactions {
 }
 
 model Blockchain {
-  id           String             @id @default(cuid()) @db.Text
-  name         String
-  chainId      Int                @unique
-  rpcUrl       String
-  explorerUrl  String
-  symbol       String
-  decimals     Int                @default(18)
-  isTestnet    Boolean            @default(false)
-  isEnabled    Boolean            @default(true)
-  tokens       Token[]
-  transactions SaleTransactions[]
-  createdAt    DateTime           @default(now()) @db.Timestamptz(6)
-  updatedAt    DateTime           @updatedAt @db.Timestamptz(6)
-  deletedAt    DateTime?          @db.Timestamptz(6)
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name        String
+  chainId     Int     @unique
+  rpcUrl      String
+  explorerUrl String?
+
+  isTestnet Boolean @default(false)
+  isEnabled Boolean @default(true)
+
+  transactions        SaleTransactions[]
+  TokensOnBlockchains TokensOnBlockchains[]
+  Sale                Sale[]
 
   @@map("blockchain")
 }
@@ -327,6 +356,7 @@ model ContractStatus {
   contractId String
   status     ContractSignatureStatus
 
+  @@unique([userId, contractId])
   @@map("contract_status")
 }
 
@@ -371,8 +401,9 @@ model Role {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  name  String     @unique
-  users UserRole[]
+  name        String     @unique
+  description String?
+  users       UserRole[]
 
   @@map("roles")
 }
@@ -397,16 +428,32 @@ model Token {
   updatedAt DateTime  @updatedAt @db.Timestamptz(6)
   deletedAt DateTime? @db.Timestamptz(6)
 
-  symbol          String     @unique
-  name            String
-  decimals        Int        @default(18)
-  totalSupply     String
-  contractAddress String?
-  blockchain      Blockchain @relation(fields: [blockchainId], references: [id])
-  blockchainId    String
-  sales           Sale[]
+  symbol      String
+  totalSupply String?
+  image       String?
+
+  sales               Sale[]
+  TokensOnBlockchains TokensOnBlockchains[]
 
   @@map("tokens")
+}
+
+model TokensOnBlockchains {
+  id          String @id @default(cuid()) @db.Text
+  token       Token  @relation(fields: [tokenId], references: [id])
+  tokenId     String
+  tokenSymbol String
+
+  blockchain   Blockchain @relation(fields: [blockchainId], references: [id])
+  blockchainId String
+
+  name            String
+  isNative        Boolean @default(false)
+  decimals        Int
+  contractAddress String?
+
+  @@unique([tokenId, blockchainId])
+  @@unique([tokenSymbol, blockchainId])
 }
 
 enum RegistrationStep {
@@ -470,3 +517,19 @@ enum KycStatus {
   VERIFIED
   REJECTED
 }
+
+// model Passkey {
+//   id           String    @id
+//   name         String?
+//   publicKey    String
+//   userId       String
+//   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   credentialID String
+//   counter      Int
+//   deviceType   String
+//   backedUp     Boolean
+//   transports   String?
+//   createdAt    DateTime?
+
+//   @@map("passkey")
+// }

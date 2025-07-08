@@ -1,48 +1,21 @@
+import { Locale } from 'next-intl';
+
 export const getFooterLinks = (
-	t: (k: string) => string,
+  t: (k: string) => string,
+  locale?: Locale
 ): Array<{
-	columnName: string;
-	links: Array<{
-		href: string;
-		title: string;
-	}>;
+  href: string;
+  title: string;
 }> => {
-	return [
-		{
-			columnName: "",
-			links: [
-				{ href: "#home", title: t("Footer.links.home") },
-				{ href: "/about", title: t("Footer.links.whoWeAre") },
-				{ href: "/terms", title: t("Footer.links.termsAndConditions") },
-				{ href: "/privacy", title: t("Footer.links.privacyPolicy") },
-				{ href: "/contact", title: t("Footer.links.contact") },
-			],
-		},
-		// {
-		// 	columnName: "Company",
-		// 	links: [
-		// 		{ href: "/", title: "Home" },
-		// 		{ href: "/token", title: "Token" },
-		// 		{ href: "/docs", title: "Docs" },
-		// 		{ href: "/about", title: "About" },
-		// 		{ href: "/all-articles", title: "Blog" },
-		// 	],
-		// },
-		// { columnName: "Product", links: [] },
-		// {
-		// 	columnName: "Docs",
-		// 	links: [
-		// 		{ href: "/tokenomics", title: "Tokenomics" },
-		// 		{ href: "/roadmap", title: "Roadmap" },
-		// 	],
-		// },
-		// {
-		// 	columnName: "Support",
-		// 	links: [
-		// 		{ href: "/support", title: "Contact us" },
-		// 		{ href: "/terms", title: "Terms of Service" },
-		// 		{ href: "/privacy", title: "Privacy Policy" },
-		// 	],
-		// },
-	];
+  return [
+    { href: '#home', title: t('Footer.links.home') },
+    {
+      href: `/${locale ? `${locale}/` : ''}docs`,
+      title: t('Footer.links.docs'),
+    },
+    { href: '/about', title: t('Footer.links.whoWeAre') },
+    { href: '/terms', title: t('Footer.links.termsAndConditions') },
+    { href: '/privacy', title: t('Footer.links.privacyPolicy') },
+    { href: '/contact', title: t('Footer.links.contact') },
+  ];
 };

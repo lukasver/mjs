@@ -2,7 +2,7 @@
   "Footer": {
     "links": {
       "home": "Início",
-      "docs": "Documentação",
+      "docs": "Documentos",
       "whoWeAre": "Quem Somos",
       "termsAndConditions": "Termos e Condições",
       "privacyPolicy": "Política de Privacidade",
@@ -11,7 +11,13 @@
     "copyright": "©{year} WASABI GAMES DMCC"
   },
   "Global": {
-    "soon": "Em Breve",
-    "search": "Pesquisar..."
+    "soon": "Em breve",
+    "search": "Pesquisar...",
+    "subscribe": "Inscreva-se agora",
+    "subscribePlaceholder": "Digite seu email",
+    "contact": "Contate-nos",
+    "banner": {
+      "title": "Token $MJS chegando em breve 🚀"
+    }
   }
 }

@@ -1,67 +1,41 @@
-import { Layout } from 'nextra-theme-docs';
-import { Head, Search } from 'nextra/components';
-import { Banner } from '@/components/banner';
-import { getPageMap } from 'nextra/page-map';
+import { Head } from 'nextra/components';
 // import 'nextra-theme-docs/style.css';
 import '@/app/styles.css';
-import {
-  getDictionary,
-  getDirection,
-  getLocaleNames,
-  getTranslations,
-} from '../lib/i18n/get-dictionaries';
 import { Metadata } from 'next';
-import { Navbar } from '@/components/header';
-import { Footer } from '@/components/footer';
 import { fontClash, fontTeachers } from './fonts';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import { PostHogProvider } from '@/components/posthog-provider';
-import { TranslationsProvider } from '@/lib/i18n/provider';
-import { Locale } from '@/lib/i18n';
-import remotePageMap from '@/data/remote-page-map.json';
-import { unstable_ViewTransition as ViewTransition } from 'react';
-import normalizePageMap from '@/lib/normalize-page-map';
-import { PageMapItem } from 'nextra';
 
-export const metadata: Metadata = {
-  // Define your metadata here
-  // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+import { unstable_ViewTransition as ViewTransition } from 'react';
+import { genPageMetadata } from './seo';
+import { metadata as siteConfig } from '@/lib/site-config';
+
+export const metadata: Metadata = genPageMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+});
+
+export const generateStaticParams = async () => {
+  const paths = await import('@/lib/i18n').then((m) => m.i18n.locales);
+  return paths.map((locale) => ({ lang: locale }));
 };
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
 }) {
-  const lang = (await params)?.lang || 'en';
-
-  const [dictionary, pageMap, t] = await Promise.all([
-    getDictionary(lang as Locale),
-    getPageMap(lang ? `/${lang}` : '/en')
-      .then(async (pageMap) =>
-        process.env.ENABLE_REMOTE === 'true'
-          ? ([...pageMap, remotePageMap.pageMap] as PageMapItem[])
-          : pageMap
-      )
-      .then(normalizePageMap(lang as Locale)),
-    getTranslations(lang as Locale),
-  ]);
-
   return (
     <html
       // Not required, but good for SEO
-      lang={lang || 'en'}
+      lang={'en'}
       // Required to be set
-      dir={getDirection(lang) || 'ltr'}
+      dir={'ltr'}
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
       className={`${fontClash.variable} ${fontTeachers.variable} scroll-smooth`}
     >
-      <Head
-      // ... Your additional head options
-      >
+      <Head>
         {/* Your additional tags should be passed as `children` of `<Head>` element */}
         <link
           rel='apple-touch-icon'
@@ -92,27 +66,10 @@ export default async function RootLayout({
       </Head>
       <body>
         <PostHogProvider>
-          <TranslationsProvider translations={dictionary}>
-            <ViewTransition>
-              <Layout
-                i18n={getLocaleNames()}
-                banner={<Banner />}
-                navbar={<Navbar lang={lang as Locale} />}
-                search={<Search placeholder={t('Global.search')} />}
-                pageMap={pageMap}
-                editLink={false}
-                docsRepositoryBase='https://github.com/mahjongstars/docs'
-                footer={<Footer />}
-                navigation={true}
-
-                // ... Your additional layout options
-              >
-                {children}
-              </Layout>
-            </ViewTransition>
-          </TranslationsProvider>
+          <ViewTransition>{children}</ViewTransition>
         </PostHogProvider>
-        {process.env.NODE_ENV === 'production' && <SpeedInsights />}
+        {process.env.NODE_ENV === 'production' && <VercelAnalytics />}
+        {/* {process.env.NODE_ENV === 'production' && <SpeedInsights />} */}
       </body>
     </html>
   );

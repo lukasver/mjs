@@ -13,7 +13,8 @@
 		"NODE_ENV",
 		"DATABASE_URL",
 		"GITHUB_TOKEN",
-		"ENABLE_EXPERIMENTAL_COREPACK"
+		"ENABLE_EXPERIMENTAL_COREPACK",
+		"GOOGLE_AI_API_KEY"
 	],
 	"tasks": {
 		"//#format": {},
@@ -68,7 +69,8 @@
 				"ALTCHA_HMAC_KEY",
 				"EMAIL_FROM",
 				"EMAILOCTOPUS_API_KEY",
-				"EMAILOCTOPUS_LIST_ID"
+				"EMAILOCTOPUS_LIST_ID",
+				"MOBILE_OPTIMIZED"
 			]
 		},
 		"@mjs/docs#build": {
@@ -83,7 +85,8 @@
 			],
 			"env": [
 				"GITHUB_TOKEN",
-				"ENABLE_REMOTE"
+				"ENABLE_REMOTE",
+				"RENEW"
 			]
 		},
 		"@mjs/token#build": {
@@ -98,6 +101,14 @@
 			"env": []
 		},
 		"@mjs/i18n#build": {
+			"dependsOn": [
+				"@mjs/utils#build"
+			],
+			"outputs": [
+				"dist/**"
+			]
+		},
+		"@mjs/utils#build": {
 			"outputs": [
 				"dist/**"
 			]
