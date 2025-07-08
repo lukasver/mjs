@@ -1,7 +1,17 @@
 'use client';
 
-import { getContract, getCurrentUser, getSales } from '@/lib/actions';
-import { FOP, TransactionStatus } from '@prisma/client';
+import {
+  getContract,
+  getCurrentUser,
+  getExchangeRate,
+  getPendingTransactions,
+  getSale,
+  getSales,
+  getUserSaleTransactions,
+  getUserTransactions,
+  getWeb3Contract,
+} from '@/lib/actions';
+import { Currency, FOP, TransactionStatus } from '@prisma/client';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 const DEFAULT_STALE_TIME = 1000 * 60 * 5; // 5 minutes
@@ -39,8 +49,8 @@ export const useActiveSale = () => {
 
 export const useSale = (id: string) => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['sales', 'active'],
-    queryFn: () => getSale(id),
+    queryKey: ['sales', `sale::${id}`],
+    queryFn: () => getSale({ id }),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -49,7 +59,7 @@ export const useSale = (id: string) => {
 
 export const useUser = () => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['user'],
+    queryKey: ['user', 'me'],
     queryFn: () => getCurrentUser(),
     staleTime: DEFAULT_STALE_TIME,
   });
@@ -60,7 +70,7 @@ export const useUser = () => {
 export function useWeb3Contract(address: string) {
   const { data, status, error } = useSuspenseQuery({
     queryKey: [`contract::${address}`],
-    queryFn: () => getContract(address),
+    queryFn: () => getWeb3Contract(address),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -77,20 +87,30 @@ export function useWeb3Contract(address: string) {
 //   return { data: data?.data, error: e, status };
 // };
 
-export const useContractStatus = (userId: string) => {
+export const useSaftStatus = () => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['contract'],
-    queryFn: () => getContractStatus(userId),
+    queryKey: ['saft'],
+    queryFn: () => getContract(),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
   return { data: data?.data, error: e, status };
 };
 
-export const useTransactionStatus = () => {
+export const useTransactions = () => {
+  const { data, status, error } = useSuspenseQuery({
+    queryKey: ['transactions'],
+    queryFn: () => getUserTransactions({}),
+    staleTime: DEFAULT_STALE_TIME,
+  });
+  const e = getError(data, error);
+  return { data: data?.data, error: e, status };
+};
+
+export const usePendingTransactions = () => {
   const { data, status, error } = useSuspenseQuery({
     queryKey: ['transactions', 'status'],
-    queryFn: () => getTransactionStatus(),
+    queryFn: () => getPendingTransactions(),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -102,17 +122,17 @@ export const useTransactionStatus = () => {
  * @param saleId - The ID of the sale to check transactions for
  * @param status - The transaction status to filter by
  */
-export const useUserPendingTransactions = (
+export const useUserSaleTransactions = (
   saleId: string,
-  status: TransactionStatus
+  status?: TransactionStatus
 ) => {
   const {
     data,
     status: queryStatus,
     error,
   } = useSuspenseQuery({
-    queryKey: ['transactions', 'pending', `transaction::${saleId}::${status}`],
-    queryFn: () => getUserPendingTransactions({ saleId, status }),
+    queryKey: ['transactions', 'status', `transaction::${saleId}::${status}`],
+    queryFn: () => getUserSaleTransactions({ saleId, status }),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -144,17 +164,29 @@ export const useUserTransactions = ({
       'user',
       `transaction::${userId}::${formOfPayment}::${symbol}::${sale}`,
     ],
-    queryFn: () => getUserTransactions({ userId, formOfPayment, symbol, sale }),
+    queryFn: () =>
+      getUserTransactions({
+        userId,
+        formOfPayment,
+        tokenSymbol: symbol,
+        saleId: sale,
+      }),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
   return { data: data?.data, error: e, status };
 };
 
-export const useExchangeRate = () => {
+export const useExchangeRate = ({
+  from,
+  to,
+}: {
+  from: Currency;
+  to: Currency;
+}) => {
   const { data, status, error } = useSuspenseQuery({
-    queryKey: ['exchange', 'rate'],
-    queryFn: () => getExchangeRate(),
+    queryKey: ['exchange', 'rate', from, to],
+    queryFn: () => getExchangeRate({ from, to }),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -166,12 +198,13 @@ export const useExchangeRate = () => {
  * =============== ADMIN ===============
  * =====================================
  */
-export const useAdminTransactions = () => {
-  const { data, status, error } = useSuspenseQuery({
-    queryKey: ['admin', 'transactions'],
-    queryFn: () => getAdminTransactions(),
-    staleTime: DEFAULT_STALE_TIME,
-  });
-  const e = getError(data, error);
-  return { data: data?.data, error: e, status };
-};
+
+// export const useAdminTransactions = () => {
+//   const { data, status, error } = useSuspenseQuery({
+//     queryKey: ['admin', 'transactions'],
+//     queryFn: () => getAdminTransactions(),
+//     staleTime: DEFAULT_STALE_TIME,
+//   });
+//   const e = getError(data, error);
+//   return { data: data?.data, error: e, status };
+// };

@@ -383,15 +383,15 @@ class TransactionsController {
    * Get user transactions for a specific sale.
    */
   async userTransactionsForSale(
-    dto: { saleId: string; type?: keyof typeof TransactionStatus },
+    dto: { saleId: string; status?: keyof typeof TransactionStatus },
     ctx: ActionCtx
   ) {
     try {
-      const { saleId, type } = dto;
+      const { saleId, status: _status } = dto;
       invariant(ctx.userId, 'User not found');
       invariant(saleId, 'Sale not found');
       const status: TransactionStatus =
-        (type && TransactionStatus[type]) || TransactionStatus.PENDING;
+        (_status && TransactionStatus[_status]) || TransactionStatus.PENDING;
       const transactions = await prisma.saleTransactions.findMany({
         where: {
           AND: [{ saleId: String(saleId) }, { userId: ctx.userId }, { status }],

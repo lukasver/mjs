@@ -1,19 +1,18 @@
-import { invariant } from '@epic-web/invariant';
 import { authActionClient } from './config';
-import { prisma } from '@/common/db/prisma';
+import { prisma } from '@/db';
+import { ROLES } from '@/common/config/constants';
+import { adminCache } from '@/lib/auth/cache';
+import { User } from '@prisma/client';
 
-const adminMiddleware: Parameters<typeof authActionClient.use>[0] = async ({
-  next,
-  ctx,
-}) => {
-  const authed = await prisma.user.findUnique({
+const isAdmin = adminCache.wrap(async (walletAddress: string) => {
+  return await prisma.user.findUniqueOrThrow({
     where: {
-      walletAddress: ctx.address,
+      walletAddress,
       userRole: {
         some: {
           role: {
             name: {
-              in: ['ADMIN', 'SUPER_ADMIN'],
+              in: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
             },
           },
         },
@@ -23,12 +22,27 @@ const adminMiddleware: Parameters<typeof authActionClient.use>[0] = async ({
       id: true,
     },
   });
-  invariant(authed, 'Forbidden');
+});
+
+const adminMiddleware: Parameters<typeof authActionClient.use>[0] = async ({
+  next,
+  ctx,
+}) => {
+  let authed: Pick<User, 'id'> | null = null;
+  try {
+    authed = await isAdmin(ctx.address);
+  } catch (_e: unknown) {
+    console.log(
+      'NON ADMIN, NOT CACHEEABLE',
+      _e instanceof Error ? _e.message : _e
+    );
+    authed = null;
+  }
   return next({
     ctx: {
       ...ctx,
-      isAdmin: true,
-      userId: authed.id,
+      isAdmin: !!authed,
+      userId: authed?.id,
     },
   });
 };

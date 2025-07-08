@@ -9,3 +9,9 @@ export const authCache = new Cacheable({
   // 2 minutes
   ttl: cacheTTL,
 });
+
+export const adminCache = new Cacheable({
+  namespace: 'admin::action:',
+  // 2 minutes
+  ttl: cacheTTL,
+});

@@ -24,6 +24,7 @@ import salesInformationController from '@/lib/controllers/salesInformation';
 import {
   CreateSaleDto,
   DeleteSaleDto,
+  GetSaleDto,
   GetSalesDto,
   UpdateSaleDto,
   UpdateSaleStatusDto,
@@ -36,6 +37,7 @@ import { ROLES } from '@/common/config/constants';
 import {
   CurrencySchema,
   ProfileSchema,
+  TransactionStatusSchema,
   UserSchema,
 } from '@/common/schemas/generated';
 import {
@@ -50,6 +52,7 @@ import {
 } from '@/common/schemas/dtos/transactions';
 import { TransactionStatus } from '@prisma/client';
 import { CreateContractStatusDto } from '@/common/schemas/dtos/contracts';
+import { adminClient } from './admin';
 
 export const isLoggedIn = loginActionClient
   .schema(z.string())
@@ -239,7 +242,17 @@ export const getSales = authActionClient
     return sales.data;
   });
 
-export const getContract = authActionClient
+export const getSale = authActionClient
+  .schema(GetSaleDto)
+  .action(async ({ ctx, parsedInput }) => {
+    const sales = await salesController.getSale(parsedInput, ctx);
+    if (!sales.success) {
+      throw new Error(sales.message);
+    }
+    return sales.data;
+  });
+
+export const getWeb3Contract = authActionClient
   .schema(z.string())
   .action(async ({ parsedInput }) => {
     const contract = await getContractThirdweb({
@@ -275,16 +288,36 @@ export const updateUserInfo = authActionClient
     return sales.data;
   });
 
-export const getAllTransactions = authActionClient.action(async ({ ctx }) => {
-  const sales = await transactionsController.pendingContactTransactions(
-    {},
-    ctx
-  );
-  if (!sales.success) {
-    throw new Error(sales.message);
+export const getPendingTransactions = authActionClient.action(
+  async ({ ctx }) => {
+    const sales = await transactionsController.pendingContactTransactions(
+      {},
+      ctx
+    );
+    if (!sales.success) {
+      throw new Error(sales.message);
+    }
+    return sales.data;
   }
-  return sales.data;
-});
+);
+
+export const getUserSaleTransactions = authActionClient
+  .schema(
+    z.object({
+      saleId: z.string(),
+      status: TransactionStatusSchema.optional(),
+    })
+  )
+  .action(async ({ ctx, parsedInput }) => {
+    const transactions = await transactionsController.userTransactionsForSale(
+      parsedInput,
+      ctx
+    );
+    if (!transactions.success) {
+      throw new Error(transactions.message);
+    }
+    return transactions.data;
+  });
 
 export const getUserTransactions = authActionClient
   .schema(GetTransactionDto)
@@ -400,16 +433,26 @@ export const confirmContractSignature = authActionClient
     return result;
   });
 
+export const getContract = authActionClient.action(async ({ ctx }) => {
+  const result = await contractController.getContract(null, ctx);
+  if (!result.success) {
+    throw new Error(result.message);
+  }
+  return result;
+});
+
 /**
  * =====================================
  * =============== ADMIN ===============
  * =====================================
  */
 
-export const createSale = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const createSale = adminClient
   .schema(CreateSaleDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! admin required
     const sales = await salesController.createSale(parsedInput, ctx);
     if (!sales.success) {
       throw new Error(sales.message);
@@ -417,10 +460,12 @@ export const createSale = authActionClient
     return sales.data;
   });
 
-export const updateSale = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const updateSale = adminClient
   .schema(UpdateSaleDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! admin required
     const sales = await salesController.updateSale(parsedInput, ctx);
     if (!sales.success) {
       throw new Error(sales.message);
@@ -428,10 +473,12 @@ export const updateSale = authActionClient
     return sales.data;
   });
 
-export const createSaleInformation = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const createSaleInformation = adminClient
   .schema(CreateSaleInformationDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! admin required
     const sales = await salesInformationController.upsertSaleInformation(
       parsedInput,
       ctx
@@ -442,7 +489,10 @@ export const createSaleInformation = authActionClient
     return sales.data;
   });
 
-export const updateSaleInformation = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const updateSaleInformation = adminClient
   .schema(
     UpdateSaleInformationDto.extend({
       saleId: z.string(),
@@ -450,7 +500,7 @@ export const updateSaleInformation = authActionClient
   )
   .action(async ({ ctx, parsedInput }) => {
     const { saleId, ...rest } = parsedInput;
-    //TODO! admin required
+
     const sales = await salesInformationController.updateSaleInformation(
       saleId,
       rest,
@@ -462,10 +512,12 @@ export const updateSaleInformation = authActionClient
     return sales.data;
   });
 
-export const updateSaleStatus = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const updateSaleStatus = adminClient
   .schema(UpdateSaleStatusDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! admin required
     const sales = await salesController.updateSaleStatus(parsedInput, ctx);
     if (!sales.success) {
       throw new Error(sales.message);
@@ -473,10 +525,12 @@ export const updateSaleStatus = authActionClient
     return sales.data;
   });
 
-export const deleteSale = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const deleteSale = adminClient
   .schema(DeleteSaleDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! admin required
     const sales = await salesController.deleteSale(parsedInput, ctx);
     if (!sales.success) {
       throw new Error(sales.message);
@@ -484,10 +538,12 @@ export const deleteSale = authActionClient
     return sales.data;
   });
 
-export const confirmAdminTransaction = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const confirmAdminTransaction = adminClient
   .schema(UpdateTransactionDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! ADMIN REQUIRED
     const transaction = await transactionsController.adminUpdateTransaction(
       parsedInput,
       ctx
@@ -498,10 +554,12 @@ export const confirmAdminTransaction = authActionClient
     return transaction.data;
   });
 
-export const cancelAllTransactions = authActionClient
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const cancelAllTransactions = adminClient
   .schema(CancelAllTransactionsDto)
   .action(async ({ ctx, parsedInput }) => {
-    //TODO! ADMIN REQUIRED
     const transaction = await transactionsController.adminUpdateTransaction(
       { ...parsedInput, status: TransactionStatus.CANCELLED },
       ctx
