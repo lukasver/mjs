@@ -1,39 +1,39 @@
 {
-  "extends": "@mjs/typescript-config/nextjs.json",
-  "compilerOptions": {
-    "paths": {
-      "@/components/*": ["./components/*"],
-      "@/data/*": ["./data/*"],
-      "@/layouts/*": ["./layouts/*"],
-      "@/css/*": ["./css/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/theme/*": ["./theme/*"],
-      "@/app/*": ["./app/*"],
-      "@/demo/*": ["./demo/*"],
-      "@/public/*": ["./public/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"],
-      "@mjs/ui/*": ["../../packages/ui/src/*"],
-      "@mjs/emails": ["../../packages/transactional/emails/index.tsx"]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.js",
-    "**/*.mjs",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mdx",
-    "**/*.jsx",
-    "**/*.json",
-    ".contentlayer/generated",
-    ".contentlayer/generated/**/*.json",
-    ".next/types/**/*.ts",
-    "../../packages/ui/tailwind.config.js"
-  ],
-  "exclude": ["node_modules"]
+	"extends": "@mjs/typescript-config/nextjs.json",
+	"compilerOptions": {
+		"paths": {
+			"@/components/*": ["./components/*"],
+			"@/data/*": ["./data/*"],
+			"@/layouts/*": ["./layouts/*"],
+			"@/css/*": ["./css/*"],
+			"@/lib/*": ["./lib/*"],
+			"@/theme/*": ["./theme/*"],
+			"@/app/*": ["./app/*"],
+			"@/demo/*": ["./demo/*"],
+			"@/public/*": ["./public/*"],
+			"contentlayer/generated": ["./.contentlayer/generated"],
+			"@mjs/ui/*": ["../../packages/ui/src/*"],
+			"@mjs/emails": ["../../packages/transactional/emails/index.tsx"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.js",
+		"**/*.mjs",
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.mdx",
+		"**/*.jsx",
+		"**/*.json",
+		".contentlayer/generated",
+		".contentlayer/generated/**/*.json",
+		".next/types/**/*.ts",
+		"../../packages/ui/tailwind.config.js"
+	],
+	"exclude": ["node_modules"]
 }

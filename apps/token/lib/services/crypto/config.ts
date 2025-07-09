@@ -1,14 +1,14 @@
-import { CryptoCurrency } from '../../../common/types';
-import { Currency } from '@prisma/client';
+import { Currency } from "@prisma/client";
+import { CryptoCurrency } from "../../../common/types";
 // import { constants } from 'ethers';
 // import { getAddress } from 'ethers/lib/utils';
 
-import * as c from 'thirdweb/chains';
+import * as c from "thirdweb/chains";
 
 export const ALLOWED_CHAINS =
-  process.env.NODE_ENV === 'production'
-    ? [c.bsc]
-    : [c.bscTestnet, c.sepolia, c.baseSepolia];
+	process.env.NODE_ENV === "production"
+		? [c.bsc]
+		: [c.bscTestnet, c.sepolia, c.baseSepolia];
 
 // type AcceptedTokens =
 //   (typeof NETWORK_TO_TOKEN_MAPPING)[keyof typeof NETWORK_TO_TOKEN_MAPPING];
@@ -145,12 +145,12 @@ const STABLECOIN_DECIMALS = 6;
 // };
 
 export const isCryptoCurrencyType = (
-  data: Currency
+	data: Currency,
 ): data is CryptoCurrency => {
-  return (
-    Boolean(data) &&
-    ![Currency.CHF, Currency.EUR, Currency.USD, Currency.GBP].includes(
-      data as any
-    )
-  );
+	return (
+		Boolean(data) &&
+		![Currency.CHF, Currency.EUR, Currency.USD, Currency.GBP].includes(
+			data as any,
+		)
+	);
 };

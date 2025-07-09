@@ -1,12 +1,12 @@
-import type { MetaRecord } from 'nextra';
+import type { MetaRecord } from "nextra";
 
 const meta: MetaRecord = {
-  team: {
-    type: 'doc',
-  },
-  advisors: {
-    type: 'doc',
-  },
+	team: {
+		type: "doc",
+	},
+	advisors: {
+		type: "doc",
+	},
 };
 
 export default meta;

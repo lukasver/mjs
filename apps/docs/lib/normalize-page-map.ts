@@ -1,12 +1,12 @@
-import 'server-only';
-import { Folder, type PageMapItem } from 'nextra';
-import { Locale } from './i18n';
+import "server-only";
+import { Folder, type PageMapItem } from "nextra";
+import { Locale } from "./i18n";
 
 /**
  * Type guard to check if a page item is a folder with children
  */
 export const isFolder = (page: PageMapItem): page is Folder => {
-  return 'children' in page && Array.isArray(page.children);
+	return "children" in page && Array.isArray(page.children);
 };
 
 /**
@@ -15,17 +15,17 @@ export const isFolder = (page: PageMapItem): page is Folder => {
  * @returns The section title if it exists and is a string
  */
 const getSectionTitleFromFrontMatter = (
-  frontMatter: unknown
+	frontMatter: unknown,
 ): string | undefined => {
-  if (
-    frontMatter &&
-    typeof frontMatter === 'object' &&
-    'sectionTitle' in frontMatter
-  ) {
-    const fm = frontMatter as Record<string, unknown>;
-    return typeof fm.sectionTitle === 'string' ? fm.sectionTitle : undefined;
-  }
-  return undefined;
+	if (
+		frontMatter &&
+		typeof frontMatter === "object" &&
+		"sectionTitle" in frontMatter
+	) {
+		const fm = frontMatter as Record<string, unknown>;
+		return typeof fm.sectionTitle === "string" ? fm.sectionTitle : undefined;
+	}
+	return undefined;
 };
 
 /**
@@ -34,15 +34,15 @@ const getSectionTitleFromFrontMatter = (
  * @returns The section title or undefined if none found
  */
 const extractSectionTitle = (children: PageMapItem[]): string | undefined => {
-  for (const child of children) {
-    if (child && 'frontMatter' in child) {
-      const sectionTitle = getSectionTitleFromFrontMatter(child.frontMatter);
-      if (sectionTitle) {
-        return sectionTitle;
-      }
-    }
-  }
-  return undefined;
+	for (const child of children) {
+		if (child && "frontMatter" in child) {
+			const sectionTitle = getSectionTitleFromFrontMatter(child.frontMatter);
+			if (sectionTitle) {
+				return sectionTitle;
+			}
+		}
+	}
+	return undefined;
 };
 
 /**
@@ -51,17 +51,17 @@ const extractSectionTitle = (children: PageMapItem[]): string | undefined => {
  * @returns The title string
  */
 const getPageTitle = (page: PageMapItem): string => {
-  // Get the current title from the page, ensuring it's a string
-  const currentTitle =
-    'title' in page && typeof page.title === 'string' ? page.title : '';
+	// Get the current title from the page, ensuring it's a string
+	const currentTitle =
+		"title" in page && typeof page.title === "string" ? page.title : "";
 
-  // If it's a folder, try to get section title from children
-  if (isFolder(page)) {
-    const sectionTitle = extractSectionTitle(page.children);
-    return sectionTitle || currentTitle;
-  }
+	// If it's a folder, try to get section title from children
+	if (isFolder(page)) {
+		const sectionTitle = extractSectionTitle(page.children);
+		return sectionTitle || currentTitle;
+	}
 
-  return currentTitle;
+	return currentTitle;
 };
 
 /**
@@ -73,13 +73,13 @@ const getPageTitle = (page: PageMapItem): string => {
  * @returns A function that normalizes the page map
  */
 export default function normalizePageMap(_lang: Locale) {
-  return (pageMap: PageMapItem[]): PageMapItem[] => {
-    return pageMap.map((page) => {
-      const _page = structuredClone(page);
-      if ('title' in _page) {
-        _page.title = getPageTitle(_page);
-      }
-      return _page;
-    });
-  };
+	return (pageMap: PageMapItem[]): PageMapItem[] => {
+		return pageMap.map((page) => {
+			const _page = structuredClone(page);
+			if ("title" in _page) {
+				_page.title = getPageTitle(_page);
+			}
+			return _page;
+		});
+	};
 }

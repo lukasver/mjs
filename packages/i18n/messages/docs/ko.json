@@ -1,18 +1,18 @@
 {
-  "Footer": {
-    "links": {
-      "home": "홈",
-      "docs": "문서",
-      "whoWeAre": "회사소개",
-      "termsAndConditions": "이용약관",
-      "privacyPolicy": "개인정보처리방침",
-      "contact": "문의"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "곧 출시 예정",
-    "search": "검색...",
-    "subscribe": "지금 구독하기"
-  }
+	"Footer": {
+		"links": {
+			"home": "홈",
+			"docs": "문서",
+			"whoWeAre": "회사소개",
+			"termsAndConditions": "이용약관",
+			"privacyPolicy": "개인정보처리방침",
+			"contact": "문의"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "곧 출시 예정",
+		"search": "검색...",
+		"subscribe": "지금 구독하기"
+	}
 }

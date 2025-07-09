@@ -1,5 +1,5 @@
 function AdminLoading() {
-  return <div>AdminLoading</div>;
+	return <div>AdminLoading</div>;
 }
 
 export default AdminLoading;

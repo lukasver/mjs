@@ -1,12 +1,12 @@
-import { geolocation, ipAddress } from '@vercel/functions';
-import { type NextRequest, userAgent } from 'next/server';
+import { geolocation, ipAddress } from "@vercel/functions";
+import { type NextRequest, userAgent } from "next/server";
 
 export const getIpAddress = (req: Headers | NextRequest) => {
-  return ipAddress(req);
+	return ipAddress(req);
 };
 
 export const getGeolocation = (req: NextRequest) => {
-  return geolocation(req);
+	return geolocation(req);
 };
 
 /**
@@ -17,12 +17,12 @@ export const getGeolocation = (req: NextRequest) => {
 export function getUserAgent(headers: Headers): string;
 export function getUserAgent(headers: Headers, asObject: false): string;
 export function getUserAgent(
-  headers: Headers,
-  asObject: true
+	headers: Headers,
+	asObject: true,
 ): ReturnType<typeof userAgent>;
 export function getUserAgent(
-  headers: Headers,
-  asObject = false
+	headers: Headers,
+	asObject = false,
 ): string | ReturnType<typeof userAgent> {
-  return asObject ? userAgent({ headers }) : userAgent({ headers }).ua;
+	return asObject ? userAgent({ headers }) : userAgent({ headers }).ua;
 }

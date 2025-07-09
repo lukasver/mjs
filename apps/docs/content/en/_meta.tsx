@@ -45,10 +45,7 @@ const meta: MetaRecord = {
   '10-faq': {
     type: 'doc',
   },
-  tokenomics: {
-    type: 'doc',
-    display: 'hidden',
-  },
+
   '###': {
     type: 'separator',
   },
