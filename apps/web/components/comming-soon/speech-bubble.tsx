@@ -3,6 +3,7 @@ import { cn } from '@mjs/ui/lib/utils';
 import { AnimatePresence, motion } from 'motion/react';
 import { Dispatch, SetStateAction } from 'react';
 import { useWindowSize } from 'usehooks-ts';
+import { useSpeechBubbleMessage } from './speech-bubble-container';
 
 /**
  * Renders an animated speech bubble with a message using Motion for React.
@@ -17,12 +18,10 @@ const SpeechBubble = ({
   show?: boolean;
   onExitComplete?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const message =
-    'Reprehenderit ut elit cupidatat commodo minim et. Officia do nisi nulla velit qui. Cupidatat in et esse laborum consequat. Anim adipisicing ut eiusmod tempor sint consectetur occaecat. Deserunt in officia fugiat culpa commodo nisi culpa veniam mollit velit reprehenderit excepteur.';
-  // useSpeechBubbleMessage();
+  const message = useSpeechBubbleMessage();
   const { width } = useWindowSize();
   const isMobile = width < 768;
-  const isVisible = true || (Boolean(message) && show);
+  const isVisible = Boolean(message) && show;
 
   return (
     <AnimatePresence onExitComplete={() => onExitComplete?.(true)}>
