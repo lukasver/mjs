@@ -157,7 +157,11 @@ export class Translator {
 
       return translatedText;
     } catch (error) {
-      console.error(`Error translating ${sourceFile}:`, error);
+      console.error(
+        `Error translating ${sourceFile}:`,
+        error instanceof Error ? error.message : error
+      );
+      throw error;
     }
   }
 

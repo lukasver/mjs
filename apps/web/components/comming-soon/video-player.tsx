@@ -1,7 +1,10 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { cn } from '@mjs/ui/lib/utils';
 import { useWindowSize } from 'usehooks-ts';
+
+import { useVideoPlayer } from '../use-video-player';
 
 function VideoPlayer({
   src,
@@ -18,7 +21,47 @@ function VideoPlayer({
   poster?: string;
 }) {
   const { width } = useWindowSize();
-  const isMobile = width < 768;
+  const isMobile = width < 640;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { isPlaying, setIsPlaying } = useVideoPlayer();
+
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.error('Video play failed:', err);
+      });
+    }
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = () => {
+      setIsPlaying(true);
+    };
+    const handlePause = () => {
+      setIsPlaying(false);
+    };
+    const handleEnded = () => {
+      setIsPlaying(false);
+    };
+
+    // Add event listeners
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+    video.addEventListener('ended', handleEnded);
+
+    // Initial state check
+    setIsPlaying(!video.paused && !video.ended);
+
+    // Cleanup
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+      video.removeEventListener('ended', handleEnded);
+    };
+  }, [isMobile, mobileSrc, src]);
 
   if (isMobile) {
     if (!mobileSrc) {
@@ -27,12 +70,15 @@ function VideoPlayer({
     return (
       <>
         <video
+          id='video'
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           className={cn(
             'absolute w-full h-full object-contain bottom-[25%] md:bottom-auto md:inset-0',
+            'hide-play-button',
             className
           )}
           {...(poster ? { poster } : {})}
@@ -45,19 +91,23 @@ function VideoPlayer({
           Your browser does not support the video tag.
         </video>
         <div
+          onClick={!isPlaying ? handlePlayVideo : undefined}
           className={cn(
             'absolute inset-0 z-1 h-[75%] sm:hidden',
             isMobile &&
               mobileSrc &&
-              'bg-gradient-to-t from-[#79080A] from-5% via-[#79080A] via-5% to-transparent to-10%'
+              'bg-gradient-to-t from-[#79080A] from-5% via-[#79080A] via-5% to-transparent to-10%',
+            !isPlaying && 'z-50'
           )}
         />
+        {/* Optionally, show a custom play button if !isPlaying */}
       </>
     );
   }
 
   return (
     <video
+      ref={videoRef}
       autoPlay
       muted
       loop

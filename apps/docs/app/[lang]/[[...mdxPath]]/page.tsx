@@ -69,3 +69,6 @@ const Page: FC<PageProps> = async (props) => {
 };
 
 export default Page;
+
+export const dynamicParams = false;
+export const dynamic = 'force-static';

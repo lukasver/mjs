@@ -32,7 +32,7 @@
         "description": "Personalizza un'IA che impara e si adatta al tuo stile di gioco."
       },
       "collectCharacters": {
-        "title": "Colleziona gli indimenticabili",
+        "title": "Colleziona l'indimenticabile",
         "description": "Sblocca personaggi rari e oggetti esclusivi con la tua blockchain."
       },
       "bringFriends": {
@@ -74,7 +74,7 @@
     "uncleCai": {
       "quote": "Mentre conti le tessere, io conto le mie vittorie.",
       "name": "Uncle Cai",
-      "description": "Uncle Cai è un maestro di Mahjong di strada che ha visto tutto, e di solito vince tutto. Disinvolto con una mente acuta, preferisce rilassarsi e lasciare che gli altri sudino. Il suo stile old-school, la catena d'oro e l'umorismo impassibile lo rendono una leggenda sia al tavolo che per strada."
+      "description": "Uncle Cai è un maestro di Mahjong di strada che ha visto tutto, e di solito vince tutto. Disinvolto con una mente acuta, preferisce rinfrescarsi con un ventaglio e lasciare che gli altri sudino. Il suo stile old-school, la catena d'oro e l'umorismo impassibile lo rendono una leggenda sia al tavolo che per le strade."
     }
   },
   "Newsletter": {
@@ -160,7 +160,7 @@
     "items": {
       "0": {
         "question": "Cos'è Mahjong Stars?",
-        "answer": "Mahjong Stars è una piattaforma multiplayer di mahjong basata su Web3 e alimentata dall'IA che consente ai giocatori di giocare, allenare avatar IA e competere in tornei globali, sia live che in autonomia."
+        "answer": "Mahjong Stars è una piattaforma di mahjong multigiocatore basata su Web3 e alimentata dall'IA che consente ai giocatori di giocare, allenare avatar IA e competere in tornei globali, sia live che in autonomia."
       },
       "1": {
         "question": "Cosa rende Mahjong Stars unico?",
@@ -206,48 +206,58 @@
       "2": "Non farti prendere dal panico. Il gioco è quasi qui",
       "3": "È pronta. Meglio esserlo anche tu."
     },
-    "description": "Iscriviti e forse, solo forse, ti faremo entrare per primo.",
+    "description": "Iscriviti e forse, <br /> solo forse, ti faremo entrare per primi.",
     "agreeTerms": "Facendo clic su \"Iscriviti\", accetti i nostri <terms>Termini e condizioni</terms> e l' <privacy>Informativa sulla privacy</privacy>.",
     "lines": {
       "1": {
-        "1": "Oddio… aspetta, è il negozio? 👀",
-        "2": "I colori? Pazzeschi!",
-        "3": "HO BISOGNO di quell'effetto tessere. Subito!",
-        "4": "Aspetta… quei personaggi… sono personalizzabili?",
-        "5": "Questo tavolo sembra ricco. Lo voglio!",
-        "6": "I tester anticipati avranno così tanto da sfoggiare!",
-        "7": "Qualcuno ha appena fatto una combinazione vincente a 4. Sto urlando!",
-        "8": "C'è anche il boba nel gioco? No, dai!",
-        "9": "Non ci credo… è pazzesco!",
-        "10": "Vorrei poterti mostrare quello che vedo…"
+        "1": "Sheeeeeeeeeesh.",
+        "2": "Vibes - impeccabili.",
+        "3": "Oddio, sono morta.",
+        "4": "Oh cavolo. Ti ho appena derubato di tutti i tuoi Star Points? xoxo",
+        "5": "Segretamente ossessionata da questi pantaloni.",
+        "6": "IYKYK. E se non lo sai, iscriviti. Non ho tutto il giorno.",
+        "7": "Mamma mia… si innamoreranno di me, vero?",
+        "8": "Mercurio è retrogrado e quadrato con Saturno. Non sentirti male per aver giocato male, era senza speranza.",
+        "9": "Questi colori sono assolutamente FANTASTICI.",
+        "10": "Questa giacca di pelle dà un'energia da divorziata ricca e io adoro.",
+        "11": "Questo ragazzo con il maglione non ha per niente rizz #sorrynotsorry",
+        "12": "Dicono che chi è felice nei giochi è infelice in amore. Mi dispiace dirti che ho avuto solo fidanzati terribili.",
+        "13": "È come… unità totale… questo è tutto.",
+        "14": "Ops. Ti ho appena spezzato il cuore?",
+        "15": "Quelle tessere sono così eccessive.",
+        "16": "In realtà \"non essere quadrato\" è un termine dispregiativo e penso che dovremmo essere attenti alle nostre parole.",
+        "17": "Dimmi meno, ho visto abbastanza. Credo di essere innamorata.",
+        "18": "Questo è più caldo dell'attuale clima geopolitico. Giuro.",
+        "19": "IA questo, IA quello. Che fine hanno fatto le fidanzate carine e manipolatrici?",
+        "20": "Se solo potessi vedere cosa possono vedere i miei bellissimi occhi digitali…"
       },
       "2": {
         "1": "Si chiama Bang Bang Mahjong. Giuro che è vero!",
-        "2": "La nonna è in questo gioco. Sono già spaventato.",
+        "2": "La nonna è in questo gioco. Sono già spaventato",
         "3": "Hanno detto che puoi sbloccare mosse speciali?!?",
-        "4": "Puoi giocare anche contro l'IA… sono veloci.",
-        "5": "È strano che io voglia comprare una pantofola digitale?",
+        "4": "Puoi giocare anche contro l'IA… sono veloci",
+        "5": "È strano che voglio comprare una pantofola digitale?",
         "6": "Amico… credo che il negozio abbia dei tavoli??",
-        "7": "Ho visto il sistema a punti. È abbastanza geniale.",
-        "8": "C'è un personaggio chiamato Jenny… è fredda.",
-        "9": "Credo che puoi vincere cose che contano davvero…",
+        "7": "Ho visto il sistema a punti. È piuttosto geniale",
+        "8": "C'è un personaggio chiamato Jenny… è fredda",
+        "9": "Penso che puoi vincere cose che contano davvero…",
         "10": "Aspetta… gli NFT ci sono davvero?!?"
       },
       "3": {
-        "1": "Mani veloci vincono. Le tue tremano.",
-        "2": "Bang Bang Mahjong. Ti sbatterai la testa cercando di stare al passo.",
-        "3": "Nessuna fortuna qui. Solo abilità. Che tu non hai.",
-        "4": "Non accontentarti di abbinare. Pensa. Se puoi.",
-        "5": "La velocità conta. Ma non se sei stupido.",
-        "6": "Puoi comprare effetti, ma non talento.",
-        "7": "Le skin sono carine. Le vittorie sono meglio.",
-        "8": "Spendere per un tavolo se ti aiuta a concentrarti. Ne avrai bisogno.",
-        "9": "Le mosse speciali sono divertenti. A meno che non le usi io su di te.",
-        "10": "Punti, vantaggi, aggiornamenti. Tutto sprecato se non giochi in modo intelligente.",
-        "11": "Sì, puoi giocare con i bot. Giocano meglio della maggior parte di voi.",
-        "12": "Guadagna punti. Scambia per NFT. Ma non diventare avido.",
-        "13": "Vendi il tuo set di tessere se vuoi. Perderai comunque contro di me.",
-        "14": "Valore reale, dolore digitale. Benvenuto in Mahjong Stars."
+        "1": "Mani veloci vincono. Le tue tremano",
+        "2": "Bang Bang Mahjong. Ti sbatterai la testa cercando di stare al passo",
+        "3": "Nessuna fortuna qui. Solo abilità. Che tu non hai",
+        "4": "Non accontentarti di abbinare. Pensa. Se puoi",
+        "5": "La velocità conta. Ma non se sei stupido",
+        "6": "Puoi comprare effetti, ma non talento",
+        "7": "Le skin sono carine. Le vittorie sono migliori",
+        "8": "Spendere per un tavolo se ti aiuta a concentrarti. Ne avrai bisogno",
+        "9": "Le mosse speciali sono divertenti. A meno che non le usi io su di te",
+        "10": "Punti, vantaggi, aggiornamenti. Tutto sprecato se non giochi in modo intelligente",
+        "11": "Sì, puoi giocare con i bot. Giocano meglio della maggior parte di voi",
+        "12": "Guadagna punti. Scambia per NFT. Ma non diventare avido",
+        "13": "Vendi il tuo set di tessere se vuoi. Mi perderai comunque",
+        "14": "Valore reale, dolore digitale. Benvenuto in Mahjong Stars"
       }
     }
   }

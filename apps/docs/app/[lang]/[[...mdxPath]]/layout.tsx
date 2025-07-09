@@ -7,6 +7,7 @@ import { getPageMap } from 'nextra/page-map';
 import '@/app/styles.css';
 import {
   getDictionary,
+  getDirection,
   getLocaleNames,
   getTranslations,
 } from '@/lib/i18n/get-dictionaries';
@@ -40,25 +41,32 @@ async function layout({
   ]);
 
   return (
-    <TranslationsProvider translations={dictionary}>
-      <Layout
-        i18n={getLocaleNames()}
-        banner={<Banner lang={lang as Locale} />}
-        navbar={<Navbar lang={lang as Locale} />}
-        search={<Search placeholder={t('Global.search')} />}
-        sidebar={{
-          defaultOpen: true,
-          defaultMenuCollapseLevel: 1,
-        }}
-        pageMap={pageMap}
-        editLink={false}
-        docsRepositoryBase='https://github.com/mahjongstars/docs'
-        footer={<Footer locale={lang as Locale} />}
-        navigation={true}
-      >
-        {children}
-      </Layout>
-    </TranslationsProvider>
+    <html
+      // Not required, but good for SEO
+      lang={lang || 'en'}
+      // Required to be set
+      dir={getDirection(lang) || 'ltr'}
+    >
+      <TranslationsProvider translations={dictionary}>
+        <Layout
+          i18n={getLocaleNames()}
+          banner={<Banner lang={lang as Locale} />}
+          navbar={<Navbar lang={lang as Locale} />}
+          search={<Search placeholder={t('Global.search')} />}
+          sidebar={{
+            defaultOpen: true,
+            defaultMenuCollapseLevel: 1,
+          }}
+          pageMap={pageMap}
+          editLink={false}
+          docsRepositoryBase='https://github.com/mahjongstars/docs'
+          footer={<Footer locale={lang as Locale} />}
+          navigation={true}
+        >
+          {children}
+        </Layout>
+      </TranslationsProvider>
+    </html>
   );
 }
 

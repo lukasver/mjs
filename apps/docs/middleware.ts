@@ -1,4 +1,12 @@
-export { middleware } from 'nextra/locales';
+import { middleware as nextraMiddleware } from 'nextra/locales';
+import { NextRequest, NextResponse } from 'next/server';
+
+export function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.includes('_vercel')) {
+    return NextResponse.next();
+  }
+  return nextraMiddleware(req);
+}
 
 export const config = {
   // Matcher ignoring `/_next/` and `/api/`

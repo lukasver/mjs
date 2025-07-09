@@ -48,4 +48,11 @@ body {
     scale: 1.5;
     z-index: -1;
   }
+
+  .hide-play-button {
+    video::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+  }
 }
