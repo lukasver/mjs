@@ -25,11 +25,11 @@ function HeroContent({
       className={cn('relative z-10 flex flex-col xl:min-h-screen', className)}
     >
       {/* Desktop Layout */}
-      <div className='hidden lg:flex flex-1 items-center'>
+      <div className='hidden md:flex flex-1 items-center'>
         <div className='container mx-auto px-8'>
           <div className='grid grid-cols-2 gap-8 items-center'>
             {/* Left Side - Hero Text */}
-            <div className='space-y-8 md:space-y-20'>
+            <div className='space-y-8 lg:space-y-20'>
               <EnterAnimation duration={1}>
                 <h1
                   className={cn(
@@ -51,12 +51,12 @@ function HeroContent({
                   />
                 </FadeAnimation>
                 <FadeAnimation delay={3.5} duration={2}>
-                  <>
+                  <div className='md:space-y-4'>
                     <NewsletterForm className='lg:mb-6' />
                     <p className='text-white/90 text-sm  font-common font-semibold whitespace-nowrap'>
                       {props.agreeTerms}
                     </p>
-                  </>
+                  </div>
                 </FadeAnimation>
               </div>
             </div>
@@ -67,7 +67,7 @@ function HeroContent({
       </div>
 
       {/* Mobile Layout */}
-      <div className='lg:hidden flex flex-col h-screen sm:h-auto relative'>
+      <div className='md:hidden flex flex-col h-screen sm:h-auto relative'>
         <div className='flex-1 flex items-start lg:justify-center pt-8 lg:pt-12 px-6'>
           <SpeechBubbleContainer messages={props.lines || []}>
             <HeroTextMobile title={props.title} />
@@ -94,9 +94,6 @@ function HeroContent({
           </div>
         </FadeAnimation>
       </div>
-
-      {/* Bubbles */}
-      {/* {children} */}
     </div>
   );
 }

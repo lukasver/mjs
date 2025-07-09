@@ -1,6 +1,5 @@
 'use client';
 import { cn } from '@mjs/ui/lib/utils';
-import { useSpeechBubbleMessage } from './speech-bubble-container';
 import { AnimatePresence, motion } from 'motion/react';
 import { Dispatch, SetStateAction } from 'react';
 import { useWindowSize } from 'usehooks-ts';
@@ -18,10 +17,12 @@ const SpeechBubble = ({
   show?: boolean;
   onExitComplete?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const message = useSpeechBubbleMessage();
+  const message =
+    'Reprehenderit ut elit cupidatat commodo minim et. Officia do nisi nulla velit qui. Cupidatat in et esse laborum consequat. Anim adipisicing ut eiusmod tempor sint consectetur occaecat. Deserunt in officia fugiat culpa commodo nisi culpa veniam mollit velit reprehenderit excepteur.';
+  // useSpeechBubbleMessage();
   const { width } = useWindowSize();
   const isMobile = width < 768;
-  const isVisible = Boolean(message) && show;
+  const isVisible = true || (Boolean(message) && show);
 
   return (
     <AnimatePresence onExitComplete={() => onExitComplete?.(true)}>
@@ -34,7 +35,7 @@ const SpeechBubble = ({
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className={cn(
             'shadow-[3px_4px_20.4px_0px_rgba(74,0,0,1)] rounded-2xl md:rounded-3xl',
-            'z-30 w-full max-w-screen',
+            'z-30 w-full max-w-screen md:max-w-[400px] lg:max-w-[500px] xl:max-w-1xl',
             className
           )}
         >
