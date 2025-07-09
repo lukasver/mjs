@@ -1,6 +1,7 @@
 import 'server-only';
 import type { Dictionaries, Dictionary, Locale } from '.';
 import { getLangDir } from 'rtl-detect';
+export { getLocaleNames } from '@mjs/i18n';
 
 // We enumerate all dictionaries here for better linting and TypeScript support
 // We also get the default import for cleaner types
@@ -15,35 +16,17 @@ const dictionaries: Dictionaries = {
   pt: () => import('@mjs/i18n/docs/pt.json'),
   ru: () => import('@mjs/i18n/docs/ru.json'),
   zh: () => import('@mjs/i18n/docs/zh.json'),
-  cn: () => import('@mjs/i18n/docs/cn.json'),
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  const { default: dictionary } = await (
-    dictionaries[locale] || dictionaries.en
-  )();
+  const { default: dictionary } = await (dictionaries[locale] ||
+    dictionaries.en)!();
   return dictionary;
 }
 
 export function getDirection(locale: string | Locale): 'ltr' | 'rtl' {
   return getLangDir(locale);
 }
-
-export const getLocaleNames = (): { locale: string; name: string }[] => {
-  return [
-    { locale: 'en', name: 'English' },
-    { locale: 'es', name: 'Español' },
-    { locale: 'fr', name: 'Français' },
-    { locale: 'de', name: 'Deutsch' },
-    { locale: 'it', name: 'Italiano' },
-    { locale: 'ja', name: '日本語' },
-    { locale: 'ko', name: '한국어' },
-    { locale: 'pt', name: 'Português' },
-    { locale: 'ru', name: 'Русский' },
-    { locale: 'zh', name: '中文' },
-    { locale: 'cn', name: '简体中文' },
-  ];
-};
 
 export const getTranslations = async (lang: Locale) => {
   const dictionary = await getDictionary(lang as Locale);

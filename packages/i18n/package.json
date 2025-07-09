@@ -6,11 +6,12 @@
   "exports": {
     "./web/*.json": "./dist/web/*.json",
     "./docs/*.json": "./dist/docs/*.json",
-    "./globals/*.json": "./dist/globals/*.json"
+    "./globals/*.json": "./dist/globals/*.json",
+    ".": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpx tsx build.ts",
+    "build": "pnpx tsx build.ts && npx tsup index.ts --format esm --dts --out-dir dist",
     "translate": "pnpx tsx translate.ts"
   },
   "keywords": [],
@@ -18,7 +19,9 @@
   "license": "ISC",
   "devDependencies": {
     "@lingual/i18n-check": "^0.8.4",
-    "@mjs/utils": "workspace:*"
+    "@mjs/utils": "workspace:*",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.3"
   },
   "private": true,
   "peerDependencies": {

@@ -1,17 +1,6 @@
 import path from 'node:path';
 import fs, { stat } from 'node:fs/promises';
-
-export const DEFAULT_LOCALES = [
-  'de',
-  'es',
-  'fr',
-  'it',
-  'ja',
-  'ko',
-  'pt',
-  'ru',
-  'zh',
-];
+import { DEFAULT_LOCALES } from '.';
 
 /**
  * Polyfill for __dirname in ESM

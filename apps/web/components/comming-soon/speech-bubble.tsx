@@ -50,7 +50,7 @@ const SpeechBubble = ({
                 height='27'
                 viewBox='0 0 40 27'
                 stroke='white'
-                strokeWidth='4'
+                strokeWidth='2'
                 xmlns='http://www.w3.org/2000/svg'
                 className={cn(
                   'absolute -bottom-5 left-5 w-10 h-5 z-10 fill-white/60',

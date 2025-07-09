@@ -1,7 +1,8 @@
 import { defineRouting } from 'next-intl/routing';
+import { DEFAULT_LOCALES } from '@mjs/i18n';
 
 export const getLocales = () => {
-  return ['en', 'de', 'es', 'fr', 'cn', 'pt', 'it', 'ja', 'ko', 'ru', 'zh'];
+  return DEFAULT_LOCALES;
 };
 
 export const routing = defineRouting({
