@@ -1,9 +1,9 @@
-import type { MetaRecord } from 'nextra';
+import type { MetaRecord } from "nextra";
 
 const meta: MetaRecord = {
-  overview: {
-    type: 'doc',
-  },
+	overview: {
+		type: "doc",
+	},
 };
 
 export default meta;

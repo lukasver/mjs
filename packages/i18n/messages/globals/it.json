@@ -1,23 +1,23 @@
 {
-  "Footer": {
-    "links": {
-      "home": "Home",
-      "docs": "Documenti",
-      "whoWeAre": "Chi Siamo",
-      "termsAndConditions": "Termini e Condizioni",
-      "privacyPolicy": "Informativa sulla Privacy",
-      "contact": "Contatti"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "Prossimamente",
-    "search": "Cerca...",
-    "subscribe": "Iscriviti ora",
-    "subscribePlaceholder": "Inserisci la tua email",
-    "contact": "Contattaci",
-    "banner": {
-      "title": "Il token $MJS è in arrivo 🚀"
-    }
-  }
+	"Footer": {
+		"links": {
+			"home": "Home",
+			"docs": "Documenti",
+			"whoWeAre": "Chi Siamo",
+			"termsAndConditions": "Termini e Condizioni",
+			"privacyPolicy": "Informativa sulla Privacy",
+			"contact": "Contatti"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "Prossimamente",
+		"search": "Cerca...",
+		"subscribe": "Iscriviti ora",
+		"subscribePlaceholder": "Inserisci la tua email",
+		"contact": "Contattaci",
+		"banner": {
+			"title": "Il token $MJS è in arrivo 🚀"
+		}
+	}
 }

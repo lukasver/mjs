@@ -1,18 +1,18 @@
 {
-  "Footer": {
-    "links": {
-      "home": "Accueil",
-      "docs": "Docs",
-      "whoWeAre": "Qui sommes-nous ?",
-      "termsAndConditions": "Conditions générales d'utilisation",
-      "privacyPolicy": "Politique de confidentialité",
-      "contact": "Contact"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "Bientôt disponible",
-    "search": "Rechercher...",
-    "subscribe": "S'abonner"
-  }
+	"Footer": {
+		"links": {
+			"home": "Accueil",
+			"docs": "Docs",
+			"whoWeAre": "Qui sommes-nous ?",
+			"termsAndConditions": "Conditions générales d'utilisation",
+			"privacyPolicy": "Politique de confidentialité",
+			"contact": "Contact"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "Bientôt disponible",
+		"search": "Rechercher...",
+		"subscribe": "S'abonner"
+	}
 }

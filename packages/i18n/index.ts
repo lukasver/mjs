@@ -1,1 +1,1 @@
-export { getLocaleNames, DEFAULT_LOCALES } from './config';
+export { getLocaleNames, DEFAULT_LOCALES } from "./config";

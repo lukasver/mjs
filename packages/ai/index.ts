@@ -1,1 +1,1 @@
-export { Generator } from './src/generator';
+export { Generator } from "./src/generator";

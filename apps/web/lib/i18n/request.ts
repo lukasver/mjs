@@ -1,23 +1,23 @@
-import { hasLocale, IntlErrorCode } from 'next-intl';
-import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing';
+import { IntlErrorCode, hasLocale } from "next-intl";
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  // Typically corresponds to the `[locale]` segment
-  const requested = await requestLocale;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
-  return {
-    locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
-    onError(error) {
-      if (error.code === IntlErrorCode.MISSING_MESSAGE) {
-        // Missing translations are expected and should only log an error
-        if (process.env.NODE_ENV === 'development') {
-          console.error(error);
-        }
-      }
-    },
-  };
+	// Typically corresponds to the `[locale]` segment
+	const requested = await requestLocale;
+	const locale = hasLocale(routing.locales, requested)
+		? requested
+		: routing.defaultLocale;
+	return {
+		locale,
+		messages: (await import(`../../messages/${locale}.json`)).default,
+		onError(error) {
+			if (error.code === IntlErrorCode.MISSING_MESSAGE) {
+				// Missing translations are expected and should only log an error
+				if (process.env.NODE_ENV === "development") {
+					console.error(error);
+				}
+			}
+		},
+	};
 });

@@ -1,18 +1,18 @@
 {
-  "Footer": {
-    "links": {
-      "home": "Главная",
-      "docs": "Документация",
-      "whoWeAre": "О нас",
-      "termsAndConditions": "Условия использования",
-      "privacyPolicy": "Политика конфиденциальности",
-      "contact": "Контакты"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "Скоро",
-    "search": "Поиск...",
-    "subscribe": "Подписаться"
-  }
+	"Footer": {
+		"links": {
+			"home": "Главная",
+			"docs": "Документация",
+			"whoWeAre": "О нас",
+			"termsAndConditions": "Условия использования",
+			"privacyPolicy": "Политика конфиденциальности",
+			"contact": "Контакты"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "Скоро",
+		"search": "Поиск...",
+		"subscribe": "Подписаться"
+	}
 }

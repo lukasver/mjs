@@ -4,18 +4,18 @@
  * @returns Array of objects containing locale codes and display names
  */
 export function getLocaleNames(): { locale: string; name: string }[] {
-  return [
-    { locale: 'en', name: 'English' },
-    { locale: 'es', name: 'Español' },
-    { locale: 'fr', name: 'Français' },
-    { locale: 'de', name: 'Deutsch' },
-    { locale: 'it', name: 'Italiano' },
-    { locale: 'ja', name: '日本語' },
-    { locale: 'ko', name: '한국어' },
-    { locale: 'pt', name: 'Português' },
-    { locale: 'ru', name: 'Русский' },
-    { locale: 'zh', name: '中文' },
-  ];
+	return [
+		{ locale: "en", name: "English" },
+		{ locale: "es", name: "Español" },
+		{ locale: "fr", name: "Français" },
+		{ locale: "de", name: "Deutsch" },
+		{ locale: "it", name: "Italiano" },
+		{ locale: "ja", name: "日本語" },
+		{ locale: "ko", name: "한국어" },
+		{ locale: "pt", name: "Português" },
+		{ locale: "ru", name: "Русский" },
+		{ locale: "zh", name: "中文" },
+	];
 }
 
 /**
@@ -23,6 +23,4 @@ export function getLocaleNames(): { locale: string; name: string }[] {
  * This is used to determine which locales need translation.
  * @returns Array of locale codes excluding 'en'
  */
-export const DEFAULT_LOCALES = getLocaleNames()
-  .map((locale) => locale.locale)
-  .filter((locale) => locale !== 'en');
+export const DEFAULT_LOCALES = getLocaleNames().map((locale) => locale.locale);

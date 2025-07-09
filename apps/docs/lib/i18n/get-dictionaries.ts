@@ -1,7 +1,6 @@
 import 'server-only';
-import type { Dictionaries, Dictionary, Locale } from '.';
 import { getLangDir } from 'rtl-detect';
-export { getLocaleNames } from '@mjs/i18n';
+import type { Dictionaries, Dictionary, Locale } from '.';
 
 // We enumerate all dictionaries here for better linting and TypeScript support
 // We also get the default import for cleaner types
@@ -19,8 +18,12 @@ const dictionaries: Dictionaries = {
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  const { default: dictionary } = await (dictionaries[locale] ||
-    dictionaries.en)!();
+  const promise = dictionaries[locale] || dictionaries.en;
+  if (!promise) {
+    throw new Error(`Dictionary for locale ${locale} not found`);
+  }
+  const { default: dictionary } = await promise();
+
   return dictionary;
 }
 

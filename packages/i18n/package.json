@@ -1,33 +1,33 @@
 {
-  "name": "@mjs/i18n",
-  "version": "0.0.1",
-  "description": "Localized messages for the MJS apps",
-  "type": "module",
-  "exports": {
-    "./web/*.json": "./dist/web/*.json",
-    "./docs/*.json": "./dist/docs/*.json",
-    "./globals/*.json": "./dist/globals/*.json",
-    ".": "./dist/index.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpx tsx build.ts && npx tsup index.ts --format esm --dts --out-dir dist",
-    "translate": "pnpx tsx translate.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@lingual/i18n-check": "^0.8.4",
-    "@mjs/utils": "workspace:*",
-    "tsup": "^8.0.0",
-    "typescript": "^5.8.3"
-  },
-  "private": true,
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "deepmerge-ts": "^7.1.5"
-  }
+	"name": "@mjs/i18n",
+	"version": "0.0.1",
+	"description": "Localized messages for the MJS apps",
+	"type": "module",
+	"exports": {
+		"./web/*.json": "./dist/web/*.json",
+		"./docs/*.json": "./dist/docs/*.json",
+		"./globals/*.json": "./dist/globals/*.json",
+		".": "./dist/index.js"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "pnpx tsx build.ts && npx tsup index.ts --format esm --dts --out-dir dist",
+		"translate": "pnpx tsx translate.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@lingual/i18n-check": "^0.8.4",
+		"@mjs/utils": "workspace:*",
+		"tsup": "^8.0.0",
+		"typescript": "^5.8.3"
+	},
+	"private": true,
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"deepmerge-ts": "^7.1.5"
+	}
 }

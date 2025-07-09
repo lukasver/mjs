@@ -1,23 +1,23 @@
 {
-  "Footer": {
-    "links": {
-      "home": "Accueil",
-      "docs": "Docs",
-      "whoWeAre": "Qui sommes-nous ?",
-      "termsAndConditions": "Conditions générales d'utilisation",
-      "privacyPolicy": "Politique de confidentialité",
-      "contact": "Contact"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "Bientôt disponible",
-    "search": "Rechercher...",
-    "subscribe": "Abonnez-vous maintenant",
-    "subscribePlaceholder": "Entrez votre email",
-    "contact": "Contactez-nous",
-    "banner": {
-      "title": "Le jeton $MJS arrive bientôt 🚀"
-    }
-  }
+	"Footer": {
+		"links": {
+			"home": "Accueil",
+			"docs": "Docs",
+			"whoWeAre": "Qui sommes-nous ?",
+			"termsAndConditions": "Conditions générales d'utilisation",
+			"privacyPolicy": "Politique de confidentialité",
+			"contact": "Contact"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "Bientôt disponible",
+		"search": "Rechercher...",
+		"subscribe": "Abonnez-vous maintenant",
+		"subscribePlaceholder": "Entrez votre email",
+		"contact": "Contactez-nous",
+		"banner": {
+			"title": "Le jeton $MJS arrive bientôt 🚀"
+		}
+	}
 }

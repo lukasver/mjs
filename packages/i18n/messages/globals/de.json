@@ -1,23 +1,23 @@
 {
-  "Footer": {
-    "links": {
-      "home": "Startseite",
-      "docs": "Dokumentation",
-      "whoWeAre": "Über uns",
-      "termsAndConditions": "Nutzungsbedingungen",
-      "privacyPolicy": "Datenschutzrichtlinie",
-      "contact": "Kontakt"
-    },
-    "copyright": "©{year} WASABI GAMES DMCC"
-  },
-  "Global": {
-    "soon": "Bald verfügbar",
-    "search": "Suchen...",
-    "subscribe": "Jetzt abonnieren",
-    "subscribePlaceholder": "E-Mail-Adresse eingeben",
-    "contact": "Kontaktieren Sie uns",
-    "banner": {
-      "title": "$MJS Token kommt bald 🚀"
-    }
-  }
+	"Footer": {
+		"links": {
+			"home": "Startseite",
+			"docs": "Dokumentation",
+			"whoWeAre": "Über uns",
+			"termsAndConditions": "Nutzungsbedingungen",
+			"privacyPolicy": "Datenschutzrichtlinie",
+			"contact": "Kontakt"
+		},
+		"copyright": "©{year} WASABI GAMES DMCC"
+	},
+	"Global": {
+		"soon": "Bald verfügbar",
+		"search": "Suchen...",
+		"subscribe": "Jetzt abonnieren",
+		"subscribePlaceholder": "E-Mail-Adresse eingeben",
+		"contact": "Kontaktieren Sie uns",
+		"banner": {
+			"title": "$MJS Token kommt bald 🚀"
+		}
+	}
 }

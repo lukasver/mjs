@@ -1,6 +1,7 @@
 "use client";
 
 import { Link, usePathname } from "@/lib/i18n/navigation";
+import { getLocaleNames } from "@mjs/i18n";
 import { cn } from "@mjs/ui/lib/utils";
 import { Button } from "@mjs/ui/primitives/button";
 import {
@@ -23,19 +24,10 @@ interface Locale {
 	name: string;
 }
 
-const locales: Locale[] = [
-	{ code: "en", name: "English" },
-	{ code: "de", name: "Deutsch" },
-	{ code: "es", name: "Español" },
-	{ code: "fr", name: "Français" },
-	{ code: "cn", name: "中文" },
-	{ code: "pt", name: "Português" },
-	{ code: "it", name: "Italiano" },
-	{ code: "ja", name: "日本語" },
-	{ code: "ko", name: "한국어" },
-	{ code: "ru", name: "Русский" },
-	// { code: "zh", name: "中文" },
-];
+const locales: Locale[] = getLocaleNames().map(({ locale, name }) => ({
+	code: locale,
+	name,
+}));
 
 interface LocaleSwitcherProps {
 	currentLocale?: string;
