@@ -1,6 +1,18 @@
 import path from 'node:path';
 import fs, { stat } from 'node:fs/promises';
 
+export const DEFAULT_LOCALES = [
+  'de',
+  'es',
+  'fr',
+  'it',
+  'ja',
+  'ko',
+  'pt',
+  'ru',
+  'zh',
+];
+
 /**
  * Polyfill for __dirname in ESM
  */
@@ -56,6 +68,7 @@ export async function getLocalesFromDirs(
   ...dirs: string[]
 ): Promise<Set<string>> {
   const localeSet = new Set<string>();
+
   for (const dir of dirs) {
     try {
       const files = await fs.readdir(dir);
@@ -68,6 +81,10 @@ export async function getLocalesFromDirs(
       // Directory may not exist, skip
     }
   }
+  if (localeSet.size === 1 && localeSet.has('en')) {
+    DEFAULT_LOCALES.forEach((locale) => localeSet.add(locale));
+  }
+
   return localeSet;
 }
 

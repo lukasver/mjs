@@ -22,7 +22,10 @@ function HeroContent({
 
   return (
     <div
-      className={cn('relative z-10 flex flex-col xl:min-h-screen', className)}
+      className={cn(
+        'relative z-10 flex flex-col xl:min-h-screen lg:min-h-[650px]',
+        className
+      )}
     >
       {/* Desktop Layout */}
       <div className='hidden md:flex flex-1 items-center'>

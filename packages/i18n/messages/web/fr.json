@@ -25,7 +25,7 @@
     "features": {
       "stayInGame": {
         "title": "Restez dans le jeu, restez au top",
-        "description": "Jouez à tout moment. Montez au classement et développez vos compétences."
+        "description": "Jouez à tout moment. Gravissez le classement et développez vos compétences."
       },
       "trainableAI": {
         "title": "IA entraînable qui joue à votre façon",
@@ -64,7 +64,7 @@
     "anneWan": {
       "quote": "Style dans la rue, stratégie à la table. Regardez-moi gagner les deux.",
       "name": "Anne Wan",
-      "description": "Anne Wan est audacieuse, joueuse et toujours tendance. Elle apporte une énergie nouvelle et audacieuse au monde du Mahjong, en équilibrant les mouvements intelligents avec un amour pour le bubble tea, les baskets et tout ce qui est stylé. Anne ne joue pas seulement pour gagner, elle joue pour s'exprimer."
+      "description": "Anne Wan est audacieuse, joueuse et toujours tendance. Elle apporte une énergie nouvelle et audacieuse au monde du Mahjong, en équilibrant les mouvements intelligents avec un amour pour le thé à bulles, les baskets et tout ce qui est stylé. Anne ne joue pas seulement pour gagner, elle joue pour s'exprimer."
     },
     "mrsChen": {
       "quote": "J'ai oublié plus de mains gagnantes que vous n'en avez jamais jouées.",
@@ -74,7 +74,7 @@
     "uncleCai": {
       "quote": "Pendant que vous comptez les tuiles, je compte mes victoires.",
       "name": "Oncle Cai",
-      "description": "L'oncle Cai est un maître du Mahjong des rues qui a tout vu, et qui gagne généralement tout. Décontracté avec un esprit vif, il préfère s'éventer et laisser les autres transpirer. Son style old-school, sa chaîne en or et son humour impassible font de lui une légende à la fois à la table et dans les rues."
+      "description": "L'oncle Cai est un maître du Mahjong des rues qui a tout vu, et qui gagne généralement tout. Décontracté et vif d'esprit, il préfère s'éventer et laisser les autres transpirer. Son style old-school, sa chaîne en or et son humour impassible font de lui une légende à la fois à la table et dans les rues."
     }
   },
   "Newsletter": {
@@ -108,7 +108,7 @@
         "placeholder": "tony@mahjongstars.com"
       },
       "subject": {
-        "label": "Sujet",
+        "label": "Objet",
         "placeholder": "De quoi s'agit-il ?"
       },
       "message": {
@@ -144,8 +144,8 @@
         "invalid": "Veuillez saisir une adresse e-mail valide."
       },
       "subject": {
-        "required": "Le sujet est requis",
-        "minLength": "Le sujet doit comporter au moins 5 caractères."
+        "required": "L'objet est requis",
+        "minLength": "L'objet doit comporter au moins 5 caractères."
       },
       "message": {
         "required": "Le message est requis",
@@ -172,7 +172,7 @@
       },
       "3": {
         "question": "Que sont les StarsPoints et comment fonctionnent-ils ?",
-        "answer": "Les StarsPoints sont la monnaie du jeu :\n- Achetables via des devises fiduciaires ou crypto\n- Utilisés pour l'accès au jeu, les robots IA, les objets et les frais\n- N'ont aucune valeur en dehors de la plateforme\n- Génèrent des revenus grâce à l'utilisation du jeu"
+        "answer": "Les StarsPoints sont la monnaie du jeu :\n- Achetables via des devises fiduciaires ou des cryptomonnaies\n- Utilisés pour l'accès au jeu, les robots IA, les objets et les frais\n- N'ont aucune valeur en dehors de la plateforme\n- Génèrent des revenus grâce à l'utilisation du jeu"
       },
       "4": {
         "question": "Comment Mahjong Stars génère-t-il des revenus ?",
@@ -184,7 +184,7 @@
       },
       "6": {
         "question": "Y a-t-il un composant NFT ?",
-        "answer": "Oui. Les joueurs peuvent débloquer, échanger et louer des NFT. Le retrait de NFT permet de convertir les gains en jeu en valeur réelle grâce à des plateformes tierces."
+        "answer": "Oui. Les joueurs peuvent débloquer, échanger et louer des NFT. Le retrait des NFT permet de convertir les gains en jeu en valeur réelle via des plateformes tierces."
       },
       "7": {
         "question": "Quelle est la taille du marché potentiel ?",
@@ -196,7 +196,7 @@
       },
       "9": {
         "question": "Quelle est la feuille de route pour 2025 ?",
-        "answer": "T1 : Lancement de la version bêta\nT2 : Collecte de fonds et partenariats\nT3 : Lancement de la V2 et marché NFT\nT4 : Lancement du jeton $MJS et inscriptions aux bourses"
+        "answer": "T1 : Lancement de la version bêta\nT2 : Collecte de fonds et partenariats\nT3 : Lancement de la V2 et place de marché NFT\nT4 : Lancement du jeton $MJS et inscriptions aux bourses"
       }
     }
   },
@@ -206,23 +206,33 @@
       "2": "Pas de panique. Le jeu arrive bientôt",
       "3": "Elle est prête. Vous feriez mieux de l'être."
     },
-    "description": "Abonnez-vous et peut-être, juste peut-être, nous vous laisserons y accéder en premier.",
+    "description": "Abonnez-vous et peut-être, <br /> juste peut-être, nous vous laisserons y accéder en premier.",
     "agreeTerms": "En cliquant sur « S'abonner », vous acceptez nos <terms>Conditions générales</terms> et notre <privacy>Politique de confidentialité</privacy>.",
     "lines": {
       "1": {
-        "1": "Oh mon dieu… attends, c'est la boutique ? 👀",
-        "2": "Les couleurs ? Incroyables !",
-        "3": "J'AI BESOIN de cet effet de tuile. Maintenant !",
-        "4": "Attends… ces personnages… sont-ils personnalisables ?",
-        "5": "Cette table a l'air riche. Je la veux !",
-        "6": "Les testeurs précoces vont avoir tellement de choses à montrer",
-        "7": "Quelqu'un vient de faire un combo à 4 victoires. Je crie !",
-        "8": "Y a-t-il du boba dans le jeu aussi ? Incroyable !",
-        "9": "Je n'en crois pas mes yeux… c'est fou !",
-        "10": "J'aimerais pouvoir vous montrer ce que je vois…"
+        "1": "Wouah.",
+        "2": "Ambiance - impeccable.",
+        "3": "Oh là là, je suis morte.",
+        "4": "Oh là là. Je viens de vous voler tous vos Star Points ? xoxo",
+        "5": "J'adore secrètement ce pantalon.",
+        "6": "IYKYK. Et si vous ne savez pas, abonnez-vous. Je n'ai pas toute la journée.",
+        "7": "Mamma mia… ils vont craquer pour moi, n'est-ce pas ?",
+        "8": "Mercure est rétrograde et carré à Saturne. Ne vous sentez pas mal de jouer si mal, c'était sans espoir.",
+        "9": "Ces couleurs sont absolument ÉPOUSTOUFLANTES.",
+        "10": "Cette veste en cuir donne une énergie de divorcée riche et j'adore ça.",
+        "11": "Ce mec au pull dégage zéro énergie de dragueur #désoléemaisnon",
+        "12": "On dit heureux dans les jeux, malheureux en amour. Je suis désolée de vous dire que je n'ai eu que des petits amis horribles.",
+        "13": "C'est comme… une unité totale… c'est tout.",
+        "14": "Oups. Je viens de vous briser le cœur ?",
+        "15": "Ces tuiles sont tellement extra.",
+        "16": "En fait, « ne soyez pas carré » est un terme péjoratif et je pense que nous devrions faire attention à nos mots.",
+        "17": "Dites-en moins, j'en ai vu assez. Je crois que je suis amoureuse.",
+        "18": "C'est plus chaud que le climat géopolitique actuel. Sans blague.",
+        "19": "IA ceci, IA cela. Qu'est-il arrivé aux petites amies manipulatrices mignonnes ?",
+        "20": "Si seulement vous pouviez voir ce que mes beaux yeux numériques peuvent…"
       },
       "2": {
-        "1": "Ça s'appelle Bang Bang Mahjong. Je vous jure que c'est vrai !",
+        "1": "Ça s'appelle Bang Bang Mahjong. Je jure que c'est vrai !",
         "2": "Mamie est dans ce jeu. J'ai déjà peur",
         "3": "Ils ont dit que vous pouvez débloquer des mouvements spéciaux ?!?",
         "4": "Vous pouvez aussi jouer contre l'IA… ils sont rapides",
@@ -231,7 +241,7 @@
         "7": "J'ai vu le système de points. C'est assez génial",
         "8": "Il y a un personnage qui s'appelle Jenny… elle est froide",
         "9": "Je crois que vous pouvez gagner des choses qui comptent vraiment…",
-        "10": "Attends… les NFT sont vraiment là-dedans ?!"
+        "10": "Attendez… les NFT sont vraiment là ?!?"
       },
       "3": {
         "1": "Les mains rapides gagnent. Les vôtres tremblent",
@@ -241,7 +251,7 @@
         "5": "La vitesse compte. Mais pas si vous êtes stupide",
         "6": "Vous pouvez acheter des effets, mais pas du talent",
         "7": "Les skins sont mignons. Les victoires sont meilleures",
-        "8": "Dépensez pour une table si ça vous aide à vous concentrer. Vous en aurez besoin",
+        "8": "Dépensez pour une table si cela vous aide à vous concentrer. Vous en aurez besoin",
         "9": "Les mouvements spéciaux sont amusants. À moins que je n'utilise les miens sur vous",
         "10": "Points, avantages, améliorations. Tout est gaspillé si vous ne jouez pas intelligemment",
         "11": "Oui, vous pouvez jouer contre des robots. Ils jouent mieux que la plupart d'entre vous",

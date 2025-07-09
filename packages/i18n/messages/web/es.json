@@ -18,14 +18,14 @@
   },
   "About": {
     "title": "¿Qué es Mahjong Stars?",
-    "description": "Explora Mahjong Stars, una plataforma Web3 donde el antiguo Mahjong se une al juego moderno. Desafía a otros, colecciona personajes NFT únicos y gana recompensas en un mundo online dinámico. Conéctate globalmente a través del poder de la blockchain para una experiencia de juego revolucionaria."
+    "description": "Explora Mahjong Stars, una plataforma Web3 donde el antiguo Mahjong se une a la jugabilidad moderna. Desafía a otros, colecciona personajes NFT únicos y gana recompensas en un mundo online dinámico. Conéctate globalmente a través del poder de la blockchain para una experiencia de juego revolucionaria."
   },
   "GameFeatures": {
     "title": "FUNCIONES DEL JUEGO",
     "features": {
       "stayInGame": {
         "title": "Permanece en el juego, permanece en la cima",
-        "description": "Juega en cualquier momento. Sube en la clasificación y mejora tus habilidades."
+        "description": "Juega cuando quieras. Sube en la clasificación y mejora tus habilidades."
       },
       "trainableAI": {
         "title": "IA entrenable que juega a tu manera",
@@ -46,7 +46,7 @@
     "variants": {
       "shenzhen": {
         "title": "Reglas del Mahjong de Shenzhen, también conocido como Hong Kong",
-        "description": "Experimenta la emoción vertiginosa de esta variante de Mahjong donde estratégicamente preservas tus Kongs."
+        "description": "Experimenta la emoción trepidante de esta variante de Mahjong donde estratégicamente preservas tus Kongs."
       },
       "riichi": {
         "title": "Reglas del Mahjong Riichi",
@@ -59,12 +59,12 @@
     "tonyKong": {
       "quote": "No persigo la suerte. La creo.",
       "name": "Tony Kong",
-      "description": "Creyéndose el Maestro indiscutible del Mahjong, Tony sabe exactamente cómo convertir una mala mano en un juego ganador. ¡Desafíalo si te atreves!"
+      "description": "Creyéndose el Maestro indiscutible del Mahjong, Tony sabe exactamente cómo convertir una mala mano en una partida ganadora. ¡Desafíalo si te atreves!"
     },
     "anneWan": {
       "quote": "Estilo en las calles, estrategia en la mesa. Mírame ganar ambas.",
       "name": "Anne Wan",
-      "description": "Anne Wan es audaz, juguetona y siempre a la moda. Ella trae una energía fresca e intrépida al mundo del Mahjong, equilibrando movimientos inteligentes con un amor por el té de burbujas, las zapatillas y todo lo elegante. Anne no solo juega para ganar, juega para expresarse."
+      "description": "Anne Wan es audaz, juguetona y siempre a la moda. Trae una energía fresca e intrépida al mundo del Mahjong, equilibrando movimientos inteligentes con un amor por el té de burbujas, las zapatillas y todo lo elegante. Anne no solo juega para ganar, juega para expresarse."
     },
     "mrsChen": {
       "quote": "He olvidado más manos ganadoras de las que tú has jugado.",
@@ -74,7 +74,7 @@
     "uncleCai": {
       "quote": "Mientras tú cuentas fichas, yo cuento mis victorias.",
       "name": "Tío Cai",
-      "description": "El Tío Cai es un maestro del Mahjong callejero que lo ha visto todo, y usualmente lo gana todo. Tranquilo con una mente aguda, prefiere abanicarse y dejar que otros suden. Su estilo antiguo, cadena de oro y humor inexpresivo lo convierten en una leyenda tanto en la mesa como en las calles."
+      "description": "El Tío Cai es un maestro del Mahjong callejero que lo ha visto todo, y por lo general lo gana todo. Tranquilo con una mente aguda, prefiere abanicarse y dejar que otros suden. Su estilo clásico, cadena de oro y humor inexpresivo lo convierten en una leyenda tanto en la mesa como en las calles."
     }
   },
   "Newsletter": {
@@ -113,7 +113,7 @@
       },
       "message": {
         "label": "Mensaje",
-        "placeholder": "¡Me encantaría aprender más sobre tu juego de mahjong y cómo puedo participar!"
+        "placeholder": "¡Me encantaría saber más sobre tu juego de mahjong y cómo puedo participar!"
       }
     },
     "captcha": {
@@ -172,15 +172,15 @@
       },
       "3": {
         "question": "¿Qué son los StarsPoints y cómo funcionan?",
-        "answer": "Los StarsPoints son la moneda del juego:\n- Se pueden comprar con dinero fiduciario o criptomonedas\n- Se utilizan para el acceso al juego, bots de IA, artículos y tarifas\n- No tienen valor fuera de la plataforma\n- Generan ingresos a través del uso en el juego"
+        "answer": "Los StarsPoints son la moneda del juego:\n- Se pueden comprar con dinero fiduciario o criptomonedas\n- Se utilizan para el acceso al juego, bots de IA, objetos y tarifas\n- No tienen valor fuera de la plataforma\n- Generan ingresos a través del uso en el juego"
       },
       "4": {
         "question": "¿Cómo genera ingresos Mahjong Stars?",
-        "answer": "Los ingresos se generan a partir de las tarifas de entrada, los servicios premium de IA, las ventas de artículos del juego y las tarifas de transacción de NFT."
+        "answer": "Los ingresos se generan a partir de las tarifas de entrada, los servicios premium de IA, la venta de artículos del juego y las tarifas de transacción de NFT."
       },
       "5": {
         "question": "¿Qué es $MJS en este contexto?",
-        "answer": "$MJS es el token de utilidad de la plataforma, utilizado para comprar artículos del juego, intercambiar NFT, apostar para obtener participación en los ingresos y recompensas, y apoyar la economía del juego."
+        "answer": "$MJS es el token de utilidad de la plataforma, que se utiliza para comprar artículos del juego, intercambiar NFT, apostar para obtener una parte de los ingresos y recompensas, y apoyar la economía del juego."
       },
       "6": {
         "question": "¿Hay un componente NFT?",
@@ -192,11 +192,11 @@
       },
       "8": {
         "question": "¿Quién está detrás del proyecto?",
-        "answer": "El equipo incluye expertos de Mahjong Logic, PokerStars Asia y Coinbase Asia, con amplia experiencia en juegos y Web3."
+        "answer": "El equipo incluye expertos de Mahjong Logic, PokerStars Asia y Coinbase Asia, con una amplia experiencia en juegos y Web3."
       },
       "9": {
         "question": "¿Cuál es la hoja de ruta para 2025?",
-        "answer": "T1: Lanzamiento de la versión beta\nT2: Recaudación de fondos y asociaciones\nT3: Lanzamiento de la V2 y mercado NFT\nT4: Lanzamiento del token $MJS y listados en exchanges"
+        "answer": "T1: Lanzamiento de la versión beta\nT2: Financiación y asociaciones\nT3: Lanzamiento de la V2 y mercado NFT\nT4: Lanzamiento del token $MJS y listados en exchanges"
       }
     }
   },
@@ -204,56 +204,60 @@
     "title": {
       "1": "¡Mahjong <br /> Stars llega <br /> pronto!",
       "2": "No te preocupes. El juego está casi aquí",
-      "3": "Ella está lista. Mejor que tú también lo estés."
+      "3": "Ella está lista. Tú deberías estarlo también."
     },
-    "description": "Suscríbete y quizás, solo quizás, te lo haremos saber primero.",
+    "description": "Suscríbete y quizás, <br /> solo quizás, te lo haremos saber primero.",
     "agreeTerms": "Al hacer clic en 'Suscribirse', aceptas nuestros <terms>Términos y condiciones</terms> y nuestra <privacy>Política de privacidad</privacy>.",
     "lines": {
       "1": {
-        "1": "¡Dios mío… espera, ¿es esa la tienda? 👀",
-        "2": "¿Los colores? ¡Increíbles!",
-        "3": "NECESITO ese efecto de fichas. Ya mismo.",
-        "4": "Espera… ¿esos personajes son… personalizables?",
-        "5": "Esta mesa se ve lujosa. La quiero.",
-        "6": "Los probadores tempranos van a tener mucho que presumir.",
-        "7": "Alguien acaba de hacer una combinación de 4 victorias. ¡Estoy gritando!",
-        "8": "¿También hay boba en el juego? ¡No puede ser!",
-        "9": "No puedo creerlo… esto es una locura.",
-        "10": "Ojalá pudiera mostrarles lo que estoy viendo…",
-        "_character": "Bubble Girl",
-        "_tone": "Stylish, flirty, curious. She’s seeing secret things on her phone and reacting with hype but no details"
+        "1": "¡Guau!",
+        "2": "Vibras - impecables.",
+        "3": "Ay, Dios mío, me muero.",
+        "4": "¡Ay, caray! ¿Te acabo de robar todos tus Star Points? xoxo",
+        "5": "Estoy locamente obsesionada con estos pantalones.",
+        "6": "Si sabes, sabes. Y si no sabes, suscríbete. No tengo todo el día.",
+        "7": "¿Mamma mía… se van a enamorar de mí, ¿verdad?",
+        "8": "Mercurio está retrógrado y en cuadratura con Saturno. No te sientas mal por jugar tan mal, era una situación desesperada.",
+        "9": "Estos colores son INCREÍBLES.",
+        "10": "Esta chaqueta de cuero da energía de divorciada rica y me encanta.",
+        "11": "Este chico con suéter no tiene nada de atractivo #losientoperonolosiento",
+        "12": "Dicen que felices en los juegos, infelices en el amor. Lamento decirte que solo he tenido novios terribles.",
+        "13": "Es como… una unidad total… esto es todo.",
+        "14": "¿Ups? ¿Te acabo de romper el corazón?",
+        "15": "Esas fichas son taaaan exageradas.",
+        "16": "En realidad, \"no seas cuadrado\" es un término despectivo y creo que deberíamos ser conscientes de nuestras palabras.",
+        "17": "Ya no hace falta decir nada, he visto suficiente. Creo que estoy enamorada.",
+        "18": "Esto está más caliente que el clima geopolítico actual. Sin bromas.",
+        "19": "IA esto, IA aquello. ¿Qué pasó con las novias lindas y manipuladoras?",
+        "20": "Si tan solo pudieras ver lo que mis hermosos ojos digitales pueden…"
       },
       "2": {
-        "1": "Se llama Bang Bang Mahjong. ¡Juro que es real!",
-        "2": "La abuela está en este juego. Ya estoy asustado.",
+        "1": "¡Se llama Bang Bang Mahjong! ¡Juro que es real!",
+        "2": "La abuela está en este juego. Ya tengo miedo",
         "3": "¡Dijeron que puedes desbloquear movimientos especiales?!",
-        "4": "También puedes jugar contra la IA… son rápidos.",
+        "4": "También puedes jugar contra la IA… son rápidos",
         "5": "¿Es raro que quiera comprar una pantufla digital?",
-        "6": "Tío… creo que la tienda tiene mesas??",
-        "7": "Vi el sistema de puntos. Es bastante ingenioso.",
-        "8": "Hay un personaje llamado Jenny… es fría.",
+        "6": "Tío… ¿creo que la tienda tiene mesas?",
+        "7": "Vi el sistema de puntos. Es bastante ingenioso",
+        "8": "Hay un personaje llamado Jenny… es fría",
         "9": "Creo que puedes ganar cosas que realmente importan…",
-        "10": "Espera… ¿los NFT realmente están en esto?!",
-        "_character": "Nervous Sweater Guy",
-        "_tone": "Don’t panic. The game’s almost here"
+        "10": "Espera… ¿los NFT realmente están en esto?!"
       },
       "3": {
-        "1": "Las manos rápidas ganan. Las tuyas están temblando.",
-        "2": "Bang Bang Mahjong. Te romperás la cabeza intentando seguir el ritmo.",
-        "3": "Aquí no hay suerte. Solo habilidad. La cual tú no tienes.",
-        "4": "No solo emparejes. Piensa. Si puedes.",
-        "5": "La velocidad importa. Pero no si eres estúpido.",
-        "6": "Puedes comprar efectos, pero no talento.",
-        "7": "Las skins son lindas. Las victorias son mejores.",
-        "8": "Gasta en una mesa si te ayuda a concentrarte. La necesitarás.",
-        "9": "Los movimientos especiales son divertidos. A menos que yo los esté usando contra ti.",
-        "10": "Puntos, ventajas, mejoras. Todo desperdiciado si no juegas inteligentemente.",
-        "11": "Sí, puedes jugar contra bots. Juegan mejor que la mayoría de ustedes.",
-        "12": "Gana puntos. Intercambia por NFT. Pero no seas codicioso.",
-        "13": "Vende tu juego de fichas si quieres. Aún así perderás contra mí.",
-        "14": "Valor real, dolor digital. Bienvenido a Mahjong Stars.",
-        "_character": "Granny + her cat",
-        "_tone": "Grumpy. Wise. Ruthlessly honest"
+        "1": "Las manos rápidas ganan. Las tuyas están temblando",
+        "2": "Bang Bang Mahjong. Te darás un golpe en la cabeza intentando seguir el ritmo",
+        "3": "Aquí no hay suerte. Solo habilidad. La cual tú no tienes",
+        "4": "No solo emparejes. Piensa. Si puedes",
+        "5": "La velocidad importa. Pero no si eres estúpido",
+        "6": "Puedes comprar efectos, pero no talento",
+        "7": "Las skins son lindas. Las victorias son mejores",
+        "8": "Gasta en una mesa si te ayuda a concentrarte. La necesitarás",
+        "9": "Los movimientos especiales son divertidos. A menos que yo los esté usando contra ti",
+        "10": "Puntos, ventajas, mejoras. Todo desperdiciado si no juegas inteligentemente",
+        "11": "Sí, puedes jugar contra bots. Juegan mejor que la mayoría de ustedes",
+        "12": "Gana puntos. Intercambia por NFT. Pero no seas codicioso",
+        "13": "Vende tu juego de fichas si quieres. Aún así perderás contra mí",
+        "14": "Valor real, dolor digital. Bienvenido a Mahjong Stars"
       }
     }
   }

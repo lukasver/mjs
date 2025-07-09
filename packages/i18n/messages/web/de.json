@@ -28,11 +28,11 @@
         "description": "Spiele jederzeit. Steige in der Rangliste auf und verbessere deine Fähigkeiten."
       },
       "trainableAI": {
-        "title": "Trainierbare KI, die so spielt wie du",
+        "title": "Trainierbare KI, die nach deiner Art spielt",
         "description": "Passe eine KI an, die deinen Spielstil lernt und sich anpasst."
       },
       "collectCharacters": {
-        "title": "Sammle die unvergesslichen",
+        "title": "Sammle das Unvergessliche",
         "description": "Schalte seltene Charaktere und exklusive Gegenstände mit deiner Blockchain frei."
       },
       "bringFriends": {
@@ -45,7 +45,7 @@
     "title": "DAS MAHJONG-SPIEL",
     "variants": {
       "shenzhen": {
-        "title": "Shenzhen Mahjong Regeln, auch bekannt als Hong Kong",
+        "title": "Shenzhen Mahjong Regeln, auch bekannt als Hongkong",
         "description": "Erlebe die rasante Spannung dieser Mahjong-Variante, bei der du strategisch deine Kongs bewahrst."
       },
       "riichi": {
@@ -62,19 +62,19 @@
       "description": "Tony glaubt, der unbestrittene Meister von Mahjong zu sein, und weiß genau, wie man eine schlechte Hand in ein gewinnendes Spiel verwandelt. Fordere ihn heraus, wenn du dich traust!"
     },
     "anneWan": {
-      "quote": "Style auf der Straße, Strategie am Tisch. Beobachte, wie ich beides gewinne.",
+      "quote": "Stil auf der Straße, Strategie am Tisch. Beobachte, wie ich beides gewinne.",
       "name": "Anne Wan",
       "description": "Anne Wan ist mutig, verspielt und immer im Trend. Sie bringt eine frische, furchtlose Energie in die Mahjong-Welt – sie verbindet clevere Züge mit der Liebe zu Bubble Tea, Sneakern und allem Stilvollen. Anne spielt nicht nur zum Gewinnen – sie spielt, um sich auszudrücken."
     },
     "mrsChen": {
-      "quote": "Ich habe mehr Gewinnkombinationen vergessen, als du jemals gespielt hast.",
+      "quote": "Ich habe mehr Gewinnkarten vergessen, als du jemals gespielt hast.",
       "name": "Mrs. Chen",
       "description": "Mrs. Chen ist eine kompromisslose Mahjong-Veteranin, die schon Tische geknackt hat, bevor du geboren wurdest. Unglaublich strategisch und ein bisschen beängstigend, gebietet sie mit nur einem Blick Respekt – und ihre grantige Katze ist genauso urteilend. Unterschätze sie auf eigene Gefahr."
     },
     "uncleCai": {
       "quote": "Während du die Steine zählst, zähle ich meine Siege.",
       "name": "Uncle Cai",
-      "description": "Uncle Cai ist ein gerissener Mahjong-Meister, der schon alles gesehen hat – und normalerweise auch alles gewinnt. Entspannt mit scharfem Verstand, bevorzugt er es, sich zu fächeln und andere schwitzen zu lassen. Sein Old-School-Swag, seine goldene Kette und sein emotionsloser Humor machen ihn zu einer Legende sowohl am Tisch als auch auf der Straße."
+      "description": "Uncle Cai ist ein gerissener Mahjong-Meister, der alles gesehen hat – und normalerweise auch alles gewinnt. Entspannt mit scharfem Verstand, bevorzugt er es, sich zu fächeln und andere schwitzen zu lassen. Sein Old-School-Swag, seine goldene Kette und sein emotionsloser Humor machen ihn zu einer Legende sowohl am Tisch als auch auf der Straße."
     }
   },
   "Newsletter": {
@@ -206,46 +206,56 @@
       "2": "Keine Panik. Das Spiel ist fast da.",
       "3": "Sie ist bereit. Du solltest es auch sein."
     },
-    "description": "Abonniere und vielleicht, nur vielleicht, lassen wir dich es zuerst wissen.",
+    "description": "Abonniere und vielleicht, <br /> nur vielleicht, lassen wir dich es zuerst wissen.",
     "agreeTerms": "Durch Klicken auf 'Abonnieren' stimmst du unseren <terms>Bedingungen</terms> und <privacy>Datenschutzbestimmungen</privacy> zu.",
     "lines": {
       "1": {
-        "1": "Omg… warte, ist das der Shop? 👀",
-        "2": "Die Farben? Wahnsinn!",
-        "3": "Ich BRAUCHE diesen Kacheleffekt. Sofort!",
-        "4": "Warte… sind diese Charaktere… anpassbar?",
-        "5": "Dieser Tisch sieht reich aus. Ich will ihn!",
-        "6": "Early Tester werden so viel zum Angeben haben!",
-        "7": "Jemand hat gerade eine 4-Gewinn-Kombination gemacht. Ich schreie!",
-        "8": "Ist auch Boba im Spiel? Niemals!",
-        "9": "Ich kann nicht glauben… das ist verrückt!",
-        "10": "Wünschte, ich könnte dir zeigen, was ich sehe…"
+        "1": "Sheeeeeeeeeesh.",
+        "2": "Vibes – makellos.",
+        "3": "Awwww, ich bin tot.",
+        "4": "Oh Mann. Habe ich dich gerade um all deine Star Points gebracht? xoxo",
+        "5": "Versteckt besessen von diesen Hosen.",
+        "6": "IYKYK. Und wenn du es nicht weißt, abonniere. Ich habe nicht den ganzen Tag Zeit.",
+        "7": "Mamma mia… werden sie mich anhimmeln, oder?",
+        "8": "Merkur ist rückläufig und im Quadrat zu Saturn. Fühl dich nicht schlecht, weil du schrecklich gespielt hast, es war hoffnungslos.",
+        "9": "Diese Farben sind absolut der Hammer.",
+        "10": "Diese Lederjacke strahlt reiche Scheidungsklima-Energie aus, und ich liebe es.",
+        "11": "Dieser Pullover-Typ strahlt null Charme aus #sorrynotsorry",
+        "12": "Sie sagen, glücklich in Spielen, unglücklich in der Liebe. Es tut mir leid, dir sagen zu müssen, dass ich nur schreckliche Freunde hatte.",
+        "13": "Es ist wie… totale Einheit… das ist alles.",
+        "14": "Ups. Habe ich dir gerade das Herz gebrochen?",
+        "15": "Diese Kacheln sind soooo extra.",
+        "16": "Eigentlich ist \"don't be square\" ein abwertender Begriff, und ich denke, wir sollten unsere Worte bewusst wählen.",
+        "17": "Sag nichts mehr, ich habe genug gesehen. Ich glaube, ich bin verliebt.",
+        "18": "Das ist heißer als das aktuelle geopolitische Klima. Kein Witz.",
+        "19": "KI dies, KI das. Was ist mit süßen, manipulativen Freundinnen passiert?",
+        "20": "Wenn du nur sehen könntest, was meine schönen digitalen Augen sehen können…"
       },
       "2": {
         "1": "Es heißt Bang Bang Mahjong. Ich schwöre, es ist echt!",
         "2": "Oma ist in diesem Spiel. Ich habe schon Angst.",
-        "3": "Sie sagten, man kann Spezialzüge freischalten?!?",
-        "4": "Man kann auch gegen KI spielen… die sind schnell.",
-        "5": "Ist es komisch, dass ich einen digitalen Hausschuh kaufen will?",
+        "3": "Sie sagten, man kann spezielle Moves freischalten?!?",
+        "4": "Man kann auch gegen KI spielen… sie sind schnell.",
+        "5": "Ist es komisch, dass ich einen digitalen Pantoffel kaufen möchte?",
         "6": "Alter… ich glaube, der Shop hat Tische??",
         "7": "Ich habe das Punktesystem gesehen. Es ist irgendwie genial.",
         "8": "Es gibt einen Charakter namens Jenny… sie ist kalt.",
         "9": "Ich glaube, man kann Sachen gewinnen, die wirklich wichtig sind…",
-        "10": "Warte… sind NFTs wirklich dabei?!"
+        "10": "Warte… sind NFTs wirklich dabei?!?"
       },
       "3": {
         "1": "Schnelle Hände gewinnen. Deine zittern.",
-        "2": "Bang Bang Mahjong. Du schlägst dir den Kopf, um mitzuhalten.",
+        "2": "Bang Bang Mahjong. Du schlägst dir den Kopf, wenn du versuchst, mitzuhalten.",
         "3": "Kein Glück hier. Nur Können. Was du nicht hast.",
-        "4": "Nicht nur passen. Denk nach. Wenn du kannst.",
+        "4": "Passe nicht nur ab. Denk nach. Wenn du kannst.",
         "5": "Geschwindigkeit zählt. Aber nicht, wenn du dumm bist.",
         "6": "Du kannst Effekte kaufen, aber kein Talent.",
         "7": "Skins sind süß. Siege sind besser.",
         "8": "Gib Geld für einen Tisch aus, wenn es dir hilft, dich zu konzentrieren. Du wirst es brauchen.",
-        "9": "Spezialzüge machen Spaß. Außer ich benutze meine gegen dich.",
+        "9": "Spezielle Moves machen Spaß. Außer ich benutze meine gegen dich.",
         "10": "Punkte, Vorteile, Upgrades. Alles verschwendet, wenn du nicht klug spielst.",
-        "11": "Ja, du kannst gegen Bots spielen. Die spielen besser als die meisten von euch.",
-        "12": "Verdiene Punkte. Tausche sie gegen NFTs. Aber werde nicht gierig.",
+        "11": "Ja, du kannst gegen Bots spielen. Sie spielen besser als die meisten von euch.",
+        "12": "Verdiene Punkte. Tausche sie gegen NFTs ein. Aber werde nicht gierig.",
         "13": "Verkaufe dein Fliesenset, wenn du willst. Du wirst trotzdem gegen mich verlieren.",
         "14": "Echter Wert, digitaler Schmerz. Willkommen bei Mahjong Stars."
       }
