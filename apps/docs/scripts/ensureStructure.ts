@@ -1,14 +1,26 @@
-import { readdir, stat, mkdir, copyFile, rm } from 'fs/promises';
-import { join, relative } from 'path';
 import { createHash } from 'crypto';
-import { translateAndSave, getPrompt } from '@mjs/utils';
+import { join, relative } from 'path';
+import { getPrompt, translateAndSave } from '@mjs/utils';
+import { copyFile, mkdir, readdir, rm, stat } from 'fs/promises';
 import mime from 'mime-types';
+import { DEFAULT_LOCALES } from '@mjs/i18n';
 
-// we need to read the contents folder for en language, since its going to be used as reference
-// Iterate over all langauges and for each langauge
-// ensure the folder/file structure is the same as in en (some performant way like deterministic hash or other)
-// If content structure is the same, then do nothing for that language
-// If content structure is different, then copy all files recursively from contents/en to the new folder ONLY
+import dotenv from 'dotenv';
+dotenv.config({ path: join(import.meta.dirname, '..', '.env.local') });
+
+/**
+ * Environment Variables:
+ *
+ * RENEW - Controls which locales should be forcefully updated regardless of their current state
+ * - "all": Forces update of all available locales
+ * - comma-separated list: Forces update of specific locales (e.g. "fr,es,de")
+ * - undefined: Only updates locales that are out of sync with reference (en)
+ *
+ * Example Usage:
+ * RENEW=all npm run sync-locales    # Updates all locales
+ * RENEW=fr,es npm run sync-locales  # Updates only French and Spanish
+ * npm run sync-locales             # Updates only out-of-sync locales
+ */
 
 const [mdxTranslationPrompt, metaTranslationPrompt] = await Promise.all([
   getPrompt(join(import.meta.dirname, 'mdx-translation.md')),
@@ -254,7 +266,7 @@ async function main() {
   // Get all available locales from the content directory
   const allLocales = await readdir(contentDir);
 
-  const locales = [];
+  const locales: string[] = [];
 
   for (const locale of allLocales) {
     const entryPath = join(contentDir, locale);
@@ -263,6 +275,14 @@ async function main() {
       locales.push(locale);
     }
   }
+  DEFAULT_LOCALES.forEach((locale) => {
+    if (!locales.includes(locale)) {
+      console.log(
+        `Locale ${locale} not found in content directory, adding it since its in defaults`
+      );
+      locales.push(locale);
+    }
+  });
 
   console.log(`Found locales: ${locales.join(', ')}`);
 

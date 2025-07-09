@@ -1,3 +1,3 @@
 export default async function CreateSale() {
-  return <div>Create Sale</div>;
+	return <div>Create Sale</div>;
 }

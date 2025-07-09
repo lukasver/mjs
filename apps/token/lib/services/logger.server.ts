@@ -1,4 +1,4 @@
-import { env } from '../../common/config/env';
+import { env } from "../../common/config/env";
 
 // type LogObject =
 // 	| {
@@ -122,9 +122,9 @@ import { env } from '../../common/config/env';
 // };
 
 const log = (...args: unknown[]) => {
-  if (env.IS_DEV || env.DEBUG) {
-    console.debug('\x1b[31m%s\x1b[0m', ...args);
-  }
+	if (env.IS_DEV || env.DEBUG) {
+		console.debug("\x1b[31m%s\x1b[0m", ...args);
+	}
 };
 
 export default log;

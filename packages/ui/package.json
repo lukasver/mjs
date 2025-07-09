@@ -16,7 +16,6 @@
 		"check-types": "tsc --noEmit",
 		"dev:styles": "tailwindcss -i ./src/globals.css -o ./dist/index.css --watch",
 		"dev:components": "tsc --watch",
-		"lint": "eslint src --max-warnings 0",
 		"clean": "rimraf dist node_modules"
 	},
 	"dependencies": {

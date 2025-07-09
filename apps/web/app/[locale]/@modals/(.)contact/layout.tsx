@@ -1,11 +1,11 @@
-import { FixModalCloseBug } from './modal-container';
+import { FixModalCloseBug } from "./modal-container";
 
 export default async function ContactLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <FixModalCloseBug expectedPath='/contact'>{children}</FixModalCloseBug>
-  );
+	return (
+		<FixModalCloseBug expectedPath="/contact">{children}</FixModalCloseBug>
+	);
 }

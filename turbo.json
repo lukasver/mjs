@@ -1,13 +1,8 @@
 {
 	"$schema": "https://turborepo.com/schema.json",
 	"ui": "stream",
-	"globalDependencies": [
-		"**/.env.*local"
-	],
-	"globalPassThroughEnv": [
-		"COREPACK_HOME",
-		"PLAYWRIGHT_*"
-	],
+	"globalDependencies": ["**/.env.*local"],
+	"globalPassThroughEnv": ["COREPACK_HOME", "PLAYWRIGHT_*"],
 	"globalEnv": [
 		"DEBUG",
 		"NODE_ENV",
@@ -22,28 +17,15 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": [
-				"^build"
-			],
-			"inputs": [
-				"$TURBO_DEFAULT$",
-				".env*"
-			],
-			"outputs": [
-				"dist/**",
-				".next/**",
-				"!.next/cache/**"
-			]
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", ".env*"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
 		},
 		"lint": {
-			"dependsOn": [
-				"^lint"
-			]
+			"dependsOn": ["^lint"]
 		},
 		"check-types": {
-			"dependsOn": [
-				"^check-types"
-			]
+			"dependsOn": ["^check-types"]
 		},
 		"dev": {
 			"cache": false,
@@ -51,19 +33,11 @@
 		},
 		"clean": {
 			"cache": false,
-			"dependsOn": [
-				"^clean"
-			]
+			"dependsOn": ["^clean"]
 		},
 		"@mjs/web#build": {
-			"dependsOn": [
-				"@mjs/i18n#build"
-			],
-			"outputs": [
-				"dist/**",
-				".next/**",
-				"!.next/cache/**"
-			],
+			"dependsOn": ["@mjs/i18n#build"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**"],
 			"env": [
 				"EMAIL_API_KEY",
 				"ALTCHA_HMAC_KEY",
@@ -74,44 +48,21 @@
 			]
 		},
 		"@mjs/docs#build": {
-			"dependsOn": [
-				"@mjs/i18n#build"
-			],
-			"outputs": [
-				"dist/**",
-				".next/**",
-				"!.next/cache/**",
-				"content/**"
-			],
-			"env": [
-				"GITHUB_TOKEN",
-				"ENABLE_REMOTE",
-				"RENEW"
-			]
+			"dependsOn": ["@mjs/i18n#build"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**", "content/**"],
+			"env": ["GITHUB_TOKEN", "ENABLE_REMOTE", "RENEW"]
 		},
 		"@mjs/token#build": {
-			"dependsOn": [
-				"@mjs/i18n#build"
-			],
-			"outputs": [
-				"dist/**",
-				".next/**",
-				"!.next/cache/**"
-			],
+			"dependsOn": ["@mjs/i18n#build"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**"],
 			"env": []
 		},
 		"@mjs/i18n#build": {
-			"dependsOn": [
-				"@mjs/utils#build"
-			],
-			"outputs": [
-				"dist/**"
-			]
+			"dependsOn": ["@mjs/utils#build"],
+			"outputs": ["dist/**"]
 		},
 		"@mjs/utils#build": {
-			"outputs": [
-				"dist/**"
-			]
+			"outputs": ["dist/**"]
 		}
 	}
 }

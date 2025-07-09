@@ -1,102 +1,102 @@
-@import '@mjs/ui/globals.css';
+@import "@mjs/ui/globals.css";
 
 /* Optional: import Nextra theme styles */
-@import 'nextra-theme-docs/style.css'; /* or nextra-theme-blog/style.css */
+@import "nextra-theme-docs/style.css"; /* or nextra-theme-blog/style.css */
 
 /* Root level overrides from the shared config styles*/
 
 :root {
-  --background: var(--color-slate-100);
-  --background-foreground: var(--color-black);
+	--background: var(--color-slate-100);
+	--background-foreground: var(--color-black);
 
-  /* --secondary: var(--color-secondary); */
-  --x-color-nextra-bg: var(--background);
-  --x-color-primary-50: var(--color-primary-50);
-  /* background of each link in the sidebar  */
-  --x-color-primary-100: var(--color-secondary-100);
-  /* Rings color */
-  --x-color-primary-200: var(--color-slate-400);
-  --x-color-primary-300: var(--color-slate-300);
+	/* --secondary: var(--color-secondary); */
+	--x-color-nextra-bg: var(--background);
+	--x-color-primary-50: var(--color-primary-50);
+	/* background of each link in the sidebar  */
+	--x-color-primary-100: var(--color-secondary-100);
+	/* Rings color */
+	--x-color-primary-200: var(--color-slate-400);
+	--x-color-primary-300: var(--color-slate-300);
 
-  --x-color-primary-400: var(--color-primary-400);
-  --x-color-primary-500: var(--color-primary-500);
-  --x-color-primary-600: var(--color-primary-600);
-  --x-color-primary-700: var(--color-primary-700);
-  --x-color-primary-800: var(--color-primary);
-  --x-color-primary-900: var(--color-primary-900);
-  --x-color-slate-900: var(--color-primary);
+	--x-color-primary-400: var(--color-primary-400);
+	--x-color-primary-500: var(--color-primary-500);
+	--x-color-primary-600: var(--color-primary-600);
+	--x-color-primary-700: var(--color-primary-700);
+	--x-color-primary-800: var(--color-primary);
+	--x-color-primary-900: var(--color-primary-900);
+	--x-color-slate-900: var(--color-primary);
 }
 
 .dark {
-  --background: color-mix(
-    in hsl,
-    var(--primary-darkest) 95%,
-    var(--color-slate-950)
-  );
-  --background-foreground: var(--color-white);
+	--background: color-mix(
+		in hsl,
+		var(--primary-darkest) 95%,
+		var(--color-slate-950)
+	);
+	--background-foreground: var(--color-white);
 
-  --nextra-bg: 20, 20, 20;
+	--nextra-bg: 20, 20, 20;
 
-  --x-color-nextra-bg: var(--background);
-  --x-color-primary-50: var(--color-secondary-50);
-  --x-color-primary-100: var(--color-secondary-100);
-  --x-color-primary-200: var(--color-secondary-200);
-  --x-color-primary-300: var(--color-secondary-300);
-  --x-color-primary-400: var(--color-secondary-400);
-  --x-color-primary-500: var(--color-secondary-500);
-  --x-color-primary-600: var(--color-secondary-600);
-  --x-color-primary-700: var(--color-secondary-700);
-  --x-color-primary-800: var(--color-secondary-800);
-  --x-color-primary-900: var(--color-secondary-900);
-  --x-color-slate-100: var(--color-secondary);
+	--x-color-nextra-bg: var(--background);
+	--x-color-primary-50: var(--color-secondary-50);
+	--x-color-primary-100: var(--color-secondary-100);
+	--x-color-primary-200: var(--color-secondary-200);
+	--x-color-primary-300: var(--color-secondary-300);
+	--x-color-primary-400: var(--color-secondary-400);
+	--x-color-primary-500: var(--color-secondary-500);
+	--x-color-primary-600: var(--color-secondary-600);
+	--x-color-primary-700: var(--color-secondary-700);
+	--x-color-primary-800: var(--color-secondary-800);
+	--x-color-primary-900: var(--color-secondary-900);
+	--x-color-slate-100: var(--color-secondary);
 }
 
 @theme inline {
-  --color-nextra-bg: var(--background) !important;
+	--color-nextra-bg: var(--background) !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--background-foreground);
+	background: var(--background);
+	color: var(--background-foreground);
 }
 
 @layer utilities {
-  .nextra-search {
-    background: var(--color-secondary-200);
-    border-radius: var(--radius);
-  }
-  .nextra-search:focus {
-    outline: 2px solid black;
-    outline-offset: 2px;
-  }
+	.nextra-search {
+		background: var(--color-secondary-200);
+		border-radius: var(--radius);
+	}
+	.nextra-search:focus {
+		outline: 2px solid black;
+		outline-offset: 2px;
+	}
 
-  .nextra-navbar {
-    --x-color-nextra-bg: var(--color-primary);
-    background: var(--color-primary) !important;
-  }
+	.nextra-navbar {
+		--x-color-nextra-bg: var(--color-primary);
+		background: var(--color-primary) !important;
+	}
 
-  header .nextra-border {
-    border: none !important;
-  }
+	header .nextra-border {
+		border: none !important;
+	}
 
-  #headlessui-portal-root ul {
-    z-index: 1000 !important;
-  }
+	#headlessui-portal-root ul {
+		z-index: 1000 !important;
+	}
 
-  .dark {
-    .nextra-search {
-      background: var(--color-secondary-700);
-      border-radius: var(--radius);
-    }
+	.dark {
+		.nextra-search {
+			background: var(--color-secondary-700);
+			border-radius: var(--radius);
+		}
 
-    .nextra-navbar {
-      background: var(--color-primary-700);
-    }
+		.nextra-navbar {
+			background: var(--color-primary-700);
+		}
 
-    .nextra-search:focus {
-      border-color: var(--color-secondary-200) !important;
-    }
-  }
+		.nextra-search:focus {
+			border-color: var(--color-secondary-200) !important;
+		}
+	}
 }
 
 /* 

@@ -4,7 +4,6 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
-		"lint": "turbo run lint",
 		"check-types": "turbo run check-types",
 		"format": "biome check .",
 		"format:fix": "biome check . --write",
@@ -13,7 +12,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/mdx": "^2.0.13",
-		"turbo": "^2.5.3"
+		"turbo": "^2.5.3",
+		"typescript": "^5.8.3"
 	},
 	"overrides": {
 		"react": "19.1.0",

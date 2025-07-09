@@ -1,3 +1,3 @@
 export default async function AdminTransactions() {
-  return <div>Transactions</div>;
+	return <div>Transactions</div>;
 }
