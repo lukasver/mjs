@@ -1,9 +1,9 @@
 'use client';
 import { cn } from '@mjs/ui/lib/utils';
-import { useSpeechBubbleMessage } from './speech-bubble-container';
 import { AnimatePresence, motion } from 'motion/react';
 import { Dispatch, SetStateAction } from 'react';
 import { useWindowSize } from 'usehooks-ts';
+import { useSpeechBubbleMessage } from './speech-bubble-container';
 
 /**
  * Renders an animated speech bubble with a message using Motion for React.
@@ -34,7 +34,7 @@ const SpeechBubble = ({
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className={cn(
             'shadow-[3px_4px_20.4px_0px_rgba(74,0,0,1)] rounded-2xl md:rounded-3xl',
-            'z-30 w-full max-w-screen',
+            'z-30 w-full max-w-screen md:max-w-[400px] lg:max-w-[500px] xl:max-w-1xl',
             className
           )}
         >
@@ -60,7 +60,6 @@ const SpeechBubble = ({
                 <path
                   d='M0.0585938 1.79102C2.73274 1.79102 4.74716 4.22369 4.24855 6.85094L2.0948 18.1993C0.88627 24.5672 9.23425 28.0623 12.9231 22.7328L20.2605 12.132C24.7432 5.65567 32.1182 1.79102 39.9946 1.79102'
                   stroke='white'
-                  stroke-width='2'
                 />
               </svg>
             </div>

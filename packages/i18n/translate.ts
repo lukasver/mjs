@@ -9,6 +9,25 @@ import {
 import { getPrompt, Translator } from '@mjs/utils';
 import dotenv from 'dotenv';
 
+/**
+ * Script to translate application localization messages from English to other languages.
+ *
+ * Usage:
+ * ```bash
+ * # Translate messages for a specific app
+ * pnpm translate --app=<app> --locale=<locale>
+ *
+ * # Where <app> can be:
+ * # - globals: Translate global messages
+ * # - web: Translate web app messages
+ * # - docs: Translate documentation messages
+ * # - token: Translate token messages
+ * # - all: Translate messages for all apps
+ * ```
+ *
+ * Requires GOOGLE_AI_API_KEY to be set in .env.local file.
+ */
+
 dotenv.config({ path: '.env.local' });
 
 if (!process.env.GOOGLE_AI_API_KEY) {
@@ -31,6 +50,10 @@ const { values } = parseArgs({
     app: {
       type: 'string',
       default: 'globals', // globals, web, docs, token, all
+    },
+    locale: {
+      type: 'string',
+      default: 'all', // all, de, es, fr, it, ja, ko, pt, ru, zh
     },
   },
   strict: true,
@@ -60,11 +83,14 @@ async function main() {
 
   await Promise.all(
     APPS.map(async (app, index) => {
-      console.debug('🚀 ~ translate.ts:53 ~ app:', app);
+      const localesToTranslate =
+        values.locale === 'all'
+          ? Array.from(locales[index] || [])
+          : values.locale?.split(',');
 
-      const appLocales = Array.from(locales[index] || []).filter(
-        (locale) => locale !== 'en'
-      );
+      const appLocales = localesToTranslate.filter((locale) => locale !== 'en');
+
+      console.debug('🚀 ~ translate.ts:93 ~ appLocales:', appLocales);
 
       const appBaseMessages = base[index] || [];
 
@@ -72,7 +98,6 @@ async function main() {
         const results = await Promise.all(
           appLocales.map(async (locale) => {
             console.group(`${app} ${locale}`);
-            console.debug('ARRANCANDO');
             const prompt = await getPrompt(getPromptsPath('v1.md'), {
               persona: await getPrompt(getPromptsPath('tone.md')),
               target_language: locale,
@@ -96,13 +121,16 @@ async function main() {
                 console.debug('FINISHED', locale);
                 console.groupEnd();
                 return r;
+              })
+              .catch((_e) => {
+                console.error(`Error translating ${app} ${locale}`);
               });
           })
         );
         console.debug('RESULTS', results.length);
       } catch (e) {
         console.error(
-          `Error translating ${app}:`,
+          `Error translating ${app}`,
           e instanceof Error ? e.message : e
         );
       }

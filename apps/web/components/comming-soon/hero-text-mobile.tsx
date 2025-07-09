@@ -5,11 +5,13 @@ import { cn } from '@mjs/ui/lib/utils';
 import SpeechBubble from './speech-bubble';
 import { useSpeechBubbleMessage } from './speech-bubble-container';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useVideoPlayer } from '../use-video-player';
 
 export function HeroTextMobile({ title }: { title: string }) {
   const message = useSpeechBubbleMessage();
   const [hasH1Exited, setHasH1Exited] = useState(false);
   const [bubbleExited, setBubbleExited] = useState(true);
+  const { isPlaying } = useVideoPlayer();
 
   // When a message appears, reset bubbleExited so the bubble waits for h1 to exit
   useEffect(() => {
@@ -22,9 +24,9 @@ export function HeroTextMobile({ title }: { title: string }) {
   }, [message]);
 
   // Show h1 if there is no message and the bubble has exited (or on initial render)
-  const showH1 = !message && bubbleExited === true;
+  const showH1 = !isPlaying || (!message && bubbleExited === true);
   // Show bubble if h1 has exited and there is a message
-  const showBubble = hasH1Exited && !!message;
+  const showBubble = isPlaying && hasH1Exited && !!message;
 
   return (
     <div className='relative w-full'>
