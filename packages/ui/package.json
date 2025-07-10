@@ -73,7 +73,9 @@
 		"sonner": "^1.7.4",
 		"tailwind-merge": "^1.14.0",
 		"usehooks-ts": "^3.1.1",
-		"vaul": "^1.1.2"
+		"vaul": "^1.1.2",
+		"@tiptap/core": "2.11.2",
+		"novel": "^0.5.0"
 	},
 	"peerDependencies": {
 		"next": "15.3.2",
