@@ -149,12 +149,12 @@ export function ListSales({
 
       {/* Filters and Search */}
       <Card className='bg-card'>
-        <CardHeader>
-          {title && <CardTitle>{title}</CardTitle>}
-          {description && <CardDescription>{description}</CardDescription>}
-        </CardHeader>
-        <CardContent>
-          <div className='flex items-center justify-between space-x-2 py-4'>
+        <CardHeader className='flex flex-col sm:flex-row gap-2 justify-between'>
+          <div className='flex flex-col'>
+            {title && <CardTitle>{title}</CardTitle>}
+            {description && <CardDescription>{description}</CardDescription>}
+          </div>
+          <div className='flex items-center justify-between space-x-2'>
             <div className='flex items-center space-x-2'>
               <div className='relative'>
                 <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
@@ -178,7 +178,8 @@ export function ListSales({
               />
             </div>
           </div>
-
+        </CardHeader>
+        <CardContent>
           {/* Data Table */}
           <div className='rounded-md border'>
             <Table>

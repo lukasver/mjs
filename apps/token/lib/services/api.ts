@@ -3,20 +3,17 @@
 import { DEFAULT_STALE_TIME } from '@/common/config/constants';
 import { Currency } from '@/common/schemas/generated';
 import {
-  getActiveSale,
   getContract,
-  getCurrentUser,
   getExchangeRate,
   getInputOptions,
   getPendingTransactions,
-  getSale,
-  getSales,
   getUserSaleTransactions,
   getUserTransactions,
   getWeb3Contract,
 } from '@/lib/actions';
 import { FOP, TransactionStatus } from '@prisma/client';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { getActiveSale, getCurrentUser, getSale, getSales } from './fetchers';
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const getError = (data: any, error: any): string | null => {
@@ -35,13 +32,18 @@ export const useInputOptions = () => {
     queryFn: () => getInputOptions(),
   });
   const e = getError(data, error);
-  return { data: data?.data, error: e, ...rest };
+  return {
+    data: data?.data,
+    error: e,
+    refetch: rest.refetch,
+    isLoading: rest.isLoading,
+  };
 };
 
 export function useSales() {
   const { data, status, error, refetch } = useSuspenseQuery({
     queryKey: ['sales'],
-    queryFn: () => getSales({}),
+    queryFn: () => getSales(),
     staleTime: DEFAULT_STALE_TIME,
   });
   const e = getError(data, error);
@@ -54,6 +56,9 @@ export const useActiveSale = () => {
     queryFn: () => getActiveSale(),
     staleTime: DEFAULT_STALE_TIME,
   });
+
+  console.debug('🚀 ~ api.ts:55 ~ data:', data);
+
   const e = getError(data, error);
   return { data: data?.data?.sales[0], error: e, status };
 };
@@ -61,7 +66,7 @@ export const useActiveSale = () => {
 export const useSale = (id: string) => {
   const { data, status, error, isLoading } = useQuery({
     queryKey: ['sales', id],
-    queryFn: ({ queryKey }) => getSale({ id: queryKey[1] as string }),
+    queryFn: ({ queryKey }) => getSale(queryKey[1] as string),
     staleTime: DEFAULT_STALE_TIME,
     enabled: !!id,
   });

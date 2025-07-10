@@ -83,7 +83,7 @@ const QUERY_MAPPING: { active: Prisma.SaleFindFirstArgs } = {
 class SalesController {
   async getSales(
     { active }: GetSalesDto = { active: false },
-    _ctx: ActionCtx
+    _ctx?: ActionCtx
   ): Promise<
     | Success<{
         sales: Sale[];

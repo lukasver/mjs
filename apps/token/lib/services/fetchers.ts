@@ -1,0 +1,139 @@
+import { publicUrl } from '@/common/config/env';
+import { Failure, Success } from '@/common/schemas/dtos/utils';
+import { Sale, User } from '@/common/schemas/generated';
+
+export type FetcherOptions = Omit<RequestInit, 'body'> & {
+  baseUrl?: string;
+  token?: string;
+} & (
+    | {
+        rawBody: true;
+        body?: RequestInit['body'];
+      }
+    | {
+        rawBody?: false | never;
+        body?: any;
+      }
+  );
+
+type JsonPrimitive = string | number | boolean | null;
+type JsonObject = { [key: string]: JsonValue };
+type JsonArray = JsonValue[];
+type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+class Fetcher {
+  private baseUrl: string;
+  private defaultToken?: string;
+  private defaultOptions: Omit<FetcherOptions, 'baseUrl' | 'token'>;
+
+  constructor(options: FetcherOptions = {}) {
+    const { baseUrl = '', token, ...defaultOptions } = options;
+    this.baseUrl = baseUrl;
+    this.defaultToken = token;
+    this.defaultOptions = defaultOptions;
+  }
+
+  static create(options: FetcherOptions = {}): Fetcher {
+    return new Fetcher(options);
+  }
+
+  fetcher = <T>(url: string, options: FetcherOptions = {}) => {
+    const { token, ...fetchOptions } = options;
+    const fullUrl = this.baseUrl ? `${this.baseUrl}${url}` : url;
+    const {
+      body,
+      rawBody = false,
+      ...mergedOptions
+    } = {
+      ...this.defaultOptions,
+      ...fetchOptions,
+    };
+    const finalToken = token || this.defaultToken;
+
+    return fetch(fullUrl, {
+      ...mergedOptions,
+      ...(body && {
+        body: typeof body === 'string' || rawBody ? body : JSON.stringify(body),
+      }),
+      headers: {
+        ...mergedOptions.headers,
+        ...(finalToken && {
+          authorization: finalToken
+            ? finalToken.startsWith('Bearer ')
+              ? finalToken
+              : `Bearer ${finalToken}`
+            : undefined,
+        }),
+      },
+    }).then(async (res) => {
+      const isText = res.headers.get('content-type')?.includes('text');
+      if (!res.ok) {
+        throw (await (isText ? res.text() : res.json())) as Failure<T>;
+      }
+      if (isText) {
+        return res.text() as T;
+      }
+      if (fetchOptions.rawBody) {
+        return res.body as T;
+      }
+      const json = (await res.json()) as Success<T> | Failure<T>;
+      if (json.success) {
+        return json.data as T;
+      } else {
+        throw new Error(json.message);
+      }
+    });
+  };
+}
+
+const basePath = '/api/proxy';
+
+const { fetcher } = Fetcher.create({
+  credentials: 'same-origin',
+  baseUrl: publicUrl + basePath,
+});
+
+/**
+ * Functions to fetch data from the API.
+ * Should ONLY be used clientside. Should not be used to mutate data.
+ */
+
+export const getCurrentUser = async () => {
+  try {
+    const data = await fetcher<User>(`/users/me`);
+    return { data: data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+};
+
+export const getSales = async (params?: { active?: boolean }) => {
+  try {
+    const queryParams = params
+      ? `?${new URLSearchParams({ active: params.active ? 'true' : 'false' })}`
+      : '';
+    const data = await fetcher<Sale[]>(`/sales${queryParams}`);
+    return { data: data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+};
+
+export const getSale = async (id: string) => {
+  try {
+    const data = await fetcher<Sale>(`/sales/${id}`);
+    return { data: data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+};
+
+export const getActiveSale = async () => {
+  try {
+    const queryParams = new URLSearchParams({ active: 'true' });
+    const data = await fetcher<Sale>(`/sales?${queryParams}`);
+    return { data: data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+};

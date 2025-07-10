@@ -1,6 +1,5 @@
 import { FundraisingProgressLoading } from '@/components/skeletons/fundraising-progress-loading';
 import { TokenDetails } from '@/components/token-details';
-import { getActiveSale } from '@/lib/actions';
 import { VisuallyHidden } from '@mjs/ui/primitives/visually-hidden';
 import { QueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -10,6 +9,7 @@ import { IcoPhases } from '../../../components/dashboard/ico-phases';
 import { RecentTransactions } from '../../../components/dashboard/recent-transactions';
 import { TokenMetrics } from '../../../components/dashboard/token-metrics';
 import { TokenStats } from '../../../components/dashboard/token-stats';
+import { getActiveSale } from '@/lib/actions';
 
 export default async function DashboardPage(_props: PageProps) {
   const queryClient = new QueryClient();

@@ -7,16 +7,12 @@ import {
 } from '@tanstack/react-query';
 import { getTranslations } from 'next-intl/server';
 
-export default async function AdminPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function AdminPage() {
   const t = await getTranslations();
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({
     queryKey: ['sales'],
-    queryFn: () => getSales({}),
+    queryFn: () => getSales(undefined),
   });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -1,6 +1,5 @@
 'use server';
 import 'server-only';
-import { ROLES } from '@/common/config/constants';
 import { CreateContractStatusDto } from '@/common/schemas/dtos/contracts';
 import {
   CreateSaleDto,
@@ -53,6 +52,27 @@ import {
 import { adminClient } from './admin';
 import { authActionClient, loginActionClient } from './config';
 
+export const hasActiveSession = async (address: string, token: string) => {
+  const sessions = await prisma.session.findMany({
+    where: {
+      expiresAt: {
+        gt: new Date(),
+      },
+      token,
+      user: {
+        walletAddress: address,
+      },
+    },
+    select: {
+      id: true,
+      expiresAt: true,
+    },
+  });
+
+  // If there is at least one active session
+  return sessions.length > 0;
+};
+
 export const isLoggedIn = loginActionClient
   .schema(z.string())
   .action(async ({ parsedInput }) => {
@@ -60,23 +80,8 @@ export const isLoggedIn = loginActionClient
     console.log('IS LOGGED IN CALLED', data);
     if (!data) return false;
 
-    const sessions = await prisma.session.findMany({
-      where: {
-        expiresAt: {
-          gt: new Date(),
-        },
-        token: data,
-        user: {
-          walletAddress: parsedInput,
-        },
-      },
-      select: {
-        id: true,
-        expiresAt: true,
-      },
-    });
-    // If there is at least one active session
-    return sessions.length > 0;
+    const hasSession = await hasActiveSession(parsedInput, data);
+    return hasSession;
   });
 
 const LoginParams = z.object({
@@ -174,45 +179,12 @@ export const getCurrentUser = authActionClient.action(
     //   email: address,
     //   // walletAddress: address,
     // });
-    const user = await prisma.user.findUnique({
-      where: {
-        walletAddress: address,
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        externalId: true,
-        walletAddress: true,
-        emailVerified: true,
-        isSiwe: true,
-        image: true,
-        profile: {
-          select: {
-            firstName: true,
-            lastName: true,
-            dateOfBirth: true,
-            address: true,
-          },
-        },
-        userRole: {
-          select: {
-            role: true,
-          },
-        },
-        // sessions: {
-        //   select: {},
-        // },
-      },
-    });
-    invariant(user, 'User not found');
-    const { userRole, ...rest } = user;
-    const roles = userRole.reduce((acc, role) => {
-      acc[role.role.name as keyof typeof ROLES] = role.role.id;
-      return acc;
-    }, {} as Record<keyof typeof ROLES, string>);
 
-    return { ...rest, roles };
+    const user = await usersController.getMe({ address });
+    if (!user.success) {
+      throw new Error(user.message);
+    }
+    return user.data;
   }
 );
 
@@ -232,7 +204,7 @@ export const getCurrentUserEmail = authActionClient.action(
 );
 
 export const getSales = authActionClient
-  .schema(GetSalesDto)
+  .schema(GetSalesDto.optional())
   .action(async ({ ctx, parsedInput }) => {
     const sales = await salesController.getSales(parsedInput, ctx);
     if (!sales.success) {
