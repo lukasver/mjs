@@ -141,6 +141,9 @@ importers:
       '@mjs/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@mjs/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@prisma/client':
         specifier: 6.8.2
         version: 6.8.2(prisma@6.8.2(typescript@5.8.3))(typescript@5.8.3)
@@ -292,9 +295,15 @@ importers:
       prisma:
         specifier: 6.8.2
         version: 6.8.2(typescript@5.8.3)
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
       sinon:
         specifier: ^20.0.0
         version: 20.0.0
+      tsx:
+        specifier: ^4.20.3
+        version: 4.20.3
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -2141,6 +2150,7 @@ packages:
 
   '@hey-api/client-fetch@0.10.0':
     resolution: {integrity: sha512-C7vzj4t52qPiHCqjn1l8cRTI2p4pZCd7ViLtJDTHr5ZwI4sWOYC1tmv6bd529qqY6HFFbhGCz4TAZSwKAMJncg==}
+    deprecated: Starting with v0.73.0, this package is bundled directly inside @hey-api/openapi-ts.
     peerDependencies:
       '@hey-api/openapi-ts': < 2
 

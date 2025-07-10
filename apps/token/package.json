@@ -7,6 +7,7 @@
 		"_build": "next build",
 		"start": "next start",
 		"lint": "next lint",
+		"clean": "rimraf .next node_modules",
 		"db:better-auth:migrate": "dotenv -e .env.local  -- npx @better-auth/cli@latest generate",
 		"db:generate": "dotenv -e .env.local -- npx prisma generate",
 		"db:studio": "dotenv -e .env.local -- npx prisma studio",
@@ -26,7 +27,7 @@
 		"db:seed:prod": "dotenv -e .env.production.local -- npx prisma db seed -- --environment production"
 	},
 	"prisma": {
-		"seed": "bun run prisma/seed.ts"
+		"seed": "tsx prisma/seed.ts"
 	},
 	"dependencies": {
 		"@coinbase/onchainkit": "latest",
@@ -35,6 +36,7 @@
 		"@mjs/transactional": "workspace:*",
 		"@mjs/typescript-config": "workspace:*",
 		"@mjs/ui": "workspace:*",
+		"@mjs/utils": "workspace:*",
 		"@prisma/client": "6.8.2",
 		"@prisma/extension-accelerate": "^2.0.0",
 		"@react-email/components": "0.0.41",
@@ -73,7 +75,11 @@
 		"zod-prisma-types": "^3.2.4"
 	},
 	"browserslist": {
-		"production": [">0.2%", "not dead", "not op_mini all"],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
@@ -95,7 +101,9 @@
 		"eslint-config-next": "^15.3.0",
 		"pino-pretty": "^13.0.0",
 		"prisma": "6.8.2",
+		"rimraf": "^6.0.1",
 		"sinon": "^20.0.0",
+		"tsx": "^4.20.3",
 		"typescript": "5.8.3"
 	}
 }

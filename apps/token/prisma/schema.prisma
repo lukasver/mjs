@@ -169,7 +169,8 @@ model Sale {
 
   name                   String
   status                 SaleStatus         @default(CREATED)
-  saleCurrency           Currency           @default(CHF)
+  saleCurrency           Currency           @relation(fields: [currency], references: [symbol])
+  currency               String
   initialTokenQuantity   Int
   availableTokenQuantity Int
   maximumTokenBuyPerUser Int?
@@ -178,10 +179,12 @@ model Sale {
   tokenContractAddress   String?
   tokenContractChainId   Int?
   blockchain             Blockchain?        @relation(fields: [tokenContractChainId], references: [chainId])
+  token                  Token              @relation(fields: [tokenId, tokenSymbol], references: [id, symbol])
+  tokenId                String
   tokenName              String
+  tokenSymbol            String
   tokenTotalSupply       String?
   tokenPricePerUnit      Decimal            @db.Decimal(36, 18)
-  tokenSymbol            String
   toWalletsAddress       String
   saleClosingDate        DateTime
   createdBy              String
@@ -192,8 +195,6 @@ model Sale {
   saleInformation        SaleInformation?
   documents              Document[]
 
-  token            Token             @relation(fields: [tokenId], references: [id])
-  tokenId          String
   vestingSchedules VestingSchedule[]
 
   @@map("sales")
@@ -302,8 +303,10 @@ model SaleTransactions {
 
   comment String?
 
-  amountPaid         String
-  amountPaidCurrency Currency
+  amountPaid String
+
+  amountPaidCurrency Currency @relation(fields: [paidCurrency], references: [symbol])
+  paidCurrency       String
 
   txHash     String?
   blockchain Blockchain? @relation(fields: [blockchainId], references: [id])
@@ -342,6 +345,7 @@ model Blockchain {
   TokensOnBlockchains TokensOnBlockchains[]
   Sale                Sale[]
 
+  @@unique([id, chainId])
   @@map("blockchain")
 }
 
@@ -435,25 +439,27 @@ model Token {
   sales               Sale[]
   TokensOnBlockchains TokensOnBlockchains[]
 
+  @@unique([id, symbol])
   @@map("tokens")
 }
 
 model TokensOnBlockchains {
   id          String @id @default(cuid()) @db.Text
-  token       Token  @relation(fields: [tokenId], references: [id])
+  token       Token  @relation(fields: [tokenId, tokenSymbol], references: [id, symbol])
   tokenId     String
   tokenSymbol String
 
-  blockchain   Blockchain @relation(fields: [blockchainId], references: [id])
-  blockchainId String
+  blockchain Blockchain @relation(fields: [chainId], references: [chainId])
+  chainId    Int
 
   name            String
   isNative        Boolean @default(false)
   decimals        Int
   contractAddress String?
 
-  @@unique([tokenId, blockchainId])
-  @@unique([tokenSymbol, blockchainId])
+  @@unique([tokenId, chainId])
+  @@unique([tokenSymbol, chainId])
+  @@map("tokens_on_blockchains")
 }
 
 enum RegistrationStep {
@@ -476,16 +482,36 @@ enum SaleStatus {
   FINISHED
 }
 
-enum Currency {
-  CHF
-  GBP
-  USD
-  EUR
-  ETH
-  USDC
-  MATIC
-  LINK
+model Currency {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name   String
+  symbol String       @unique
+  type   CurrencyType
+
+  Sale             Sale[]
+  SaleTransactions SaleTransactions[]
 }
+
+enum CurrencyType {
+  CRYPTO
+  FIAT
+}
+
+// enum Currency {
+//   CHF
+//   GBP
+//   USD
+//   EUR
+//   ETH
+//   USDC
+//   MATIC
+//   LINK
+//   BNB
+// }
 
 enum TransactionStatus {
   PENDING

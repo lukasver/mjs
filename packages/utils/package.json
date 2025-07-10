@@ -5,8 +5,8 @@
 	"main": "index.ts",
 	"type": "module",
 	"exports": {
-		".": "./index.ts",
-		"./dist": "./dist/index.mjs"
+		".": "./dist/index.js",
+		"./client": "./dist/client/index.js"
 	},
 	"scripts": {
 		"build": "tsup"
