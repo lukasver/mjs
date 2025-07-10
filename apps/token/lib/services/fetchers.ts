@@ -131,7 +131,7 @@ export const getSale = async (id: string) => {
 export const getActiveSale = async () => {
   try {
     const queryParams = new URLSearchParams({ active: 'true' });
-    const data = await fetcher<Sale>(`/sales?${queryParams}`);
+    const data = await fetcher<{ sales: Sale[] }>(`/sales?${queryParams}`);
     return { data: data, error: null };
   } catch (e) {
     return { data: null, error: e };

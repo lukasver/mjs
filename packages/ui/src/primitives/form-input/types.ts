@@ -20,7 +20,9 @@ export type InputTypes =
   | 'json';
 
 export type SelectOption = {
+  id: string;
   value: string | number | boolean | null;
   label: string;
   disabled?: boolean;
+  meta?: Record<string, unknown>;
 };

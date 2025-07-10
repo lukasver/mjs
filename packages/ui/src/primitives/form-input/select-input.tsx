@@ -25,20 +25,19 @@ export interface SelectInputProps extends React.ComponentProps<typeof Select> {
 
 export function SelectInput({ options, ...rest }: SelectInputProps) {
   const { onChange, value, placeholder, className, create, createLabel } = rest;
+
   const [shouldCreate, setShouldCreate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (shouldCreate) {
     return (
       <div className='relative'>
-        {/* <FormControl> */}
         <Input
           className={cn('w-full', className)}
           ref={inputRef}
           name={rest.name}
           placeholder='Type in a new option...'
         />
-        {/* </FormControl> */}
         <Button
           variant='ghost'
           // size='xs'
@@ -59,9 +58,12 @@ export function SelectInput({ options, ...rest }: SelectInputProps) {
     }, 100);
   };
 
+  const onValueChange = (v: SelectOption['value']) => {
+    onChange?.(String(v));
+  };
+
   return (
-    <Select onValueChange={(v) => onChange?.(v)} defaultValue={value} {...rest}>
-      {/* <FormControl> */}
+    <Select onValueChange={onValueChange} defaultValue={value} {...rest}>
       <SelectTrigger
         className={cn(
           'w-full relative cursor-pointer shadow-xs',
@@ -71,12 +73,10 @@ export function SelectInput({ options, ...rest }: SelectInputProps) {
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      {/* </FormControl> */}
       <SelectContent>
-        {options?.map(({ value, ...rest }) => {
-          const label = rest && rest.label;
+        {options?.map(({ value, id, label, disabled }) => {
           return (
-            <SelectItem key={value} value={value} disabled={rest.disabled}>
+            <SelectItem key={id} value={String(value)} disabled={disabled}>
               {label}
             </SelectItem>
           );

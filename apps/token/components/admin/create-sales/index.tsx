@@ -47,12 +47,6 @@ export const CreateSaleForm = () => {
     defaultValues: {},
     onSubmit: ({ value }) => console.log(value),
   });
-  // TODO: Wire up step, projectPath, saleStep, methods from props/context
-  // const step = 0;
-  // const projectPath = 0;
-  // TODO: Specify the correct type for saleStep
-  // const saleStep: Array<unknown> = [];
-  // const methods = {};
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -139,8 +133,6 @@ const animation = {
 const TokenInformation = () => {
   const t = useTranslations('admin.sales.create.basic');
   const { options } = useInputOptionsContext();
-
-  console.debug('🚀 ~ sales.tsx:279 ~ options:', options);
 
   return (
     <motion.div {...animation}>

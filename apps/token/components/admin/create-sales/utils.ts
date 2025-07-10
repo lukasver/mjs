@@ -14,8 +14,8 @@ export const formSchemaShape = {
     .regex(/^0x[a-fA-F0-9]{40}$/g, 'Invalid token contract address')
     .min(1, 'Token contract address required')
     .optional(),
-  tokenContractChainId: z.number().int().optional(),
-  tokenPricePerUnit: z
+  tokenContractChainId: z.coerce.number().int().optional(),
+  tokenPricePerUnit: z.coerce
     .number()
     .min(0.01, 'Price per unit must be at least 0.01')
     .min(1, 'Price per unit required'),
@@ -33,41 +33,41 @@ export const formSchemaShape = {
     .string()
     .regex(/^0x[a-fA-F0-9]{40}$/g, 'Invalid wallet address')
     .min(1, 'Wallet address required'),
-  saleStartDate: z
+  saleStartDate: z.coerce
     .date()
     .min(
       new Date(new Date().setDate(new Date().getDate() - 1)),
       'Please choose a future date for the start date'
     ),
-  saleClosingDate: z.date(),
-  initialTokenQuantity: z
+  saleClosingDate: z.coerce.date(),
+  initialTokenQuantity: z.coerce
     .number()
     .int()
     .min(1, 'Initial token quantity must be at least 1')
     .min(1, 'Initial token quantity required'),
-  availableTokenQuantity: z
+  availableTokenQuantity: z.coerce
     .number()
     .int()
     .min(0, 'Available token quantity must be at least 0')
     .max(
       Number.MAX_SAFE_INTEGER,
-      'Available quantity cannot exceed initial quantity'
+      'Available quantity cannot safe number quantity'
     )
     .min(1, 'Available token quantity required'),
-  minimumTokenBuyPerUser: z
+  minimumTokenBuyPerUser: z.coerce
     .number()
     .int()
     .min(1, 'Minimum buy per user must be at least 1')
-    .max(Number.MAX_SAFE_INTEGER, 'Minimum cannot exceed initial quantity')
+    .max(Number.MAX_SAFE_INTEGER, 'Minimum cannot safe number quantity')
     .min(1, 'Minimum buy per user required'),
-  maximumTokenBuyPerUser: z
+  maximumTokenBuyPerUser: z.coerce
     .number()
     .int()
-    .max(Number.MAX_SAFE_INTEGER, 'Maximum cannot exceed initial quantity')
+    .max(Number.MAX_SAFE_INTEGER, 'Maximum cannot safe number quantity')
     .nullable()
     .refine(
-      (val: number | null) => val === null || val > 0,
-      'Maximum buy per user must be greater than 0'
+      (val: number | null) => val === null || val > -1,
+      'Maximum buy per user must be 0 or greater'
     ),
   saftCheckbox: z.boolean().default(false),
 };
@@ -91,6 +91,30 @@ export const FormSchema = z.object(formSchemaShape).superRefine((data, ctx) => {
       path: ['tokenContractChainId'],
     });
   }
+  if (data.availableTokenQuantity > data.initialTokenQuantity) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Available quantity cannot exceed initial quantity',
+      path: ['availableTokenQuantity'],
+    });
+  }
+  if (data.minimumTokenBuyPerUser > data.availableTokenQuantity) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Minimum buy per user cannot exceed available quantity',
+      path: ['minimumTokenBuyPerUser'],
+    });
+  }
+  if (
+    data.maximumTokenBuyPerUser &&
+    data.maximumTokenBuyPerUser > data.minimumTokenBuyPerUser
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Maximum buy per user cannot exceed minimum buy per user',
+      path: ['maximumTokenBuyPerUser'],
+    });
+  }
 });
 
 export type InputProps = {
@@ -104,18 +128,29 @@ export const InputProps = {
   tokenName: { type: 'text' },
   tokenSymbol: { type: 'text' },
   tokenContractAddress: { type: 'text' },
-  tokenContractChainId: { type: 'select' },
+  tokenContractChainId: { type: 'select', optionKey: 'blockchain' },
   tokenPricePerUnit: {
     type: 'number',
-    inputProps: { inputMode: 'decimal', autoComplete: 'off' },
+    inputProps: {
+      inputMode: 'decimal',
+      autoComplete: 'off',
+      step: '0.01',
+      min: 0.01,
+    },
   },
   saleCurrency: {
     type: 'select',
-    optionKey: 'currency',
+    optionKey: 'fiatCurrencies',
   },
   toWalletsAddress: { type: 'text' },
-  saleStartDate: { type: 'text' },
-  saleClosingDate: { type: 'text' },
+  saleStartDate: {
+    type: 'date',
+    inputProps: { disabled: (date) => date < new Date() },
+  },
+  saleClosingDate: {
+    type: 'date',
+    inputProps: { disabled: (date) => date < new Date() },
+  },
   initialTokenQuantity: {
     type: 'number',
     inputProps: { inputMode: 'decimal', autoComplete: 'off' },

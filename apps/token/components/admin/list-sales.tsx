@@ -40,6 +40,7 @@ import { Button } from '@mjs/ui/primitives/button';
 import { cn } from '@mjs/ui/lib/utils';
 import { Badge } from '@mjs/ui/primitives/badge';
 import { SaleDetailsModal } from './sale-details-modal';
+import Link from 'next/link';
 
 export function ListSales({
   children,
@@ -148,7 +149,7 @@ export function ListSales({
       {children}
 
       {/* Filters and Search */}
-      <Card className='bg-card'>
+      <Card className='bg-card shadow'>
         <CardHeader className='flex flex-col sm:flex-row gap-2 justify-between'>
           <div className='flex flex-col'>
             {title && <CardTitle>{title}</CardTitle>}
@@ -179,9 +180,9 @@ export function ListSales({
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className=''>
           {/* Data Table */}
-          <div className='rounded-md border'>
+          <div className='rounded-md border bg-primary'>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -266,9 +267,13 @@ export function ListSales({
                               <Eye className='mr-2 h-4 w-4' />
                               View Details
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Edit className='mr-2 h-4 w-4' />
-                              Edit Sale
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/admin/sales/create?edit=${sale.id}`}
+                              >
+                                <Edit className='mr-2 h-4 w-4' />
+                                Edit Sale
+                              </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>

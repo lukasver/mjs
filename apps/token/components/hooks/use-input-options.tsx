@@ -9,7 +9,7 @@ type InputOptionsContextType = Pick<
   'isLoading' | 'error' | 'refetch'
 > & {
   options: {
-    currency: SelectOption[];
+    fiatCurrencies: SelectOption[];
     blockchain: SelectOption[];
     token: SelectOption[];
   } | null;

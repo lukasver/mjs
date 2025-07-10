@@ -7,12 +7,20 @@ export const getInputClass = () => {
 };
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, onWheel, ...props }, ref) => {
     return (
       <input
         type={type}
         className={cn(getInputClass(), className)}
         ref={ref}
+        onWheel={(e) => {
+          e.preventDefault();
+          // Fix to involuntary number change when scrolling
+          if (type === 'number') {
+            (document?.activeElement as HTMLElement)?.blur();
+          }
+          onWheel?.(e);
+        }}
         {...props}
       />
     );

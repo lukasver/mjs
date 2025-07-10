@@ -401,10 +401,13 @@ class SalesController {
           select: {
             symbol: true,
             name: true,
+            type: true,
+            id: true,
           },
         }),
         prisma.blockchain.findMany({
           select: {
+            id: true,
             chainId: true,
             name: true,
           },
@@ -412,24 +415,37 @@ class SalesController {
         prisma.token.findMany({
           select: {
             symbol: true,
+            id: true,
             TokensOnBlockchains: {
               select: {
                 name: true,
+                chainId: true,
               },
             },
           },
         }),
       ]);
       return Success({
-        currency: currencies.map(({ symbol }) => ({
-          value: symbol,
-          label: symbol,
-        })),
-        blockchain: blockchains.map(({ chainId, name }) => ({
+        fiatCurrencies: currencies
+          .filter(({ type }) => type === 'FIAT')
+          .map(({ symbol, type }) => ({
+            meta: {
+              type,
+            },
+            id: symbol,
+            value: symbol,
+            label: symbol,
+          })),
+        blockchain: blockchains.map(({ chainId, name, id }) => ({
+          id,
           value: chainId,
           label: name,
         })),
-        token: tokens.map(({ symbol, TokensOnBlockchains }) => ({
+        token: tokens.map(({ symbol, TokensOnBlockchains, id }) => ({
+          meta: {
+            chainId: TokensOnBlockchains[0]?.chainId,
+          },
+          id: id,
           value: symbol,
           label: TokensOnBlockchains[0]?.name || symbol,
         })),

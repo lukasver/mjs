@@ -228,7 +228,7 @@ export const getActiveSale = authActionClient.action(async ({ ctx }) => {
   if (!sales.success) {
     throw new Error(sales.message);
   }
-  return sales.data;
+  return sales.data?.sales[0];
 });
 
 export const getWeb3Contract = authActionClient

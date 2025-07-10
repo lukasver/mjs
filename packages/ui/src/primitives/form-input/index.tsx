@@ -5,11 +5,12 @@ import { getInputClass, Input } from '../input';
 import { useFormContext } from '../form/tanstack-form';
 import { Textarea } from '../textarea';
 import { PasswordInput } from './password';
-import { InputTypes } from './types';
+import { InputTypes, SelectOption } from './types';
 import { Checkbox } from '../checkbox';
 import { cn } from '@mjs/ui/lib/utils';
-import { SelectInput, SelectOption } from './select-input';
+import { SelectInput } from './select-input';
 import { isObject } from 'motion/react';
+import { DateInput, DateInputProps } from './date-input';
 
 interface DefaultInputProps extends ComponentProps<typeof Input> {
   options?: never;
@@ -20,7 +21,7 @@ interface SelectorInputProps extends ComponentProps<typeof SelectInput> {
   options: SelectOption[];
 }
 
-type InputUnionProps = DefaultInputProps | SelectorInputProps;
+type InputUnionProps = DefaultInputProps | SelectorInputProps | DateInputProps;
 
 export type FormInputProps = {
   id?: string;
@@ -179,6 +180,8 @@ function InputWrapper({ type, ...props }: InputWrapperProps) {
       return <Checkbox {...props} />;
     case 'select':
       return <SelectInput {...(props as SelectorInputProps)} />;
+    case 'date':
+      return <DateInput {...(props as DateInputProps)} />;
     default:
       return <Input {...props} />;
   }

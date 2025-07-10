@@ -57,8 +57,6 @@ export const useActiveSale = () => {
     staleTime: DEFAULT_STALE_TIME,
   });
 
-  console.debug('🚀 ~ api.ts:55 ~ data:', data);
-
   const e = getError(data, error);
   return { data: data?.data?.sales[0], error: e, status };
 };
