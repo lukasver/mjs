@@ -12,3 +12,11 @@ export const copyToClipboard = (text: string) => {
     );
   }
 };
+
+export const safeJsonParse = (value: string) => {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return {};
+  }
+};

@@ -24,19 +24,18 @@ export function Stepper({
 }: StepperProps) {
   return (
     <div className={cn('w-full py-6', className)}>
-      <div className='flex items-center'>
+      <div className='flex items-center justify-between px-4 py-2'>
         {steps.map((step, index) => (
-          <div key={step.id} className='flex items-center flex-1'>
+          <div key={step.id} className='flex items-center'>
             <div className='flex flex-col items-center'>
               <button
-                type='button'
                 onClick={() => onStepClick?.(step.id)}
                 className={cn(
                   'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-medium transition-colors',
                   currentStep > step.id
                     ? 'border-primary bg-primary text-primary-foreground'
                     : currentStep === step.id
-                    ? 'border-primary bg-background text-primary'
+                    ? 'border-secondary-500 bg-background text-secondary-500'
                     : 'border-muted-foreground/25 bg-background text-muted-foreground',
                   onStepClick && 'hover:border-primary/50 cursor-pointer'
                 )}
@@ -50,7 +49,7 @@ export function Stepper({
               <div className='mt-2 text-center'>
                 <div
                   className={cn(
-                    'text-xs sm:text-sm font-medium',
+                    'text-xs sm:text-sm font-medium whitespace-nowrap',
                     currentStep >= step.id
                       ? 'text-foreground'
                       : 'text-muted-foreground'
@@ -58,18 +57,18 @@ export function Stepper({
                 >
                   {step.name}
                 </div>
-                <div className='text-xs text-muted-foreground hidden sm:block'>
+                <div className='text-xs text-muted-foreground hidden sm:block whitespace-nowrap'>
                   {step.description}
                 </div>
               </div>
             </div>
             {index < steps.length - 1 && (
-              <div className='flex-1 mx-2 sm:mx-4'>
+              <div className='flex-1 mx-4 sm:mx-8 min-w-[60px] sm:min-w-[100px]'>
                 <div
                   className={cn(
                     'h-0.5 w-full transition-colors',
                     currentStep > step.id
-                      ? 'bg-primary'
+                      ? 'bg-secondary-500'
                       : 'bg-muted-foreground/25'
                   )}
                 />

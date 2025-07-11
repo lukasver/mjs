@@ -21,6 +21,7 @@ import {
   changeActiveSaleToFinish,
   checkSaleDateIsNotExpired,
 } from './functions';
+import { FIAT_CURRENCIES } from '@/common/config/constants';
 
 const QUERY_MAPPING: { active: Prisma.SaleFindFirstArgs } = {
   active: {
@@ -229,9 +230,8 @@ class SalesController {
         availableTokenQuantity,
         minimumTokenBuyPerUser,
         maximumTokenBuyPerUser,
+        tokenContractChainId,
         saftCheckbox,
-        saftContract,
-        tokenId,
       } = dto;
       if (Number.isNaN(Number(tokenPricePerUnit))) {
         return Failure(
@@ -244,25 +244,83 @@ class SalesController {
       // if (!Object.values(Currency).includes(saleCurrency as Currency)) {
       //   return Failure('Invalid sale currency', 400, 'Invalid sale currency');
       // }
+      invariant(
+        FIAT_CURRENCIES.includes(currency as (typeof FIAT_CURRENCIES)[number]),
+        'Invalid sale currency'
+      );
+      invariant(tokenContractChainId, 'Token contract chain id is required');
+      invariant(ctx.userId, 'User id is required');
+
+      // First we check if the token configuration exists in DB or if is new
+      const tob = await prisma.tokensOnBlockchains.upsert({
+        where: {
+          tokenSymbol_chainId: {
+            tokenSymbol,
+            chainId: tokenContractChainId,
+          },
+        },
+        create: {
+          blockchain: {
+            connect: {
+              chainId: tokenContractChainId,
+            },
+          },
+          name: tokenName,
+          //TODO! REVISE THIS
+          decimals: 18,
+          token: {
+            create: {
+              symbol: tokenSymbol,
+            },
+          },
+        },
+        update: {},
+        select: {
+          token: {
+            select: {
+              id: true,
+              symbol: true,
+            },
+          },
+        },
+      });
+
       const sale = await prisma.sale.create({
         data: {
           name,
+          saleStartDate: new Date(saleStartDate),
+          saleClosingDate: new Date(saleClosingDate),
           tokenName,
-          tokenSymbol,
           tokenContractAddress,
           tokenPricePerUnit: parseFloat(Number(tokenPricePerUnit).toFixed(2)),
           toWalletsAddress,
-          currency,
-          saleStartDate: new Date(saleStartDate),
-          saleClosingDate: new Date(saleClosingDate),
           initialTokenQuantity,
           availableTokenQuantity,
           minimumTokenBuyPerUser,
           maximumTokenBuyPerUser,
-          createdBy: ctx.userId || '',
           saftCheckbox,
-          saftContract,
-          tokenId,
+          documents: {},
+          user: {
+            connect: {
+              walletAddress: ctx.address,
+            },
+          },
+          saleCurrency: {
+            connect: {
+              symbol: currency,
+            },
+          },
+          blockchain: {
+            connect: {
+              chainId: tokenContractChainId,
+            },
+          },
+          token: {
+            connect: {
+              id: tob.token.id,
+              symbol: tob.token.symbol,
+            },
+          },
         },
       });
       if (!sale) {
@@ -272,7 +330,7 @@ class SalesController {
           'Error while creating sale'
         );
       }
-      return Success({ sale }, { status: 201 });
+      return Success({ sale: this.decimalsToString(sale) }, { status: 201 });
     } catch (error) {
       logger(error);
       return Failure(error);

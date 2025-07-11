@@ -1,6 +1,21 @@
 import { FIAT_CURRENCIES } from '@/common/config/constants';
+import { Sale } from '@/common/schemas/generated';
 import { FormInputProps } from '@mjs/ui/primitives/form-input';
 import z from 'zod';
+
+type SaleKeys = Partial<
+  keyof Omit<
+    Sale,
+    | 'status'
+    | 'id'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'deletedAt'
+    | 'createdBy'
+    | 'tokenId'
+    | 'tokenTotalSupply'
+  >
+>;
 
 export const formSchemaShape = {
   name: z.string().min(1, 'Sale name required'),
@@ -17,9 +32,8 @@ export const formSchemaShape = {
   tokenContractChainId: z.coerce.number().int().optional(),
   tokenPricePerUnit: z.coerce
     .number()
-    .min(0.01, 'Price per unit must be at least 0.01')
-    .min(1, 'Price per unit required'),
-  saleCurrency: z.enum(
+    .min(0.001, 'Price per unit must be at least 0.001'),
+  currency: z.enum(
     FIAT_CURRENCIES as unknown as [
       string,
       ...(typeof FIAT_CURRENCIES)[number][]
@@ -70,52 +84,54 @@ export const formSchemaShape = {
       'Maximum buy per user must be 0 or greater'
     ),
   saftCheckbox: z.boolean().default(false),
-};
+} satisfies Record<SaleKeys, z.ZodType>;
 
-export const FormSchema = z.object(formSchemaShape).superRefine((data, ctx) => {
-  if (
-    data.saleClosingDate &&
-    data.saleStartDate &&
-    data.saleClosingDate <= data.saleStartDate
-  ) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'End date must be after the start date',
-      path: ['saleClosingDate'],
-    });
-  }
-  if (data.tokenContractAddress && !data.tokenContractChainId) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'Blockchain is required when token contract is specified',
-      path: ['tokenContractChainId'],
-    });
-  }
-  if (data.availableTokenQuantity > data.initialTokenQuantity) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'Available quantity cannot exceed initial quantity',
-      path: ['availableTokenQuantity'],
-    });
-  }
-  if (data.minimumTokenBuyPerUser > data.availableTokenQuantity) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'Minimum buy per user cannot exceed available quantity',
-      path: ['minimumTokenBuyPerUser'],
-    });
-  }
-  if (
-    data.maximumTokenBuyPerUser &&
-    data.maximumTokenBuyPerUser > data.minimumTokenBuyPerUser
-  ) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'Maximum buy per user cannot exceed minimum buy per user',
-      path: ['maximumTokenBuyPerUser'],
-    });
-  }
-});
+export const SaleFormSchema = z
+  .object(formSchemaShape)
+  .superRefine((data, ctx) => {
+    if (
+      data.saleClosingDate &&
+      data.saleStartDate &&
+      data.saleClosingDate <= data.saleStartDate
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'End date must be after the start date',
+        path: ['saleClosingDate'],
+      });
+    }
+    if (data.tokenContractAddress && !data.tokenContractChainId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Blockchain is required when token contract is specified',
+        path: ['tokenContractChainId'],
+      });
+    }
+    if (data.availableTokenQuantity > data.initialTokenQuantity) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Available quantity cannot exceed initial quantity',
+        path: ['availableTokenQuantity'],
+      });
+    }
+    if (data.minimumTokenBuyPerUser > data.availableTokenQuantity) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Minimum buy per user cannot exceed available quantity',
+        path: ['minimumTokenBuyPerUser'],
+      });
+    }
+    if (
+      data.maximumTokenBuyPerUser &&
+      data.maximumTokenBuyPerUser > data.minimumTokenBuyPerUser
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Maximum buy per user cannot exceed minimum buy per user',
+        path: ['maximumTokenBuyPerUser'],
+      });
+    }
+  });
 
 export type InputProps = {
   [key in keyof typeof formSchemaShape]: Omit<FormInputProps, 'name'> & {
@@ -134,18 +150,20 @@ export const InputProps = {
     inputProps: {
       inputMode: 'decimal',
       autoComplete: 'off',
-      step: '0.01',
-      min: 0.01,
+      step: '0.001',
+      min: 0.001,
     },
   },
-  saleCurrency: {
+  currency: {
     type: 'select',
     optionKey: 'fiatCurrencies',
   },
   toWalletsAddress: { type: 'text' },
   saleStartDate: {
     type: 'date',
-    inputProps: { disabled: (date) => date < new Date() },
+    inputProps: {
+      disabled: (date) => date < new Date(new Date().setHours(0, 0, 0, 0)),
+    },
   },
   saleClosingDate: {
     type: 'date',

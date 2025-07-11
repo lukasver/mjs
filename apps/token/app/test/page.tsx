@@ -21,6 +21,7 @@ export default function Page() {
   console.debug('🚀 ~ page.tsx:21 ~ result:', result);
 
   // const [state, action] = useActionState(createSaftContract, initialFormState);
+  const saleId = 'cmcyrf1kt000r8o72ess9y14u';
 
   const form = useAppForm({
     validators: { onSubmit: FormSchema },
@@ -28,7 +29,7 @@ export default function Page() {
       content: '',
       name: '',
       description: '',
-      saleId: 'cmcyrf1kt000r8o72ess9y14u',
+      saleId,
     },
     onSubmit: ({ value }) => {
       console.log('VALL', value);
@@ -53,7 +54,7 @@ export default function Page() {
       <form.AppForm>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='max-w-lg'>
-            <SaftEditor saleId={undefined} placeholder={initialText} />
+            <SaftEditor saleId={saleId} placeholder={initialText} />
             <div className='flex justify-end'>
               <Button
                 className='w-full'

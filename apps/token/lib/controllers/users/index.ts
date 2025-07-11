@@ -1,4 +1,4 @@
-import { ONE_DAY, ROLES } from '@/common/config/constants';
+import { JWT_EXPIRATION_TIME, ONE_DAY, ROLES } from '@/common/config/constants';
 import { publicUrl } from '@/common/config/env';
 import { ActionCtx } from '@/common/schemas/dtos/sales';
 import { CreateUserDto, GetUserDto } from '@/common/schemas/dtos/users';
@@ -8,6 +8,7 @@ import { prisma } from '@/db';
 import { getIpAddress, getUserAgent } from '@/lib/geo';
 import logger from '@/services/logger.server';
 import { invariant } from '@epic-web/invariant';
+import { DateTime } from 'luxon';
 import { headers } from 'next/headers';
 
 class UsersController {
@@ -59,13 +60,20 @@ class UsersController {
 
   async createSession(
     address: string,
-    { jwt, expirationTime }: { jwt: string; expirationTime: string }
+    { jwt, expirationTime }: { jwt: string; expirationTime: number }
   ) {
     const h = await headers();
+
+    const expiresAt = DateTime.now()
+      .plus({
+        seconds: expirationTime || JWT_EXPIRATION_TIME,
+      })
+      .toJSDate();
+
     const session = await prisma.session.create({
       data: {
         token: jwt,
-        expiresAt: new Date(expirationTime || Date.now() + ONE_DAY),
+        expiresAt,
         ipAddress: getIpAddress(new Headers(h)),
         userAgent: getUserAgent(new Headers(h)),
         user: {
@@ -99,6 +107,13 @@ class UsersController {
       const email = `temp_${address}@${new URL(publicUrl).hostname}`;
       const ipAddress = getIpAddress(h);
       const userAgent = getUserAgent(h);
+
+      const expiresAt = DateTime.now()
+        .plus({
+          seconds: expirationTime || JWT_EXPIRATION_TIME,
+        })
+        .toJSDate();
+
       const user = await prisma.user.upsert({
         where: {
           walletAddress: address,
@@ -112,7 +127,7 @@ class UsersController {
                 },
                 create: {
                   token: jwt,
-                  expiresAt: new Date(expirationTime || Date.now() + ONE_DAY),
+                  expiresAt,
                   ipAddress,
                   userAgent,
                 },

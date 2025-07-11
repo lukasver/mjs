@@ -1,3 +1,5 @@
+import { Duration } from 'luxon';
+
 export const MAX_FILE_SIZE = 10000000;
 export const MAX_ALLOWANCE_WITHOUT_KYC = 5000;
 export const COOKIE_PREFIX = 'mjs-td';
@@ -9,6 +11,12 @@ export const ONE_WEEK = 7 * ONE_DAY;
 export const ONE_MONTH = 30 * ONE_DAY;
 export const ONE_YEAR = 365 * ONE_DAY;
 export const DEFAULT_STALE_TIME = 1000 * 60 * 5; // 5 minutes
+/**
+ * Duration in seconds
+ */
+export const JWT_EXPIRATION_TIME = Duration.fromObject({ days: 1 }).as(
+  'seconds'
+);
 
 export const FIAT_CURRENCIES = ['CHF', 'EUR', 'USD', 'GBP'] as const;
 export const CRYPTO_CURRENCIES = [

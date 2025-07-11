@@ -1,4 +1,5 @@
 'use server';
+import documentsController from '@/lib/controllers/documents';
 import { ROLES } from '@/common/config/constants';
 import { prisma } from '@/db';
 import { adminCache } from '@/lib/auth/cache';
@@ -24,6 +25,7 @@ import salesInformationController from '@/lib/controllers/salesInformation';
 import transactionsController from '@/lib/controllers/transactions';
 import { TransactionStatus } from '@prisma/client';
 import { z } from 'zod';
+import { JSONContent } from '../controllers/documents/types';
 
 const isAdmin = adminCache.wrap(async (walletAddress: string) => {
   return await prisma.user.findUniqueOrThrow({
@@ -71,7 +73,7 @@ const adminMiddleware: Parameters<typeof authActionClient.use>[0] = async ({
 /**
  * Use this client for sensistive administrative actions only
  */
-export const adminClient = authActionClient.use(adminMiddleware);
+const adminClient = authActionClient.use(adminMiddleware);
 
 /**
  * =====================================
@@ -200,4 +202,24 @@ export const cancelAllTransactions = adminClient
       throw new Error(transaction.message);
     }
     return transaction.data;
+  });
+
+/**
+ * @warning ADMIN REQUIRED
+ */
+export const createSaftContract = authActionClient
+  .schema(
+    z.object({
+      content: z.union([z.string(), z.custom<JSONContent>()]),
+      name: z.string(),
+      description: z.string().optional(),
+      saleId: z.string(),
+    })
+  )
+  .action(async ({ ctx, parsedInput }) => {
+    const result = await documentsController.createSaft(parsedInput, ctx);
+    if (!result.success) {
+      throw new Error(result.message);
+    }
+    return result;
   });

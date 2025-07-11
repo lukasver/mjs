@@ -14,7 +14,6 @@ import {
 } from '@/common/schemas/generated';
 import { prisma } from '@/db';
 import contractController from '@/lib/controllers/contract';
-import documentsController from '@/lib/controllers/documents';
 import ratesController from '@/lib/controllers/feeds/rates';
 import salesController from '@/lib/controllers/sales';
 import transactionsController from '@/lib/controllers/transactions';
@@ -37,7 +36,7 @@ import {
   verifyJwt,
 } from '../auth/thirdweb';
 import { authActionClient, loginActionClient } from './config';
-import { JSONContent } from '../controllers/documents/types';
+import { JWT_EXPIRATION_TIME } from '@/common/config/constants';
 
 export const hasActiveSession = async (address: string, token: string) => {
   const sessions = await prisma.session.findMany({
@@ -114,7 +113,7 @@ export const login = loginActionClient
       address: payload.address,
       session: {
         jwt,
-        expirationTime: payload.expiration_time,
+        expirationTime: JWT_EXPIRATION_TIME,
       },
       chainId: payload.chain_id ? Number(payload.chain_id) : undefined,
     });
@@ -420,20 +419,3 @@ export const getInputOptions = authActionClient.action(async ({ ctx }) => {
  * =============== MUTATION ACTIONS ===============
  * =====================================
  */
-
-export const createSaftContract = authActionClient
-  .schema(
-    z.object({
-      content: z.union([z.string(), z.custom<JSONContent>()]),
-      name: z.string(),
-      description: z.string().optional(),
-      saleId: z.string(),
-    })
-  )
-  .action(async ({ ctx, parsedInput }) => {
-    const result = await documentsController.createSaft(parsedInput, ctx);
-    if (!result.success) {
-      throw new Error(result.message);
-    }
-    return result;
-  });
