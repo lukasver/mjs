@@ -24,7 +24,8 @@
 		"e2e:ci": "RENEW_STATE=true NODE_ENV=test playwright test --project=chromium",
 		"vercel-build": "npm prisma generate && prisma migrate deploy && next build",
 		"db:seed": "dotenv -e .env.local -- npx prisma db seed -- --environment development",
-		"db:seed:prod": "dotenv -e .env.production.local -- npx prisma db seed -- --environment production"
+		"db:seed:prod": "dotenv -e .env.production.local -- npx prisma db seed -- --environment production",
+		"type-check": "tsc -p tsconfig.json --noEmit"
 	},
 	"prisma": {
 		"seed": "tsx prisma/seed.ts"

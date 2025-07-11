@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@mjs/ui/primitives/card';
 import { FormInput } from '@mjs/ui/primitives/form-input';
-import { useAppForm } from '../../../packages/ui/dist/primitives/form/tanstack-form';
+import { useAppForm } from '@mjs/ui/primitives/form';
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { z } from 'zod';

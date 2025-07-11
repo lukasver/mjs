@@ -1,19 +1,19 @@
-import { cn } from '@smat/ui/lib/utils'
 import {
   BoldIcon,
   ItalicIcon,
   UnderlineIcon,
   StrikethroughIcon,
   CodeIcon,
-} from 'lucide-react'
-import { EditorBubbleItem, useEditor } from 'novel'
+} from 'lucide-react';
+import { EditorBubbleItem, useEditor } from 'novel';
 
-import { Button } from '../../../primitives/button'
-import { type SelectorItem } from './node-selector'
+import { Button } from '../../../primitives/button';
+import { type SelectorItem } from './node-selector';
+import { cn } from '@mjs/ui/lib/utils';
 
 export const TextButtons = () => {
-  const { editor } = useEditor()
-  if (!editor) return null
+  const { editor } = useEditor();
+  if (!editor) return null;
 
   const items: SelectorItem[] = [
     {
@@ -50,21 +50,21 @@ export const TextButtons = () => {
       command: (editor) => editor.chain().focus().toggleCode().run(),
       icon: CodeIcon,
     },
-  ]
+  ];
 
   return (
-    <div className="flex">
+    <div className='flex'>
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
           onSelect={(editor) => {
-            item.command(editor)
+            item.command(editor);
           }}
         >
           <Button
-            size="sm"
-            className="rounded-none"
-            variant="ghost"
+            size='sm'
+            className='rounded-none'
+            variant='ghost'
             type={'button'}
           >
             <item.icon
@@ -76,5 +76,5 @@ export const TextButtons = () => {
         </EditorBubbleItem>
       ))}
     </div>
-  )
-}
+  );
+};

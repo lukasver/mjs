@@ -16,8 +16,6 @@ export default async function AdminPage({
 }) {
   const tab = (await params)?.slug;
 
-  console.debug('🚀 ~ page.tsx:21 ~ tab:', tab);
-
   if (tab === ADMIN_TAB_VALUES.Create) {
     return <CreateSaleForm />;
   }

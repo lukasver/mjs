@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {
   CheckSquare,
   Code,
@@ -10,12 +10,12 @@ import {
   ListOrdered,
   Text,
   TextQuote,
-} from 'lucide-react'
-import { createSuggestionItems, Command, renderItems } from 'novel/extensions'
-import { uploadFn } from './image-upload'
+} from 'lucide-react';
+import { createSuggestionItems, Command, renderItems } from 'novel/extensions';
+import { uploadFn } from './image-upload';
 
 export const getSuggestionItems = (
-  onUpload?: (file: File) => Promise<unknown>,
+  onUpload?: (file: File) => Promise<unknown>
 ) =>
   createSuggestionItems(
     [
@@ -41,7 +41,7 @@ export const getSuggestionItems = (
             .focus()
             .deleteRange(range)
             .toggleNode('paragraph', 'paragraph')
-            .run()
+            .run();
         },
       },
       {
@@ -52,7 +52,7 @@ export const getSuggestionItems = (
         // @ts-expect-error fixme?
 
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleTaskList().run()
+          editor.chain().focus().deleteRange(range).toggleTaskList().run();
         },
       },
       {
@@ -68,7 +68,7 @@ export const getSuggestionItems = (
             .focus()
             .deleteRange(range)
             .setNode('heading', { level: 1 })
-            .run()
+            .run();
         },
       },
       {
@@ -84,7 +84,7 @@ export const getSuggestionItems = (
             .focus()
             .deleteRange(range)
             .setNode('heading', { level: 2 })
-            .run()
+            .run();
         },
       },
       {
@@ -99,7 +99,7 @@ export const getSuggestionItems = (
             .focus()
             .deleteRange(range)
             .setNode('heading', { level: 3 })
-            .run()
+            .run();
         },
       },
       {
@@ -109,7 +109,7 @@ export const getSuggestionItems = (
         icon: <List size={18} />,
         // @ts-expect-error fixme?
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleBulletList().run()
+          editor.chain().focus().deleteRange(range).toggleBulletList().run();
         },
       },
       {
@@ -119,7 +119,7 @@ export const getSuggestionItems = (
         icon: <ListOrdered size={18} />,
         // @ts-expect-error fixme?
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleOrderedList().run()
+          editor.chain().focus().deleteRange(range).toggleOrderedList().run();
         },
       },
       {
@@ -152,25 +152,25 @@ export const getSuggestionItems = (
         searchTerms: ['photo', 'picture', 'media'],
         icon: <ImageIcon size={18} />,
         command: ({ editor, range }: { editor: any; range: any }) => {
-          editor.chain().focus().deleteRange(range).run()
+          editor.chain().focus().deleteRange(range).run();
           // upload image
-          const input = document.createElement('input')
-          input.type = 'file'
-          input.accept = 'image/*'
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/*';
           input.onchange = async () => {
             if (input.files?.length) {
-              const file = input.files[0]
-              const pos = editor.view.state.selection.from
+              const file = input.files[0];
+              const pos = editor.view.state.selection.from;
               if (file) {
-                uploadFn(onUpload)(file, editor.view, pos)
+                uploadFn(onUpload)(file, editor.view, pos);
               }
             }
-          }
-          input.click()
+          };
+          input.click();
         },
       },
-    ].filter(Boolean),
-  )
+    ].filter(Boolean)
+  );
 
 export const getSlashCommands = (onUpload?: (file: File) => Promise<unknown>) =>
   Command.configure({
@@ -178,4 +178,4 @@ export const getSlashCommands = (onUpload?: (file: File) => Promise<unknown>) =>
       items: () => getSuggestionItems(onUpload),
       render: renderItems,
     },
-  })
+  });

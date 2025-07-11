@@ -48,6 +48,7 @@ export const env = createEnv({
     EMAIL_FROM: z.string().min(1),
     THIRDWEB_ADMIN_PRIVATE_KEY: z.string().min(1),
     THIRDWEB_API_SECRET: z.string().min(1),
+    DOCUMENSO_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_THIRDWEB_CLIENT_ID: z.string().min(1),
@@ -81,6 +82,7 @@ export const env = createEnv({
     EMAIL_FROM: process.env.EMAIL_FROM,
     THIRDWEB_ADMIN_PRIVATE_KEY: process.env.THIRDWEB_ADMIN_PRIVATE_KEY,
     THIRDWEB_API_SECRET: process.env.THIRDWEB_API_SECRET,
+    DOCUMENSO_API_KEY: process.env.DOCUMENSO_API_KEY,
   },
 });
 
