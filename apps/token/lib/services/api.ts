@@ -13,7 +13,13 @@ import {
 } from '@/lib/actions';
 import { FOP, TransactionStatus } from '@prisma/client';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { getActiveSale, getCurrentUser, getSale, getSales } from './fetchers';
+import {
+  getActiveSale,
+  getCurrentUser,
+  getSale,
+  getSales,
+  getSaleSaft,
+} from './fetchers';
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const getError = (data: any, error: any): string | null => {
@@ -202,6 +208,20 @@ export const useExchangeRate = ({
   });
   const e = getError(data, error);
   return { data: data?.data, error: e, status };
+};
+
+/**
+ * @description NOT SUSPENDED: Clienside ussage only.
+ */
+export const useSaleSaft = (id: string | undefined) => {
+  const { data, isLoading, refetch, error } = useQuery({
+    queryKey: ['sale', 'saft', id],
+    queryFn: ({ queryKey }) => getSaleSaft(queryKey[2] as string),
+    staleTime: DEFAULT_STALE_TIME,
+    enabled: !!id,
+  });
+  const e = getError(data, error);
+  return { data: data?.data, error: e, isLoading, refetch };
 };
 
 /**

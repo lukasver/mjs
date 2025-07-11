@@ -87,9 +87,9 @@
 		"@tiptap/extension-text-align": "^2.11.2",
 		"@tiptap/extension-text-style": "^2.11.2",
 		"@tiptap/extension-underline": "^2.11.2",
-		"@tiptap/html": "^2.11.2",
 		"@tiptap/starter-kit": "^2.11.2",
-		"novel": "^0.5.0"
+		"novel": "^0.5.0",
+		"@mjs/utils": "workspace:*"
 	},
 	"peerDependencies": {
 		"next": "15.3.2",

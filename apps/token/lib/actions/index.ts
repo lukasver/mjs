@@ -1,20 +1,8 @@
 'use server';
 import 'server-only';
 import { CreateContractStatusDto } from '@/common/schemas/dtos/contracts';
+import { GetSaleDto, GetSalesDto } from '@/common/schemas/dtos/sales';
 import {
-  CreateSaleDto,
-  DeleteSaleDto,
-  GetSaleDto,
-  GetSalesDto,
-  UpdateSaleDto,
-  UpdateSaleStatusDto,
-} from '@/common/schemas/dtos/sales';
-import {
-  CreateSaleInformationDto,
-  UpdateSaleInformationDto,
-} from '@/common/schemas/dtos/sales/information';
-import {
-  CancelAllTransactionsDto,
   CreateTransactionDto,
   GetTransactionDto,
   UpdateTransactionDto,
@@ -26,13 +14,12 @@ import {
 } from '@/common/schemas/generated';
 import { prisma } from '@/db';
 import contractController from '@/lib/controllers/contract';
+import documentsController from '@/lib/controllers/documents';
 import ratesController from '@/lib/controllers/feeds/rates';
 import salesController from '@/lib/controllers/sales';
-import salesInformationController from '@/lib/controllers/salesInformation';
 import transactionsController from '@/lib/controllers/transactions';
 import usersController from '@/lib/controllers/users';
 import { invariant } from '@epic-web/invariant';
-import { TransactionStatus } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { defineChain, getContract as getContractThirdweb } from 'thirdweb';
 import { bscTestnet } from 'thirdweb/chains';
@@ -49,8 +36,8 @@ import {
   verifyAuthPayload,
   verifyJwt,
 } from '../auth/thirdweb';
-import { adminClient } from './admin';
 import { authActionClient, loginActionClient } from './config';
+import { JSONContent } from '../controllers/documents/types';
 
 export const hasActiveSession = async (address: string, token: string) => {
   const sessions = await prisma.session.findMany({
@@ -430,129 +417,23 @@ export const getInputOptions = authActionClient.action(async ({ ctx }) => {
 
 /**
  * =====================================
- * =============== ADMIN ===============
+ * =============== MUTATION ACTIONS ===============
  * =====================================
  */
 
-/**
- * @warning ADMIN REQUIRED
- */
-export const createSale = adminClient
-  .schema(CreateSaleDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const sales = await salesController.createSale(parsedInput, ctx);
-    if (!sales.success) {
-      throw new Error(sales.message);
-    }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const updateSale = adminClient
-  .schema(UpdateSaleDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const sales = await salesController.updateSale(parsedInput, ctx);
-    if (!sales.success) {
-      throw new Error(sales.message);
-    }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const createSaleInformation = adminClient
-  .schema(CreateSaleInformationDto.extend({ saleId: z.string() }))
-  .action(async ({ ctx, parsedInput }) => {
-    const sales = await salesInformationController.upsertSaleInformation(
-      parsedInput,
-      ctx
-    );
-    if (!sales.success) {
-      throw new Error(sales.message);
-    }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const updateSaleInformation = adminClient
+export const createSaftContract = authActionClient
   .schema(
-    UpdateSaleInformationDto.extend({
+    z.object({
+      content: z.union([z.string(), z.custom<JSONContent>()]),
+      name: z.string(),
+      description: z.string().optional(),
       saleId: z.string(),
     })
   )
   .action(async ({ ctx, parsedInput }) => {
-    const { saleId, ...rest } = parsedInput;
-
-    const sales = await salesInformationController.updateSaleInformation(
-      saleId,
-      rest,
-      ctx
-    );
-    if (!sales.success) {
-      throw new Error(sales.message);
+    const result = await documentsController.createSaft(parsedInput, ctx);
+    if (!result.success) {
+      throw new Error(result.message);
     }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const updateSaleStatus = adminClient
-  .schema(UpdateSaleStatusDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const sales = await salesController.updateSaleStatus(parsedInput, ctx);
-    if (!sales.success) {
-      throw new Error(sales.message);
-    }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const deleteSale = adminClient
-  .schema(DeleteSaleDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const sales = await salesController.deleteSale(parsedInput, ctx);
-    if (!sales.success) {
-      throw new Error(sales.message);
-    }
-    return sales.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const confirmAdminTransaction = adminClient
-  .schema(UpdateTransactionDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const transaction = await transactionsController.adminUpdateTransaction(
-      parsedInput,
-      ctx
-    );
-    if (!transaction.success) {
-      throw new Error(transaction.message);
-    }
-    return transaction.data;
-  });
-
-/**
- * @warning ADMIN REQUIRED
- */
-export const cancelAllTransactions = adminClient
-  .schema(CancelAllTransactionsDto)
-  .action(async ({ ctx, parsedInput }) => {
-    const transaction = await transactionsController.adminUpdateTransaction(
-      { ...parsedInput, status: TransactionStatus.CANCELLED },
-      ctx
-    );
-    if (!transaction.success) {
-      throw new Error(transaction.message);
-    }
-    return transaction.data;
+    return result;
   });

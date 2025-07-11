@@ -1,4 +1,4 @@
-import { createFormHook } from '@tanstack/react-form';
+import { createFormHook, type AnyFieldApi } from '@tanstack/react-form';
 import {
   FormLabel,
   fieldContext,
@@ -10,7 +10,11 @@ import {
   useFormContext,
   useFieldContext,
 } from './tanstack-form';
+import { mergeForm, useTransform } from '@tanstack/react-form';
+
 import { SubmitButton } from './buttons';
+import { formOptions } from '@tanstack/react-form/nextjs';
+import { initialFormState } from '@tanstack/react-form/nextjs';
 
 const { useAppForm, withForm } = createFormHook({
   fieldContext,
@@ -34,5 +38,10 @@ export {
   useFormContext,
   useFieldContext,
   withForm,
+  formOptions,
+  initialFormState,
+  useTransform,
+  mergeForm,
   type UseAppForm,
+  type AnyFieldApi,
 };

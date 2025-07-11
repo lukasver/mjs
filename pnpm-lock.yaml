@@ -137,7 +137,10 @@ importers:
     dependencies:
       '@coinbase/onchainkit':
         specifier: latest
-        version: 0.38.16(@tanstack/query-core@5.76.2)(@types/react@19.1.5)(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(use-sync-external-store@1.5.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.67)
+        version: 0.38.17(@tanstack/query-core@5.76.2)(@types/react@19.1.5)(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(use-sync-external-store@1.5.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.67)
+      '@documenso/sdk-typescript':
+        specifier: ^0.3.1
+        version: 0.3.1(zod@3.25.67)
       '@epic-web/invariant':
         specifier: ^1.0.0
         version: 1.0.0
@@ -171,6 +174,51 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.76.1
         version: 5.76.2(react@19.1.0)
+      '@tanstack/react-store':
+        specifier: ^0.7.3
+        version: 0.7.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tiptap/extension-color':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/extension-text-style@2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1)))
+      '@tiptap/extension-highlight':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-horizontal-rule':
+        specifier: 2.11.2
+        version: 2.11.2(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
+      '@tiptap/extension-image':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-link':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
+      '@tiptap/extension-placeholder':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
+      '@tiptap/extension-strike':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-task-item':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
+      '@tiptap/extension-task-list':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-text-align':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-text-style':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/extension-underline':
+        specifier: ^2.11.2
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
+      '@tiptap/html':
+        specifier: ^2.25.1
+        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
+      '@tiptap/starter-kit':
+        specifier: ^2.11.2
+        version: 2.25.1
       '@vercel/functions':
         specifier: ^2.2.2
         version: 2.2.2
@@ -197,7 +245,7 @@ importers:
         version: 0.511.0(react@19.1.0)
       luxon:
         specifier: ^3.4.4
-        version: 3.6.1
+        version: 3.7.1
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
@@ -237,6 +285,9 @@ importers:
       resend:
         specifier: ^4.5.1
         version: 4.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      sanitize-html:
+        specifier: ^2.17.0
+        version: 2.17.0
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -292,6 +343,9 @@ importers:
       '@types/react-dom':
         specifier: 19.1.0
         version: 19.1.0(@types/react@19.1.5)
+      '@types/sanitize-html':
+        specifier: ^2.16.0
+        version: 2.16.0
       '@types/sinon':
         specifier: ^17.0.3
         version: 17.0.4
@@ -661,6 +715,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@mjs/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@radix-ui/react-accessible-icon':
         specifier: ^1.1.7
         version: 1.1.7(@types/react-dom@19.1.0(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -802,9 +859,6 @@ importers:
       '@tiptap/extension-underline':
         specifier: ^2.11.2
         version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))
-      '@tiptap/html':
-        specifier: ^2.11.2
-        version: 2.25.1(@tiptap/core@2.11.2(@tiptap/pm@2.25.1))(@tiptap/pm@2.25.1)
       '@tiptap/starter-kit':
         specifier: ^2.11.2
         version: 2.25.1
@@ -831,7 +885,7 @@ importers:
         version: 0.511.0(react@19.1.0)
       luxon:
         specifier: ^3.6.1
-        version: 3.6.1
+        version: 3.7.1
       motion:
         specifier: ^12.15.0
         version: 12.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -908,10 +962,16 @@ importers:
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
+      luxon:
+        specifier: ^3.7.1
+        version: 3.7.1
     devDependencies:
       '@mjs/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/luxon':
+        specifier: ^3.6.2
+        version: 3.6.2
       '@types/node':
         specifier: ^24.0.7
         version: 24.0.10
@@ -1634,8 +1694,8 @@ packages:
     peerDependencies:
       '@citation-js/core': ^0.7.0
 
-  '@coinbase/onchainkit@0.38.16':
-    resolution: {integrity: sha512-B5NCEN667+ccbqHslYPftchnsNmBNZxzkinW9mWGj8gk6S1M8nTJcJ6bIScnf7zXijRxV7/lLsP8IowtZ7/gUQ==}
+  '@coinbase/onchainkit@0.38.17':
+    resolution: {integrity: sha512-TMZwdsSzzOcswIKnPolCMJJlmTYrSV+cx/T2UV3LTRWPvvACvCV5TTKQx7ELs34Fqtp7QA7Kcn4unio4En2PaQ==}
     peerDependencies:
       react: 19.1.0
       react-dom: 19.1.0
@@ -1686,6 +1746,16 @@ packages:
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
+
+  '@documenso/sdk-typescript@0.3.1':
+    resolution: {integrity: sha512-hzNn4NNoGUp4bvBHoXBammafcnPMDx4vVO4o2LLoNORJsKKUgLi2dgpaG4S+YJUvWJhmT/mgQSDEXr2CKjraUQ==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.5.0 <1.10.0'
+      zod: '>= 3'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
 
   '@ecies/ciphers@0.2.3':
     resolution: {integrity: sha512-tapn6XhOueMwht3E2UzY0ZZjYokdaw9XtL9kEyjhQ/Fb9vL9xTFbOaI+fV0AWvTpYu4BNloC6getKW6NtSg4mA==}
@@ -4746,6 +4816,12 @@ packages:
       react: 19.1.0
       react-dom: 19.1.0
 
+  '@tanstack/react-store@0.7.3':
+    resolution: {integrity: sha512-3Dnqtbw9P2P0gw8uUM8WP2fFfg8XMDSZCTsywRPZe/XqqYW8PGkXKZTvP0AHkE4mpqP9Y43GpOg9vwO44azu6Q==}
+    peerDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0
+
   '@tanstack/react-table@8.21.3':
     resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}
     engines: {node: '>=12'}
@@ -4761,6 +4837,9 @@ packages:
 
   '@tanstack/store@0.7.0':
     resolution: {integrity: sha512-CNIhdoUsmD2NolYuaIs8VfWM467RK6oIBAW4nPEKZhg1smZ+/CwtCdpURgp7nxSqOaV9oKkzdWD80+bC66F/Jg==}
+
+  '@tanstack/store@0.7.2':
+    resolution: {integrity: sha512-RP80Z30BYiPX2Pyo0Nyw4s1SJFH2jyM6f9i3HfX4pA+gm5jsnYryscdq2aIQLnL4TaGuQMO+zXmN9nh1Qck+Pg==}
 
   '@tanstack/table-core@8.21.3':
     resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
@@ -5244,6 +5323,9 @@ packages:
 
   '@types/rtl-detect@1.0.3':
     resolution: {integrity: sha512-qpstuHivwg/HoXxRrBo5/r/OVx5M2SkqJpVu2haasdLctt+jMGHWjqdbI0LL7Rk2wRmN/UHdHK4JZg9RUMcvKA==}
+
+  '@types/sanitize-html@2.16.0':
+    resolution: {integrity: sha512-l6rX1MUXje5ztPT0cAFtUayXF06DqPhRyfVXareEN5gGCFaP/iwsxIyKODr9XDhfxPpN6vXUFNfo5kZMXCxBtw==}
 
   '@types/sinon@17.0.4':
     resolution: {integrity: sha512-RHnIrhfPO3+tJT0s7cFaXGZvsL4bbR3/k7z3P312qMS4JaS2Tk+KiwiLx1S0rQ56ERj00u1/BtdyVd0FY+Pdew==}
@@ -8339,8 +8421,8 @@ packages:
     peerDependencies:
       react: 19.1.0
 
-  luxon@3.6.1:
-    resolution: {integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==}
+  luxon@3.7.1:
+    resolution: {integrity: sha512-RkRWjA926cTvz5rAb1BqyWkKbbjzCGchDUIKMCUvNi17j6f6j8uHGDV82Aqcqtzd+icoYpELmG3ksgGiFNNcNg==}
     engines: {node: '>=12'}
 
   magic-string@0.30.17:
@@ -9191,6 +9273,9 @@ packages:
 
   parse-numeric-range@1.3.0:
     resolution: {integrity: sha512-twN+njEipszzlMJd4ONUYgSfZPDxgHhT9Ahed5uTigpQn90FggW4SA/AIPq/6a149fTbE9qBEcSwE3FAEp6wQQ==}
+
+  parse-srcset@1.0.2:
+    resolution: {integrity: sha512-/2qh0lav6CmI15FzA3i/2Bzk2zCgQhGMkvhOhKNcBVQ1ldgpbfiNTVslmooUmWJcADi1f1kIeynbDRVzNlfR6Q==}
 
   parse5-htmlparser2-tree-adapter@7.1.0:
     resolution: {integrity: sha512-ruw5xyKs6lrpo9x9rCZqZZnIUntICjQAd0Wsmp396Ul9lN/h+ifgVV1x1gZHi8euej6wTfpqX8j+BFQxF0NS/g==}
@@ -10088,6 +10173,9 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
+
+  sanitize-html@2.17.0:
+    resolution: {integrity: sha512-dLAADUSS8rBwhaevT12yCezvioCA+bmUTPH/u57xKPT8d++voeYE6HeluA/bPbQ15TwDBG2ii+QZIEmYx8VdxA==}
 
   satori@0.12.2:
     resolution: {integrity: sha512-3C/laIeE6UUe9A+iQ0A48ywPVCCMKCNSTU5Os101Vhgsjd3AAxGNjyq0uAA8kulMPK5n0csn8JlxPN9riXEjLA==}
@@ -12377,7 +12465,7 @@ snapshots:
       '@citation-js/date': 0.5.1
       citeproc: 2.4.63
 
-  '@coinbase/onchainkit@0.38.16(@tanstack/query-core@5.76.2)(@types/react@19.1.5)(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(use-sync-external-store@1.5.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.67)':
+  '@coinbase/onchainkit@0.38.17(@tanstack/query-core@5.76.2)(@types/react@19.1.5)(bufferutil@4.0.9)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(use-sync-external-store@1.5.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.67)':
     dependencies:
       '@farcaster/frame-sdk': 0.0.60(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@3.25.67)
       '@farcaster/frame-wagmi-connector': 0.0.53(@farcaster/frame-sdk@0.0.60(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@3.25.67))(@wagmi/core@2.17.2(@tanstack/query-core@5.76.2)(@types/react@19.1.5)(react@19.1.0)(typescript@5.8.3)(use-sync-external-store@1.5.0(react@19.1.0))(viem@2.30.0(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@3.25.67)))(viem@2.30.0(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@3.25.67))
@@ -12545,6 +12633,10 @@ snapshots:
   '@daybrush/utils@1.13.0': {}
 
   '@discoveryjs/json-ext@0.5.7': {}
+
+  '@documenso/sdk-typescript@0.3.1(zod@3.25.67)':
+    dependencies:
+      zod: 3.25.67
 
   '@ecies/ciphers@0.2.3(@noble/ciphers@1.3.0)':
     dependencies:
@@ -16259,6 +16351,13 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       use-sync-external-store: 1.5.0(react@19.1.0)
 
+  '@tanstack/react-store@0.7.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@tanstack/store': 0.7.2
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      use-sync-external-store: 1.5.0(react@19.1.0)
+
   '@tanstack/react-table@8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@tanstack/table-core': 8.21.3
@@ -16272,6 +16371,8 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
 
   '@tanstack/store@0.7.0': {}
+
+  '@tanstack/store@0.7.2': {}
 
   '@tanstack/table-core@8.21.3': {}
 
@@ -16784,6 +16885,10 @@ snapshots:
   '@types/resolve@1.20.6': {}
 
   '@types/rtl-detect@1.0.3': {}
+
+  '@types/sanitize-html@2.16.0':
+    dependencies:
+      htmlparser2: 8.0.2
 
   '@types/sinon@17.0.4':
     dependencies:
@@ -21121,7 +21226,7 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  luxon@3.6.1: {}
+  luxon@3.7.1: {}
 
   magic-string@0.30.17:
     dependencies:
@@ -22525,6 +22630,8 @@ snapshots:
 
   parse-numeric-range@1.3.0: {}
 
+  parse-srcset@1.0.2: {}
+
   parse5-htmlparser2-tree-adapter@7.1.0:
     dependencies:
       domhandler: 5.0.3
@@ -23846,6 +23953,15 @@ snapshots:
   safe-stable-stringify@2.5.0: {}
 
   safer-buffer@2.1.2: {}
+
+  sanitize-html@2.17.0:
+    dependencies:
+      deepmerge: 4.3.1
+      escape-string-regexp: 4.0.0
+      htmlparser2: 8.0.2
+      is-plain-object: 5.0.0
+      parse-srcset: 1.0.2
+      postcss: 8.5.3
 
   satori@0.12.2:
     dependencies:

@@ -1,6 +1,6 @@
 import { publicUrl } from '@/common/config/env';
 import { Failure, Success } from '@/common/schemas/dtos/utils';
-import { Sale, User } from '@/common/schemas/generated';
+import { SaftContract, Sale, User } from '@/common/schemas/generated';
 
 export type FetcherOptions = Omit<RequestInit, 'body'> & {
   baseUrl?: string;
@@ -132,6 +132,18 @@ export const getActiveSale = async () => {
   try {
     const queryParams = new URLSearchParams({ active: 'true' });
     const data = await fetcher<{ sales: Sale[] }>(`/sales?${queryParams}`);
+    return { data: data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+};
+
+export const getSaleSaft = async (id: string) => {
+  try {
+    const data = await fetcher<{
+      saft: SaftContract | null;
+      versions: SaftContract[];
+    }>(`/sales/${id}/saft`);
     return { data: data, error: null };
   } catch (e) {
     return { data: null, error: e };

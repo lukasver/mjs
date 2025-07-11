@@ -15,7 +15,7 @@ import { isObject } from '@/common/schemas/dtos/utils';
 import { prisma } from '@/db';
 import logger from '@/lib/services/logger.server';
 import { invariant } from '@epic-web/invariant';
-import { Prisma, Sale, SaleStatus } from '@prisma/client';
+import { Prisma, SaftContract, Sale, SaleStatus } from '@prisma/client';
 import { DateTime } from 'luxon';
 import {
   changeActiveSaleToFinish,
@@ -453,6 +453,51 @@ class SalesController {
     } catch (error) {
       logger(error);
       return Failure(error);
+    }
+  }
+
+  async getSaleSaftContract(id: string) {
+    try {
+      invariant(id, 'Sale id is required');
+      const data = await prisma.sale.findUniqueOrThrow({
+        where: {
+          id,
+          saftContract: {
+            isCurrent: true,
+          },
+        },
+        select: {
+          id: true,
+          saftContract: true,
+        },
+      });
+
+      const saft = data.saftContract || null;
+      let versions: SaftContract[] = [];
+      if (saft && saft.version > 1) {
+        versions = await prisma.saftContract.findMany({
+          where: {
+            OR: [
+              {
+                parentId: null,
+              },
+              {
+                parentId: saft.id,
+              },
+            ],
+          },
+          orderBy: {
+            version: 'desc',
+          },
+        });
+      }
+      return Success({
+        saft,
+        versions,
+      });
+    } catch (e) {
+      logger(e);
+      return Failure(e);
     }
   }
 }

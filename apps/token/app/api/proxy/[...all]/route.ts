@@ -19,6 +19,7 @@ export const GET = withAuth(async (req, context, auth) => {
 
   const controller = all[0];
   const identifier = all[1];
+  const subIdentifier = all[2];
 
   if (!controller) {
     return NextResponse.json({ error: 'Bad request' }, { status: 404 });
@@ -27,12 +28,18 @@ export const GET = withAuth(async (req, context, auth) => {
   switch (controller) {
     case 'sales': {
       if (identifier) {
+        if (subIdentifier === 'saft') {
+          const data = await sales.getSaleSaftContract(identifier);
+          return NextResponse.json(data);
+        }
+
         const data = await sales.getSale(
           { id: identifier },
           { address: auth.address }
         );
         return NextResponse.json(data);
       }
+
       const data = await sales.getSales(
         { active: qParamsObject.active === 'true' },
         { address: auth.address }

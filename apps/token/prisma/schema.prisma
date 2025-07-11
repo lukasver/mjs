@@ -53,9 +53,9 @@ model User {
   transactionApprovals SaleTransactions[] @relation("TransactionApprovals")
   Document             Document[]
 
-  isSiwe        Boolean?
-  // passkeys    Passkey[]
-  WalletAddress WalletAddress[]
+  isSiwe            Boolean?
+  WalletAddress     WalletAddress[]
+  DocumentRecipient DocumentRecipient[]
 
   @@map("users")
 }
@@ -168,36 +168,117 @@ model Sale {
   deletedAt DateTime? @db.Timestamptz(6)
 
   name                   String
-  status                 SaleStatus         @default(CREATED)
-  saleCurrency           Currency           @relation(fields: [currency], references: [symbol])
+  status                 SaleStatus    @default(CREATED)
+  saleCurrency           Currency      @relation(fields: [currency], references: [symbol])
   currency               String
   initialTokenQuantity   Int
   availableTokenQuantity Int
   maximumTokenBuyPerUser Int?
-  minimumTokenBuyPerUser Int                @default(1)
+  minimumTokenBuyPerUser Int           @default(1)
   saleStartDate          DateTime
   tokenContractAddress   String?
   tokenContractChainId   Int?
-  blockchain             Blockchain?        @relation(fields: [tokenContractChainId], references: [chainId])
-  token                  Token              @relation(fields: [tokenId, tokenSymbol], references: [id, symbol])
+  blockchain             Blockchain?   @relation(fields: [tokenContractChainId], references: [chainId])
+  token                  Token         @relation(fields: [tokenId, tokenSymbol], references: [id, symbol])
   tokenId                String
   tokenName              String
   tokenSymbol            String
   tokenTotalSupply       String?
-  tokenPricePerUnit      Decimal            @db.Decimal(36, 18)
+  tokenPricePerUnit      Decimal       @db.Decimal(36, 18)
   toWalletsAddress       String
   saleClosingDate        DateTime
   createdBy              String
-  saftCheckbox           Boolean            @default(false)
-  saftContract           String?
-  user                   User               @relation(fields: [createdBy], references: [id])
-  transactions           SaleTransactions[]
-  saleInformation        SaleInformation?
-  documents              Document[]
+  saftCheckbox           Boolean       @default(false)
+  saftContract           SaftContract?
+
+  user            User               @relation(fields: [createdBy], references: [id])
+  transactions    SaleTransactions[]
+  saleInformation SaleInformation?
+  documents       Document[]
 
   vestingSchedules VestingSchedule[]
 
   @@map("sales")
+}
+
+/**
+ * SaftContract model with versioning support.
+ * - All versions are stored in this table.
+ * - parentId: null for the original (v1), set to original id for subsequent versions.
+ * - isLatest: true for the latest version, false for previous versions.
+ * - Sale points to the latest version only.
+ */
+model SaftContract {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  name        String
+  description String?
+  /// For File types
+  url         String?
+  /// Text content for TEXT type
+  content     Json?
+  /// Variables for TEXT type
+  variables   Json[]
+
+  recipients DocumentRecipient[]
+
+  version   Int     @default(1)
+  parentId  String? // Points to the original contract (null for v1)
+  isCurrent Boolean @default(true)
+
+  /// latest contract should always have a saleId to which is related
+  Sale   Sale?   @relation(fields: [saleId], references: [id])
+  saleId String? @unique
+
+  @@unique([parentId, version]) // Ensures no duplicate version per parent
+  @@map("saft_contract")
+}
+
+model DocumentRecipient {
+  id        String    @id @default(cuid()) @db.Text
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(6)
+  deletedAt DateTime? @db.Timestamptz(6)
+
+  fullname     String?
+  email        String
+  role         SignableDocumentRole    @default(SIGNER)
+  status       DocumentSignatureStatus @default(CREATED)
+  signatureUrl String?
+  externalId   Int?
+
+  user    User?   @relation(fields: [address], references: [walletAddress])
+  address String?
+
+  SaftContract   SaftContract? @relation(fields: [saftContractId], references: [id])
+  saftContractId String?       @db.Text
+
+  @@index([email])
+  @@map("signable_document_recipient")
+}
+
+enum SignableDocumentRole {
+  CC
+  SIGNER
+  VIEWER
+  APPROVER
+
+  @@map("signable_document_role")
+}
+
+enum DocumentSignatureStatus {
+  CREATED
+  SENT_FOR_SIGNATURE
+  WAITING_FOR_COUNTERPARTY
+  SIGNED
+  EXPIRED
+  REJECTED
+  OPENED
+
+  @@map("document_signature_status")
 }
 
 model Document {
